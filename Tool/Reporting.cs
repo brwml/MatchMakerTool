@@ -1,4 +1,5 @@
 ﻿using MatchMaker.Reporting;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -67,7 +68,7 @@ namespace MatchMaker.Tool
         private static string GetScheduleName(string name)
         {
             var ti = CultureInfo.CurrentCulture.TextInfo;
-            return ti.ToTitleCase(name.Substring(0, name.IndexOf(".schedule")));
+            return ti.ToTitleCase(name.Substring(0, name.IndexOf(".schedule", StringComparison.OrdinalIgnoreCase)));
         }
 
         private static TeamRankingPolicy[] LoadRankingPolicies(string procedure)
