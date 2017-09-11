@@ -1,5 +1,4 @@
-﻿using iTextSharp.text;
-using iTextSharp.text.pdf;
+﻿using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,28 +10,28 @@ namespace MatchMaker.Reporting
     {
         public static void Create(Summary summary, int numberOfTournamentTeams, int numberOfAlternateTeams, string outputFolder)
         {
-            var fileName = Path.Combine(outputFolder, $"{summary.Name}_TournamentTeams.pdf");
-            var document = OpenDocument(fileName);
             var quizzers = GetQuizzers(summary, numberOfTournamentTeams);
             var teams = GetTeams(summary, quizzers, numberOfAlternateTeams);
 
-            var table = new PdfPTable(4);
+            var fileName = Path.Combine(outputFolder, $"{summary.Name}_TournamentTeams.xlsx");
 
-            foreach (var team in teams)
+            using (var workbook = new XLWorkbook())
             {
-                var font = new Font(Font.FontFamily.HELVETICA, 9f);
-                var content = string.Join(Environment.NewLine, team.Select(x => $"{x.FirstName} {x.LastName} ({x.ChurchId})"));
-                var phrase = new Phrase(content, font);
-                table.AddCell(phrase);
-            }
+                var sheet = workbook.AddWorksheet("Teams");
 
-            for (int i = 0; i < teams.Count % 4; i++)
-            {
-                table.AddCell(string.Empty);
-            }
+                for (var column = 0; column < teams.Count; column++)
+                {
+                    var team = teams[column];
 
-            document.Add(table);
-            document.Close();
+                    for (var row = 0; row < team.Count; row++)
+                    {
+                        var quizzer = team[row];
+                        sheet.Cell(row + 1, column + 1).SetValue($"{quizzer.FirstName} {quizzer.LastName} ({quizzer.ChurchId})");
+                    }
+                }
+
+                workbook.SaveAs(fileName);
+            }
         }
 
         private static List<List<Quizzer>> DistributeChurches(List<List<Quizzer>> teams)
@@ -112,14 +111,6 @@ namespace MatchMaker.Reporting
             }
 
             return DistributeChurches(teams);
-        }
-
-        private static Document OpenDocument(string fileName)
-        {
-            var document = new Document();
-            PdfWriter.GetInstance(document, File.Create(fileName));
-            document.Open();
-            return document;
         }
     }
 }
