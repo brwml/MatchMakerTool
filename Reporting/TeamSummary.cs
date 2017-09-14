@@ -12,15 +12,9 @@ namespace MatchMaker.Reporting
             this.Place = 1;
         }
 
-        public decimal AverageErrors
-        {
-            get { return Convert.ToDecimal(this.TotalErrors) / Convert.ToDecimal(this.TotalRounds); }
-        }
+        public decimal AverageErrors => Convert.ToDecimal(this.TotalErrors) / Convert.ToDecimal(this.TotalRounds);
 
-        public decimal AverageScore
-        {
-            get { return Convert.ToDecimal(this.TotalScore) / Convert.ToDecimal(this.TotalRounds); }
-        }
+        public decimal AverageScore => Convert.ToDecimal(this.TotalScore) / Convert.ToDecimal(this.TotalRounds);
 
         public int Losses { get; set; }
         public int Place { get; set; }
@@ -28,17 +22,11 @@ namespace MatchMaker.Reporting
         public TieBreak TieBreak { get; set; }
         public int TotalErrors { get; set; }
 
-        public int TotalRounds
-        {
-            get { return this.Wins + this.Losses; }
-        }
+        public int TotalRounds => this.Wins + this.Losses;
 
         public int TotalScore { get; set; }
 
-        public decimal WinPercentage
-        {
-            get { return Convert.ToDecimal(this.Wins) / Convert.ToDecimal(this.TotalRounds); }
-        }
+        public decimal WinPercentage => Convert.ToDecimal(this.Wins) / Convert.ToDecimal(this.TotalRounds);
 
         public int Wins { get; set; }
 

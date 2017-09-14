@@ -18,7 +18,7 @@ namespace MatchMaker.Reporting
 
         public void SetRelativePlaces(List<QuizzerSummary> summaries, int initial, Func<QuizzerSummary, QuizzerSummary, bool> areEqual)
         {
-            for (int i = 1; i < summaries.Count; i++)
+            for (var i = 1; i < summaries.Count; i++)
             {
                 if (areEqual(summaries[i], summaries[i - 1]))
                 {

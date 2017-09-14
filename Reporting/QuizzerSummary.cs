@@ -12,15 +12,9 @@ namespace MatchMaker.Reporting
             this.TotalRounds = 1;
         }
 
-        public decimal AverageErrors
-        {
-            get { return Convert.ToDecimal(this.TotalErrors) / Convert.ToDecimal(this.TotalRounds); }
-        }
+        public decimal AverageErrors => Convert.ToDecimal(this.TotalErrors) / Convert.ToDecimal(this.TotalRounds);
 
-        public decimal AverageScore
-        {
-            get { return Convert.ToDecimal(this.TotalScore) / Convert.ToDecimal(this.TotalRounds); }
-        }
+        public decimal AverageScore => Convert.ToDecimal(this.TotalScore) / Convert.ToDecimal(this.TotalRounds);
 
         public int Place { get; set; }
         public int QuizzerId { get; set; }

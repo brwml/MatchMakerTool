@@ -1,13 +1,12 @@
-﻿using GraphVizWrapper;
+﻿using System.IO;
+using System.Linq;
+using GraphVizWrapper;
 using GraphVizWrapper.Commands;
 using GraphVizWrapper.Queries;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using QuickGraph;
 using QuickGraph.Graphviz;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace MatchMaker.Reporting
 {
@@ -45,10 +44,11 @@ namespace MatchMaker.Reporting
         private static PdfPCell CreateCell(string content)
         {
             var phrase = new Phrase(content, RegularCellFont);
-            var cell = new PdfPCell(phrase);
-            cell.Border = 0;
-            cell.BorderWidth = 0;
-            return cell;
+            return new PdfPCell(phrase)
+            {
+                Border = 0,
+                BorderWidth = 0
+            };
         }
 
         private static PdfPHeaderCell CreateHeaderCell(string content)
@@ -63,13 +63,15 @@ namespace MatchMaker.Reporting
 
         private static PdfPRow CreateQuizzerHeaderRow()
         {
-            List<PdfPHeaderCell> cells = new List<PdfPHeaderCell>();
-            cells.Add(CreateHeaderCell(string.Empty));
-            cells.Add(CreateHeaderCell("Quizzer Name"));
-            cells.Add(CreateHeaderCell("Church"));
-            cells.Add(CreateHeaderCell("Score"));
-            cells.Add(CreateHeaderCell("Errors"));
-            return new PdfPRow(cells.ToArray());
+            var cells = new[]
+            {
+                CreateHeaderCell(string.Empty),
+                CreateHeaderCell("Quizzer Name"),
+                CreateHeaderCell("Church"),
+                CreateHeaderCell("Score"),
+                CreateHeaderCell("Errors")
+            };
+            return new PdfPRow(cells);
         }
 
         private static void CreateQuizzerPageTitle(Document document)
@@ -82,28 +84,32 @@ namespace MatchMaker.Reporting
 
         private static PdfPRow CreateQuizzerRow(Summary summary, QuizzerSummary quizzer, bool showPlace)
         {
-            List<PdfPCell> cells = new List<PdfPCell>();
-            cells.Add(CreateCell(showPlace ? quizzer.Place.ToString() : string.Empty));
             var quizzerInfo = summary.Result.Schedule.Quizzers[quizzer.QuizzerId];
             var churchInfo = summary.Result.Schedule.Churches.Values.FirstOrDefault(c => c.Id == quizzerInfo.ChurchId);
-            cells.Add(CreateCell($"{quizzerInfo.FirstName} {quizzerInfo.LastName}"));
-            cells.Add(CreateCell($"{churchInfo?.Name ?? string.Empty}"));
-            cells.Add(CreateCell($"{quizzer.AverageScore.ToString("N2")}"));
-            cells.Add(CreateCell($"{quizzer.AverageErrors.ToString("N2")}"));
-            return new PdfPRow(cells.ToArray());
+            var cells = new[]
+            {
+                CreateCell(showPlace ? quizzer.Place.ToString() : string.Empty),
+                CreateCell($"{quizzerInfo.FirstName} {quizzerInfo.LastName}"),
+                CreateCell($"{churchInfo?.Name ?? string.Empty}"),
+                CreateCell($"{quizzer.AverageScore.ToString("N2")}"),
+                CreateCell($"{quizzer.AverageErrors.ToString("N2")}")
+            };
+            return new PdfPRow(cells);
         }
 
         private static PdfPRow CreateTeamHeaderRow()
         {
-            List<PdfPHeaderCell> cells = new List<PdfPHeaderCell>();
-            cells.Add(CreateHeaderCell(string.Empty));
-            cells.Add(CreateHeaderCell("Team Name"));
-            cells.Add(CreateHeaderCell("W"));
-            cells.Add(CreateHeaderCell("L"));
-            cells.Add(CreateHeaderCell("Score"));
-            cells.Add(CreateHeaderCell("Errors"));
-            cells.Add(CreateHeaderCell("Tie Breaker"));
-            return new PdfPRow(cells.ToArray());
+            var cells = new[]
+            {
+                CreateHeaderCell(string.Empty),
+                CreateHeaderCell("Team Name"),
+                CreateHeaderCell("W"),
+                CreateHeaderCell("L"),
+                CreateHeaderCell("Score"),
+                CreateHeaderCell("Errors"),
+                CreateHeaderCell("Tie Breaker")
+            };
+            return new PdfPRow(cells);
         }
 
         private static void CreateTeamPageTitle(Summary summary, Document document)
@@ -119,15 +125,17 @@ namespace MatchMaker.Reporting
 
         private static PdfPRow CreateTeamRow(Team team, TeamSummary summary, bool showPlace)
         {
-            List<PdfPCell> cells = new List<PdfPCell>();
-            cells.Add(CreateCell(showPlace ? summary.Place.ToString() : string.Empty));
-            cells.Add(CreateCell(team.Name));
-            cells.Add(CreateCell(summary.Wins.ToString()));
-            cells.Add(CreateCell(summary.Losses.ToString()));
-            cells.Add(CreateCell(summary.AverageScore.ToString("N2")));
-            cells.Add(CreateCell(summary.AverageErrors.ToString("N2")));
-            cells.Add(CreateCell(summary.TieBreak.ToString()));
-            return new PdfPRow(cells.ToArray());
+            var cells = new[]
+            {
+                CreateCell(showPlace ? summary.Place.ToString() : string.Empty),
+                CreateCell(team.Name),
+                CreateCell(summary.Wins.ToString()),
+                CreateCell(summary.Losses.ToString()),
+                CreateCell(summary.AverageScore.ToString("N2")),
+                CreateCell(summary.AverageErrors.ToString("N2")),
+                CreateCell(summary.TieBreak.ToString())
+            };
+            return new PdfPRow(cells);
         }
 
         private static void ExportQuizzerResults(Document document, Summary summary)
@@ -138,7 +146,7 @@ namespace MatchMaker.Reporting
 
             var quizzers = summary.QuizzerSummaries.OrderBy(x => x.Value.Place).Select(x => x.Value).ToArray();
 
-            for (int i = 0; i < quizzers.Length; i++)
+            for (var i = 0; i < quizzers.Length; i++)
             {
                 var showPlace = i == 0 || quizzers[i].Place != quizzers[i - 1].Place;
                 table.Rows.Add(CreateQuizzerRow(summary, quizzers[i], showPlace));
@@ -155,7 +163,7 @@ namespace MatchMaker.Reporting
 
             var teams = summary.TeamSummaries.OrderBy(x => x.Value.Place).Select(x => x.Value).ToArray();
 
-            for (int i = 0; i < teams.Length; i++)
+            for (var i = 0; i < teams.Length; i++)
             {
                 var showPlace = i == 0 || teams[i].Place != teams[i - 1].Place;
                 table.Rows.Add(CreateTeamRow(summary.Result.Schedule.Teams[teams[i].TeamId], teams[i], showPlace));

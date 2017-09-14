@@ -12,13 +12,7 @@ namespace MatchMaker.Reporting
         public int Room { get; set; }
         public int Round { get; set; }
 
-        public int ScheduleId
-        {
-            get
-            {
-                return (this.Round * 100) + this.Room;
-            }
-        }
+        public int ScheduleId => (this.Round * 100) + this.Room;
 
         public TeamResult[] TeamResults { get; set; }
 

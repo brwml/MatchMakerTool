@@ -1,9 +1,9 @@
-﻿using QuickGraph;
-using QuickGraph.Algorithms;
-using QuickGraph.Algorithms.Condensation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using QuickGraph;
+using QuickGraph.Algorithms;
+using QuickGraph.Algorithms.Condensation;
 
 namespace MatchMaker.Reporting
 {
@@ -31,9 +31,7 @@ namespace MatchMaker.Reporting
             {
                 var paths = ordered[position].Select(x => condensated.ShortestPathsDijkstra(e => 1, x));
 
-                IEnumerable<CondensedEdge<GraphVertex, GraphEdge, DependencyGraph>> path;
-
-                if (ordered[position + 1].All(x => paths.All(p => p(x, out path))))
+                if (ordered[position + 1].All(x => paths.All(p => p(x, out var path))))
                 {
                     position++;
                 }
@@ -62,7 +60,7 @@ namespace MatchMaker.Reporting
         {
             var graph = new DependencyGraph();
             graph.AddVertexRange(summaries.Select(x => x.TeamId));
-            IEnumerable<MatchResult> matches = GetMatchesForTeamSummaries(summaries);
+            var matches = GetMatchesForTeamSummaries(summaries);
             graph.AddEdgeRange(matches.Select(m => new GraphEdge(m.TeamResults.First(x => x.Place == 1).TeamId, m.TeamResults.First(x => x.Place == 2).TeamId)));
 
             return graph;

@@ -4,10 +4,7 @@ namespace MatchMaker.Reporting
 {
     public class Summary
     {
-        public string Name
-        {
-            get { return this.Result?.Name ?? string.Empty; }
-        }
+        public string Name => this.Result?.Name ?? string.Empty;
 
         public IDictionary<int, QuizzerSummary> QuizzerSummaries { get; set; }
         public Result Result { get; set; }

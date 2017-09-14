@@ -9,23 +9,17 @@ namespace MatchMaker.Reporting
     {
         public IDictionary<int, MatchResult> Matches { get; set; }
 
-        public string Name
-        {
-            get
-            {
-                return this.Schedule?.Name ?? string.Empty;
-            }
-        }
+        public string Name => this.Schedule?.Name ?? string.Empty;
 
         public Schedule Schedule { get; set; }
 
         public static Result FromXml(IEnumerable<XDocument> documents, Schedule schedule)
         {
-            var result = new Result();
-            result.Schedule = schedule;
-            result.Matches = documents?.SelectMany(x => LoadMatches(x))?.ToDictionary(m => m.ScheduleId, m => m)
-                ?? new Dictionary<int, MatchResult>();
-            return result;
+            return new Result
+            {
+                Schedule = schedule,
+                Matches = documents?.SelectMany(x => LoadMatches(x))?.ToDictionary(m => m.ScheduleId, m => m) ?? new Dictionary<int, MatchResult>()
+            };
         }
 
         private static IEnumerable<MatchResult> LoadMatches(XDocument document)

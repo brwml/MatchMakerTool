@@ -24,7 +24,7 @@ namespace MatchMaker.Reporting
 
         public void SetRelativePlaces(List<TeamSummary> summaries, int initial, Func<TeamSummary, TeamSummary, bool> areEqual, TieBreak tieBreak)
         {
-            for (int i = 1; i < summaries.Count; i++)
+            for (var i = 1; i < summaries.Count; i++)
             {
                 if (areEqual(summaries[i], summaries[i - 1]))
                 {

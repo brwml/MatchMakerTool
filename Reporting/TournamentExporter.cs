@@ -1,8 +1,8 @@
-﻿using ClosedXML.Excel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ClosedXML.Excel;
 
 namespace MatchMaker.Reporting
 {
@@ -26,7 +26,7 @@ namespace MatchMaker.Reporting
                     for (var row = 0; row < team.Count; row++)
                     {
                         var quizzer = team[row];
-                        sheet.Cell(row + 1, column + 1).SetValue($"{quizzer.FirstName} {quizzer.LastName} ({quizzer.ChurchId})");
+                        sheet.Cell(row + 1, column + 1).SetValue($"{quizzer.FirstName} {quizzer.LastName}");
                     }
                 }
 
@@ -36,9 +36,9 @@ namespace MatchMaker.Reporting
 
         private static List<List<Quizzer>> DistributeChurches(List<List<Quizzer>> teams)
         {
-            for (int team = 0; team < teams.Count; team++)
+            for (var team = 0; team < teams.Count; team++)
             {
-                for (int member = 0; member < teams[team].Count; member++)
+                for (var member = 0; member < teams[team].Count; member++)
                 {
                     var quizzer = teams[team][member];
                     var churchId = quizzer.ChurchId;
@@ -65,7 +65,7 @@ namespace MatchMaker.Reporting
         {
             var churches = quizzers[fromTeam].Select(x => x.ChurchId);
 
-            for (int team = 0; team < quizzers.Count; team++)
+            for (var team = 0; team < quizzers.Count; team++)
             {
                 var teamQuizzer = Math.Min(quizzers[team].Count - 1, quizzer);
 
@@ -96,16 +96,19 @@ namespace MatchMaker.Reporting
             {
                 var row = (index / numberOfAlternateTeams) % 2;
                 if (row == 0)
+                {
                     return index % numberOfAlternateTeams;
+                }
+
                 return numberOfAlternateTeams - index % numberOfAlternateTeams - 1;
             };
 
-            for (int i = 0; i < numberOfAlternateTeams; i++)
+            for (var i = 0; i < numberOfAlternateTeams; i++)
             {
                 teams.Add(new List<Quizzer>());
             }
 
-            for (int i = 0; i < quizzers.Count; i++)
+            for (var i = 0; i < quizzers.Count; i++)
             {
                 teams[CalculateTeam(i)].Add(quizzers[i]);
             }
