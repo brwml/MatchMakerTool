@@ -7,8 +7,7 @@ namespace MatchMaker.Tool
     {
         private static void Main(string[] args)
         {
-            var options = new Options();
-            Parser.Default.ParseArguments(args, options, ProcessVerbCommand);
+            Parser.Default.ParseArguments(args, new Options(), ProcessVerbCommand);
         }
 
         private static void ProcessVerbCommand(string verb, object options)

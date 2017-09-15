@@ -10,16 +10,16 @@ namespace MatchMaker.Tool
         [Option('t', DefaultValue = 0, HelpText = "The number of teams in the tournament.")]
         public int NumberOfTournamentTeams { get; set; }
 
-        [Option('o', "out", DefaultValue = ".", HelpText = "Output folder for the report.")]
+        [Option('o', DefaultValue = ".", HelpText = "Output folder for the report.")]
         public string OutputFolder { get; set; }
 
-        [Option('f', "format", DefaultValue = OutputFormat.None, HelpText = "Output format for the report. Possible values are Excel and Pdf.")]
+        [Option('f', DefaultValue = OutputFormat.None, HelpText = "Output format for the report. Possible values are Excel and Pdf.")]
         public OutputFormat OutputFormat { get; set; }
 
-        [Option('r', "rank", DefaultValue = "whse", HelpText = "The ranking operations and sequence. Each character represents a ranking operation. Possible operations include 'w' for winning percentage, 'l' for total losses, 'h' for head-to-head competition, 's' for average score, and 'e' for average errors.")]
+        [Option('r', DefaultValue = "whse", HelpText = "The ranking operations and sequence. Each character represents a ranking operation. Possible operations include 'w' for winning percentage, 'l' for total losses, 'h' for head-to-head competition, 's' for average score, and 'e' for average errors.")]
         public string RankingProcedure { get; set; }
 
-        [Option('s', "source", Required = true, HelpText = "Source folder with the score files.")]
+        [Option('s', Required = true, HelpText = "Source folder with the score files.")]
         public string SourceFolder { get; set; }
     }
 }
