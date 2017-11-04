@@ -17,9 +17,14 @@ namespace MatchMaker.Reporting
             return new Round
             {
                 Id = xml.GetAttribute<int>("id"),
-                StartTime = Convert.ToDateTime(xml.Attribute("date").Value + " " + xml.Attribute("time").Value),
+                StartTime = ConvertDateTime(xml.Attribute("date").Value + " " + xml.Attribute("time").Value),
                 Matches = xml.Elements("match").Select(x => MatchSchedule.FromXml(x)).ToDictionary(k => k.Id, v => v)
             };
+        }
+
+        private static DateTime ConvertDateTime(string dateTime)
+        {
+            return DateTime.TryParse(dateTime, out var result) ? result : DateTime.Today;
         }
     }
 }

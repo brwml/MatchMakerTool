@@ -28,6 +28,8 @@ namespace MatchMaker.Reporting
                         var quizzer = team[row];
                         sheet.Cell(row + 1, column + 1).SetValue($"{quizzer.FirstName} {quizzer.LastName}");
                     }
+
+                    sheet.Column(column + 1).Width = 20.0;
                 }
 
                 workbook.SaveAs(fileName);

@@ -7,6 +7,12 @@ namespace MatchMaker.Reporting
 {
     public class ExcelExporter : IExporter
     {
+        private const double QuizzerChurchColumnWidth = 20.0;
+
+        private const double QuizzerNameColumnWidth = 20.0;
+
+        private const double TeamNameColumnWidth = 20.0;
+
         public void Export(Summary summary, string folder)
         {
             using (var workbook = new XLWorkbook())
@@ -49,6 +55,10 @@ namespace MatchMaker.Reporting
             row.Cell(QuizzerColumns.TotalErrors).SetValue(nameof(QuizzerColumns.TotalErrors));
             row.Cell(QuizzerColumns.AverageScore).SetValue(nameof(QuizzerColumns.AverageScore));
             row.Cell(QuizzerColumns.AverageErrors).SetValue(nameof(QuizzerColumns.AverageErrors));
+
+            row.Cell(QuizzerColumns.Name).WorksheetColumn().Width = QuizzerNameColumnWidth;
+            row.Cell(QuizzerColumns.Church).WorksheetColumn().Width = QuizzerChurchColumnWidth;
+            row.Cell(QuizzerColumns.ID).WorksheetColumn().Hide();
         }
 
         private static int FillQuizzerResults(Summary summary, IXLWorksheet worksheet, int row)
@@ -104,6 +114,9 @@ namespace MatchMaker.Reporting
             row.Cell(TeamColumns.Percentage).SetValue(nameof(TeamColumns.Percentage));
             row.Cell(TeamColumns.AverageScore).SetValue(nameof(TeamColumns.AverageScore));
             row.Cell(TeamColumns.AverageErrors).SetValue(nameof(TeamColumns.AverageErrors));
+
+            row.Cell(TeamColumns.Name).WorksheetColumn().Width = TeamNameColumnWidth;
+            row.Cell(TeamColumns.ID).WorksheetColumn().Hide();
         }
 
         private static int FillTeamResults(Summary summary, IXLWorksheet worksheet, int row)
