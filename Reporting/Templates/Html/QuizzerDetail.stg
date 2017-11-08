@@ -1,0 +1,61 @@
+﻿root(summary, quizzer, details) ::= <<
+--NextPart
+Content-Location: q<quizzer.Id>.html
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="utf-8"
+
+\<html>
+	\<head>
+		\<title><summary.Name>: <quizzer.Name>\</title>
+		\<link rel=3D"stylesheet" type=3D"text/css" href=3D"style.css">
+	\</head>
+	\<body>
+		\<a href=3D"index.html"><summary.Name> Home\</a> |
+		\<a href=3D"teams.html">Teams\</a> |
+		\<a href=3D"quizzers.html">Quizzers\</a>
+		\<br/>
+		\<hr/>
+		\<h1><quizzer.FirstName> <quizzer.LastName>\</h1>
+		\<h2>Summary\</h2>
+		\<table>
+			<summaryRows(quizzer)>
+		\</table>
+		\<h2>Details\</h2>
+		\<table>
+			\<tr>
+				\<th>Round\</th>
+				\<th>Opponent\</th>
+				\<th>Score\</th>
+				\<th>Errors\</th>
+			\</tr>
+			<details:detailRows()>
+		\</table>
+	\</body>
+\</html>
+
+
+>>
+
+summaryRows(summary) ::= <<
+\<tr>
+	\<td>\<b>Place\</b>\</td>
+	\<td><summary.Place>\</td>
+\</tr>
+\<tr>
+	\<td>\<b>Average Score\</b>\</td>
+	\<td><summary.AverageScore; format="F2">\</td>
+\</tr>
+\<tr>
+	\<td>\<b>Average Errors\</b>\</td>
+	\<td><summary.AverageErrors; format="F2">\</td>
+\</tr>
+>>
+
+detailRows(detail) ::= <<
+\<tr>
+	\<td><detail.Round>\</td>
+	\<td>\<a href=3D"t<detail.OpponentId>.html"><detail.Opponent>\</a>\</td>
+	\<td><detail.Score>\</td>
+	\<td><detail.Errors>\</td>
+\</tr>
+>>

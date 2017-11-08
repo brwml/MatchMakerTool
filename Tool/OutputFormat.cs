@@ -7,6 +7,7 @@ namespace MatchMaker.Tool
     {
         None,
         Excel,
+        Html,
         Pdf
     }
 }

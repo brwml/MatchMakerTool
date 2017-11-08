@@ -13,7 +13,7 @@ namespace MatchMaker.Tool
         [Option('o', DefaultValue = ".", HelpText = "Output folder for the report.")]
         public string OutputFolder { get; set; }
 
-        [Option('f', DefaultValue = OutputFormat.None, HelpText = "Output format for the report. Possible values are Excel and Pdf.")]
+        [Option('f', DefaultValue = OutputFormat.None, HelpText = "Output format for the report. Possible values are Excel, Html, and Pdf.")]
         public OutputFormat OutputFormat { get; set; }
 
         [Option('r', DefaultValue = "whse", HelpText = "The ranking operations and sequence. Each character represents a ranking operation. Possible operations include 'w' for winning percentage, 'l' for total losses, 'h' for head-to-head competition, 's' for average score, and 'e' for average errors.")]

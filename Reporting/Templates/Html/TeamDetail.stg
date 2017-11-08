@@ -1,0 +1,94 @@
+﻿root(summary, team, details, quizzers) ::= <<
+--NextPart
+Content-Location: t<team.TeamId>.html
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="utf-8"
+
+\<html>
+	\<head>
+		\<title><summary.Name>: <team.Name> Team Details\</title>
+		\<link rel=3D"stylesheet" type=3D"text/css" href=3D"style.css">
+	\</head>
+	\<body>
+		\<a href=3D"index.html"><summary.Name> Home\</a> |
+		\<a href=3D"teams.html">Teams\</a> |
+		\<a href=3D"quizzers.html">Quizzers\</a>
+		\<br/>
+		\<hr/>
+		\<h1><team.Name> Team Details\</h1>
+		\<h2>Summary\</h2>
+		\<table>
+			<summaryRows(team)>
+		\</table>
+		\<h2>Details\</h2>
+		\<table>
+			\<tr>
+				\<th>Round\</th>
+				\<th>Opponent\</th>
+				\<th>Their Score\</th>
+				\<th>Our Score\</th>
+				\<th>Win/Loss\</th>
+			\</tr>
+			<details:detailRows()>
+		\</table>
+		\<h2>Quizzers\</h2>
+		\<table>
+			\<tr>
+				\<th>Place\</th>
+				\<th>Name\</th>
+				\<th>Average Score\</th>
+				\<th>Average Errors\</th>
+			\</tr>
+			<quizzers:quizzerRows()>
+		\</table>
+	\</body>
+\</html>
+
+
+>>
+
+quizzerRows(quizzer) ::= <<
+\<tr>
+	\<td><quizzer.Place>\</td>
+	\<td>\<a href=3D"q<quizzer.Id>.html"><quizzer.Name>\</a>\</td>
+	\<td><quizzer.AverageScore; format="F2">\</td>
+	\<td><quizzer.AverageErrors; format="F2">\</td>
+\</tr>
+>>
+
+summaryRows(summary) ::= <<
+\<tr>
+	\<td>\<b>Place\</b>\</td>
+	\<td><summary.Place>\</td>
+\</tr>
+\<tr>
+	\<td>\<b>Wins\</b>\</td>
+	\<td><summary.Wins>\</td>
+\</tr>
+\<tr>
+	\<td>\<b>Losses\</b>\</td>
+	\<td><summary.Losses>\</td>
+\</tr>
+\<tr>
+	\<td>\<b>Percentage\</b>\</td>
+	\<td><summary.WinPercentage; format="F3">\</td>
+\</tr>
+\<tr>
+	\<td>\<b>Average Score\</b>\</td>
+	\<td><summary.AverageScore; format="F2">\</td>
+\</tr>
+\<tr>
+	\<td>\<b>Average Errors\</b>\</td>
+	\<td><summary.AverageErrors; format="F2">\</td>
+\</tr>
+>>
+
+detailRows(detail) ::= <<
+\<tr>
+	\<td><detail.Round>\</td>
+	\<td>\<a href=3D"t<detail.OpponentId>.html"><detail.Opponent>\</a>\</td>
+	\<td><detail.OpponentScore>\</td>
+	\<td><detail.Score>\</td>
+	\<td><if (detail.Win)>Win<else>Loss<endif>\</td>
+\</tr>
+>>

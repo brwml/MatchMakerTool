@@ -1,0 +1,45 @@
+﻿root(name, teams) ::= <<
+--NextPart
+Content-Location: teams.html
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="utf-8"
+
+\<html>
+	\<head>
+		\<title><name>: Team Summary\</title>
+		\<link rel=3D"stylesheet" type=3D"text/css" href=3D"style.css">
+	\</head>
+	\<body>
+		\<a href=3D"index.html"><name> Home\</a>
+		\<br/>
+		\<hr/>
+		\<h1>Team Summary\</h1>
+		\<table>
+			\<tr>
+				\<th>Place\</th>
+				\<th>Team\</th>
+				\<th>Wins\</th>
+				\<th>Losses\</th>
+				\<th>Percentage\</th>
+				\<th>Score\</th>
+				\<th>Errors\</th>
+			\</tr>
+			<teams:rows()>
+		\</table>
+	\</body>
+\</html>
+
+
+>>
+
+rows(team) ::= <<
+\<tr>
+	\<td><team.Place>\</td>
+	\<td>\<a href=3D"t<team.TeamId>.html"><team.Name>\</a>\</td>
+	\<td><team.Wins>\</td>
+	\<td><team.Losses>\</td>
+	\<td><team.WinPercentage; format="F3">\</td>
+	\<td><team.AverageScore; format="F2">\</td>
+	\<td><team.AverageErrors; format="F2">\</td>
+\</tr>
+>>

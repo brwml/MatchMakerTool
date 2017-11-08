@@ -57,6 +57,11 @@ namespace MatchMaker.Tool
                 list.Add(new ExcelExporter());
             }
 
+            if (format.HasFlag(OutputFormat.Html))
+            {
+                list.Add(new HtmlExporter());
+            }
+
             if (format.HasFlag(OutputFormat.Pdf))
             {
                 list.Add(new PdfExporter());

@@ -1,0 +1,16 @@
+﻿--NextPart
+Content-Location: style.css
+Content-Type: text/css; charset="utf-8"
+
+body, table {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1, h2, h3 {
+    color: navy;
+}
+
+td, th {
+    padding-right: 2em;
+}
+

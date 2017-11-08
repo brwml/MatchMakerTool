@@ -70,18 +70,20 @@ namespace MatchMaker.Reporting
             {
                 var quizzer = schedule.Quizzers[quizzerSummary.QuizzerId];
                 var church = schedule.Churches.Values.FirstOrDefault(c => c.Id == quizzer.ChurchId);
-
-                FillQuizzerRow(worksheet.Row(row++), quizzer, church, rookieYear, quizzerSummary);
+                var team = schedule.Teams.Values.FirstOrDefault(t => t.Id == quizzer.TeamId);
+                
+                FillQuizzerRow(worksheet.Row(row++), quizzer, team, church, rookieYear, quizzerSummary);
             }
 
             return row;
         }
 
-        private static void FillQuizzerRow(IXLRow row, Quizzer quizzer, Church church, int rookieYear, QuizzerSummary summary)
+        private static void FillQuizzerRow(IXLRow row, Quizzer quizzer, Team team, Church church, int rookieYear, QuizzerSummary summary)
         {
             row.Cell(QuizzerColumns.Place).SetValue(summary.Place);
             row.Cell(QuizzerColumns.ID).SetValue(quizzer.Id);
             row.Cell(QuizzerColumns.Name).SetValue($"{quizzer.FirstName} {quizzer.LastName}");
+            row.Cell(QuizzerColumns.Team).SetValue(team?.Name ?? string.Empty);
             row.Cell(QuizzerColumns.Church).SetValue(church?.Name ?? string.Empty);
             row.Cell(QuizzerColumns.IsRookie).SetValue(rookieYear == quizzer.RookieYear ? "R" : string.Empty);
 
@@ -165,16 +167,17 @@ namespace MatchMaker.Reporting
 
         private static class QuizzerColumns
         {
-            public const int AverageErrors = 10;
-            public const int AverageScore = 9;
-            public const int Church = 4;
+            public const int AverageErrors = 11;
+            public const int AverageScore = 10;
+            public const int Church = 5;
             public const int ID = 2;
-            public const int IsRookie = 5;
+            public const int IsRookie = 6;
             public const int Name = 3;
             public const int Place = 1;
-            public const int TotalErrors = 8;
-            public const int TotalRounds = 6;
-            public const int TotalScore = 7;
+            public const int Team = 4;
+            public const int TotalErrors = 9;
+            public const int TotalRounds = 7;
+            public const int TotalScore = 8;
         }
 
         private static class TeamColumns
