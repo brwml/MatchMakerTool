@@ -71,7 +71,7 @@ namespace MatchMaker.Reporting
                 var quizzer = schedule.Quizzers[quizzerSummary.QuizzerId];
                 var church = schedule.Churches.Values.FirstOrDefault(c => c.Id == quizzer.ChurchId);
                 var team = schedule.Teams.Values.FirstOrDefault(t => t.Id == quizzer.TeamId);
-                
+
                 FillQuizzerRow(worksheet.Row(row++), quizzer, team, church, rookieYear, quizzerSummary);
             }
 

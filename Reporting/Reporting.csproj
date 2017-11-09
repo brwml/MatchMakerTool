@@ -101,6 +101,7 @@
     <Compile Include="ExcelExporter.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Gender.cs" />
+    <Compile Include="GumChallengeExporter.cs" />
     <Compile Include="HeadToHeadTeamRankingPolicy.cs" />
     <Compile Include="HtmlExporter.cs" />
     <Compile Include="IExporter.cs" />

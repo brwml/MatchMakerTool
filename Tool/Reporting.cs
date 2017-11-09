@@ -67,6 +67,11 @@ namespace MatchMaker.Tool
                 list.Add(new PdfExporter());
             }
 
+            if (format.HasFlag(OutputFormat.Gum))
+            {
+                list.Add(new GumChallengeExporter());
+            }
+
             return list;
         }
 
