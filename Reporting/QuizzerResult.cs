@@ -1,13 +1,18 @@
-﻿using System.Xml.Linq;
+﻿using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 namespace MatchMaker.Reporting
 {
+    [DataContract]
     public class QuizzerResult
     {
+        [DataMember]
         public int Errors { get; set; }
 
+        [DataMember]
         public int QuizzerId { get; set; }
 
+        [DataMember]
         public int Score { get; set; }
 
         public static QuizzerResult FromXml(XElement xml)

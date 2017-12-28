@@ -50,7 +50,7 @@ namespace MatchMaker.Tool
 
         private static IEnumerable<IExporter> GetExports(OutputFormat format)
         {
-            var list = new List<IExporter>();
+            var list = new List<IExporter> { new DefaultExporter() };
 
             if (format.HasFlag(OutputFormat.Excel))
             {

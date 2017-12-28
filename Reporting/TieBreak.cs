@@ -1,10 +1,14 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
 
 namespace MatchMaker.Reporting
 {
+    [DataContract]
     public class TieBreak
     {
         public static TieBreak None = new NullTieBreak();
+
+        [DataMember]
         public TieBreakReason Reason { get; set; }
 
         public override string ToString()

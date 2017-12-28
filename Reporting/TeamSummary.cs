@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace MatchMaker.Reporting
 {
+    [DataContract]
     public class TeamSummary
     {
         public TeamSummary()
@@ -12,22 +14,37 @@ namespace MatchMaker.Reporting
             this.Place = 1;
         }
 
+        [IgnoreDataMember]
         public decimal AverageErrors => Convert.ToDecimal(this.TotalErrors) / Convert.ToDecimal(this.TotalRounds);
 
+        [IgnoreDataMember]
         public decimal AverageScore => Convert.ToDecimal(this.TotalScore) / Convert.ToDecimal(this.TotalRounds);
 
+        [DataMember]
         public int Losses { get; set; }
+
+        [DataMember]
         public int Place { get; set; }
+
+        [DataMember]
         public int TeamId { get; set; }
+
+        [DataMember]
         public TieBreak TieBreak { get; set; }
+
+        [DataMember]
         public int TotalErrors { get; set; }
 
+        [IgnoreDataMember]
         public int TotalRounds => this.Wins + this.Losses;
 
+        [DataMember]
         public int TotalScore { get; set; }
 
+        [IgnoreDataMember]
         public decimal WinPercentage => Convert.ToDecimal(this.Wins) / Convert.ToDecimal(this.TotalRounds);
 
+        [DataMember]
         public int Wins { get; set; }
 
         public static IDictionary<int, TeamSummary> FromResult(Result result, TeamRankingPolicy[] policies)

@@ -1,16 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
 namespace MatchMaker.Reporting
 {
+    [DataContract]
     public class Schedule
     {
+        [DataMember]
         public IDictionary<int, Church> Churches { get; set; }
+
+        [DataMember]
         public string Name { get; set; }
+
+        [DataMember]
         public IDictionary<int, Quizzer> Quizzers { get; set; }
+
+        [DataMember]
         public IDictionary<int, Round> Rounds { get; set; }
+
+        [DataMember]
         public IDictionary<int, Team> Teams { get; set; }
 
         public static Schedule FromXml(XDocument document, string name)

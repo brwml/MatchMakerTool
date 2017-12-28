@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace MatchMaker.Reporting
 {
+    [DataContract]
     public class QuizzerSummary
     {
         public QuizzerSummary()
@@ -12,14 +14,25 @@ namespace MatchMaker.Reporting
             this.TotalRounds = 1;
         }
 
+        [IgnoreDataMember]
         public decimal AverageErrors => Convert.ToDecimal(this.TotalErrors) / Convert.ToDecimal(this.TotalRounds);
 
+        [IgnoreDataMember]
         public decimal AverageScore => Convert.ToDecimal(this.TotalScore) / Convert.ToDecimal(this.TotalRounds);
 
+        [DataMember]
         public int Place { get; set; }
+
+        [DataMember]
         public int QuizzerId { get; set; }
+
+        [DataMember]
         public int TotalErrors { get; set; }
+
+        [DataMember]
         public int TotalRounds { get; set; }
+
+        [DataMember]
         public int TotalScore { get; set; }
 
         public static IDictionary<int, QuizzerSummary> FromResult(Result result)

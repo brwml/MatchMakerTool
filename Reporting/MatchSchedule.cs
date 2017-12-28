@@ -1,13 +1,18 @@
-﻿using System.Xml.Linq;
+﻿using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 namespace MatchMaker.Reporting
 {
+    [DataContract]
     public class MatchSchedule
     {
+        [DataMember]
         public int Id { get; set; }
 
+        [DataMember]
         public int Room { get; set; }
 
+        [DataMember]
         public int[] Teams { get; set; }
 
         internal static MatchSchedule FromXml(XElement x)

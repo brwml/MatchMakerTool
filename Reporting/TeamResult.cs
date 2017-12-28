@@ -1,15 +1,21 @@
-﻿using System.Xml.Linq;
+﻿using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 namespace MatchMaker.Reporting
 {
+    [DataContract]
     public class TeamResult
     {
+        [DataMember]
         public int Errors { get; set; }
 
+        [DataMember]
         public int Place { get; set; }
 
+        [DataMember]
         public int Score { get; set; }
 
+        [DataMember]
         public int TeamId { get; set; }
 
         public static TeamResult FromXml(XElement xml)

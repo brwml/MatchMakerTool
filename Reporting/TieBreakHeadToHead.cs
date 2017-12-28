@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace MatchMaker.Reporting
 {
+    [DataContract]
     public class TieBreakHeadToHead : TieBreak
     {
         public TieBreakHeadToHead(IEnumerable<MatchResult> results, IDictionary<int, Team> teams)
@@ -12,7 +14,10 @@ namespace MatchMaker.Reporting
             this.Teams = teams;
         }
 
+        [IgnoreDataMember]
         public IDictionary<int, Team> Teams { get; set; }
+
+        [IgnoreDataMember]
         private IEnumerable<MatchResult> Results { get; set; }
 
         public override string ToString()
