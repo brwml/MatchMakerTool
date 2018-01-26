@@ -31,7 +31,7 @@ namespace MatchMaker.Reporting
             CreateQuizzerPageTitle(document);
             ExportQuizzerResults(document, summary);
 
-            ExportTieBreakers(fileName, summary);
+            ExportTieBreakers(folder, summary);
 
             document.Close();
         }
@@ -180,11 +180,14 @@ namespace MatchMaker.Reporting
             return document;
         }
 
-        private void ExportTieBreakers(string fileName, Summary summary)
+        private void ExportTieBreakers(string folder, Summary summary)
         {
             var groups = summary.TeamSummaries.Select(x => x.Value).GroupBy(x => x.Losses).Select(x => x.Select(y => y));
 
-            var document = OpenDocument(AppendToFileName(fileName, "_TieBreakers_HTH"));
+            var document = OpenDocument(Path.Combine(folder, $"{summary.Name}_TieBreakers_HTH.pdf"));
+            var dotPath = Path.Combine(folder, "dot");
+
+            Directory.CreateDirectory(dotPath);
 
             foreach (var group in groups)
             {
@@ -207,14 +210,22 @@ namespace MatchMaker.Reporting
                     var command = new RegisterLayoutPluginCommand(process, start);
                     var wrapper = new GraphGeneration(start, process, command);
 
-                    var bytes = wrapper.GenerateGraph(dot, Enums.GraphReturnType.Png);
+                    if (File.Exists(wrapper.GraphvizPath))
+                    {
+                        var bytes = wrapper.GenerateGraph(dot, Enums.GraphReturnType.Png);
 
-                    document.NewPage();
-                    document.Add(Image.GetInstance(bytes));
+                        document.NewPage();
+                        document.Add(Image.GetInstance(bytes));
+                    }
+
+                    File.WriteAllText(Path.Combine(dotPath, $"HTH_{string.Join("-", graph.Vertices)}.dot"), dot);
                 }
             }
 
-            document.Close();
+            if (document.PageNumber > 0)
+            {
+                document.Close();
+            }
         }
     }
 }
