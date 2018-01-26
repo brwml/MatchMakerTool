@@ -126,6 +126,7 @@
     <Compile Include="ScoreQuizzerRankingPolicy.cs" />
     <Compile Include="ScoreTeamRankingPolicy.cs" />
     <Compile Include="Summary.cs" />
+    <Compile Include="SummaryExporter.cs" />
     <Compile Include="Team.cs" />
     <Compile Include="TeamRankingPolicy.cs" />
     <Compile Include="TeamResult.cs" />

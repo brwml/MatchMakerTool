@@ -94,7 +94,7 @@ namespace MatchMaker.Reporting
         {
             var teams = new List<List<Quizzer>>();
 
-            Func<int, int> CalculateTeam = (index) =>
+            int CalculateTeam(int index)
             {
                 var row = (index / numberOfAlternateTeams) % 2;
                 if (row == 0)
@@ -103,7 +103,7 @@ namespace MatchMaker.Reporting
                 }
 
                 return numberOfAlternateTeams - index % numberOfAlternateTeams - 1;
-            };
+            }
 
             for (var i = 0; i < numberOfAlternateTeams; i++)
             {

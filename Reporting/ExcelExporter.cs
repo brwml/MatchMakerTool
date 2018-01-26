@@ -23,9 +23,9 @@ namespace MatchMaker.Reporting
             }
         }
 
-        private static void ExportQuizzerResults(XLWorkbook workbook, Summary summary)
+        protected static void ExportQuizzerResults(XLWorkbook workbook, Summary summary)
         {
-            var worksheet = workbook.AddWorksheet("Quizzer Results");
+            var worksheet = workbook.AddWorksheet($"{summary.Name} Quizzer Results".Substring(0, 31));
 
             var row = 1;
 
@@ -35,7 +35,7 @@ namespace MatchMaker.Reporting
 
         private static void ExportTeamResults(XLWorkbook workbook, Summary summary)
         {
-            var worksheet = workbook.AddWorksheet("Team Results");
+            var worksheet = workbook.AddWorksheet($"{summary.Name} Team Results".Substring(0, 31));
 
             var row = 1;
 

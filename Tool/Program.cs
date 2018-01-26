@@ -16,6 +16,10 @@ namespace MatchMaker.Tool
             {
                 Reporting.Process((ReportingOptions)options);
             }
+            else if (verb.Equals(Options.SummaryOption, StringComparison.OrdinalIgnoreCase))
+            {
+                Reporting.Process((SummaryOptions)options);
+            }
         }
     }
 }

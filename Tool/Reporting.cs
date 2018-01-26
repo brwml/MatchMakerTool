@@ -11,16 +11,17 @@ namespace MatchMaker.Tool
 {
     internal static class Reporting
     {
-        public static void Process(ReportingOptions options)
+        internal static void Process(ReportingOptions options)
         {
             if (options == null)
             {
                 return;
             }
 
-            var schedule = LoadScheduleFromFolder(options.SourceFolder);
-            var result = LoadResultsFromFolder(options.SourceFolder, schedule);
-            var summary = Summary.FromResult(result, LoadRankingPolicies(options.RankingProcedure));
+            var sourceFolder = options.SourceFolder;
+            var policies = LoadRankingPolicies(options.RankingProcedure);
+
+            var summary = CreateSummary(sourceFolder, policies);
 
             Parallel.ForEach(GetExports(options.OutputFormat), exporter =>
             {
@@ -31,6 +32,25 @@ namespace MatchMaker.Tool
             {
                 TournamentExporter.Create(summary, options.NumberOfTournamentTeams, options.NumberOfAlternateTeams, options.OutputFolder);
             }
+        }
+
+        internal static void Process(SummaryOptions options)
+        {
+            if (options == null)
+            {
+                return;
+            }
+
+            var policies = LoadRankingPolicies("wse");
+            var summaries = options.InputPaths.Select(x => CreateSummary(x, policies));
+            SummaryExporter.Export(summaries, options.OutputPath);
+        }
+
+        private static Summary CreateSummary(string sourceFolder, TeamRankingPolicy[] policies)
+        {
+            var schedule = LoadScheduleFromFolder(sourceFolder);
+            var result = LoadResultsFromFolder(sourceFolder, schedule);
+            return Summary.FromResult(result, policies);
         }
 
         private static IEnumerable<FileInfo> FindResultFiles(string sourceFolder)
