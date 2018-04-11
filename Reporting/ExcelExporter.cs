@@ -82,7 +82,7 @@ namespace MatchMaker.Reporting
         {
             row.Cell(QuizzerColumns.Place).SetValue(summary.Place);
             row.Cell(QuizzerColumns.ID).SetValue(quizzer.Id);
-            row.Cell(QuizzerColumns.Name).SetValue($"{quizzer.FirstName} {quizzer.LastName}");
+            row.Cell(QuizzerColumns.Name).SetValue(FormattableString.Invariant($"{quizzer.FirstName} {quizzer.LastName}"));
             row.Cell(QuizzerColumns.Team).SetValue(team?.Name ?? string.Empty);
             row.Cell(QuizzerColumns.Church).SetValue(church?.Name ?? string.Empty);
             row.Cell(QuizzerColumns.IsRookie).SetValue(rookieYear == quizzer.RookieYear ? "R" : string.Empty);
@@ -97,9 +97,9 @@ namespace MatchMaker.Reporting
             cellScore.SetValue(summary.TotalScore);
             cellErrors.SetValue(summary.TotalErrors);
 
-            cellAverageScore.SetFormulaA1($"={cellScore.Address} / {cellRounds.Address}");
+            cellAverageScore.SetFormulaA1(FormattableString.Invariant($"={cellScore.Address} / {cellRounds.Address}"));
             cellAverageScore.Style.NumberFormat.NumberFormatId = 2;
-            cellAverageErrors.SetFormulaA1($"{cellErrors.Address} / {cellRounds.Address}");
+            cellAverageErrors.SetFormulaA1(FormattableString.Invariant($"{cellErrors.Address} / {cellRounds.Address}"));
             cellAverageErrors.Style.NumberFormat.NumberFormatId = 2;
         }
 
@@ -150,17 +150,17 @@ namespace MatchMaker.Reporting
             cellLosses.SetValue(summary.Losses);
             cellScore.SetValue(summary.TotalScore);
             cellErrors.SetValue(summary.TotalErrors);
-            cellPercentage.SetFormulaA1($"={cellWins.Address} / ({cellWins.Address} + {cellLosses.Address})");
+            cellPercentage.SetFormulaA1(FormattableString.Invariant($"={cellWins.Address} / ({cellWins.Address} + {cellLosses.Address})"));
             cellPercentage.Style.NumberFormat.NumberFormatId = 10;
-            cellAverageScore.SetFormulaA1($"={cellScore.Address} / ({cellWins.Address} + {cellLosses.Address})");
+            cellAverageScore.SetFormulaA1(FormattableString.Invariant($"={cellScore.Address} / ({cellWins.Address} + {cellLosses.Address})"));
             cellAverageScore.Style.NumberFormat.NumberFormatId = 2;
-            cellAverageErrors.SetFormulaA1($"={cellErrors.Address} / ({cellWins.Address} + {cellLosses.Address})");
+            cellAverageErrors.SetFormulaA1(FormattableString.Invariant($"={cellErrors.Address} / ({cellWins.Address} + {cellLosses.Address})"));
             cellAverageErrors.Style.NumberFormat.NumberFormatId = 2;
         }
 
         private static void SaveFile(XLWorkbook workbook, Summary summary, string folder)
         {
-            var fileName = Path.Combine(folder, $"{summary.Name}.xlsx");
+            var fileName = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.xlsx"));
             File.Delete(fileName);
             workbook.SaveAs(fileName);
         }

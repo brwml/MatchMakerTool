@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 
 namespace MatchMaker.Reporting
@@ -31,7 +32,7 @@ namespace MatchMaker.Reporting
 
             for (var i = 0; i < teams.Length - 1; i += 2)
             {
-                File.AppendAllText(Path.Combine(folder, "gum.txt"), $"{teams[i].Name} | {teams[i + 1].Name}\r\n");
+                File.AppendAllText(Path.Combine(folder, "gum.txt"), FormattableString.Invariant($"{teams[i].Name} | {teams[i + 1].Name}\r\n"));
             }
         }
 
@@ -39,7 +40,7 @@ namespace MatchMaker.Reporting
         {
             return summary.Result.Schedule.Quizzers
                 .Where(x => x.Value.Id == quizzer.QuizzerId)
-                .Select(x => $"{x.Value.FirstName} {x.Value.LastName}")
+                .Select(x => FormattableString.Invariant($"{x.Value.FirstName} {x.Value.LastName}"))
                 .First();
         }
 

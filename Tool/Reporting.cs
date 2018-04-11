@@ -11,13 +11,8 @@ namespace MatchMaker.Tool
 {
     internal static class Reporting
     {
-        internal static void Process(ReportingOptions options)
+        internal static bool Process(ReportingOptions options)
         {
-            if (options == null)
-            {
-                return;
-            }
-
             var sourceFolder = options.SourceFolder;
             var policies = LoadRankingPolicies(options.RankingProcedure);
 
@@ -32,18 +27,17 @@ namespace MatchMaker.Tool
             {
                 TournamentExporter.Create(summary, options.NumberOfTournamentTeams, options.NumberOfAlternateTeams, options.OutputFolder);
             }
+
+            return true;
         }
 
-        internal static void Process(SummaryOptions options)
+        internal static bool Process(SummaryOptions options)
         {
-            if (options == null)
-            {
-                return;
-            }
-
-            var policies = LoadRankingPolicies("wse");
+            var policies = LoadRankingPolicies(ReportingOptions.DefaultRankingProcedure);
             var summaries = options.InputPaths.Select(x => CreateSummary(x, policies));
             SummaryExporter.Export(summaries, options.OutputPath);
+
+            return true;
         }
 
         private static Summary CreateSummary(string sourceFolder, TeamRankingPolicy[] policies)

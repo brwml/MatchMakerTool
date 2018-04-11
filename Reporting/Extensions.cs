@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Xml.Linq;
 
 namespace MatchMaker.Reporting
@@ -7,12 +8,22 @@ namespace MatchMaker.Reporting
     {
         public static T GetAttribute<T>(this XElement xml, string name)
         {
-            return (T)Convert.ChangeType(xml.Attribute(name).Value, typeof(T));
+            if (xml == null)
+            {
+                return default(T);
+            }
+
+            return (T)Convert.ChangeType(xml.Attribute(name).Value, typeof(T), CultureInfo.InvariantCulture);
         }
 
-        public static T GetElement<T>(this XElement xml, string name)
+        public static T GetElement<T>(this XContainer xml, string name)
         {
-            return (T)Convert.ChangeType(xml.Element(name).Value, typeof(T));
+            if (xml == null)
+            {
+                return default(T);
+            }
+
+            return (T)Convert.ChangeType(xml.Element(name).Value, typeof(T), CultureInfo.InvariantCulture);
         }
     }
 }

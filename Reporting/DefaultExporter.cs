@@ -7,7 +7,8 @@ namespace MatchMaker.Reporting
     {
         public void Export(Summary summary, string folder)
         {
-            var path = Path.Combine(folder, summary.Name + ".summary");
+            var name = summary.Name;
+            var path = Path.Combine(folder, name + ".summary");
             File.WriteAllText(path, JsonConvert.SerializeObject(summary, Formatting.Indented));
         }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using CommandLine;
+﻿using CommandLine;
 
 namespace MatchMaker.Tool
 {
@@ -7,19 +6,10 @@ namespace MatchMaker.Tool
     {
         private static void Main(string[] args)
         {
-            Parser.Default.ParseArguments(args, new Options(), ProcessVerbCommand);
-        }
-
-        private static void ProcessVerbCommand(string verb, object options)
-        {
-            if (verb.Equals(Options.ReportingOption, StringComparison.OrdinalIgnoreCase))
-            {
-                Reporting.Process((ReportingOptions)options);
-            }
-            else if (verb.Equals(Options.SummaryOption, StringComparison.OrdinalIgnoreCase))
-            {
-                Reporting.Process((SummaryOptions)options);
-            }
+            Parser.Default.ParseArguments<ReportingOptions, SummaryOptions>(args).MapResult(
+                (ReportingOptions options) => Reporting.Process(options),
+                (SummaryOptions options) => Reporting.Process(options),
+                error => false);
         }
     }
 }

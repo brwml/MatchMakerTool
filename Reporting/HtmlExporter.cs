@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -22,7 +23,7 @@ namespace MatchMaker.Reporting
         public void Export(Summary summary, string folder)
         {
             var results = CreateResults(summary);
-            File.WriteAllText(Path.Combine(folder, $"{summary.Name}.mhtml"), results);
+            File.WriteAllText(Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.mhtml")), results);
         }
 
         private static string CreateResults(Summary summary)
@@ -47,7 +48,7 @@ namespace MatchMaker.Reporting
 
         private static string FormatQuizzerName(Quizzer quizzer)
         {
-            return $"{quizzer.LastName}, {quizzer.FirstName}";
+            return FormattableString.Invariant($"{quizzer.LastName}, {quizzer.FirstName}");
         }
 
         private static int GetOpponentId(MatchResult result, int teamId)
