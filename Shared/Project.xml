@@ -2,9 +2,8 @@
     <PropertyGroup>
         <AssemblyTitle>Tool for ACME Quiz MatchMaker</AssemblyTitle>
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-        <Version>1.1</Version>
+        <Version>1.2.1807.11</Version>
         <Authors>Bryan Wilhelm</Authors>
-        <Company />
         <Product>Tool for ACME Quiz MatchMaker</Product>
         <Description>A command line tool for generating reports from ACME Quiz MatchMaker results XML files.</Description>
         <Copyright>Copyright (c) 2016-2018 Bryan Wilhelm</Copyright>
