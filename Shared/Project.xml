@@ -1,0 +1,16 @@
+<Project>
+    <PropertyGroup>
+        <AssemblyTitle>Tool for ACME Quiz MatchMaker</AssemblyTitle>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <Version>1.1</Version>
+        <Authors>Bryan Wilhelm</Authors>
+        <Company />
+        <Product>Tool for ACME Quiz MatchMaker</Product>
+        <Description>A command line tool for generating reports from ACME Quiz MatchMaker results XML files.</Description>
+        <Copyright>Copyright (c) 2016-2018 Bryan Wilhelm</Copyright>
+        <PackageProjectUrl>https://github.com/brwml/MatchMakerTool</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/brwml/MatchMakerTool</RepositoryUrl>
+        <RepositoryType>GitHub</RepositoryType>
+        <PackageLicenseUrl>https://github.com/brwml/MatchMakerTool/blob/master/LICENSE</PackageLicenseUrl>
+    </PropertyGroup>
+</Project>

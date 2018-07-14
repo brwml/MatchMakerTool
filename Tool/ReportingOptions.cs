@@ -2,11 +2,10 @@
 
 namespace MatchMaker.Tool
 {
-    [Verb(OptionName, HelpText = "Generate a report from the results XML files")]
+    [Verb("reporting", HelpText = "Generate a report from the results XML files")]
     internal class ReportingOptions
     {
         public const string DefaultRankingProcedure = "whse";
-        public const string OptionName = "reporting";
 
         [Option('m', Default = 0, HelpText = "The number of alternate tournament teams to create.")]
         public int NumberOfAlternateTeams { get; set; }
