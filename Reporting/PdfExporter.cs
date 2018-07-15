@@ -210,7 +210,7 @@ namespace MatchMaker.Reporting
                     var command = new RegisterLayoutPluginCommand(process, start);
                     var wrapper = new GraphGeneration(start, process, command);
 
-                    if (File.Exists(wrapper.GraphvizPath))
+                    if (Directory.Exists(wrapper.GraphvizPath))
                     {
                         var bytes = wrapper.GenerateGraph(dot, Enums.GraphReturnType.Png);
 
@@ -222,10 +222,7 @@ namespace MatchMaker.Reporting
                 }
             }
 
-            if (document.PageNumber > 0)
-            {
-                document.Close();
-            }
+            document.CloseDocument();
         }
     }
 }
