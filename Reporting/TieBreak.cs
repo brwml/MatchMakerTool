@@ -9,7 +9,10 @@ namespace MatchMaker.Reporting
         public static TieBreak None = new NullTieBreak();
 
         [DataMember]
-        public TieBreakReason Reason { get; set; }
+        public TieBreakReason Reason
+        {
+            get; set;
+        }
 
         public override string ToString()
         {

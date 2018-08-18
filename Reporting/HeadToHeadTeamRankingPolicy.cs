@@ -60,7 +60,7 @@ namespace MatchMaker.Reporting
         {
             var graph = new DependencyGraph();
             graph.AddVertexRange(summaries.Select(x => x.TeamId));
-            var matches = GetMatchesForTeamSummaries(summaries);
+            var matches = this.GetMatchesForTeamSummaries(summaries);
             graph.AddEdgeRange(matches.Select(m => new GraphEdge(m.TeamResults.First(x => x.Place == 1).TeamId, m.TeamResults.First(x => x.Place == 2).TeamId)));
 
             return graph;
@@ -68,12 +68,12 @@ namespace MatchMaker.Reporting
 
         private void RankGroupInternal(IEnumerable<TeamSummary> summaries, int initial)
         {
-            var graph = InitializeDependencyGraph(summaries);
+            var graph = this.InitializeDependencyGraph(summaries);
             var condensated = CondensateGraph(graph);
             var ordered = SortCondensatedGraph(condensated);
             ordered = ResolveIndeterminantOrderings(condensated, ordered);
 
-            SetRelativePlaces(summaries, initial, ordered);
+            this.SetRelativePlaces(summaries, initial, ordered);
         }
 
         private void SetRelativePlaces(IEnumerable<TeamSummary> summaries, int initial, List<List<DependencyGraph>> ordered)

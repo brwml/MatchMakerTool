@@ -31,7 +31,7 @@ namespace MatchMaker.Reporting
             CreateQuizzerPageTitle(document);
             ExportQuizzerResults(document, summary);
 
-            ExportTieBreakers(folder, summary);
+            this.ExportTieBreakers(folder, summary);
 
             document.Close();
         }

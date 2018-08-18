@@ -7,25 +7,46 @@ namespace MatchMaker.Reporting
     public class Quizzer
     {
         [DataMember]
-        public int ChurchId { get; set; }
+        public int ChurchId
+        {
+            get; set;
+        }
 
         [DataMember]
-        public string FirstName { get; set; }
+        public string FirstName
+        {
+            get; set;
+        }
 
         [DataMember]
-        public Gender Gender { get; set; }
+        public Gender Gender
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int Id { get; set; }
+        public int Id
+        {
+            get; set;
+        }
 
         [DataMember]
-        public string LastName { get; set; }
+        public string LastName
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int RookieYear { get; set; }
+        public int RookieYear
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int TeamId { get; set; }
+        public int TeamId
+        {
+            get; set;
+        }
 
         public static Quizzer FromXml(XElement xml)
         {

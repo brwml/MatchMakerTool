@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tool", "Tool\Tool.csproj", "{006A3B3A-208E-4D0F-A7E3-DD8E5A45748C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tool", "Tool\Tool.csproj", "{006A3B3A-208E-4D0F-A7E3-DD8E5A45748C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reporting.Test", "Reporting.Test\Reporting.Test.csproj", "{9A154498-9E41-439E-9BA5-7264DDC060CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reporting.Test", "Reporting.Test\Reporting.Test.csproj", "{9A154498-9E41-439E-9BA5-7264DDC060CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reporting", "Reporting\Reporting.csproj", "{F4D004A7-4C3B-41FC-A326-C1997ED96F9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reporting", "Reporting\Reporting.csproj", "{F4D004A7-4C3B-41FC-A326-C1997ED96F9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

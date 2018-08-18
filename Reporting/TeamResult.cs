@@ -7,16 +7,28 @@ namespace MatchMaker.Reporting
     public class TeamResult
     {
         [DataMember]
-        public int Errors { get; set; }
+        public int Errors
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int Place { get; set; }
+        public int Place
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int Score { get; set; }
+        public int Score
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int TeamId { get; set; }
+        public int TeamId
+        {
+            get; set;
+        }
 
         public static TeamResult FromXml(XElement xml)
         {

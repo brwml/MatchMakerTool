@@ -21,31 +21,52 @@ namespace MatchMaker.Reporting
         public decimal AverageScore => Convert.ToDecimal(this.TotalScore) / Convert.ToDecimal(this.TotalRounds);
 
         [DataMember]
-        public int Losses { get; set; }
+        public int Losses
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int Place { get; set; }
+        public int Place
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int TeamId { get; set; }
+        public int TeamId
+        {
+            get; set;
+        }
 
         [DataMember]
-        public TieBreak TieBreak { get; set; }
+        public TieBreak TieBreak
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int TotalErrors { get; set; }
+        public int TotalErrors
+        {
+            get; set;
+        }
 
         [IgnoreDataMember]
         public int TotalRounds => this.Wins + this.Losses;
 
         [DataMember]
-        public int TotalScore { get; set; }
+        public int TotalScore
+        {
+            get; set;
+        }
 
         [IgnoreDataMember]
         public decimal WinPercentage => Convert.ToDecimal(this.Wins) / Convert.ToDecimal(this.TotalRounds);
 
         [DataMember]
-        public int Wins { get; set; }
+        public int Wins
+        {
+            get; set;
+        }
 
         public static IDictionary<int, TeamSummary> FromResult(Result result, TeamRankingPolicy[] policies)
         {

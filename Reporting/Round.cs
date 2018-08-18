@@ -10,13 +10,22 @@ namespace MatchMaker.Reporting
     public class Round
     {
         [DataMember]
-        public int Id { get; set; }
+        public int Id
+        {
+            get; set;
+        }
 
         [DataMember]
-        public IDictionary<int, MatchSchedule> Matches { get; set; }
+        public IDictionary<int, MatchSchedule> Matches
+        {
+            get; set;
+        }
 
         [DataMember]
-        public DateTime StartTime { get; set; }
+        public DateTime StartTime
+        {
+            get; set;
+        }
 
         public static Round FromXml(XElement xml)
         {

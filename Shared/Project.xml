@@ -1,12 +1,12 @@
 <Project>
     <PropertyGroup>
         <AssemblyTitle>Tool for ACME Quiz MatchMaker</AssemblyTitle>
-        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-        <Version>1.2.1807.11</Version>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>1.2.$([System.DateTime]::Now.ToString("yy"))$([System.DateTime]::Now.DayOfYear).0</Version>
         <Authors>Bryan Wilhelm</Authors>
         <Product>Tool for ACME Quiz MatchMaker</Product>
         <Description>A command line tool for generating reports from ACME Quiz MatchMaker results XML files.</Description>
-        <Copyright>Copyright (c) 2016-2018 Bryan Wilhelm</Copyright>
+        <Copyright>Copyright (c) 2016-$([System.DateTime]::Now.Year) Bryan Wilhelm</Copyright>
         <PackageProjectUrl>https://github.com/brwml/MatchMakerTool</PackageProjectUrl>
         <RepositoryUrl>https://github.com/brwml/MatchMakerTool</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>

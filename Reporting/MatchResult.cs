@@ -8,22 +8,37 @@ namespace MatchMaker.Reporting
     public class MatchResult
     {
         [DataMember]
-        public int Id { get; set; }
+        public int Id
+        {
+            get; set;
+        }
 
         [DataMember]
-        public QuizzerResult[] QuizzerResults { get; set; }
+        public QuizzerResult[] QuizzerResults
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int Room { get; set; }
+        public int Room
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int Round { get; set; }
+        public int Round
+        {
+            get; set;
+        }
 
         [IgnoreDataMember]
         public int ScheduleId => (this.Round * 100) + this.Room;
 
         [DataMember]
-        public TeamResult[] TeamResults { get; set; }
+        public TeamResult[] TeamResults
+        {
+            get; set;
+        }
 
         public static MatchResult FromXml(XElement xml)
         {

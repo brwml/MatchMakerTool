@@ -21,19 +21,34 @@ namespace MatchMaker.Reporting
         public decimal AverageScore => Convert.ToDecimal(this.TotalScore) / Convert.ToDecimal(this.TotalRounds);
 
         [DataMember]
-        public int Place { get; set; }
+        public int Place
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int QuizzerId { get; set; }
+        public int QuizzerId
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int TotalErrors { get; set; }
+        public int TotalErrors
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int TotalRounds { get; set; }
+        public int TotalRounds
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int TotalScore { get; set; }
+        public int TotalScore
+        {
+            get; set;
+        }
 
         public static IDictionary<int, QuizzerSummary> FromResult(Result result)
         {

@@ -7,10 +7,16 @@ namespace MatchMaker.Reporting
     public class Church
     {
         [DataMember]
-        public int Id { get; set; }
+        public int Id
+        {
+            get; set;
+        }
 
         [DataMember]
-        public string Name { get; set; }
+        public string Name
+        {
+            get; set;
+        }
 
         public static Church FromXml(XElement xml)
         {

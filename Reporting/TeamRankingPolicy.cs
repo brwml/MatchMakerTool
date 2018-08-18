@@ -6,7 +6,10 @@ namespace MatchMaker.Reporting
 {
     public abstract class TeamRankingPolicy
     {
-        protected Result Result { get; set; }
+        protected Result Result
+        {
+            get; set;
+        }
 
         public void Rank(IEnumerable<TeamSummary> summaries, Result result)
         {

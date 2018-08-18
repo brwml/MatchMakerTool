@@ -7,9 +7,15 @@ namespace MatchMaker.Tool
     public class SummaryOptions
     {
         [Option('i', Required = true, HelpText = "The list of input paths", Separator = ',')]
-        public IEnumerable<string> InputPaths { get; set; }
+        public IEnumerable<string> InputPaths
+        {
+            get; set;
+        }
 
         [Option('o', Required = true, HelpText = "The output path")]
-        public string OutputPath { get; set; }
+        public string OutputPath
+        {
+            get; set;
+        }
     }
 }

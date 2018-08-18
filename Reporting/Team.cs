@@ -7,16 +7,28 @@ namespace MatchMaker.Reporting
     public class Team
     {
         [DataMember]
-        public string Abbreviation { get; set; }
+        public string Abbreviation
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int Division { get; set; }
+        public int Division
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int Id { get; set; }
+        public int Id
+        {
+            get; set;
+        }
 
         [DataMember]
-        public string Name { get; set; }
+        public string Name
+        {
+            get; set;
+        }
 
         public static Team FromXml(XElement xml)
         {

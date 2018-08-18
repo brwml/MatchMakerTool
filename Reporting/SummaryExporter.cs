@@ -103,8 +103,16 @@ namespace MatchMaker.Reporting
 
         private class InternalQuizzerSummary
         {
-            public string Church { get; set; }
-            public string Name { get; set; }
+            public string Church
+            {
+                get; set;
+            }
+
+            public string Name
+            {
+                get; set;
+            }
+
             public Dictionary<string, QuizzerSummary> Results { get; } = new Dictionary<string, QuizzerSummary>();
         }
     }

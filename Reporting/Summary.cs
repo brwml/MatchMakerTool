@@ -10,13 +10,22 @@ namespace MatchMaker.Reporting
         public string Name => this.Result?.Name ?? string.Empty;
 
         [DataMember]
-        public IDictionary<int, QuizzerSummary> QuizzerSummaries { get; set; }
+        public IDictionary<int, QuizzerSummary> QuizzerSummaries
+        {
+            get; set;
+        }
 
         [DataMember]
-        public Result Result { get; set; }
+        public Result Result
+        {
+            get; set;
+        }
 
         [DataMember]
-        public IDictionary<int, TeamSummary> TeamSummaries { get; set; }
+        public IDictionary<int, TeamSummary> TeamSummaries
+        {
+            get; set;
+        }
 
         public static Summary FromResult(Result result, TeamRankingPolicy[] policies)
         {

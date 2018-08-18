@@ -7,13 +7,22 @@ namespace MatchMaker.Reporting
     public class QuizzerResult
     {
         [DataMember]
-        public int Errors { get; set; }
+        public int Errors
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int QuizzerId { get; set; }
+        public int QuizzerId
+        {
+            get; set;
+        }
 
         [DataMember]
-        public int Score { get; set; }
+        public int Score
+        {
+            get; set;
+        }
 
         public static QuizzerResult FromXml(XElement xml)
         {

@@ -15,10 +15,16 @@ namespace MatchMaker.Reporting
         }
 
         [IgnoreDataMember]
-        public IDictionary<int, Team> Teams { get; set; }
+        public IDictionary<int, Team> Teams
+        {
+            get; set;
+        }
 
         [IgnoreDataMember]
-        private IEnumerable<MatchResult> Results { get; set; }
+        private IEnumerable<MatchResult> Results
+        {
+            get; set;
+        }
 
         public override string ToString()
         {

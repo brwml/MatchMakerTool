@@ -10,13 +10,19 @@ namespace MatchMaker.Reporting
     public class Result
     {
         [DataMember]
-        public IDictionary<int, MatchResult> Matches { get; set; }
+        public IDictionary<int, MatchResult> Matches
+        {
+            get; set;
+        }
 
         [IgnoreDataMember]
         public string Name => this.Schedule?.Name ?? string.Empty;
 
         [DataMember]
-        public Schedule Schedule { get; set; }
+        public Schedule Schedule
+        {
+            get; set;
+        }
 
         public static Result FromXml(IEnumerable<XDocument> documents, Schedule schedule)
         {

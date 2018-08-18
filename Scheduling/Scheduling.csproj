@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <RootNamespace>MatchMaker.Scheduling</RootNamespace>
+    <AssemblyName>MatchMaker.Scheduling</AssemblyName>
+  </PropertyGroup>
+  <Import Project="..\Shared\Project.xml" />
+  <ItemGroup>
+    <ProjectReference Include="..\Reporting\Reporting.csproj" />
+  </ItemGroup>
+</Project>
