@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
+using System.Windows.Input;
 
 namespace MatchMaker.Tool.UI
 {
@@ -15,20 +15,19 @@ namespace MatchMaker.Tool.UI
 
         private readonly Label DestinationFolderLabel = CreateLabel(string.Empty);
 
-        private readonly TextBox GeneratedTeams = CreateTextBox();
+        private readonly TextBox GeneratedTeams = CreateNumericTextBox();
 
         private readonly Label SourceFolderLabel = CreateLabel(string.Empty);
 
-        private readonly TextBox TournamentTeams = CreateTextBox();
+        private readonly TextBox TournamentTeams = CreateNumericTextBox();
+
+        private Button okButton;
 
         public MatchMakerToolWindow()
         {
             this.Title = "Match Maker Tool";
             this.Padding = DefaultThickness;
             this.SizeToContent = SizeToContent.WidthAndHeight;
-            this.MouseLeftButtonDown += (s, e) => this.DragMove();
-            this.BorderBrush = new SolidColorBrush(Colors.DarkGray);
-            this.BorderThickness = new Thickness(1);
 
             var rootPanel = this.CreateRootPanel();
             rootPanel.Children.Add(this.CreateSourcePanel());
@@ -66,17 +65,7 @@ namespace MatchMaker.Tool.UI
             };
         }
 
-        private static StackPanel CreateRowPanel()
-        {
-            return new StackPanel
-            {
-                Orientation = Orientation.Horizontal,
-                VerticalAlignment = VerticalAlignment.Center,
-                Margin = DefaultThickness
-            };
-        }
-
-        private static TextBox CreateTextBox()
+        private static TextBox CreateNumericTextBox()
         {
             var textBox = new TextBox
             {
@@ -87,7 +76,48 @@ namespace MatchMaker.Tool.UI
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center
             };
+
+            textBox.KeyDown += OnKeyEventRequireNumeric;
+
             return textBox;
+        }
+
+        private static StackPanel CreateRowPanel()
+        {
+            return new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = DefaultThickness
+            };
+        }
+
+        private static void OnKeyEventRequireNumeric(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.D0 &&
+                e.Key != Key.D1 &&
+                e.Key != Key.D2 &&
+                e.Key != Key.D3 &&
+                e.Key != Key.D4 &&
+                e.Key != Key.D5 &&
+                e.Key != Key.D6 &&
+                e.Key != Key.D7 &&
+                e.Key != Key.D8 &&
+                e.Key != Key.D9 &&
+                e.Key != Key.NumPad0 &&
+                e.Key != Key.NumPad1 &&
+                e.Key != Key.NumPad2 &&
+                e.Key != Key.NumPad3 &&
+                e.Key != Key.NumPad4 &&
+                e.Key != Key.NumPad5 &&
+                e.Key != Key.NumPad6 &&
+                e.Key != Key.NumPad7 &&
+                e.Key != Key.NumPad8 &&
+                e.Key != Key.NumPad9
+                )
+            {
+                e.Handled = true;
+            }
         }
 
         private StackPanel CreateCommandPanel()
@@ -100,11 +130,12 @@ namespace MatchMaker.Tool.UI
             cancelButton.Margin = new Thickness(0, 0, DefaultSize, 0);
             panel.Children.Add(cancelButton);
 
-            var okButton = CreateButton("OK");
-            okButton.Width = 120;
-            okButton.Click += this.OnOk;
-            okButton.Margin = new Thickness(DefaultSize, 0, 0, 0);
-            panel.Children.Add(okButton);
+            this.okButton = CreateButton("OK");
+            this.okButton.Width = 120;
+            this.okButton.Click += this.OnOk;
+            this.okButton.Margin = new Thickness(DefaultSize, 0, 0, 0);
+            this.okButton.IsEnabled = false;
+            panel.Children.Add(this.okButton);
 
             return panel;
         }
@@ -150,6 +181,11 @@ namespace MatchMaker.Tool.UI
             return panel;
         }
 
+        private bool IsLabelEmpty(Label control)
+        {
+            return string.IsNullOrWhiteSpace(control.Content.ToString());
+        }
+
         private void OnOk(object sender, RoutedEventArgs e)
         {
             this.IsEnabled = false;
@@ -192,7 +228,17 @@ namespace MatchMaker.Tool.UI
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
                     this.DestinationFolderLabel.Content = dialog.SelectedPath;
+
+                    if (!this.IsLabelEmpty(this.SourceFolderLabel))
+                    {
+                        this.okButton.IsEnabled = true;
+                    }
                 }
+            }
+
+            if (!this.IsLabelEmpty(this.DestinationFolderLabel) && !this.IsLabelEmpty(this.SourceFolderLabel))
+            {
+                this.okButton.IsEnabled = true;
             }
         }
 
@@ -205,6 +251,11 @@ namespace MatchMaker.Tool.UI
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
                     this.SourceFolderLabel.Content = dialog.SelectedPath;
+
+                    if (!this.IsLabelEmpty(this.DestinationFolderLabel))
+                    {
+                        this.okButton.IsEnabled = true;
+                    }
                 }
             }
         }
