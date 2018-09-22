@@ -26,10 +26,9 @@ namespace MatchMaker.Tool.UI
             this.Title = "Match Maker Tool";
             this.Padding = DefaultThickness;
             this.SizeToContent = SizeToContent.WidthAndHeight;
-            this.WindowStyle = WindowStyle.None;
-            this.AllowsTransparency = true;
-            this.Background = new SolidColorBrush(Colors.WhiteSmoke) { Opacity = 0.75 };
             this.MouseLeftButtonDown += (s, e) => this.DragMove();
+            this.BorderBrush = new SolidColorBrush(Colors.DarkGray);
+            this.BorderThickness = new Thickness(1);
 
             var rootPanel = this.CreateRootPanel();
             rootPanel.Children.Add(this.CreateSourcePanel());
