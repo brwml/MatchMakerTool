@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Winexe</OutputType>
+    <RootNamespace>MatchMaker.Tool.UI</RootNamespace>
+    <AssemblyName>mmtui</AssemblyName>
+    <TargetFramework>net472</TargetFramework>
+  </PropertyGroup>
+  <Import Project="..\Shared\Project.xml" />
+  <ItemGroup>
+    <PackageReference Include="WindowsBase" Version="4.6.1055" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tool\Tool.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+</Project>
