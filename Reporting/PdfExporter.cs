@@ -1,12 +1,8 @@
 ﻿using System.IO;
 using System.Linq;
-using GraphVizWrapper;
-using GraphVizWrapper.Commands;
-using GraphVizWrapper.Queries;
+
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using QuickGraph;
-using QuickGraph.Graphviz;
 
 namespace MatchMaker.Reporting
 {
@@ -30,8 +26,6 @@ namespace MatchMaker.Reporting
 
             CreateQuizzerPageTitle(document);
             ExportQuizzerResults(document, summary);
-
-            this.ExportTieBreakers(folder, summary);
 
             document.Close();
         }
@@ -178,51 +172,6 @@ namespace MatchMaker.Reporting
             PdfWriter.GetInstance(document, File.Create(fileName));
             document.Open();
             return document;
-        }
-
-        private void ExportTieBreakers(string folder, Summary summary)
-        {
-            var groups = summary.TeamSummaries.Select(x => x.Value).GroupBy(x => x.Losses).Select(x => x.Select(y => y));
-
-            var document = OpenDocument(Path.Combine(folder, $"{summary.Name}_TieBreakers_HTH.pdf"));
-            var dotPath = Path.Combine(folder, "dot");
-
-            Directory.CreateDirectory(dotPath);
-
-            foreach (var group in groups)
-            {
-                if (group.Count() > 1)
-                {
-                    var teams = group.Select(x => summary.Result.Schedule.Teams[x.TeamId]).ToDictionary(k => k.Id, v => v);
-                    var matches = summary.Result.Matches.Where(x => x.Value.TeamResults.All(y => teams.ContainsKey(y.TeamId))).Select(x => x.Value);
-
-                    var graph = new AdjacencyGraph<string, Edge<string>>();
-                    graph.AddVertexRange(teams.Select(x => x.Value.Abbreviation));
-                    graph.AddEdgeRange(matches.Select(x => new Edge<string>(teams[x.TeamResults.First(t => t.Place == 1).TeamId].Abbreviation, teams[x.TeamResults.First(t => t.Place == 2).TeamId].Abbreviation)));
-
-                    var dot = graph.ToGraphviz(algorithm =>
-                    {
-                        algorithm.FormatVertex += (s, e) => { };
-                    });
-
-                    var start = new GetStartProcessQuery();
-                    var process = new GetProcessStartInfoQuery();
-                    var command = new RegisterLayoutPluginCommand(process, start);
-                    var wrapper = new GraphGeneration(start, process, command);
-
-                    if (Directory.Exists(wrapper.GraphvizPath))
-                    {
-                        var bytes = wrapper.GenerateGraph(dot, Enums.GraphReturnType.Png);
-
-                        document.NewPage();
-                        document.Add(Image.GetInstance(bytes));
-                    }
-
-                    File.WriteAllText(Path.Combine(dotPath, $"HTH_{string.Join("-", graph.Vertices)}.dot"), dot);
-                }
-            }
-
-            document.CloseDocument();
         }
     }
 }

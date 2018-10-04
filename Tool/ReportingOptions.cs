@@ -3,7 +3,7 @@
 namespace MatchMaker.Tool
 {
     [Verb("reporting", HelpText = "Generate a report from the results XML files")]
-    internal class ReportingOptions
+    internal class ReportingOptions : BaseOptions
     {
         public const string DefaultRankingProcedure = "whse";
 

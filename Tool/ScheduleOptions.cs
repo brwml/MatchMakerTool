@@ -3,7 +3,7 @@
 namespace MatchMaker.Tool
 {
     [Verb("schedule", HelpText = "Generates a tournament schedule")]
-    internal class ScheduleOptions
+    internal class ScheduleOptions : BaseOptions
     {
         [Option('a', Default = true, Required = false, HelpText = "Indicates whether the schedule is created a priori", SetName = "Swiss")]
         public bool IsApriori

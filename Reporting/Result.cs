@@ -15,14 +15,14 @@ namespace MatchMaker.Reporting
             get; set;
         }
 
-        [IgnoreDataMember]
-        public string Name => this.Schedule?.Name ?? string.Empty;
-
         [DataMember]
         public Schedule Schedule
         {
             get; set;
         }
+
+        [IgnoreDataMember]
+        public string Name => this.Schedule?.Name ?? string.Empty;
 
         public static Result FromXml(IEnumerable<XDocument> documents, Schedule schedule)
         {

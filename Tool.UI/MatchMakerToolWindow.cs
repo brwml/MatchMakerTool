@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,7 +12,7 @@ namespace MatchMaker.Tool.UI
 
         private static readonly Thickness DefaultThickness = new Thickness(DefaultSize);
 
-        private static readonly FontWeight DefaultWeight = FontWeight.FromOpenTypeWeight(500);
+        private static readonly FontWeight DefaultWeight = FontWeights.Bold;
 
         private readonly Label DestinationFolderLabel = CreateLabel(string.Empty);
 
@@ -25,9 +26,10 @@ namespace MatchMaker.Tool.UI
 
         public MatchMakerToolWindow()
         {
-            this.Title = "Match Maker Tool";
+            this.Title = GetTitleText();
             this.Padding = DefaultThickness;
             this.SizeToContent = SizeToContent.WidthAndHeight;
+            this.WindowStyle = WindowStyle.ToolWindow;
 
             var rootPanel = this.CreateRootPanel();
             rootPanel.Children.Add(this.CreateSourcePanel());
@@ -90,6 +92,12 @@ namespace MatchMaker.Tool.UI
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = DefaultThickness
             };
+        }
+
+        private static string GetTitleText()
+        {
+            var versionInfo = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+            return $"{versionInfo.ProductName} ({versionInfo.ProductVersion})";
         }
 
         private static void OnKeyEventRequireNumeric(object sender, KeyEventArgs e)

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+
 using MatchMaker.Reporting;
 
 namespace MatchMaker.Tool
@@ -16,18 +18,23 @@ namespace MatchMaker.Tool
             var sourceFolder = options.SourceFolder;
             var policies = LoadRankingPolicies(options.RankingProcedure);
 
+            Trace.TraceInformation($"Loading results from {sourceFolder}...");
             var summary = CreateSummary(sourceFolder, policies);
+            var directory = Directory.CreateDirectory(options.OutputFolder);
 
             Parallel.ForEach(GetExports(options.OutputFormat), exporter =>
             {
-                exporter.Export(summary, options.OutputFolder);
+                Trace.TraceInformation($"{exporter.GetType().Name}: exporting results to {options.OutputFolder}...");
+                exporter.Export(summary, directory.FullName);
             });
 
             if (options.NumberOfAlternateTeams > 0)
             {
-                TournamentExporter.Create(summary, options.NumberOfTournamentTeams, options.NumberOfAlternateTeams, options.OutputFolder);
+                Trace.TraceInformation($"Creating tournament teams...");
+                TournamentExporter.Create(summary, options.NumberOfTournamentTeams, options.NumberOfAlternateTeams, directory.FullName);
             }
 
+            Trace.TraceInformation("Finished.");
             return true;
         }
 

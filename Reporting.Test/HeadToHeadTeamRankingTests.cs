@@ -1,5 +1,7 @@
 ﻿using System.IO;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using Newtonsoft.Json;
 
 namespace MatchMaker.Reporting.Test

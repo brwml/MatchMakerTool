@@ -6,9 +6,6 @@ namespace MatchMaker.Reporting
     [DataContract]
     public class Summary
     {
-        [IgnoreDataMember]
-        public string Name => this.Result?.Name ?? string.Empty;
-
         [DataMember]
         public IDictionary<int, QuizzerSummary> QuizzerSummaries
         {
@@ -26,6 +23,9 @@ namespace MatchMaker.Reporting
         {
             get; set;
         }
+
+        [IgnoreDataMember]
+        public string Name => this.Result?.Name ?? string.Empty;
 
         public static Summary FromResult(Result result, TeamRankingPolicy[] policies)
         {
