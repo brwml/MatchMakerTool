@@ -10,7 +10,6 @@
         <PackageProjectUrl>https://github.com/brwml/MatchMakerTool</PackageProjectUrl>
         <RepositoryUrl>https://github.com/brwml/MatchMakerTool</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
-        <PackageLicenseUrl>https://github.com/brwml/MatchMakerTool/blob/master/LICENSE</PackageLicenseUrl>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 </Project>

@@ -9,7 +9,6 @@ namespace MatchMaker.Tool
         Excel = 1,
         Html = 2,
         Pdf = 4,
-        Gum = 8,
-        All = Excel | Html | Pdf | Gum
+        All = Excel | Html | Pdf
     }
 }
