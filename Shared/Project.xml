@@ -1,7 +1,6 @@
 <Project>
     <PropertyGroup>
         <AssemblyTitle>Tool for ACME Quiz MatchMaker</AssemblyTitle>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Version>1.2.$([System.DateTime]::Now.ToString("yy"))$([System.DateTime]::Now.DayOfYear).0</Version>
         <Authors>Bryan Wilhelm</Authors>
         <Product>Tool for ACME Quiz MatchMaker</Product>
