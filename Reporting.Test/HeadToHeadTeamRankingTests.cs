@@ -1,14 +1,23 @@
-﻿using System.IO;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using Newtonsoft.Json;
-
-namespace MatchMaker.Reporting.Test
+﻿namespace MatchMaker.Reporting.Test
 {
+    using MatchMaker.Reporting.Models;
+    using MatchMaker.Reporting.Policies;
+
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using Newtonsoft.Json;
+
+    using System.IO;
+
+    /// <summary>
+    /// Defines the <see cref="HeadToHeadTeamRankingTests" />
+    /// </summary>
     [TestClass]
     public class HeadToHeadTeamRankingTests
     {
+        /// <summary>
+        /// The HeadToHeadCase15
+        /// </summary>
         [TestMethod]
         [DeploymentItem(@".\Data\results.0015.json", "Data")]
         public void HeadToHeadCase15()
@@ -21,6 +30,9 @@ namespace MatchMaker.Reporting.Test
             Assert.AreEqual(1, summary.TeamSummaries[3].Place);
         }
 
+        /// <summary>
+        /// The HeadToHeadCase19
+        /// </summary>
         [TestMethod]
         [DeploymentItem(@".\Data\results.0019.json", "Data")]
         public void HeadToHeadCase19()
@@ -34,6 +46,9 @@ namespace MatchMaker.Reporting.Test
             Assert.AreEqual(1, summary.TeamSummaries[4].Place);
         }
 
+        /// <summary>
+        /// The HeadToHeadCase2
+        /// </summary>
         [TestMethod]
         [DeploymentItem(@".\Data\results.0002.json", "Data")]
         public void HeadToHeadCase2()
@@ -45,6 +60,9 @@ namespace MatchMaker.Reporting.Test
             Assert.AreEqual(2, summary.TeamSummaries[2].Place);
         }
 
+        /// <summary>
+        /// The HeadToHeadCase3
+        /// </summary>
         [TestMethod]
         [DeploymentItem(@".\Data\results.0003.json", "Data")]
         public void HeadToHeadCase3()
@@ -56,6 +74,9 @@ namespace MatchMaker.Reporting.Test
             Assert.AreEqual(1, summary.TeamSummaries[2].Place);
         }
 
+        /// <summary>
+        /// The HeadToHeadCase35
+        /// </summary>
         [TestMethod]
         [DeploymentItem(@".\Data\results.0035.json", "Data")]
         public void HeadToHeadCase35()
@@ -73,6 +94,9 @@ namespace MatchMaker.Reporting.Test
             Assert.AreEqual(8, summary.TeamSummaries[8].Place);
         }
 
+        /// <summary>
+        /// The HeadToHeadCase7
+        /// </summary>
         [TestMethod]
         [DeploymentItem(@".\Data\results.0007.json", "Data")]
         public void HeadToHeadCase7()
@@ -85,6 +109,9 @@ namespace MatchMaker.Reporting.Test
             Assert.AreEqual(1, summary.TeamSummaries[3].Place);
         }
 
+        /// <summary>
+        /// The HeadToHeadCase8
+        /// </summary>
         [TestMethod]
         [DeploymentItem(@".\Data\results.0008.json", "Data")]
         public void HeadToHeadCase8()

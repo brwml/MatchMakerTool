@@ -8,8 +8,12 @@
   <Import Project="..\Shared\Project.xml" />
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.94.2" />
-    <PackageReference Include="iTextSharp" Version="5.5.13" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="QuickGraph" Version="3.6.61119.7" />
     <PackageReference Include="StringTemplate4" Version="4.0.8" />
   </ItemGroup>
@@ -21,5 +25,8 @@
     <EmbeddedResource Include="Templates\Html\QuizzerDetail.stg" />
     <EmbeddedResource Include="Templates\Html\Style.txt" />
     <EmbeddedResource Include="Templates\Html\Header.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 </Project>

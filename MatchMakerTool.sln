@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tool", "Tool\Tool.csproj", "{006A3B3A-208E-4D0F-A7E3-DD8E5A45748C}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reporting", "Reporting\Reporting.csproj", "{F4D004A7-4C3B-41FC-A326-C1997ED96F9D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tool.UI", "Tool.UI\Tool.UI.csproj", "{7B8F1D3E-7B6D-41EA-8004-E92C4EAAAC20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{3855F46C-3E18-42DB-A098-6A48487C5D27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,14 @@ Global
 		{7B8F1D3E-7B6D-41EA-8004-E92C4EAAAC20}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B8F1D3E-7B6D-41EA-8004-E92C4EAAAC20}.Release|x86.ActiveCfg = Release|Any CPU
 		{7B8F1D3E-7B6D-41EA-8004-E92C4EAAAC20}.Release|x86.Build.0 = Release|Any CPU
+		{3855F46C-3E18-42DB-A098-6A48487C5D27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3855F46C-3E18-42DB-A098-6A48487C5D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3855F46C-3E18-42DB-A098-6A48487C5D27}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3855F46C-3E18-42DB-A098-6A48487C5D27}.Debug|x86.Build.0 = Debug|Any CPU
+		{3855F46C-3E18-42DB-A098-6A48487C5D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3855F46C-3E18-42DB-A098-6A48487C5D27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3855F46C-3E18-42DB-A098-6A48487C5D27}.Release|x86.ActiveCfg = Release|Any CPU
+		{3855F46C-3E18-42DB-A098-6A48487C5D27}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
