@@ -3,7 +3,7 @@
     <OutputType>Winexe</OutputType>
     <RootNamespace>MatchMaker.Tool.UI</RootNamespace>
     <AssemblyName>mmtui</AssemblyName>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
   <Import Project="..\Shared\Project.xml" />

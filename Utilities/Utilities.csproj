@@ -3,7 +3,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>MatchMaker.Utilities</RootNamespace>
     <AssemblyName>MatchMaker.Utilities</AssemblyName>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
   </PropertyGroup>
   <Import Project="..\Shared\Project.xml" />
   <ItemGroup>
