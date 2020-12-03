@@ -1,9 +1,9 @@
 ﻿namespace MatchMaker.Tool
 {
-    using CommandLine;
-
     using System;
     using System.Diagnostics;
+
+    using CommandLine;
 
     /// <summary>
     /// Defines the <see cref="Program" />

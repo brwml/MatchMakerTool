@@ -1,9 +1,9 @@
 ﻿namespace MatchMaker.Reporting.Models
 {
-    using MatchMaker.Utilities;
-
     using System.Runtime.Serialization;
     using System.Xml.Linq;
+
+    using MatchMaker.Utilities;
 
     /// <summary>
     /// Defines the <see cref="Team" />

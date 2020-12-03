@@ -1,12 +1,12 @@
 ﻿namespace MatchMaker.Reporting.Models
 {
-    using MatchMaker.Utilities;
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Xml.Linq;
+
+    using MatchMaker.Utilities;
 
     /// <summary>
     /// Defines the <see cref="Round" />

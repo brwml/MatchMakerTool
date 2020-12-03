@@ -1,9 +1,5 @@
 ﻿namespace MatchMaker.Tool
 {
-    using MatchMaker.Reporting.Exporters;
-    using MatchMaker.Reporting.Models;
-    using MatchMaker.Reporting.Policies;
-
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -12,6 +8,10 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Xml.Linq;
+
+    using MatchMaker.Reporting.Exporters;
+    using MatchMaker.Reporting.Models;
+    using MatchMaker.Reporting.Policies;
 
     /// <summary>
     /// Defines the <see cref="Reporting" /> processor class.

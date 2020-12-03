@@ -1,8 +1,8 @@
 ﻿namespace MatchMaker.Reporting.Policies
 {
-    using MatchMaker.Reporting.Models;
-
     using System.Collections.Generic;
+
+    using MatchMaker.Reporting.Models;
 
     /// <summary>
     /// Defines the <see cref="NullTeamRankingPolicy" />

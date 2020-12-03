@@ -1,13 +1,13 @@
 ﻿namespace MatchMaker.Reporting.Policies
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     using MatchMaker.Reporting.Models;
 
     using QuickGraph;
     using QuickGraph.Algorithms;
     using QuickGraph.Algorithms.Condensation;
-
-    using System.Collections.Generic;
-    using System.Linq;
 
     using DependencyGraph = QuickGraph.AdjacencyGraph<int, QuickGraph.Edge<int>>;
     using GraphEdge = QuickGraph.Edge<int>;

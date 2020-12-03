@@ -1,10 +1,10 @@
 ﻿namespace MatchMaker.Reporting.Policies
 {
-    using MatchMaker.Reporting.Models;
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
+    using MatchMaker.Reporting.Models;
 
     /// <summary>
     /// Defines the <see cref="QuizzerRankingPolicy" />
@@ -33,6 +33,11 @@
         /// <param name="areEqual">A <see cref="Func{QuizzerSummary, QuizzerSummary, Boolean}"/> indicating whether two placements are equal.</param>
         protected static void SetRelativePlaces(IList<QuizzerSummary> summaries, int initial, Func<QuizzerSummary, QuizzerSummary, bool> areEqual)
         {
+            if (summaries is null || areEqual is null)
+            {
+                return;
+            }
+
             for (var i = 1; i < summaries.Count; i++)
             {
                 if (areEqual(summaries[i], summaries[i - 1]))

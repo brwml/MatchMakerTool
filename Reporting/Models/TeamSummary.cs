@@ -1,12 +1,12 @@
 ﻿namespace MatchMaker.Reporting.Models
 {
-    using MatchMaker.Reporting.Policies;
-    using MatchMaker.Utilities;
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
+
+    using MatchMaker.Reporting.Policies;
+    using MatchMaker.Utilities;
 
     /// <summary>
     /// Defines the <see cref="TeamSummary" />

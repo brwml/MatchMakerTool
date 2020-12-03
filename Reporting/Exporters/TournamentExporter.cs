@@ -1,14 +1,14 @@
 ﻿namespace MatchMaker.Reporting.Exporters
 {
-    using ClosedXML.Excel;
-
-    using MatchMaker.Reporting.Models;
-    using MatchMaker.Utilities;
-
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+
+    using ClosedXML.Excel;
+
+    using MatchMaker.Reporting.Models;
+    using MatchMaker.Utilities;
 
     /// <summary>
     /// Defines the <see cref="TournamentExporter" />

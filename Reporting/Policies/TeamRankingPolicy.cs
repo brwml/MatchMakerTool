@@ -1,10 +1,10 @@
 ﻿namespace MatchMaker.Reporting.Policies
 {
-    using MatchMaker.Reporting.Models;
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
+    using MatchMaker.Reporting.Models;
 
     /// <summary>
     /// Defines the <see cref="TeamRankingPolicy" />
@@ -44,6 +44,11 @@
         /// <param name="tieBreak">The <see cref="TieBreak"/> method that was used.</param>
         protected static void SetRelativePlaces(IList<TeamSummary> summaries, int initial, Func<TeamSummary, TeamSummary, bool> areEqual, TieBreak tieBreak)
         {
+            if (summaries is null || areEqual is null)
+            {
+                return;
+            }
+
             for (var i = 1; i < summaries.Count; i++)
             {
                 if (areEqual(summaries[i], summaries[i - 1]))

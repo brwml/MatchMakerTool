@@ -1,13 +1,13 @@
 ﻿namespace MatchMaker.Reporting.Test
 {
+    using System.IO;
+
     using MatchMaker.Reporting.Models;
     using MatchMaker.Reporting.Policies;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using Newtonsoft.Json;
-
-    using System.IO;
 
     /// <summary>
     /// Defines the <see cref="HeadToHeadTeamRankingTests" />

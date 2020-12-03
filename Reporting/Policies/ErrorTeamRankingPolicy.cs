@@ -1,9 +1,9 @@
 ﻿namespace MatchMaker.Reporting.Policies
 {
-    using MatchMaker.Reporting.Models;
-
     using System.Collections.Generic;
     using System.Linq;
+
+    using MatchMaker.Reporting.Models;
 
     /// <summary>
     /// Defines the <see cref="ErrorTeamRankingPolicy" />

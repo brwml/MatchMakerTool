@@ -1,11 +1,11 @@
 ﻿namespace MatchMaker.Reporting.Exporters
 {
+    using System.IO;
+
     using MatchMaker.Reporting.Models;
     using MatchMaker.Utilities;
 
     using Newtonsoft.Json;
-
-    using System.IO;
 
     /// <summary>
     /// Defines the <see cref="DefaultExporter" />

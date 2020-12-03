@@ -1,14 +1,14 @@
 ﻿namespace MatchMaker.Reporting.Exporters
 {
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+
     using iTextSharp.text;
     using iTextSharp.text.pdf;
 
     using MatchMaker.Reporting.Models;
     using MatchMaker.Utilities;
-
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
 
     /// <summary>
     /// Defines the <see cref="PdfExporter" />

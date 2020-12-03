@@ -61,7 +61,7 @@
             this.SizeToContent = SizeToContent.WidthAndHeight;
             this.WindowStyle = WindowStyle.ToolWindow;
 
-            var rootPanel = this.CreateRootPanel();
+            var rootPanel = CreateRootPanel();
             rootPanel.Children.Add(this.CreateSourcePanel());
             rootPanel.Children.Add(this.CreateDestinationPanel());
             rootPanel.Children.Add(this.CreateTournamentTeamPanel());
@@ -239,7 +239,7 @@
         /// The CreateRootPanel
         /// </summary>
         /// <returns>The <see cref="Panel"/></returns>
-        private Panel CreateRootPanel()
+        private static Panel CreateRootPanel()
         {
             return new StackPanel { Margin = DefaultThickness };
         }
@@ -275,7 +275,7 @@
         /// </summary>
         /// <param name="control">The control<see cref="Label"/></param>
         /// <returns>The <see cref="bool"/></returns>
-        private bool IsLabelEmpty(Label control)
+        private static bool IsLabelEmpty(Label control)
         {
             return string.IsNullOrWhiteSpace(control.Content.ToString());
         }
@@ -333,14 +333,14 @@
                 {
                     this.DestinationFolderLabel.Content = dialog.SelectedPath;
 
-                    if (!this.IsLabelEmpty(this.SourceFolderLabel))
+                    if (!IsLabelEmpty(this.SourceFolderLabel))
                     {
                         this.okButton.IsEnabled = true;
                     }
                 }
             }
 
-            if (!this.IsLabelEmpty(this.DestinationFolderLabel) && !this.IsLabelEmpty(this.SourceFolderLabel))
+            if (!IsLabelEmpty(this.DestinationFolderLabel) && !IsLabelEmpty(this.SourceFolderLabel))
             {
                 this.okButton.IsEnabled = true;
             }
@@ -361,7 +361,7 @@
                 {
                     this.SourceFolderLabel.Content = dialog.SelectedPath;
 
-                    if (!this.IsLabelEmpty(this.DestinationFolderLabel))
+                    if (!IsLabelEmpty(this.DestinationFolderLabel))
                     {
                         this.okButton.IsEnabled = true;
                     }

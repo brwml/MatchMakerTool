@@ -1,13 +1,13 @@
 ﻿namespace MatchMaker.Reporting.Exporters
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+
     using ClosedXML.Excel;
 
     using MatchMaker.Reporting.Models;
     using MatchMaker.Utilities;
-
-    using System;
-    using System.IO;
-    using System.Linq;
 
     /// <summary>
     /// Defines the <see cref="ExcelExporter" />

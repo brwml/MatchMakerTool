@@ -1,9 +1,9 @@
 ﻿namespace MatchMaker.Reporting.Models
 {
-    using MatchMaker.Reporting.Policies;
-
     using System.Collections.Generic;
     using System.Runtime.Serialization;
+
+    using MatchMaker.Reporting.Policies;
 
     /// <summary>
     /// Defines the <see cref="Summary" />

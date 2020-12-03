@@ -1,8 +1,8 @@
 ﻿namespace MatchMaker.Tool
 {
-    using CommandLine;
-
     using System.Collections.Generic;
+
+    using CommandLine;
 
     /// <summary>
     /// Defines the <see cref="SummaryOptions" />

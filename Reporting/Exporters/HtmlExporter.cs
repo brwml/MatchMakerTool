@@ -1,16 +1,16 @@
 ﻿namespace MatchMaker.Reporting.Exporters
 {
-    using Antlr4.StringTemplate;
-
-    using MatchMaker.Reporting.Models;
-    using MatchMaker.Utilities;
-
     using System;
     using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Reflection;
     using System.Text;
+
+    using Antlr4.StringTemplate;
+
+    using MatchMaker.Reporting.Models;
+    using MatchMaker.Utilities;
 
     /// <summary>
     /// Defines the <see cref="HtmlExporter" />
