@@ -9,7 +9,7 @@ document(summary, teams, quizzers) ::= "<maintitle(summary)>\sect<teampage(summa
 maintitle(summary) ::= "\pard\f1\fs64\qc{<summary.Name>}"
 
 teampage(summary, teams) ::= "<teamtitle()><teamresults(summary, teams)>"
-teamtitle() ::= "\pard\f1\fs48\qc{Team Results}\fs16\par\par\par"
+teamtitle() ::= "\pard\f1\fs48\i\qc{Team Results}\i0\fs16\par\par\par"
 teamresults(summary, teams) ::= "\pard\plain\fs18<teamresults_header()><teams:teamrow()>"
 teamresults_header() ::= "{\trowd<teamrow_header()><teamresults_header_place()><teamresults_header_name()><teamresults_header_wins()><teamresults_header_losses()><teamresults_header_score()><teamresults_header_errors()><teamresults_header_tiebreaker()>\row}"
 teamresults_header_place() ::= "\intbl{}\cell"
@@ -30,7 +30,7 @@ teamrow_errors(team) ::= "\intbl{<team.AverageErrors; format=\"F2\">}\cell"
 teamrow_tiebreaker(team) ::= "\intbl{<team.TieBreak>}\cell"
 
 quizzerpage(summary, quizzers) ::= "<quizzertitle()><quizzerresults(summary, quizzers)>"
-quizzertitle() ::= "\pard\f1\fs48\qc{Quizzer Results}\fs16\par\par\par"
+quizzertitle() ::= "\pard\f1\fs48\i\qc{Quizzer Results}\i0\fs16\par\par\par"
 quizzerresults(summary, quizzers) ::= "\pard\plain\fs18<quizzerresults_header()><quizzers:quizzerrow()>"
 quizzerresults_header() ::= "{\trowd<quizzerrow_header()><quizzerresults_header_place()><quizzerresults_header_name()><quizzerresults_header_church()><quizzerresults_header_score()><quizzerresults_header_errors()>\row}"
 quizzerresults_header_place() ::= "\intbl{}\cell"
