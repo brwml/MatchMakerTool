@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -26,9 +25,8 @@
         internal static bool Process(ReportingOptions options)
         {
             var summary = CreateSummary(options);
-            var directory = Directory.CreateDirectory(options.OutputFolder);
 
-            Trace.TraceInformation($"Exporting results to {options.OutputFolder}...");
+            var directory = Directory.CreateDirectory(options.OutputFolder);
 
             Parallel.ForEach(GetExporters(options.OutputFormat), exporter =>
             {
@@ -37,11 +35,9 @@
 
             if (options.NumberOfAlternateTeams > 0)
             {
-                Trace.TraceInformation($"Creating tournament teams...");
                 TournamentExporter.Create(summary, options.NumberOfTournamentTeams, options.NumberOfAlternateTeams, directory.FullName);
             }
 
-            Trace.TraceInformation("Finished.");
             return true;
         }
 
