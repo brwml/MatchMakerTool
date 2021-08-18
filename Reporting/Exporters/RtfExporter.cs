@@ -8,6 +8,7 @@
     using Antlr4.StringTemplate;
 
     using MatchMaker.Reporting.Models;
+    using MatchMaker.Utilities;
 
     /// <summary>
     /// Exports the <see cref="Summary"/> results as an RTF file.
@@ -32,6 +33,9 @@
         /// <param name="folder">The output folder</param>
         public void Export(Summary summary, string folder)
         {
+            Arg.NotNull(summary, nameof(summary));
+            Arg.NotNullOrWhiteSpace(folder, nameof(folder));
+
             var template = LoadTemplate();
             template.Add("summary", summary);
             template.Add("teams", GetTeams(summary));
