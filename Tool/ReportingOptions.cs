@@ -34,7 +34,7 @@
         /// <summary>
         /// Gets or sets the output format
         /// </summary>
-        [Option('f', Default = OutputFormat.All, HelpText = "Output format for the report. Possible values are Excel, Html, and Pdf.")]
+        [Option('f', Default = OutputFormat.All, HelpText = "Output format for the report. Possible values are Excel, Html, Pdf, and Rtf.")]
         public OutputFormat OutputFormat { get; set; }
 
         /// <summary>
@@ -48,5 +48,11 @@
         /// </summary>
         [Option('s', Required = true, HelpText = "Source folder with the score files.")]
         public string SourceFolder { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the tournament.
+        /// </summary>
+        [Option('n', HelpText = "The name of the tournament")]
+        public string Name { get; set; }
     }
 }

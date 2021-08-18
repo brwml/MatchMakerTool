@@ -3,9 +3,9 @@
     using System;
     using System.Globalization;
     using System.IO;
+    using System.IO.Compression;
     using System.Linq;
     using System.Reflection;
-    using System.Text;
 
     using Antlr4.StringTemplate;
 
@@ -15,17 +15,8 @@
     /// <summary>
     /// Defines the <see cref="HtmlExporter" />
     /// </summary>
-    public class HtmlExporter : IExporter
+    public partial class HtmlExporter : IExporter
     {
-        /// <summary>
-        /// Defines the end of file marker
-        /// </summary>
-        private const string EndOfFileMarker = "--NextPart--";
-
-        /// <summary>
-        /// Defines the header text resource key
-        /// </summary>
-        private const string HeaderTextResource = "MatchMaker.Reporting.Templates.Html.Header.txt";
 
         /// <summary>
         /// Defines the index template resource key
@@ -50,7 +41,7 @@
         /// <summary>
         /// Defines the style sheet resource key
         /// </summary>
-        private const string StyleSheet = "MatchMaker.Reporting.Templates.Html.Style.txt";
+        private const string StyleSheet = "MatchMaker.Reporting.Templates.Html.Style.css";
 
         /// <summary>
         /// Defines the team detail template resource key
@@ -63,6 +54,41 @@
         private const string TeamSummaryTemplate = "MatchMaker.Reporting.Templates.Html.TeamSummary.stg";
 
         /// <summary>
+        /// The results folder
+        /// </summary>
+        private const string ResultsFolder = "Results";
+
+        /// <summary>
+        /// The index file name
+        /// </summary>
+        private const string IndexFileName = "index.html";
+
+        /// <summary>
+        /// The quizzers folder name
+        /// </summary>
+        private const string QuizzersFolderName = "quizzers";
+
+        /// <summary>
+        /// The quizzers file name
+        /// </summary>
+        private const string QuizzersFileName = "quizzers.html";
+
+        /// <summary>
+        /// The style sheet file name
+        /// </summary>
+        private const string StyleSheetFileName = "style.css";
+
+        /// <summary>
+        /// The teams folder name
+        /// </summary>
+        private const string TeamsFolderName = "teams";
+
+        /// <summary>
+        /// The teams file name
+        /// </summary>
+        private const string TeamsFileName = "teams.html";
+
+        /// <summary>
         /// Exports the <see cref="Summary"/> to a single HTML archive.
         /// </summary>
         /// <param name="summary">The <see cref="Summary"/> instance</param>
@@ -70,34 +96,67 @@
         public void Export(Summary summary, string folder)
         {
             Arg.NotNull(summary, nameof(summary));
+            Arg.NotNullOrWhiteSpace(folder, nameof(folder));
 
-            var results = CreateResults(summary);
-            File.WriteAllText(Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.mhtml")), results);
+            var resultsFolder = CreateResultsFolder(folder);
+
+            CreateResults(summary, resultsFolder);
+
+            CreateZipFile(summary, folder, resultsFolder);
+        }
+
+        /// <summary>
+        /// Creates the ZIP file.
+        /// </summary>
+        /// <param name="summary">The summary.</param>
+        /// <param name="folder">The folder.</param>
+        /// <param name="resultsFolder">The results folder.</param>
+        private static void CreateZipFile(Summary summary, string folder, string resultsFolder)
+        {
+            var zipPath = Path.Combine(folder, $"{summary.Name} (Results).zip");
+
+            if (File.Exists(zipPath))
+            {
+                File.Delete(zipPath);
+            }
+
+            ZipFile.CreateFromDirectory(resultsFolder, zipPath);
+        }
+
+        /// <summary>
+        /// Creates the results folder.
+        /// </summary>
+        /// <param name="folder">The folder.</param>
+        /// <returns>The results folder path</returns>
+        private static string CreateResultsFolder(string folder)
+        {
+            var resultsFolder = Path.Combine(folder, ResultsFolder);
+
+            if (Directory.Exists(resultsFolder))
+            {
+                Directory.Delete(resultsFolder, true);
+            }
+
+            Directory.CreateDirectory(resultsFolder);
+            return resultsFolder;
         }
 
         /// <summary>
         /// Create the HTML output from the given <see cref="Summary"/> instance
         /// </summary>
         /// <param name="summary">The <see cref="Summary"/> instance</param>
-        /// <returns>The HTML <see cref="string"/> output</returns>
-        private static string CreateResults(Summary summary)
+        /// <param name="folder">The target folder</param>
+        private static void CreateResults(Summary summary, string folder)
         {
-            var builder = new StringBuilder();
+            WriteStyleSheet(folder);
 
-            WriteHeader(builder);
+            WriteIndex(summary, folder);
 
-            WriteIndex(summary, builder);
-            WriteTeamSummary(summary, builder);
-            WriteTeamDetails(summary, builder);
+            WriteTeamSummary(summary, folder);
+            WriteTeamDetails(summary, folder);
 
-            WriteQuizzerSummary(summary, builder);
-            WriteQuizzerDetails(summary, builder);
-
-            WriteStyleSheet(builder);
-
-            builder.AppendLine(EndOfFileMarker);
-
-            return builder.ToString();
+            WriteQuizzerSummary(summary, folder);
+            WriteQuizzerDetails(summary, folder);
         }
 
         /// <summary>
@@ -219,34 +278,15 @@
         }
 
         /// <summary>
-        /// Writes the header text.
-        /// </summary>
-        /// <param name="builder">The input <see cref="StringBuilder"/></param>
-        /// <returns>The <see cref="StringBuilder"/> with the header text</returns>
-        private static StringBuilder WriteHeader(StringBuilder builder)
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            using (var stream = assembly.GetManifestResourceStream(HeaderTextResource))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                    builder.Append(reader.ReadToEnd());
-                }
-            }
-
-            return builder;
-        }
-
-        /// <summary>
         /// Writes the tournament <see cref="Summary"/> index.
         /// </summary>
         /// <param name="summary">The <see cref="Summary"/> instance</param>
-        /// <param name="builder">The input <see cref="StringBuilder"/></param>
-        private static void WriteIndex(Summary summary, StringBuilder builder)
+        /// <param name="folder">The target folder</param>
+        private static void WriteIndex(Summary summary, string folder)
         {
             var template = LoadTemplate(IndexTemplate);
             template.Add("summary", summary);
-            builder.Append(template.Render(CultureInfo.CurrentCulture));
+            File.WriteAllText(Path.Combine(folder, IndexFileName), template.Render(CultureInfo.CurrentCulture));
         }
 
         /// <summary>
@@ -254,8 +294,8 @@
         /// </summary>
         /// <param name="summary">The <see cref="Summary"/> instance</param>
         /// <param name="quizzerSummary">The <see cref="QuizzerSummary"/> instance</param>
-        /// <param name="builder">The <see cref="StringBuilder"/> instance</param>
-        private static void WriteQuizzerDetail(Summary summary, QuizzerSummary quizzerSummary, StringBuilder builder)
+        /// <param name="folder">The target folder</param>
+        private static void WriteQuizzerDetail(Summary summary, QuizzerSummary quizzerSummary, string folder)
         {
             var quizzer = summary.Result.Schedule.Quizzers.First(x => x.Value.Id == quizzerSummary.QuizzerId).Value;
             var details = summary.Result.Matches
@@ -285,19 +325,22 @@
             template.Add("quizzer", quizzerData);
             template.Add("details", details);
 
-            builder.Append(template.Render(CultureInfo.CurrentCulture));
+            File.WriteAllText(Path.Combine(folder, $"{quizzer.Id}.html"), template.Render(CultureInfo.CurrentCulture));
         }
 
         /// <summary>
         /// Writes all quizzer details to the output.
         /// </summary>
         /// <param name="summary">The <see cref="Summary"/> instance</param>
-        /// <param name="builder">The <see cref="StringBuilder"/> instance</param>
-        private static void WriteQuizzerDetails(Summary summary, StringBuilder builder)
+        /// <param name="folder">The target folder</param>
+        private static void WriteQuizzerDetails(Summary summary, string folder)
         {
+            folder = Path.Combine(folder, QuizzersFolderName);
+            Directory.CreateDirectory(folder);
+
             foreach (var quizzer in summary.QuizzerSummaries)
             {
-                WriteQuizzerDetail(summary, quizzer.Value, builder);
+                WriteQuizzerDetail(summary, quizzer.Value, folder);
             }
         }
 
@@ -305,8 +348,8 @@
         /// Writes the quizzer summary page
         /// </summary>
         /// <param name="summary">The <see cref="Summary"/> instance</param>
-        /// <param name="builder">The <see cref="StringBuilder"/> instance</param>
-        private static void WriteQuizzerSummary(Summary summary, StringBuilder builder)
+        /// <param name="folder">The target folder</param>
+        private static void WriteQuizzerSummary(Summary summary, string folder)
         {
             var quizzers = summary.QuizzerSummaries
                 .OrderBy(x => x.Value.Place)
@@ -324,21 +367,21 @@
             template.Add("name", summary.Name);
             template.Add("quizzers", quizzers);
 
-            builder.Append(template.Render(CultureInfo.CurrentCulture));
+            File.WriteAllText(Path.Combine(folder, QuizzersFileName), template.Render(CultureInfo.CurrentCulture));
         }
 
         /// <summary>
         /// Writes the CSS style sheet
         /// </summary>
-        /// <param name="builder">The <see cref="StringBuilder"/> instance</param>
-        private static void WriteStyleSheet(StringBuilder builder)
+        /// <param name="folder">The target folder</param>
+        private static void WriteStyleSheet(string folder)
         {
             var assembly = Assembly.GetExecutingAssembly();
             using (var stream = assembly.GetManifestResourceStream(StyleSheet))
             {
-                using (var reader = new StreamReader(stream))
+                using (var destination = File.OpenWrite(Path.Combine(folder, StyleSheetFileName)))
                 {
-                    builder.Append(reader.ReadToEnd());
+                    stream.CopyTo(destination);
                 }
             }
         }
@@ -348,8 +391,8 @@
         /// </summary>
         /// <param name="summary">The <see cref="Summary"/> instance</param>
         /// <param name="teamSummary">The <see cref="TeamSummary"/> instance</param>
-        /// <param name="builder">The <see cref="StringBuilder"/> instance</param>
-        private static void WriteTeamDetail(Summary summary, TeamSummary teamSummary, StringBuilder builder)
+        /// <param name="folder">The target folder</param>
+        private static void WriteTeamDetail(Summary summary, TeamSummary teamSummary, string folder)
         {
             var details = summary.Result.Matches
                 .Where(x => x.Value.TeamResults.Any(t => t.TeamId == teamSummary.TeamId))
@@ -395,19 +438,22 @@
             template.Add("details", details);
             template.Add("quizzers", quizzerSummaries);
 
-            builder.Append(template.Render(CultureInfo.CurrentCulture));
+            File.WriteAllText(Path.Combine(folder, $"{team.TeamId}.html"), template.Render(CultureInfo.CurrentCulture));
         }
 
         /// <summary>
         /// Writes all team details.
         /// </summary>
         /// <param name="summary">The <see cref="Summary"/> instance</param>
-        /// <param name="builder">The <see cref="StringBuilder"/> instance</param>
-        private static void WriteTeamDetails(Summary summary, StringBuilder builder)
+        /// <param name="folder">The target folder</param>
+        private static void WriteTeamDetails(Summary summary, string folder)
         {
+            folder = Path.Combine(folder, TeamsFolderName);
+            Directory.CreateDirectory(folder);
+
             foreach (var team in summary.TeamSummaries)
             {
-                WriteTeamDetail(summary, team.Value, builder);
+                WriteTeamDetail(summary, team.Value, folder);
             }
         }
 
@@ -415,8 +461,8 @@
         /// Writes the team summary page
         /// </summary>
         /// <param name="summary">The <see cref="Summary"/> instance</param>
-        /// <param name="builder">The <see cref="StringBuilder"/> instance</param>
-        private static void WriteTeamSummary(Summary summary, StringBuilder builder)
+        /// <param name="folder">The target folder</param>
+        private static void WriteTeamSummary(Summary summary, string folder)
         {
             var teams = summary.TeamSummaries
                 .OrderBy(kvp => kvp.Value.Place)
@@ -436,25 +482,7 @@
             template.Add("name", summary.Name);
             template.Add("teams", teams);
 
-            builder.Append(template.Render(CultureInfo.CurrentCulture));
-        }
-
-        /// <summary>
-        /// Defines the <see cref="DecimalAttributeRenderer" />
-        /// </summary>
-        private class DecimalAttributeRenderer : IAttributeRenderer
-        {
-            /// <summary>
-            /// Converts the given object to a string assuming it is a <see cref="decimal"/>.
-            /// </summary>
-            /// <param name="obj">The <see cref="decimal"/> <see cref="object"/> instance</param>
-            /// <param name="formatString">The format <see cref="string"/></param>
-            /// <param name="culture">The <see cref="CultureInfo"/> instance</param>
-            /// <returns>The formatted <see cref="string"/></returns>
-            public string ToString(object obj, string formatString, CultureInfo culture)
-            {
-                return ((decimal)obj).ToString(formatString, culture);
-            }
+            File.WriteAllText(Path.Combine(folder, TeamsFileName), template.Render(CultureInfo.CurrentCulture));
         }
     }
 }

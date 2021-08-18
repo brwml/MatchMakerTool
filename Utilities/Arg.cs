@@ -23,5 +23,21 @@
 
             return arg;
         }
+
+        /// <summary>
+        /// Determines whether the argument is null or whitespace. When it is, an <see cref="ArgumentException"/> is thrown.
+        /// </summary>
+        /// <param name="arg">The argument.</param>
+        /// <param name="name">The name.</param>
+        /// <returns>The argument</returns>
+        public static string NotNullOrWhiteSpace([ValidatedNotNull] string arg, string name)
+        {
+            if (string.IsNullOrWhiteSpace(arg))
+            {
+                throw new ArgumentException("The argument cannot be null or whitespace.", name);
+            }
+
+            return arg;
+        }
     }
 }

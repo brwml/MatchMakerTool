@@ -25,16 +25,13 @@
         /// <returns>The <see cref="bool"/></returns>
         internal static bool Process(ReportingOptions options)
         {
-            var sourceFolder = options.SourceFolder;
-            var policies = LoadRankingPolicies(options.RankingProcedure);
-
-            Trace.TraceInformation($"Loading results from {sourceFolder}...");
-            var summary = CreateSummary(sourceFolder, policies);
+            var summary = CreateSummary(options);
             var directory = Directory.CreateDirectory(options.OutputFolder);
+
+            Trace.TraceInformation($"Exporting results to {options.OutputFolder}...");
 
             Parallel.ForEach(GetExporters(options.OutputFormat), exporter =>
             {
-                Trace.TraceInformation($"{exporter.GetType().Name}: exporting results to {options.OutputFolder}...");
                 exporter.Export(summary, directory.FullName);
             });
 
@@ -73,6 +70,19 @@
             var schedule = LoadScheduleFromFolder(sourceFolder);
             var result = LoadResultsFromFolder(sourceFolder, schedule);
             return Summary.FromResult(result, policies);
+        }
+
+        /// <summary>
+        /// Create the tournament summary
+        /// </summary>
+        /// <param name="options">The reporting options</param>
+        /// <returns>The <see cref="Summary"/> instance</returns>
+        private static Summary CreateSummary(ReportingOptions options)
+        {
+            var sourceFolder = options.SourceFolder;
+            var schedule = LoadScheduleFromFolder(sourceFolder).WithName(options.Name);
+            var result = LoadResultsFromFolder(sourceFolder, schedule);
+            return Summary.FromResult(result, LoadRankingPolicies(options.RankingProcedure));
         }
 
         /// <summary>
@@ -122,6 +132,11 @@
             if (format.HasFlag(OutputFormat.Pdf))
             {
                 list.Add(new PdfExporter());
+            }
+
+            if (format.HasFlag(OutputFormat.Rtf))
+            {
+                list.Add(new RtfExporter());
             }
 
             return list;

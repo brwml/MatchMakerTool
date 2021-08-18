@@ -1,16 +1,11 @@
 ﻿root(name, quizzers) ::= <<
---NextPart
-Content-Location: quizzers.html
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset="utf-8"
-
 \<html>
 	\<head>
 		\<title><name>: Quizzer Summary\</title>
-		\<link rel=3D"stylesheet" type=3D"text/css" href=3D"style.css">
+		\<link rel="stylesheet" type="text/css" href="style.css">
 	\</head>
 	\<body>
-		\<a href=3D"index.html"><name> Home\</a>
+		\<a href="index.html"><name> Home\</a>
 		\<br/>
 		\<hr/>
 		\<h1>Quizzer Summary\</h1>
@@ -25,14 +20,12 @@ Content-Type: text/html; charset="utf-8"
 		\</table>
 	\</body>
 \</html>
-
-
 >>
 
 rows(quizzer) ::= <<
 \<tr>
 	\<td><quizzer.Place>\</td>
-	\<td>\<a href=3D"q<quizzer.Id>.html"><quizzer.FirstName> <quizzer.LastName>\</a>\</td>
+	\<td>\<a href="quizzers/<quizzer.Id>.html"><quizzer.FirstName> <quizzer.LastName>\</a>\</td>
 	\<td><quizzer.AverageScore; format="F2">\</td>
 	\<td><quizzer.AverageErrors; format="F2">\</td>
 \</tr>

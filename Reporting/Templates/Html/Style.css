@@ -1,0 +1,12 @@
+﻿body, table {
+    font-family: "Calibri", "Segoe UI", "Tahoma", "Geneva", "Verdana", sans-serif;
+}
+
+h1, h2, h3 {
+    color: navy;
+}
+
+td, th {
+    padding-right: 2em;
+}
+

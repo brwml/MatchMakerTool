@@ -118,4 +118,26 @@
             return schedule;
         }
     }
+
+    /// <summary>
+    /// Extension methods for <see cref="Schedule"/> objects
+    /// </summary>
+    public static class ScheduleExtensions
+    {
+        /// <summary>
+        /// Yields the schedule object with the provided name.
+        /// </summary>
+        /// <param name="schedule">The schedule.</param>
+        /// <param name="name">The name.</param>
+        /// <returns>The schedule</returns>
+        public static Schedule WithName(this Schedule schedule, string name)
+        {
+            if (schedule != null && !string.IsNullOrWhiteSpace(name))
+            {
+                schedule.Name = name;
+            }
+
+            return schedule;
+        }
+    }
 }

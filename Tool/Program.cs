@@ -46,6 +46,7 @@
             if (options.Verbose)
             {
                 Trace.Listeners.Add(new ColorConsoleTraceListener());
+                Trace.IndentSize = 2;
             }
         }
     }

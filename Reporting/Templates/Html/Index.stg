@@ -1,26 +1,19 @@
 ﻿root(summary) ::= <<
---NextPart
-Content-Location: index.html
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset="utf-8"
-
 \<html>
 	\<head>
 		\<title><summary.Name>\</title>
-		\<link rel=3D"stylesheet" type=3D"text/css" href=3D"style.css">
+		\<link rel="stylesheet" type="text/css" href="style.css">
 	\</head>
 	\<body>
-		\<a href=3D"index.html">Home\</a>
+		\<a href="index.html">Home\</a>
 		\<br/>
 		\<hr/>
 		\<h1><summary.Name>\</h1>
 		\<h2>Summaries\</h2>
 		\<ul>
-			\<li>\<a href=3D"teams.html">Team Summary\</a>\</li>
-			\<li>\<a href=3D"quizzers.html">Quizzer Summary\</a>\</li>
+			\<li>\<a href="teams.html">Team Summary\</a>\</li>
+			\<li>\<a href="quizzers.html">Quizzer Summary\</a>\</li>
 		\</ul>
 	\</body>
 \</html>
-
-
 >>

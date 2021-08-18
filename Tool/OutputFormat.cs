@@ -25,8 +25,12 @@
         /// </summary>
         Pdf = 4,
         /// <summary>
+        /// Defines the RTF output format
+        /// </summary>
+        Rtf = 8,
+        /// <summary>
         /// Defines all output formats
         /// </summary>
-        All = Excel | Html | Pdf
+        All = Excel | Html | Pdf | Rtf
     }
 }
