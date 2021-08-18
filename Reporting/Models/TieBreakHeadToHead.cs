@@ -25,13 +25,13 @@
         /// <summary>
         /// Gets the Teams
         /// </summary>
-        [IgnoreDataMember]
+        [DataMember]
         public IDictionary<int, Team> Teams { get; }
 
         /// <summary>
         /// Gets or sets the Results
         /// </summary>
-        [IgnoreDataMember]
+        [DataMember]
         private IEnumerable<MatchResult> Results { get; set; }
 
         /// <summary>

@@ -23,7 +23,7 @@
 
             var name = summary.Name;
             var path = Path.Combine(folder, name + ".summary");
-            File.WriteAllText(path, JsonConvert.SerializeObject(summary, Formatting.Indented));
+            File.WriteAllText(path, JsonConvert.SerializeObject(summary, Formatting.Indented, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto }));
         }
     }
 }
