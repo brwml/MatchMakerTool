@@ -50,19 +50,29 @@
         /// <returns>The quizzers</returns>
         private static IEnumerable GetQuizzers(Summary summary)
         {
-            return summary.QuizzerSummaries.Values
-                .Select(x => new
-                {
-                    x.AverageErrors,
-                    x.AverageScore,
-                    x.Place,
-                    Quizzer = GetQuizzer(x.QuizzerId, summary),
-                    x.TotalErrors,
-                    x.TotalRounds,
-                    x.TotalScore
-                })
+            var quizzers = summary.QuizzerSummaries.Values
                 .OrderBy(x => x.Place)
                 .ToArray();
+
+            for (int i = 0; i < quizzers.Length; i++)
+            {
+                yield return GetQuizzer(quizzers[i], i == 0 || quizzers[i].Place != quizzers[i - 1].Place, summary);
+            }
+        }
+
+        private static object GetQuizzer(QuizzerSummary quizzer, bool showPlace, Summary summary)
+        {
+            return new
+            {
+                quizzer.AverageErrors,
+                quizzer.AverageScore,
+                quizzer.Place,
+                Quizzer = GetQuizzer(quizzer.QuizzerId, summary),
+                ShowPlace = showPlace,
+                quizzer.TotalErrors,
+                quizzer.TotalRounds,
+                quizzer.TotalScore
+            };
         }
 
         /// <summary>
