@@ -67,8 +67,8 @@
                 Id = xml.GetAttribute<int>("id"),
                 TeamId = xml.GetElement<int>("teamID"),
                 ChurchId = xml.GetElement<int>("churchID"),
-                FirstName = xml.Element("firstname").Value,
-                LastName = xml.Element("lastname").Value,
+                FirstName = xml.Element("firstname").Value.Trim(),
+                LastName = xml.Element("lastname").Value.Trim(),
                 Gender = xml.Element("gender").Value == "M" ? Gender.Male : Gender.Female,
                 RookieYear = xml.GetElement<int>("rookieYear")
             };
