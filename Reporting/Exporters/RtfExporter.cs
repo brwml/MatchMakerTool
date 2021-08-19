@@ -83,7 +83,7 @@
                 quizzer.Id,
                 quizzer.LastName,
                 quizzer.RookieYear,
-                FullName = $"{quizzer.LastName}, {quizzer.FirstName}",
+                FullName = $"{quizzer.FirstName} {quizzer.LastName}",
                 Church = church
             };
         }
