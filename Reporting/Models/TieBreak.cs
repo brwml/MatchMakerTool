@@ -1,7 +1,8 @@
 ﻿namespace MatchMaker.Reporting.Models
 {
     using System.Runtime.Serialization;
-    using System.Text.RegularExpressions;
+
+    using Humanizer;
 
     /// <summary>
     /// Defines the <see cref="TieBreak" />
@@ -26,7 +27,7 @@
         /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
-            return Regex.Replace(this.Reason.ToString(), "[A-Z]", m => " " + m.Value).Trim();
+            return this.Reason.Humanize(LetterCasing.Title);
         }
 
         /// <summary>
