@@ -475,7 +475,8 @@
                     kvp.Value.WinPercentage,
                     kvp.Value.AverageScore,
                     kvp.Value.AverageErrors,
-                    summary.Result.Schedule.Teams.Select(x => x.Value).FirstOrDefault(x => x.Id == kvp.Value.TeamId).Name
+                    kvp.Value.TieBreak,
+                    Name = $"{GetTeamName(kvp.Value, summary)} ({GetTeamAbbreviation(kvp.Value, summary)})"
                 });
 
             var template = LoadTemplate(TeamSummaryTemplate);
@@ -483,6 +484,28 @@
             template.Add("teams", teams);
 
             File.WriteAllText(Path.Combine(folder, TeamsFileName), template.Render(CultureInfo.CurrentCulture));
+        }
+
+        /// <summary>
+        /// Gets the team abbreviation.
+        /// </summary>
+        /// <param name="team">The team.</param>
+        /// <param name="summary">The summary.</param>
+        /// <returns>The team abbreviation</returns>
+        private static string GetTeamAbbreviation(TeamSummary team, Summary summary)
+        {
+            return summary.Result.Schedule.Teams[team.TeamId].Abbreviation;
+        }
+
+        /// <summary>
+        /// Gets the name of the team.
+        /// </summary>
+        /// <param name="team">The team.</param>
+        /// <param name="summary">The summary.</param>
+        /// <returns>The name of the team</returns>
+        private static string GetTeamName(TeamSummary team, Summary summary)
+        {
+            return summary.Result.Schedule.Teams[team.TeamId].Name;
         }
     }
 }

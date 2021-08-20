@@ -18,6 +18,7 @@
 				\<th>Percentage\</th>
 				\<th>Score\</th>
 				\<th>Errors\</th>
+				\<th>Tie Breaker\</th>
 			\</tr>
 			<teams:rows()>
 		\</table>
@@ -34,5 +35,6 @@ rows(team) ::= <<
 	\<td><team.WinPercentage; format="F3">\</td>
 	\<td><team.AverageScore; format="F2">\</td>
 	\<td><team.AverageErrors; format="F2">\</td>
+	\<td><team.TieBreak>\</td>
 \</tr>
 >>
