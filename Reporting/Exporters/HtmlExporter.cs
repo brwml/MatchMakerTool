@@ -464,8 +464,7 @@
         /// <param name="folder">The target folder</param>
         private static void WriteTeamSummary(Summary summary, string folder)
         {
-            var teams = summary.TeamSummaries
-                .Select(kvp => kvp.Value)
+            var teams = summary.TeamSummaries.Values
                 .OrderBy(x => x.Place)
                 .Select(x => new
                 {
