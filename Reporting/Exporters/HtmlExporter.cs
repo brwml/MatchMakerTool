@@ -465,18 +465,19 @@
         private static void WriteTeamSummary(Summary summary, string folder)
         {
             var teams = summary.TeamSummaries
-                .OrderBy(kvp => kvp.Value.Place)
-                .Select(kvp => new
+                .Select(kvp => kvp.Value)
+                .OrderBy(x => x.Place)
+                .Select(x => new
                 {
-                    kvp.Value.Place,
-                    kvp.Value.TeamId,
-                    kvp.Value.Wins,
-                    kvp.Value.Losses,
-                    kvp.Value.WinPercentage,
-                    kvp.Value.AverageScore,
-                    kvp.Value.AverageErrors,
-                    kvp.Value.TieBreak,
-                    Name = $"{GetTeamName(kvp.Value, summary)} ({GetTeamAbbreviation(kvp.Value, summary)})"
+                    x.Place,
+                    x.TeamId,
+                    x.Wins,
+                    x.Losses,
+                    x.WinPercentage,
+                    x.AverageScore,
+                    x.AverageErrors,
+                    x.TieBreak,
+                    Name = $"{GetTeamName(x, summary)} ({GetTeamAbbreviation(x, summary)})"
                 });
 
             var template = LoadTemplate(TeamSummaryTemplate);
