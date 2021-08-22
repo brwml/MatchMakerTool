@@ -54,7 +54,7 @@
                 .OrderBy(x => x.Place)
                 .ToArray();
 
-            for (int i = 0; i < quizzers.Length; i++)
+            for (var i = 0; i < quizzers.Length; i++)
             {
                 yield return GetQuizzer(quizzers[i], i == 0 || quizzers[i].Place != quizzers[i - 1].Place, summary);
             }
