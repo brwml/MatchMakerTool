@@ -3,16 +3,15 @@
     <OutputType>Library</OutputType>
     <RootNamespace>MatchMaker.Reporting</RootNamespace>
     <AssemblyName>MatchMaker.Reporting</AssemblyName>
-    <TargetFramework>net48</TargetFramework>
+    <!-- <TargetFramework>net48</TargetFramework> -->
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <Import Project="..\Shared\Project.xml" />
   <ItemGroup>
-    <None Remove="Templates\Rtf\Document.stg" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.95.4" />
     <PackageReference Include="Humanizer.Core" Version="2.11.10" />
-    <PackageReference Include="iTextSharp" Version="5.5.13.2" />
+    <PackageReference Include="itext7" Version="7.1.16" />
+    <!--<PackageReference Include="iTextSharp" Version="5.5.13.2" />-->
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,7 +21,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="QuickGraph" Version="3.6.61119.7" />
+    <PackageReference Include="QuickGraph" Version="4.0.0" />
     <PackageReference Include="StringTemplate4" Version="4.0.8" />
     <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
   </ItemGroup>

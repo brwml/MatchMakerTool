@@ -4,8 +4,13 @@
     using System.IO;
     using System.Linq;
 
-    using iTextSharp.text;
-    using iTextSharp.text.pdf;
+    using iText.IO.Font.Constants;
+    using iText.Kernel.Font;
+    using iText.Kernel.Pdf;
+    using iText.Layout;
+    using iText.Layout.Borders;
+    using iText.Layout.Element;
+    using iText.Layout.Properties;
 
     using MatchMaker.Reporting.Models;
     using MatchMaker.Utilities;
@@ -18,22 +23,22 @@
         /// <summary>
         /// Defines the header cell font
         /// </summary>
-        private static readonly Font HeaderCellFont = new Font(Font.FontFamily.HELVETICA, 9f, Font.BOLD | Font.UNDERLINE);
+        //private static readonly PdfFont HeaderCellFont = new( PdfFont.FontFamily.HELVETICA, 9f, Font.BOLD | Font.UNDERLINE);
 
         /// <summary>
         /// Defines the regular cell font
         /// </summary>
-        private static readonly Font RegularCellFont = new Font(Font.FontFamily.HELVETICA, 9f);
+        //private static readonly Font RegularCellFont = new Font(Font.FontFamily.HELVETICA, 9f);
 
         /// <summary>
         /// Defines the subtitle font
         /// </summary>
-        private static readonly Font SubtitleFont = new Font(Font.FontFamily.TIMES_ROMAN, 14f, Font.BOLDITALIC);
+        //private static readonly Font SubtitleFont = new Font(Font.FontFamily.TIMES_ROMAN, 14f, Font.BOLDITALIC);
 
         /// <summary>
         /// Defines the title font
         /// </summary>
-        private static readonly Font TitleFont = new Font(Font.FontFamily.TIMES_ROMAN, 20f, Font.BOLDITALIC);
+        //private static readonly Font TitleFont = new Font(Font.FontFamily.TIMES_ROMAN, 20f, Font.BOLDITALIC);
 
         /// <summary>
         /// Exports the <see cref="Summary"/> to a PDF file.
@@ -46,17 +51,14 @@
 
             var fileName = Path.Combine(folder, $"{summary.Name}.pdf");
 
-            using (var stream = File.Create(fileName))
-            using (var document = OpenDocument(stream))
-            {
-                CreateTeamPageTitle(summary, document);
-                ExportTeamResults(document, summary);
+            using var document = OpenDocument(fileName);
+            CreateTeamPageTitle(summary, document);
+            ExportTeamResults(document, summary);
 
-                CreateQuizzerPageTitle(document);
-                ExportQuizzerResults(document, summary);
+            CreateQuizzerPageTitle(document);
+            ExportQuizzerResults(document, summary);
 
-                document.Close();
-            }
+            document.Close();
         }
 
         /// <summary>
@@ -64,14 +66,13 @@
         /// </summary>
         /// <param name="content">The <see cref="string"/> content of the cell</param>
         /// <returns>The <see cref="PdfPCell"/> instance</returns>
-        private static PdfPCell CreateCell(string content)
+        private static Cell CreateCell(string content)
         {
-            var phrase = new Phrase(content, RegularCellFont);
-            return new PdfPCell(phrase)
-            {
-                Border = 0,
-                BorderWidth = 0
-            };
+            return new Cell()
+                .Add(new Paragraph(content).SetNormalFont())
+                .SetBorder(Border.NO_BORDER)
+                .SetPaddingRight(10f)
+                ;
         }
 
         /// <summary>
@@ -79,23 +80,24 @@
         /// </summary>
         /// <param name="content">The <see cref="string"/> content</param>
         /// <returns>The <see cref="PdfPHeaderCell"/> instance</returns>
-        private static PdfPHeaderCell CreateHeaderCell(string content)
+        private static Cell CreateHeaderCell(string content)
         {
-            var phrase = new Phrase(content, HeaderCellFont);
-            var cell = new PdfPHeaderCell();
-            cell.AddElement(phrase);
-            cell.Border = 0;
-            cell.BorderWidth = 0;
-            return cell;
+            return new Cell()
+                .Add(new Paragraph(content).SetNormalFont())
+                .SetBold()
+                .SetUnderline()
+                .SetBorder(Border.NO_BORDER)
+                .SetPaddingRight(10f)
+                ;
         }
 
         /// <summary>
         /// Creates the quizzer header row
         /// </summary>
         /// <returns>The <see cref="PdfPRow"/> instance</returns>
-        private static PdfPRow CreateQuizzerHeaderRow()
+        private static Cell[] CreateQuizzerHeaderRow()
         {
-            var cells = new[]
+            return new[]
             {
                 CreateHeaderCell(string.Empty),
                 CreateHeaderCell("Quizzer Name"),
@@ -103,7 +105,6 @@
                 CreateHeaderCell("Score"),
                 CreateHeaderCell("Errors")
             };
-            return new PdfPRow(cells);
         }
 
         /// <summary>
@@ -112,10 +113,8 @@
         /// <param name="document">The <see cref="Document"/> instance</param>
         private static void CreateQuizzerPageTitle(Document document)
         {
-            document.NewPage();
-            var paragraph = new Paragraph(new Phrase("Quizzer Results", SubtitleFont)) { Alignment = Element.ALIGN_CENTER };
-            document.Add(paragraph);
-            document.Add(Chunk.NEWLINE);
+            document.Add(new AreaBreak());
+            document.Add(new Paragraph("Quizzer Results").SetSubtitleFont());
         }
 
         /// <summary>
@@ -125,11 +124,11 @@
         /// <param name="quizzer">The <see cref="QuizzerSummary"/> instance</param>
         /// <param name="showPlace">A <see cref="bool"/> indicating whether to show the placement</param>
         /// <returns>The <see cref="PdfPRow"/> instance</returns>
-        private static PdfPRow CreateQuizzerRow(Summary summary, QuizzerSummary quizzer, bool showPlace)
+        private static Cell[] CreateQuizzerRow(Summary summary, QuizzerSummary quizzer, bool showPlace)
         {
             var quizzerInfo = summary.Result.Schedule.Quizzers[quizzer.QuizzerId];
             var churchInfo = summary.Result.Schedule.Churches.Values.FirstOrDefault(c => c.Id == quizzerInfo.ChurchId);
-            var cells = new[]
+            return new[]
             {
                 CreateCell(showPlace ? quizzer.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
                 CreateCell($"{quizzerInfo.FirstName} {quizzerInfo.LastName}"),
@@ -137,16 +136,15 @@
                 CreateCell($"{quizzer.AverageScore.ToString("N2", CultureInfo.CurrentCulture)}"),
                 CreateCell($"{quizzer.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)}")
             };
-            return new PdfPRow(cells);
         }
 
         /// <summary>
         /// Creates the team header row
         /// </summary>
         /// <returns>The <see cref="PdfPRow"/> instance</returns>
-        private static PdfPRow CreateTeamHeaderRow()
+        private static Cell[] CreateTeamHeaderRow()
         {
-            var cells = new[]
+            return new[]
             {
                 CreateHeaderCell(string.Empty),
                 CreateHeaderCell("Team Name"),
@@ -156,7 +154,6 @@
                 CreateHeaderCell("Errors"),
                 CreateHeaderCell("Tie Breaker")
             };
-            return new PdfPRow(cells);
         }
 
         /// <summary>
@@ -166,13 +163,9 @@
         /// <param name="document">The <see cref="Document"/> instance</param>
         private static void CreateTeamPageTitle(Summary summary, Document document)
         {
-            document.AddTitle(summary.Name);
-            var title = new Paragraph(new Phrase(summary.Name, TitleFont)) { Alignment = Element.ALIGN_CENTER };
-            document.Add(title);
-            document.Add(Chunk.NEWLINE);
-            var subtitle = new Paragraph(new Phrase("Team Results", SubtitleFont)) { Alignment = Element.ALIGN_CENTER };
-            document.Add(subtitle);
-            document.Add(Chunk.NEWLINE);
+            document.Add(new Paragraph(summary.Name).SetTitleFont());
+            document.Add(new AreaBreak());
+            document.Add(new Paragraph("Team Results").SetSubtitleFont());
         }
 
         /// <summary>
@@ -182,9 +175,9 @@
         /// <param name="summary">The <see cref="TeamSummary"/> instance</param>
         /// <param name="showPlace">A <see cref="bool"/> indicating whether to show the placement</param>
         /// <returns>The <see cref="PdfPRow"/> instance</returns>
-        private static PdfPRow CreateTeamRow(Team team, TeamSummary summary, bool showPlace)
+        private static Cell[] CreateTeamRow(Team team, TeamSummary summary, bool showPlace)
         {
-            var cells = new[]
+            return new[]
             {
                 CreateCell(showPlace ? summary.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
                 CreateCell(team.Name),
@@ -194,7 +187,6 @@
                 CreateCell(summary.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)),
                 CreateCell(summary.TieBreak.ToString())
             };
-            return new PdfPRow(cells);
         }
 
         /// <summary>
@@ -204,16 +196,16 @@
         /// <param name="summary">The <see cref="Summary"/> instance</param>
         private static void ExportQuizzerResults(Document document, Summary summary)
         {
-            var table = new PdfPTable(new[] { 1f, 5f, 5f, 2f, 2f });
+            var table = new Table(5).SetHorizontalAlignment(HorizontalAlignment.CENTER);
 
-            table.Rows.Add(CreateQuizzerHeaderRow());
+            table.AddHeader(CreateQuizzerHeaderRow());
 
             var quizzers = summary.QuizzerSummaries.OrderBy(x => x.Value.Place).Select(x => x.Value).ToArray();
 
             for (var i = 0; i < quizzers.Length; i++)
             {
                 var showPlace = i == 0 || quizzers[i].Place != quizzers[i - 1].Place;
-                table.Rows.Add(CreateQuizzerRow(summary, quizzers[i], showPlace));
+                table.AddRow(CreateQuizzerRow(summary, quizzers[i], showPlace));
             }
 
             document.Add(table);
@@ -226,16 +218,16 @@
         /// <param name="summary">The <see cref="Summary"/> instance</param>
         private static void ExportTeamResults(Document document, Summary summary)
         {
-            var table = new PdfPTable(new[] { 1f, 5f, 1f, 1f, 2f, 2f, 4f });
+            var table = new Table(7).SetHorizontalAlignment(HorizontalAlignment.CENTER);
 
-            table.Rows.Add(CreateTeamHeaderRow());
+            table.AddHeader(CreateTeamHeaderRow());
 
             var teams = summary.TeamSummaries.OrderBy(x => x.Value.Place).Select(x => x.Value).ToArray();
 
             for (var i = 0; i < teams.Length; i++)
             {
                 var showPlace = i == 0 || teams[i].Place != teams[i - 1].Place;
-                table.Rows.Add(CreateTeamRow(summary.Result.Schedule.Teams[teams[i].TeamId], teams[i], showPlace));
+                table.AddRow(CreateTeamRow(summary.Result.Schedule.Teams[teams[i].TeamId], teams[i], showPlace));
             }
 
             document.Add(table);
@@ -244,15 +236,88 @@
         /// <summary>
         /// Opens the PDF <see cref="Document"/> instance.
         /// </summary>
-        /// <param name="stream">The file <see cref="Stream"/></param>
+        /// <param name="fileName">The file name</param>
         /// <returns>The <see cref="Document"/> instance</returns>
-        private static Document OpenDocument(Stream stream)
+        private static Document OpenDocument(string fileName)
         {
-            var document = new Document();
-
-            PdfWriter.GetInstance(document, stream);
-            document.Open();
+            var writer = new PdfWriter(fileName);
+            var pdf = new PdfDocument(writer);
+            var document = new Document(pdf);
             return document;
+        }
+    }
+
+    /// <summary>
+    /// Extensions for manipulating PDF tables.
+    /// </summary>
+    internal static class TableExtensions
+    {
+        /// <summary>
+        /// Add a header row.
+        /// </summary>
+        /// <param name="table">The table</param>
+        /// <param name="cells">The header row cells</param>
+        /// <returns>The table</returns>
+        public static Table AddHeader(this Table table, Cell[] cells)
+        {
+            foreach (var cell in cells)
+            {
+                table.AddHeaderCell(cell);
+            }
+
+            return table;
+        }
+
+        /// <summary>
+        /// Adds a table row
+        /// </summary>
+        /// <param name="table">The table</param>
+        /// <param name="cells">The row cells</param>
+        /// <returns>The table</returns>
+        public static Table AddRow(this Table table, Cell[] cells)
+        {
+            foreach (var cell in cells)
+            {
+                table.AddCell(cell);
+            }
+
+            return table;
+        }
+    }
+
+    /// <summary>
+    /// Extensions methods for manipulating paragraphs.
+    /// </summary>
+    internal static class ParagraphExtensions
+    {
+        /// <summary>
+        /// Sets the normal font on the paragraph.
+        /// </summary>
+        /// <param name="paragraph">The paragraph</param>
+        /// <returns>The paragraph</returns>
+        public static Paragraph SetNormalFont(this Paragraph paragraph)
+        {
+            return paragraph.SetFontSize(9);
+        }
+
+        /// <summary>
+        /// Sets the title font.
+        /// </summary>
+        /// <param name="paragraph">The paragraph</param>
+        /// <returns>The paragraph</returns>
+        public static Paragraph SetTitleFont(this Paragraph paragraph)
+        {
+            return paragraph.SetFont(PdfFontFactory.CreateFont(StandardFonts.TIMES_BOLDITALIC)).SetFontSize(27).SetTextAlignment(TextAlignment.CENTER);
+        }
+
+        /// <summary>
+        /// Sets the subtitle font.
+        /// </summary>
+        /// <param name="paragraph">The paragraph</param>
+        /// <returns>The paragraph</returns>
+        public static Paragraph SetSubtitleFont(this Paragraph paragraph)
+        {
+            return paragraph.SetFont(PdfFontFactory.CreateFont(StandardFonts.TIMES_BOLDITALIC)).SetFontSize(18).SetTextAlignment(TextAlignment.CENTER);
         }
     }
 }

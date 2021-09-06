@@ -142,15 +142,11 @@
         private static Template LoadTemplate()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            using (var stream = assembly.GetManifestResourceStream(RtfTemplate))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                    var group = new TemplateGroupString(reader.ReadToEnd());
-                    group.RegisterRenderer(typeof(decimal), new DecimalAttributeRenderer());
-                    return group.GetInstanceOf(RootElement);
-                }
-            }
+            using var stream = assembly.GetManifestResourceStream(RtfTemplate);
+            using var reader = new StreamReader(stream);
+            var group = new TemplateGroupString(reader.ReadToEnd());
+            group.RegisterRenderer(typeof(decimal), new DecimalAttributeRenderer());
+            return group.GetInstanceOf(RootElement);
         }
     }
 }
