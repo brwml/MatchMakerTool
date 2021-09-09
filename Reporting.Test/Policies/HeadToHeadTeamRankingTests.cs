@@ -1,4 +1,4 @@
-﻿namespace MatchMaker.Reporting.Test.Policies
+﻿namespace Reporting.Test.Policies
 {
     using System.Collections.Generic;
     using System.IO;

@@ -1,4 +1,4 @@
-﻿namespace MatchMaker.Reporting.Test
+﻿namespace Reporting.Test.Models
 {
     using System.Xml.Linq;
 
