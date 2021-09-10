@@ -3,7 +3,6 @@
     <OutputType>Library</OutputType>
     <RootNamespace>MatchMaker.Reporting</RootNamespace>
     <AssemblyName>MatchMaker.Reporting</AssemblyName>
-    <!-- <TargetFramework>net48</TargetFramework> -->
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <Import Project="..\Shared\Project.xml" />

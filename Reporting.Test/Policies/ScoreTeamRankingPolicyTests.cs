@@ -10,16 +10,16 @@
 
     using Xunit;
 
-    public class ScoreQuizzerRankingPolicyTests
+    public class ScoreTeamRankingPolicyTests
     {
         [Theory]
         [MemberData(nameof(GetTestCases))]
-        public void ScoreTests(IEnumerable<QuizzerSummary> summaries, IDictionary<int, int> places)
+        public void TeamScoreTests(IEnumerable<TeamSummary> summaries, IDictionary<int, int> places)
         {
-            var policy = new ScoreQuizzerRankingPolicy();
-            policy.Rank(summaries);
+            var policy = new ScoreTeamRankingPolicy();
+            policy.Rank(summaries, null);
 
-            Assert.Equal(places, summaries.ToDictionary(x => x.QuizzerId, y => y.Place));
+            Assert.Equal(places, summaries.ToDictionary(x => x.TeamId, y => y.Place));
         }
 
         public static IEnumerable<object[]> GetTestCases()
@@ -34,16 +34,12 @@
         private static object[] GetTestCase1()
         {
             var faker = new Faker();
-            var points1 = faker.Random.Number(100, 200);
-            var rounds1 = faker.Random.Number(10, 20);
+            var score = faker.Random.Number(100, 1000);
 
-            var points2 = faker.Random.Number(100, 200);
-            var rounds2 = faker.Random.Number(100, 200);
-
-            var summaries = new List<QuizzerSummary>
+            var summaries = new List<TeamSummary>
             {
-                new QuizzerSummary { QuizzerId = 1, TotalScore = points1, TotalRounds = rounds1 },
-                new QuizzerSummary { QuizzerId = 2, TotalScore = points2, TotalRounds = rounds2 }
+                new TeamSummary { TeamId = 1, TotalScore = score, Wins = 1 },
+                new TeamSummary { TeamId = 2, TotalScore = score - 10, Wins = 1 }
             };
 
             var places = new Dictionary<int, int>
@@ -58,14 +54,12 @@
         private static object[] GetTestCase2()
         {
             var faker = new Faker();
-            var x = faker.Random.Number(10, 20);
-            var y = faker.Random.Number(10, 20);
-            var z = faker.Random.Number(10, 20);
+            var score = faker.Random.Number(100, 1000);
 
-            var summaries = new List<QuizzerSummary>
+            var summaries = new List<TeamSummary>
             {
-                new QuizzerSummary { QuizzerId = 1, TotalRounds = x, TotalScore = x * y },
-                new QuizzerSummary { QuizzerId = 2, TotalRounds = x * z, TotalScore = x * y * z }
+                new TeamSummary { TeamId = 1, TotalScore = score, Wins = 1 },
+                new TeamSummary { TeamId = 2, TotalScore = score, Wins = 1 }
             };
 
             var places = new Dictionary<int, int>
@@ -76,6 +70,5 @@
 
             return new object[] { summaries, places };
         }
-
     }
 }

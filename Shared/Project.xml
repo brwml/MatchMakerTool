@@ -1,7 +1,8 @@
 <Project>
     <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
         <AssemblyTitle>Tool for ACME Quiz MatchMaker</AssemblyTitle>
-        <Version>1.2.$([System.DateTime]::Now.ToString("yy"))$([System.DateTime]::Now.DayOfYear).0</Version>
+        <Version>2.0.$([System.DateTime]::Now.ToString("yyyy")).$([System.DateTime]::Now.DayOfYear.ToString("D03"))</Version>
         <Authors>Bryan Wilhelm</Authors>
         <Product>Tool for ACME Quiz MatchMaker</Product>
         <Description>A command line tool for generating reports from ACME Quiz MatchMaker results XML files.</Description>
