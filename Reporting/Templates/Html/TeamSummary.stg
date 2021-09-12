@@ -29,7 +29,7 @@
 rows(team) ::= <<
 \<tr>
 	\<td><team.Place>\</td>
-	\<td>\<a href="teams/<team.TeamId>.html"><team.Name>\</a>\</td>
+	\<td>\<a href="teams/<team.Id>.html"><team.Name>\</a>\</td>
 	\<td><team.Wins>\</td>
 	\<td><team.Losses>\</td>
 	\<td><team.WinPercentage; format="F3">\</td>

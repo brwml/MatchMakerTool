@@ -266,15 +266,11 @@
         private static Template LoadTemplate(string name)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            using (var stream = assembly.GetManifestResourceStream(name))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                    var group = new TemplateGroupString(reader.ReadToEnd());
-                    group.RegisterRenderer(typeof(decimal), new DecimalAttributeRenderer());
-                    return group.GetInstanceOf(RootElement);
-                }
-            }
+            using var stream = assembly.GetManifestResourceStream(name);
+            using var reader = new StreamReader(stream);
+            var group = new TemplateGroupString(reader.ReadToEnd());
+            group.RegisterRenderer(typeof(decimal), new DecimalAttributeRenderer());
+            return group.GetInstanceOf(RootElement);
         }
 
         /// <summary>
@@ -310,19 +306,9 @@
                     Errors = GetQuizzerErrors(x.Value, quizzer.Id)
                 });
 
-            var quizzerData = new
-            {
-                quizzer.Id,
-                quizzer.FirstName,
-                quizzer.LastName,
-                quizzerSummary.AverageErrors,
-                quizzerSummary.AverageScore,
-                quizzerSummary.Place
-            };
-
             var template = LoadTemplate(QuizzerDetailTemplate);
             template.Add("summary", summary);
-            template.Add("quizzer", quizzerData);
+            template.Add("quizzer", new QuizzerData(quizzerSummary, quizzer));
             template.Add("details", details);
 
             File.WriteAllText(Path.Combine(folder, $"{quizzer.Id}.html"), template.Render(CultureInfo.CurrentCulture));
@@ -351,21 +337,18 @@
         /// <param name="folder">The target folder</param>
         private static void WriteQuizzerSummary(Summary summary, string folder)
         {
-            var quizzers = summary.QuizzerSummaries
-                .OrderBy(x => x.Value.Place)
-                .Select(x => new
-                {
-                    Id = x.Value.QuizzerId,
-                    summary.Result.Schedule.Quizzers.First(q => q.Value.Id == x.Value.QuizzerId).Value.FirstName,
-                    summary.Result.Schedule.Quizzers.First(q => q.Value.Id == x.Value.QuizzerId).Value.LastName,
-                    x.Value.Place,
-                    x.Value.AverageScore,
-                    x.Value.AverageErrors
-                });
+            var quizzers = summary.Result.Schedule.Quizzers;
+
+            var quizzerData = summary.QuizzerSummaries
+                                     .Join(quizzers,
+                                           s => s.Key,
+                                           s => s.Key,
+                                           (s, q) => new QuizzerData(s.Value, q.Value))
+                                     .OrderBy(x => (x.Place, x.LastName, x.FirstName));
 
             var template = LoadTemplate(QuizzerSummaryTemplate);
             template.Add("name", summary.Name);
-            template.Add("quizzers", quizzers);
+            template.Add("quizzers", quizzerData);
 
             File.WriteAllText(Path.Combine(folder, QuizzersFileName), template.Render(CultureInfo.CurrentCulture));
         }
@@ -377,13 +360,9 @@
         private static void WriteStyleSheet(string folder)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            using (var stream = assembly.GetManifestResourceStream(StyleSheet))
-            {
-                using (var destination = File.OpenWrite(Path.Combine(folder, StyleSheetFileName)))
-                {
-                    stream.CopyTo(destination);
-                }
-            }
+            using var stream = assembly.GetManifestResourceStream(StyleSheet);
+            using var destination = File.OpenWrite(Path.Combine(folder, StyleSheetFileName));
+            stream.CopyTo(destination);
         }
 
         /// <summary>
@@ -407,17 +386,8 @@
                     Win = GetTeamPlace(x.Value, teamSummary.TeamId) == 1
                 });
 
-            var team = new
-            {
-                teamSummary.AverageErrors,
-                teamSummary.AverageScore,
-                teamSummary.Losses,
-                teamSummary.Place,
-                teamSummary.TeamId,
-                teamSummary.WinPercentage,
-                teamSummary.Wins,
-                summary.Result.Schedule.Teams.First(x => x.Value.Id == teamSummary.TeamId).Value.Name
-            };
+            var team = summary.Result.Schedule.Teams[teamSummary.TeamId];
+            var teamData = new TeamData(team, teamSummary);
 
             var quizzers = summary.Result.Schedule.Quizzers.Where(x => x.Value.TeamId == teamSummary.TeamId).Select(x => x.Value);
             var quizzerSummaries = summary.QuizzerSummaries
@@ -434,11 +404,11 @@
 
             var template = LoadTemplate(TeamDetailTemplate);
             template.Add("summary", summary);
-            template.Add("team", team);
+            template.Add("team", teamData);
             template.Add("details", details);
             template.Add("quizzers", quizzerSummaries);
 
-            File.WriteAllText(Path.Combine(folder, $"{team.TeamId}.html"), template.Render(CultureInfo.CurrentCulture));
+            File.WriteAllText(Path.Combine(folder, $"{team.Id}.html"), template.Render(CultureInfo.CurrentCulture));
         }
 
         /// <summary>
@@ -464,20 +434,12 @@
         /// <param name="folder">The target folder</param>
         private static void WriteTeamSummary(Summary summary, string folder)
         {
-            var teams = summary.TeamSummaries.Values
-                .OrderBy(x => x.Place)
-                .Select(x => new
-                {
-                    x.Place,
-                    x.TeamId,
-                    x.Wins,
-                    x.Losses,
-                    x.WinPercentage,
-                    x.AverageScore,
-                    x.AverageErrors,
-                    x.TieBreak,
-                    Name = $"{GetTeamName(x, summary)} ({GetTeamAbbreviation(x, summary)})"
-                });
+            var teams = summary.TeamSummaries
+                               .Join(summary.Result.Schedule.Teams,
+                                     s => s.Key,
+                                     t => t.Key,
+                                     (s, t) => new TeamData(t.Value, s.Value))
+                               .OrderBy(x => (x.Place, x.Name));
 
             var template = LoadTemplate(TeamSummaryTemplate);
             template.Add("name", summary.Name);
@@ -487,25 +449,77 @@
         }
 
         /// <summary>
-        /// Gets the team abbreviation.
+        /// Complete quizzer information for the tournament.
         /// </summary>
-        /// <param name="team">The team.</param>
-        /// <param name="summary">The summary.</param>
-        /// <returns>The team abbreviation</returns>
-        private static string GetTeamAbbreviation(TeamSummary team, Summary summary)
+        private class QuizzerData
         {
-            return summary.Result.Schedule.Teams[team.TeamId].Abbreviation;
+            private readonly QuizzerSummary quizzerSummary;
+            private readonly Quizzer quizzer;
+
+            public QuizzerData(QuizzerSummary summary, Quizzer quizzer)
+            {
+                this.quizzerSummary = summary;
+                this.quizzer = quizzer;
+            }
+
+            public int Id => this.quizzer.Id;
+
+            public string FirstName => this.quizzer.FirstName;
+
+            public string LastName => this.quizzer.LastName;
+
+            public decimal AverageErrors => this.quizzerSummary.AverageErrors;
+
+            public decimal AverageScore => this.quizzerSummary.AverageScore;
+
+            public int Place => this.quizzerSummary.Place;
+
+            public int TotalErrors => this.quizzerSummary.TotalErrors;
+
+            public int TotalRounds => this.quizzerSummary.TotalRounds;
+
+            public int TotalScore => this.quizzerSummary.TotalScore;
         }
 
         /// <summary>
-        /// Gets the name of the team.
+        /// Complete team information for the tournament
         /// </summary>
-        /// <param name="team">The team.</param>
-        /// <param name="summary">The summary.</param>
-        /// <returns>The name of the team</returns>
-        private static string GetTeamName(TeamSummary team, Summary summary)
+        private class TeamData
         {
-            return summary.Result.Schedule.Teams[team.TeamId].Name;
+            private readonly Team team;
+            private readonly TeamSummary teamSummary;
+
+            public TeamData(Team team, TeamSummary summary)
+            {
+                this.team = team;
+                this.teamSummary = summary;
+            }
+
+            public int Id => this.team.Id;
+
+            public string Abbreviation => this.team.Abbreviation;
+
+            public string Name => FormattableString.Invariant($"{this.team.Name} ({this.team.Abbreviation})");
+
+            public decimal AverageErrors => this.teamSummary.AverageErrors;
+
+            public decimal AverageScore => this.teamSummary.AverageScore;
+
+            public int Losses => this.teamSummary.Losses;
+
+            public int Place => this.teamSummary.Place;
+
+            public TieBreak TieBreak => this.teamSummary.TieBreak;
+
+            public int TotalErrors => this.teamSummary.TotalErrors;
+
+            public int TotalRounds => this.teamSummary.TotalRounds;
+
+            public int TotalScore => this.teamSummary.TotalScore;
+
+            public decimal WinPercentage => this.teamSummary.WinPercentage;
+
+            public int Wins => this.teamSummary.Wins;
         }
     }
 }
