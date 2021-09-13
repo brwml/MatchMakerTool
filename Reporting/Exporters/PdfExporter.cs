@@ -18,34 +18,14 @@
     /// <summary>
     /// Defines the <see cref="PdfExporter" />
     /// </summary>
-    public class PdfExporter : IExporter
+    public class PdfExporter : BaseExporter
     {
-        /// <summary>
-        /// Defines the header cell font
-        /// </summary>
-        //private static readonly PdfFont HeaderCellFont = new( PdfFont.FontFamily.HELVETICA, 9f, Font.BOLD | Font.UNDERLINE);
-
-        /// <summary>
-        /// Defines the regular cell font
-        /// </summary>
-        //private static readonly Font RegularCellFont = new Font(Font.FontFamily.HELVETICA, 9f);
-
-        /// <summary>
-        /// Defines the subtitle font
-        /// </summary>
-        //private static readonly Font SubtitleFont = new Font(Font.FontFamily.TIMES_ROMAN, 14f, Font.BOLDITALIC);
-
-        /// <summary>
-        /// Defines the title font
-        /// </summary>
-        //private static readonly Font TitleFont = new Font(Font.FontFamily.TIMES_ROMAN, 20f, Font.BOLDITALIC);
-
         /// <summary>
         /// Exports the <see cref="Summary"/> to a PDF file.
         /// </summary>
         /// <param name="summary">The <see cref="Summary"/> instance</param>
         /// <param name="folder">The output folder</param>
-        public void Export(Summary summary, string folder)
+        public override void Export(Summary summary, string folder)
         {
             Arg.NotNull(summary, nameof(summary));
 
@@ -120,19 +100,15 @@
         /// <summary>
         /// Creates a quizzer row
         /// </summary>
-        /// <param name="summary">The <see cref="Summary"/> instance</param>
         /// <param name="quizzer">The <see cref="QuizzerSummary"/> instance</param>
-        /// <param name="showPlace">A <see cref="bool"/> indicating whether to show the placement</param>
         /// <returns>The <see cref="PdfPRow"/> instance</returns>
-        private static Cell[] CreateQuizzerRow(Summary summary, QuizzerSummary quizzer, bool showPlace)
+        private static Cell[] CreateQuizzerRow(QuizzerInfo quizzer)
         {
-            var quizzerInfo = summary.Result.Schedule.Quizzers[quizzer.QuizzerId];
-            var churchInfo = summary.Result.Schedule.Churches.Values.FirstOrDefault(c => c.Id == quizzerInfo.ChurchId);
             return new[]
             {
-                CreateCell(showPlace ? quizzer.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
-                CreateCell($"{quizzerInfo.FirstName} {quizzerInfo.LastName}"),
-                CreateCell($"{churchInfo?.Name ?? string.Empty}"),
+                CreateCell(quizzer.ShowPlace ? quizzer.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
+                CreateCell(quizzer.FullName),
+                CreateCell($"{quizzer.Church?.Name ?? string.Empty}"),
                 CreateCell($"{quizzer.AverageScore.ToString("N2", CultureInfo.CurrentCulture)}"),
                 CreateCell($"{quizzer.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)}")
             };
@@ -175,17 +151,17 @@
         /// <param name="summary">The <see cref="TeamSummary"/> instance</param>
         /// <param name="showPlace">A <see cref="bool"/> indicating whether to show the placement</param>
         /// <returns>The <see cref="PdfPRow"/> instance</returns>
-        private static Cell[] CreateTeamRow(Team team, TeamSummary summary, bool showPlace)
+        private static Cell[] CreateTeamRow(TeamInfo team)
         {
             return new[]
             {
-                CreateCell(showPlace ? summary.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
+                CreateCell(team.ShowPlace ? team.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
                 CreateCell(team.Name),
-                CreateCell(summary.Wins.ToString(CultureInfo.CurrentCulture)),
-                CreateCell(summary.Losses.ToString(CultureInfo.CurrentCulture)),
-                CreateCell(summary.AverageScore.ToString("N2", CultureInfo.CurrentCulture)),
-                CreateCell(summary.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)),
-                CreateCell(summary.TieBreak.ToString())
+                CreateCell(team.Wins.ToString(CultureInfo.CurrentCulture)),
+                CreateCell(team.Losses.ToString(CultureInfo.CurrentCulture)),
+                CreateCell(team.AverageScore.ToString("N2", CultureInfo.CurrentCulture)),
+                CreateCell(team.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)),
+                CreateCell(team.TieBreak.ToString())
             };
         }
 
@@ -200,12 +176,11 @@
 
             table.AddHeader(CreateQuizzerHeaderRow());
 
-            var quizzers = summary.QuizzerSummaries.OrderBy(x => x.Value.Place).Select(x => x.Value).ToArray();
+            var quizzers = GetQuizzerInfo(summary).ToArray();
 
-            for (var i = 0; i < quizzers.Length; i++)
+            foreach (var quizzer in quizzers)
             {
-                var showPlace = i == 0 || quizzers[i].Place != quizzers[i - 1].Place;
-                table.AddRow(CreateQuizzerRow(summary, quizzers[i], showPlace));
+                table.AddRow(CreateQuizzerRow(quizzer));
             }
 
             document.Add(table);
@@ -222,12 +197,11 @@
 
             table.AddHeader(CreateTeamHeaderRow());
 
-            var teams = summary.TeamSummaries.OrderBy(x => x.Value.Place).Select(x => x.Value).ToArray();
+            var teams = GetTeamInfo(summary);
 
-            for (var i = 0; i < teams.Length; i++)
+            foreach (var team in teams)
             {
-                var showPlace = i == 0 || teams[i].Place != teams[i - 1].Place;
-                table.AddRow(CreateTeamRow(summary.Result.Schedule.Teams[teams[i].TeamId], teams[i], showPlace));
+                table.AddRow(CreateTeamRow(team));
             }
 
             document.Add(table);

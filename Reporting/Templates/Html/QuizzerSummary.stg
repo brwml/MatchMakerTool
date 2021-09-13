@@ -13,6 +13,8 @@
 			\<tr>
 				\<th>Place\</th>
 				\<th>Name\</th>
+				\<th>Team\</th>
+				\<th>Church\</th>
 				\<th>Average Score\</th>
 				\<th>Average Errors\</th>
 			\</tr>
@@ -24,8 +26,10 @@
 
 rows(quizzer) ::= <<
 \<tr>
-	\<td><quizzer.Place>\</td>
-	\<td>\<a href="quizzers/<quizzer.Id>.html"><quizzer.FirstName> <quizzer.LastName>\</a>\</td>
+	\<td><if(quizzer.ShowPlace)><quizzer.Place><endif>\</td>
+	\<td>\<a href="quizzers/<quizzer.Id>.html"><quizzer.FullName>\</a>\</td>
+	\<td>\<a href="teams/<quizzer.Team.Id>.html"><quizzer.Team.Name>\</a>\</td>
+	\<td><quizzer.Church.Name>\</td>
 	\<td><quizzer.AverageScore; format="F2">\</td>
 	\<td><quizzer.AverageErrors; format="F2">\</td>
 \</tr>

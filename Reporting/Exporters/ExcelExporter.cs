@@ -6,13 +6,15 @@
 
     using ClosedXML.Excel;
 
+    using Humanizer;
+
     using MatchMaker.Reporting.Models;
     using MatchMaker.Utilities;
 
     /// <summary>
     /// Defines the <see cref="ExcelExporter" />
     /// </summary>
-    public class ExcelExporter : IExporter
+    public class ExcelExporter : BaseExporter
     {
         /// <summary>
         /// Defines the quizzer church column width
@@ -34,7 +36,7 @@
         /// </summary>
         /// <param name="summary">The summary/></param>
         /// <param name="folder">The folder/></param>
-        public void Export(Summary summary, string folder)
+        public override void Export(Summary summary, string folder)
         {
             Arg.NotNull(summary, nameof(summary));
 
@@ -85,16 +87,17 @@
         /// <param name="row">The row/></param>
         private static void FillQuizzerHeaderRow(IXLRow row)
         {
-            row.Cell(QuizzerColumns.Place).SetValue(nameof(QuizzerColumns.Place));
-            row.Cell(QuizzerColumns.ID).SetValue(nameof(QuizzerColumns.ID));
-            row.Cell(QuizzerColumns.Name).SetValue(nameof(QuizzerColumns.Name));
-            row.Cell(QuizzerColumns.Church).SetValue(nameof(QuizzerColumns.Church));
-            row.Cell(QuizzerColumns.IsRookie).SetValue(nameof(QuizzerColumns.IsRookie));
-            row.Cell(QuizzerColumns.TotalRounds).SetValue(nameof(QuizzerColumns.TotalRounds));
-            row.Cell(QuizzerColumns.TotalScore).SetValue(nameof(QuizzerColumns.TotalScore));
-            row.Cell(QuizzerColumns.TotalErrors).SetValue(nameof(QuizzerColumns.TotalErrors));
-            row.Cell(QuizzerColumns.AverageScore).SetValue(nameof(QuizzerColumns.AverageScore));
-            row.Cell(QuizzerColumns.AverageErrors).SetValue(nameof(QuizzerColumns.AverageErrors));
+            row.Cell(QuizzerColumns.Place).SetValue(nameof(QuizzerColumns.Place).Titleize());
+            row.Cell(QuizzerColumns.ID).SetValue(nameof(QuizzerColumns.ID).Titleize());
+            row.Cell(QuizzerColumns.Name).SetValue(nameof(QuizzerColumns.Name).Titleize());
+            row.Cell(QuizzerColumns.Team).SetValue(nameof(QuizzerColumns.Team).Titleize());
+            row.Cell(QuizzerColumns.Church).SetValue(nameof(QuizzerColumns.Church).Titleize());
+            row.Cell(QuizzerColumns.IsRookie).SetValue(nameof(QuizzerColumns.IsRookie).Titleize());
+            row.Cell(QuizzerColumns.TotalRounds).SetValue(nameof(QuizzerColumns.TotalRounds).Titleize());
+            row.Cell(QuizzerColumns.TotalScore).SetValue(nameof(QuizzerColumns.TotalScore).Titleize());
+            row.Cell(QuizzerColumns.TotalErrors).SetValue(nameof(QuizzerColumns.TotalErrors).Titleize());
+            row.Cell(QuizzerColumns.AverageScore).SetValue(nameof(QuizzerColumns.AverageScore).Titleize());
+            row.Cell(QuizzerColumns.AverageErrors).SetValue(nameof(QuizzerColumns.AverageErrors).Titleize());
 
             row.Cell(QuizzerColumns.Name).WorksheetColumn().Width = QuizzerNameColumnWidth;
             row.Cell(QuizzerColumns.Church).WorksheetColumn().Width = QuizzerChurchColumnWidth;
@@ -113,13 +116,11 @@
             var schedule = summary.Result.Schedule;
             var rookieYear = schedule.Rounds.Min(x => x.Value.StartTime).Subtract(TimeSpan.FromDays(180)).Year;
 
-            foreach (var quizzerSummary in summary.QuizzerSummaries.OrderBy(s => s.Value.Place).Select(s => s.Value))
-            {
-                var quizzer = schedule.Quizzers[quizzerSummary.QuizzerId];
-                var church = schedule.Churches.Values.FirstOrDefault(c => c.Id == quizzer.ChurchId);
-                var team = schedule.Teams.Values.FirstOrDefault(t => t.Id == quizzer.TeamId);
+            var quizzers = GetQuizzerInfo(summary).ToArray();
 
-                FillQuizzerRow(worksheet.Row(row++), quizzer, team, church, rookieYear, quizzerSummary);
+            foreach (var quizzer in quizzers)
+            {
+                FillQuizzerRow(worksheet.Row(row++), quizzer, rookieYear);
             }
 
             return row;
@@ -134,13 +135,13 @@
         /// <param name="church">The church</param>
         /// <param name="rookieYear">The rookie year</param>
         /// <param name="summary">The summary</param>
-        private static void FillQuizzerRow(IXLRow row, Quizzer quizzer, Team team, Church church, int rookieYear, QuizzerSummary summary)
+        private static void FillQuizzerRow(IXLRow row, QuizzerInfo quizzer, int rookieYear)
         {
-            row.Cell(QuizzerColumns.Place).SetValue(summary.Place);
+            row.Cell(QuizzerColumns.Place).SetValue(quizzer.Place);
             row.Cell(QuizzerColumns.ID).SetValue(quizzer.Id);
             row.Cell(QuizzerColumns.Name).SetValue(FormattableString.Invariant($"{quizzer.FirstName} {quizzer.LastName}"));
-            row.Cell(QuizzerColumns.Team).SetValue(team?.Name ?? string.Empty);
-            row.Cell(QuizzerColumns.Church).SetValue(church?.Name ?? string.Empty);
+            row.Cell(QuizzerColumns.Team).SetValue(quizzer.Team?.Name ?? string.Empty);
+            row.Cell(QuizzerColumns.Church).SetValue(quizzer.Church?.Name ?? string.Empty);
             row.Cell(QuizzerColumns.IsRookie).SetValue(rookieYear == quizzer.RookieYear ? "R" : string.Empty);
 
             var cellRounds = row.Cell(QuizzerColumns.TotalRounds);
@@ -149,13 +150,13 @@
             var cellAverageScore = row.Cell(QuizzerColumns.AverageScore);
             var cellAverageErrors = row.Cell(QuizzerColumns.AverageErrors);
 
-            cellRounds.SetValue(summary.TotalRounds);
-            cellScore.SetValue(summary.TotalScore);
-            cellErrors.SetValue(summary.TotalErrors);
+            cellRounds.SetValue(quizzer.TotalRounds);
+            cellScore.SetValue(quizzer.TotalScore);
+            cellErrors.SetValue(quizzer.TotalErrors);
 
             cellAverageScore.SetFormulaA1(FormattableString.Invariant($"={cellScore.Address} / {cellRounds.Address}"));
             cellAverageScore.Style.NumberFormat.NumberFormatId = 2;
-            cellAverageErrors.SetFormulaA1(FormattableString.Invariant($"{cellErrors.Address} / {cellRounds.Address}"));
+            cellAverageErrors.SetFormulaA1(FormattableString.Invariant($"={cellErrors.Address} / {cellRounds.Address}"));
             cellAverageErrors.Style.NumberFormat.NumberFormatId = 2;
         }
 
@@ -165,17 +166,17 @@
         /// <param name="row">The row</param>
         private static void FillTeamHeaderRow(IXLRow row)
         {
-            row.Cell(TeamColumns.Place).SetValue(nameof(TeamColumns.Place));
-            row.Cell(TeamColumns.ID).SetValue(nameof(TeamColumns.ID));
-            row.Cell(TeamColumns.Abbreviation).SetValue(nameof(TeamColumns.Abbreviation));
-            row.Cell(TeamColumns.Name).SetValue(nameof(TeamColumns.Name));
-            row.Cell(TeamColumns.Wins).SetValue(nameof(TeamColumns.Wins));
-            row.Cell(TeamColumns.Losses).SetValue(nameof(TeamColumns.Losses));
-            row.Cell(TeamColumns.TotalScore).SetValue(nameof(TeamColumns.TotalScore));
-            row.Cell(TeamColumns.TotalErrors).SetValue(nameof(TeamColumns.TotalErrors));
-            row.Cell(TeamColumns.Percentage).SetValue(nameof(TeamColumns.Percentage));
-            row.Cell(TeamColumns.AverageScore).SetValue(nameof(TeamColumns.AverageScore));
-            row.Cell(TeamColumns.AverageErrors).SetValue(nameof(TeamColumns.AverageErrors));
+            row.Cell(TeamColumns.Place).SetValue(nameof(TeamColumns.Place).Titleize());
+            row.Cell(TeamColumns.ID).SetValue(nameof(TeamColumns.ID).Titleize());
+            row.Cell(TeamColumns.Abbreviation).SetValue(nameof(TeamColumns.Abbreviation).Titleize());
+            row.Cell(TeamColumns.Name).SetValue(nameof(TeamColumns.Name).Titleize());
+            row.Cell(TeamColumns.Wins).SetValue(nameof(TeamColumns.Wins).Titleize());
+            row.Cell(TeamColumns.Losses).SetValue(nameof(TeamColumns.Losses).Titleize());
+            row.Cell(TeamColumns.TotalScore).SetValue(nameof(TeamColumns.TotalScore).Titleize());
+            row.Cell(TeamColumns.TotalErrors).SetValue(nameof(TeamColumns.TotalErrors).Titleize());
+            row.Cell(TeamColumns.Percentage).SetValue(nameof(TeamColumns.Percentage).Titleize());
+            row.Cell(TeamColumns.AverageScore).SetValue(nameof(TeamColumns.AverageScore).Titleize());
+            row.Cell(TeamColumns.AverageErrors).SetValue(nameof(TeamColumns.AverageErrors).Titleize());
 
             row.Cell(TeamColumns.Name).WorksheetColumn().Width = TeamNameColumnWidth;
             row.Cell(TeamColumns.ID).WorksheetColumn().Hide();
@@ -190,9 +191,11 @@
         /// <returns>The <see cref="int"/></returns>
         private static int FillTeamResults(Summary summary, IXLWorksheet worksheet, int row)
         {
-            foreach (var team in summary.TeamSummaries.OrderBy(kvp => kvp.Value.Place).Select(kvp => kvp.Value))
+            var teams = GetTeamInfo(summary);
+
+            foreach (var team in teams)
             {
-                FillTeamRow(worksheet.Row(row++), summary.Result.Schedule.Teams[team.TeamId], team);
+                FillTeamRow(worksheet.Row(row++), team);
             }
 
             return row;
@@ -204,9 +207,9 @@
         /// <param name="row">The row</param>
         /// <param name="team">The team</param>
         /// <param name="summary">The summary</param>
-        private static void FillTeamRow(IXLRow row, Team team, TeamSummary summary)
+        private static void FillTeamRow(IXLRow row, TeamInfo team)
         {
-            row.Cell(TeamColumns.Place).SetValue(summary.Place);
+            row.Cell(TeamColumns.Place).SetValue(team.Place);
             row.Cell(TeamColumns.ID).SetValue(team.Id);
             row.Cell(TeamColumns.Abbreviation).SetValue(team.Abbreviation);
             row.Cell(TeamColumns.Name).SetValue(team.Name);
@@ -219,10 +222,10 @@
             var cellAverageScore = row.Cell(TeamColumns.AverageScore);
             var cellAverageErrors = row.Cell(TeamColumns.AverageErrors);
 
-            cellWins.SetValue(summary.Wins);
-            cellLosses.SetValue(summary.Losses);
-            cellScore.SetValue(summary.TotalScore);
-            cellErrors.SetValue(summary.TotalErrors);
+            cellWins.SetValue(team.Wins);
+            cellLosses.SetValue(team.Losses);
+            cellScore.SetValue(team.TotalScore);
+            cellErrors.SetValue(team.TotalErrors);
             cellPercentage.SetFormulaA1(FormattableString.Invariant($"={cellWins.Address} / ({cellWins.Address} + {cellLosses.Address})"));
             cellPercentage.Style.NumberFormat.NumberFormatId = 10;
             cellAverageScore.SetFormulaA1(FormattableString.Invariant($"={cellScore.Address} / ({cellWins.Address} + {cellLosses.Address})"));

@@ -1,6 +1,5 @@
 ﻿namespace MatchMaker.Reporting.Exporters
 {
-    using System;
     using System.Globalization;
     using System.IO;
     using System.IO.Compression;
@@ -15,9 +14,8 @@
     /// <summary>
     /// Defines the <see cref="HtmlExporter" />
     /// </summary>
-    public partial class HtmlExporter : IExporter
+    public partial class HtmlExporter : BaseExporter
     {
-
         /// <summary>
         /// Defines the index template resource key
         /// </summary>
@@ -93,7 +91,7 @@
         /// </summary>
         /// <param name="summary">The <see cref="Summary"/> instance</param>
         /// <param name="folder">The output folder</param>
-        public void Export(Summary summary, string folder)
+        public override void Export(Summary summary, string folder)
         {
             Arg.NotNull(summary, nameof(summary));
             Arg.NotNullOrWhiteSpace(folder, nameof(folder));
@@ -157,16 +155,6 @@
 
             WriteQuizzerSummary(summary, folder);
             WriteQuizzerDetails(summary, folder);
-        }
-
-        /// <summary>
-        /// Formats the quizzer name
-        /// </summary>
-        /// <param name="quizzer">The <see cref="Quizzer"/> instance</param>
-        /// <returns>The formatter quizzer name <see cref="string"/></returns>
-        private static string FormatQuizzerName(Quizzer quizzer)
-        {
-            return FormattableString.Invariant($"{quizzer.LastName}, {quizzer.FirstName}");
         }
 
         /// <summary>
@@ -293,25 +281,30 @@
         /// <param name="folder">The target folder</param>
         private static void WriteQuizzerDetail(Summary summary, QuizzerSummary quizzerSummary, string folder)
         {
-            var quizzer = summary.Result.Schedule.Quizzers.First(x => x.Value.Id == quizzerSummary.QuizzerId).Value;
+            var quizzerId = quizzerSummary.QuizzerId;
+            var quizzer = summary.Result.Schedule.Quizzers[quizzerId];
+            var teamId = quizzer.TeamId;
+
             var details = summary.Result.Matches
-                .Where(x => x.Value.QuizzerResults.Any(r => r.QuizzerId == quizzer.Id))
+                .Where(x => x.Value.QuizzerResults.Any(r => r.QuizzerId == quizzerId))
                 .OrderBy(x => x.Value.Round)
                 .Select(x => new
                 {
                     Round = GetRoundNumber(x.Value),
-                    OpponentId = GetOpponentId(x.Value, quizzer.TeamId),
-                    Opponent = GetOpponentName(summary, x.Value, quizzer.TeamId),
-                    Score = GetQuizzerScore(x.Value, quizzer.Id),
-                    Errors = GetQuizzerErrors(x.Value, quizzer.Id)
+                    OpponentId = GetOpponentId(x.Value, teamId),
+                    Opponent = GetOpponentName(summary, x.Value, teamId),
+                    Score = GetQuizzerScore(x.Value, quizzerId),
+                    Errors = GetQuizzerErrors(x.Value, quizzerId)
                 });
+
+            var quizzerInfo = new QuizzerInfo(quizzer, quizzerSummary, GetChurch(summary, quizzer), GetTeam(summary, quizzer));
 
             var template = LoadTemplate(QuizzerDetailTemplate);
             template.Add("summary", summary);
-            template.Add("quizzer", new QuizzerData(quizzerSummary, quizzer));
+            template.Add("quizzer", quizzerInfo);
             template.Add("details", details);
 
-            File.WriteAllText(Path.Combine(folder, $"{quizzer.Id}.html"), template.Render(CultureInfo.CurrentCulture));
+            File.WriteAllText(Path.Combine(folder, $"{quizzerId}.html"), template.Render(CultureInfo.CurrentCulture));
         }
 
         /// <summary>
@@ -337,18 +330,11 @@
         /// <param name="folder">The target folder</param>
         private static void WriteQuizzerSummary(Summary summary, string folder)
         {
-            var quizzers = summary.Result.Schedule.Quizzers;
-
-            var quizzerData = summary.QuizzerSummaries
-                                     .Join(quizzers,
-                                           s => s.Key,
-                                           s => s.Key,
-                                           (s, q) => new QuizzerData(s.Value, q.Value))
-                                     .OrderBy(x => (x.Place, x.LastName, x.FirstName));
+            var quizzers = GetQuizzerInfo(summary);
 
             var template = LoadTemplate(QuizzerSummaryTemplate);
             template.Add("name", summary.Name);
-            template.Add("quizzers", quizzerData);
+            template.Add("quizzers", quizzers);
 
             File.WriteAllText(Path.Combine(folder, QuizzersFileName), template.Render(CultureInfo.CurrentCulture));
         }
@@ -373,40 +359,30 @@
         /// <param name="folder">The target folder</param>
         private static void WriteTeamDetail(Summary summary, TeamSummary teamSummary, string folder)
         {
+            var teamId = teamSummary.TeamId;
             var details = summary.Result.Matches
-                .Where(x => x.Value.TeamResults.Any(t => t.TeamId == teamSummary.TeamId))
+                .Where(x => x.Value.TeamResults.Any(t => t.TeamId == teamId))
                 .OrderBy(x => x.Value.Round)
                 .Select(x => new
                 {
                     Round = GetRoundNumber(x.Value),
-                    OpponentId = GetOpponentId(x.Value, teamSummary.TeamId),
-                    Opponent = GetOpponentName(summary, x.Value, teamSummary.TeamId),
-                    Score = GetTeamScore(x.Value, teamSummary.TeamId),
-                    OpponentScore = GetOpponentScore(x.Value, teamSummary.TeamId),
-                    Win = GetTeamPlace(x.Value, teamSummary.TeamId) == 1
+                    OpponentId = GetOpponentId(x.Value, teamId),
+                    Opponent = GetOpponentName(summary, x.Value, teamId),
+                    Score = GetTeamScore(x.Value, teamId),
+                    OpponentScore = GetOpponentScore(x.Value, teamId),
+                    Win = GetTeamPlace(x.Value, teamId) == 1
                 });
 
-            var team = summary.Result.Schedule.Teams[teamSummary.TeamId];
-            var teamData = new TeamData(team, teamSummary);
+            var team = summary.Result.Schedule.Teams[teamId];
+            var teamInfo = new TeamInfo(team, teamSummary);
 
-            var quizzers = summary.Result.Schedule.Quizzers.Where(x => x.Value.TeamId == teamSummary.TeamId).Select(x => x.Value);
-            var quizzerSummaries = summary.QuizzerSummaries
-                .Where(x => quizzers.Any(q => q.Id == x.Value.QuizzerId))
-                .OrderBy(x => x.Value.Place)
-                .Select(x => new
-                {
-                    Id = x.Value.QuizzerId,
-                    Name = FormatQuizzerName(quizzers.First(q => q.Id == x.Value.QuizzerId)),
-                    x.Value.Place,
-                    x.Value.AverageErrors,
-                    x.Value.AverageScore
-                });
+            var quizzers = GetQuizzerInfo(summary).Where(x => x.Team.Id == teamId);
 
             var template = LoadTemplate(TeamDetailTemplate);
             template.Add("summary", summary);
-            template.Add("team", teamData);
+            template.Add("team", teamInfo);
             template.Add("details", details);
-            template.Add("quizzers", quizzerSummaries);
+            template.Add("quizzers", quizzers);
 
             File.WriteAllText(Path.Combine(folder, $"{team.Id}.html"), template.Render(CultureInfo.CurrentCulture));
         }
@@ -434,92 +410,13 @@
         /// <param name="folder">The target folder</param>
         private static void WriteTeamSummary(Summary summary, string folder)
         {
-            var teams = summary.TeamSummaries
-                               .Join(summary.Result.Schedule.Teams,
-                                     s => s.Key,
-                                     t => t.Key,
-                                     (s, t) => new TeamData(t.Value, s.Value))
-                               .OrderBy(x => (x.Place, x.Name));
+            var teams = GetTeamInfo(summary);
 
             var template = LoadTemplate(TeamSummaryTemplate);
             template.Add("name", summary.Name);
             template.Add("teams", teams);
 
             File.WriteAllText(Path.Combine(folder, TeamsFileName), template.Render(CultureInfo.CurrentCulture));
-        }
-
-        /// <summary>
-        /// Complete quizzer information for the tournament.
-        /// </summary>
-        private class QuizzerData
-        {
-            private readonly QuizzerSummary quizzerSummary;
-            private readonly Quizzer quizzer;
-
-            public QuizzerData(QuizzerSummary summary, Quizzer quizzer)
-            {
-                this.quizzerSummary = summary;
-                this.quizzer = quizzer;
-            }
-
-            public int Id => this.quizzer.Id;
-
-            public string FirstName => this.quizzer.FirstName;
-
-            public string LastName => this.quizzer.LastName;
-
-            public decimal AverageErrors => this.quizzerSummary.AverageErrors;
-
-            public decimal AverageScore => this.quizzerSummary.AverageScore;
-
-            public int Place => this.quizzerSummary.Place;
-
-            public int TotalErrors => this.quizzerSummary.TotalErrors;
-
-            public int TotalRounds => this.quizzerSummary.TotalRounds;
-
-            public int TotalScore => this.quizzerSummary.TotalScore;
-        }
-
-        /// <summary>
-        /// Complete team information for the tournament
-        /// </summary>
-        private class TeamData
-        {
-            private readonly Team team;
-            private readonly TeamSummary teamSummary;
-
-            public TeamData(Team team, TeamSummary summary)
-            {
-                this.team = team;
-                this.teamSummary = summary;
-            }
-
-            public int Id => this.team.Id;
-
-            public string Abbreviation => this.team.Abbreviation;
-
-            public string Name => FormattableString.Invariant($"{this.team.Name} ({this.team.Abbreviation})");
-
-            public decimal AverageErrors => this.teamSummary.AverageErrors;
-
-            public decimal AverageScore => this.teamSummary.AverageScore;
-
-            public int Losses => this.teamSummary.Losses;
-
-            public int Place => this.teamSummary.Place;
-
-            public TieBreak TieBreak => this.teamSummary.TieBreak;
-
-            public int TotalErrors => this.teamSummary.TotalErrors;
-
-            public int TotalRounds => this.teamSummary.TotalRounds;
-
-            public int TotalScore => this.teamSummary.TotalScore;
-
-            public decimal WinPercentage => this.teamSummary.WinPercentage;
-
-            public int Wins => this.teamSummary.Wins;
         }
     }
 }

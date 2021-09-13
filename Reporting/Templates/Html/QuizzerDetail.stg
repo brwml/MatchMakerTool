@@ -1,7 +1,7 @@
 ﻿root(summary, quizzer, details) ::= <<
 \<html>
 	\<head>
-		\<title><summary.Name>: <quizzer.Name>\</title>
+		\<title><summary.Name>: <quizzer.FullName>\</title>
 		\<link rel="stylesheet" type="text/css" href="../style.css">
 	\</head>
 	\<body>
@@ -10,7 +10,7 @@
 		\<a href="../quizzers.html">Quizzers\</a>
 		\<br/>
 		\<hr/>
-		\<h1><quizzer.FirstName> <quizzer.LastName>\</h1>
+		\<h1><quizzer.FullName> (<quizzer.Church.Name>)\</h1>
 		\<h2>Summary\</h2>
 		\<table>
 			<summaryRows(quizzer)>
