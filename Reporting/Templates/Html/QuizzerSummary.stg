@@ -27,7 +27,7 @@
 rows(quizzer) ::= <<
 \<tr>
 	\<td><if(quizzer.ShowPlace)><quizzer.Place><endif>\</td>
-	\<td>\<a href="quizzers/<quizzer.Id>.html"><quizzer.FullName>\</a>\</td>
+	\<td>\<a href="quizzers/<quizzer.Id>.html"><quizzer.FullName>\</a><if(quizzer.IsRookie)> (R)<endif>\</td>
 	\<td>\<a href="teams/<quizzer.Team.Id>.html"><quizzer.Team.Name>\</a>\</td>
 	\<td><quizzer.Church.Name>\</td>
 	\<td><quizzer.AverageScore; format="F2">\</td>

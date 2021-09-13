@@ -44,7 +44,7 @@
 quizzerRows(quizzer) ::= <<
 \<tr>
 	\<td><quizzer.Place>\</td>
-	\<td>\<a href="../quizzers/<quizzer.Id>.html"><quizzer.FullName>\</a>\</td>
+	\<td>\<a href="../quizzers/<quizzer.Id>.html"><quizzer.FullName>\</a><if(quizzer.IsRookie)> (R)<endif>\</td>
 	\<td><quizzer.Church.Name>\</td>
 	\<td><quizzer.AverageScore; format="F2">\</td>
 	\<td><quizzer.AverageErrors; format="F2">\</td>

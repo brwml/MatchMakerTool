@@ -1,5 +1,6 @@
 ﻿namespace MatchMaker.Reporting.Exporters
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -58,6 +59,13 @@
             for (int i = 1; i < quizzerInfo.Length; i++)
             {
                 quizzerInfo[i].ShowPlace = quizzerInfo[i - 1].Place != quizzerInfo[i].Place;
+            }
+
+            var rookieYear = summary.Result.Schedule.Rounds.Min(x => x.Value.StartTime).Subtract(TimeSpan.FromDays(180)).Year;
+
+            foreach (var quizzer in quizzerInfo)
+            {
+                quizzer.IsRookie = quizzer.RookieYear == rookieYear;
             }
 
             return quizzerInfo;

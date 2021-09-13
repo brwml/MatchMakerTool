@@ -107,11 +107,21 @@
             return new[]
             {
                 CreateCell(quizzer.ShowPlace ? quizzer.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
-                CreateCell(quizzer.FullName),
+                CreateCell($"{quizzer.FullName}{GetRookieTag(quizzer.IsRookie)}"),
                 CreateCell($"{quizzer.Church?.Name ?? string.Empty}"),
                 CreateCell($"{quizzer.AverageScore.ToString("N2", CultureInfo.CurrentCulture)}"),
                 CreateCell($"{quizzer.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)}")
             };
+        }
+
+        /// <summary>
+        /// Gets the tag text indicating that a quizzer is a rookie.
+        /// </summary>
+        /// <param name="isRookie">A value indicating whether the quizzer is a rookie</param>
+        /// <returns>The tag text</returns>
+        private static string GetRookieTag(bool isRookie)
+        {
+            return isRookie ? " (R)" : string.Empty;
         }
 
         /// <summary>

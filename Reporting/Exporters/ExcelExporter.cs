@@ -113,14 +113,11 @@
         /// <returns>The <see cref="int"/> indicating the number of rows</returns>
         private static int FillQuizzerResults(Summary summary, IXLWorksheet worksheet, int row)
         {
-            var schedule = summary.Result.Schedule;
-            var rookieYear = schedule.Rounds.Min(x => x.Value.StartTime).Subtract(TimeSpan.FromDays(180)).Year;
-
-            var quizzers = GetQuizzerInfo(summary).ToArray();
+            var quizzers = GetQuizzerInfo(summary);
 
             foreach (var quizzer in quizzers)
             {
-                FillQuizzerRow(worksheet.Row(row++), quizzer, rookieYear);
+                FillQuizzerRow(worksheet.Row(row++), quizzer);
             }
 
             return row;
@@ -131,18 +128,14 @@
         /// </summary>
         /// <param name="row">The row</param>
         /// <param name="quizzer">The quizzer</param>
-        /// <param name="team">The team</param>
-        /// <param name="church">The church</param>
-        /// <param name="rookieYear">The rookie year</param>
-        /// <param name="summary">The summary</param>
-        private static void FillQuizzerRow(IXLRow row, QuizzerInfo quizzer, int rookieYear)
+        private static void FillQuizzerRow(IXLRow row, QuizzerInfo quizzer)
         {
             row.Cell(QuizzerColumns.Place).SetValue(quizzer.Place);
             row.Cell(QuizzerColumns.ID).SetValue(quizzer.Id);
             row.Cell(QuizzerColumns.Name).SetValue(FormattableString.Invariant($"{quizzer.FirstName} {quizzer.LastName}"));
             row.Cell(QuizzerColumns.Team).SetValue(quizzer.Team?.Name ?? string.Empty);
             row.Cell(QuizzerColumns.Church).SetValue(quizzer.Church?.Name ?? string.Empty);
-            row.Cell(QuizzerColumns.IsRookie).SetValue(rookieYear == quizzer.RookieYear ? "R" : string.Empty);
+            row.Cell(QuizzerColumns.IsRookie).SetValue(quizzer.IsRookie ? "R" : string.Empty);
 
             var cellRounds = row.Cell(QuizzerColumns.TotalRounds);
             var cellScore = row.Cell(QuizzerColumns.TotalScore);

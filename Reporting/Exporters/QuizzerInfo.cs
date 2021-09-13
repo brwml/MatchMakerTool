@@ -57,6 +57,11 @@
         public int RookieYear { get; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the quizzing is a rookie.
+        /// </summary>
+        public bool IsRookie { get; set; }
+
+        /// <summary>
         /// Gets the church
         /// </summary>
         public Church Church { get; }
