@@ -5,6 +5,10 @@
     <AssemblyName>MatchMaker.Reporting</AssemblyName>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+  </PropertyGroup>
   <Import Project="..\Shared\Project.xml" />
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.95.4" />
