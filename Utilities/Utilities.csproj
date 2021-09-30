@@ -7,6 +7,10 @@
   </PropertyGroup>
   <Import Project="..\Shared\Project.xml" />
   <ItemGroup>
+    <PackageReference Include="GitVersion.MsBuild" Version="5.7.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
