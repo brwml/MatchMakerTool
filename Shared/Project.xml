@@ -2,7 +2,6 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <AssemblyTitle>Tool for ACME Quiz MatchMaker</AssemblyTitle>
-        <Version>2.0.$([System.DateTime]::Now.ToString("yyyy")).$([System.DateTime]::Now.DayOfYear.ToString("D03"))</Version>
         <Authors>Bryan Wilhelm</Authors>
         <Product>Tool for ACME Quiz MatchMaker</Product>
         <Description>A command line tool for generating reports from ACME Quiz MatchMaker results XML files.</Description>
@@ -10,6 +9,10 @@
         <PackageProjectUrl>https://github.com/brwml/MatchMakerTool</PackageProjectUrl>
         <RepositoryUrl>https://github.com/brwml/MatchMakerTool</RepositoryUrl>
         <RepositoryType>GitHub</RepositoryType>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+        <NoWarn />
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <WarningsAsErrors />
+        <WarningLevel>5</WarningLevel>
     </PropertyGroup>
 </Project>

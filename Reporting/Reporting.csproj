@@ -5,16 +5,11 @@
     <AssemblyName>MatchMaker.Reporting</AssemblyName>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-  </PropertyGroup>
   <Import Project="..\Shared\Project.xml" />
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.95.4" />
     <PackageReference Include="Humanizer.Core" Version="2.11.10" />
     <PackageReference Include="itext7" Version="7.1.16" />
-    <!--<PackageReference Include="iTextSharp" Version="5.5.13.2" />-->
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
