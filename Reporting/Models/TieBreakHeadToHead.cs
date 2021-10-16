@@ -4,6 +4,8 @@
     using System.Linq;
     using System.Runtime.Serialization;
 
+    using Ardalis.GuardClauses;
+
     /// <summary>
     /// Defines the <see cref="TieBreakHeadToHead" />
     /// </summary>
@@ -17,6 +19,9 @@
         /// <param name="teams">The <see cref="IDictionary{int, Team}"/></param>
         public TieBreakHeadToHead(IEnumerable<MatchResult> results, IDictionary<int, Team> teams)
         {
+            Guard.Against.NullOrEmpty(results, nameof(results));
+            Guard.Against.NullOrEmpty(teams, nameof(teams));
+
             this.Reason = TieBreakReason.HeadToHead;
             this.Results = results;
             this.Teams = teams;

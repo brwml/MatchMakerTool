@@ -3,7 +3,7 @@
     using System.Runtime.Serialization;
     using System.Xml.Linq;
 
-    using MatchMaker.Utilities;
+    using Ardalis.GuardClauses;
 
     /// <summary>
     /// Defines the <see cref="Church" /> class
@@ -30,7 +30,7 @@
         /// <returns>The <see cref="Church"/></returns>
         public static Church FromXml(XElement xml)
         {
-            Arg.NotNull(xml, nameof(xml));
+            Guard.Against.Null(xml, nameof(xml));
 
             return new Church
             {

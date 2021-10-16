@@ -5,7 +5,7 @@
     using System.Runtime.Serialization;
     using System.Xml.Linq;
 
-    using MatchMaker.Utilities;
+    using Ardalis.GuardClauses;
 
     /// <summary>
     /// Defines the <see cref="MatchResult" />
@@ -56,7 +56,7 @@
         /// <returns>The <see cref="MatchResult"/> instance</returns>
         public static MatchResult FromXml(XElement xml)
         {
-            Arg.NotNull(xml, nameof(xml));
+            Guard.Against.Null(xml, nameof(xml));
 
             return new MatchResult
             {

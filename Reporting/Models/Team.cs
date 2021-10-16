@@ -3,7 +3,7 @@
     using System.Runtime.Serialization;
     using System.Xml.Linq;
 
-    using MatchMaker.Utilities;
+    using Ardalis.GuardClauses;
 
     /// <summary>
     /// Defines the <see cref="Team" />
@@ -42,7 +42,7 @@
         /// <returns>The <see cref="Team"/></returns>
         public static Team FromXml(XElement xml)
         {
-            Arg.NotNull(xml, nameof(xml));
+            Guard.Against.Null(xml, nameof(xml));
 
             return new Team
             {

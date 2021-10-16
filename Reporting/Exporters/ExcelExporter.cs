@@ -2,14 +2,14 @@
 {
     using System;
     using System.IO;
-    using System.Linq;
+
+    using Ardalis.GuardClauses;
 
     using ClosedXML.Excel;
 
     using Humanizer;
 
     using MatchMaker.Reporting.Models;
-    using MatchMaker.Utilities;
 
     /// <summary>
     /// Defines the <see cref="ExcelExporter" />
@@ -38,14 +38,13 @@
         /// <param name="folder">The folder/></param>
         public override void Export(Summary summary, string folder)
         {
-            Arg.NotNull(summary, nameof(summary));
+            Guard.Against.Null(summary, nameof(summary));
+            Guard.Against.NullOrWhiteSpace(folder, nameof(folder));
 
-            using (var workbook = new XLWorkbook())
-            {
-                ExportTeamResults(workbook, summary);
-                ExportQuizzerResults(workbook, summary);
-                SaveFile(workbook, summary, folder);
-            }
+            using var workbook = new XLWorkbook();
+            ExportTeamResults(workbook, summary);
+            ExportQuizzerResults(workbook, summary);
+            SaveFile(workbook, summary, folder);
         }
 
         /// <summary>
@@ -55,8 +54,9 @@
         /// <param name="summary">The summary/></param>
         protected static void ExportQuizzerResults(XLWorkbook workbook, Summary summary)
         {
-            Arg.NotNull(workbook, nameof(workbook));
-            Arg.NotNull(summary, nameof(summary));
+            // TODO: Does this need a guard?
+            Guard.Against.Null(workbook, nameof(workbook));
+            Guard.Against.Null(summary, nameof(summary));
 
             var worksheet = workbook.AddWorksheet("Quizzer Results");
 

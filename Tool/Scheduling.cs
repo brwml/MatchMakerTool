@@ -1,6 +1,6 @@
 ﻿namespace MatchMaker.Tool
 {
-    using MatchMaker.Utilities;
+    using Ardalis.GuardClauses;
 
     /// <summary>
     /// Defines the <see cref="Scheduling" />
@@ -14,7 +14,7 @@
         /// <returns>The <see cref="bool"/></returns>
         public static bool Process(ScheduleOptions options)
         {
-            Arg.NotNull(options, nameof(options));
+            Guard.Against.Null(options, nameof(options));
 
             return true;
         }

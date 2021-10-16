@@ -6,6 +6,8 @@
     using System.Xml.Linq;
     using System.Xml.XPath;
 
+    using Ardalis.GuardClauses;
+
     /// <summary>
     /// Defines the <see cref="Schedule" />
     /// </summary>
@@ -50,6 +52,9 @@
         /// <returns>The <see cref="Schedule"/></returns>
         public static Schedule FromXml(XDocument document, string name)
         {
+            Guard.Against.Null(document, nameof(document));
+            Guard.Against.NullOrWhiteSpace(name, nameof(name));
+
             var schedule = PopulateSchedule(new Schedule(), document);
             schedule.Name = name;
             return schedule;
@@ -132,7 +137,7 @@
         /// <returns>The schedule</returns>
         public static Schedule WithName(this Schedule schedule, string name)
         {
-            if (schedule != null && !string.IsNullOrWhiteSpace(name))
+            if (schedule is not null && !string.IsNullOrWhiteSpace(name))
             {
                 schedule.Name = name;
             }

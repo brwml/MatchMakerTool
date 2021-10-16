@@ -3,6 +3,8 @@
     using System.Runtime.Serialization;
     using System.Xml.Linq;
 
+    using Ardalis.GuardClauses;
+
     /// <summary>
     /// Defines the <see cref="QuizzerResult" />
     /// </summary>
@@ -34,6 +36,8 @@
         /// <returns>The <see cref="QuizzerResult"/> instance</returns>
         public static QuizzerResult FromXml(XElement xml)
         {
+            Guard.Against.Null(xml, nameof(xml));
+
             return new QuizzerResult
             {
                 QuizzerId = xml.GetAttribute<int>("id"),

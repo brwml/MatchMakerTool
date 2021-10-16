@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Ardalis.GuardClauses;
+
     using MatchMaker.Reporting.Models;
 
     /// <summary>
@@ -17,6 +19,8 @@
         /// <param name="summaries">The <see cref="QuizzerSummary"/> instances</param>
         public void Rank(IEnumerable<QuizzerSummary> summaries)
         {
+            Guard.Against.NullOrEmpty(summaries, nameof(summaries));
+
             var groups = summaries.GroupBy(s => s.Place);
 
             foreach (var group in groups)

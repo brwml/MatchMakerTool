@@ -1,5 +1,5 @@
 mode: ContinuousDeployment
-next-version: 1.2.0
+next-version: 1.5.0
 branches: {}
 ignore:
   sha: []

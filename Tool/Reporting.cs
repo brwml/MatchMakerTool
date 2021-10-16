@@ -8,6 +8,8 @@
     using System.Threading.Tasks;
     using System.Xml.Linq;
 
+    using Ardalis.GuardClauses;
+
     using MatchMaker.Reporting.Exporters;
     using MatchMaker.Reporting.Models;
     using MatchMaker.Reporting.Policies;
@@ -24,6 +26,8 @@
         /// <returns>The <see cref="bool"/></returns>
         internal static bool Process(ReportingOptions options)
         {
+            Guard.Against.Null(options, nameof(options));
+
             var summary = CreateSummary(options);
 
             var directory = Directory.CreateDirectory(options.OutputFolder);
@@ -48,6 +52,8 @@
         /// <returns>The <see cref="bool"/></returns>
         internal static bool Process(SummaryOptions options)
         {
+            Guard.Against.Null(options, nameof(options));
+
             var policies = LoadRankingPolicies(ReportingOptions.DefaultRankingProcedure);
             var summaries = options.InputPaths.Select(x => CreateSummary(x, policies));
             SummaryExporter.Export(summaries, options.OutputPath);
@@ -146,7 +152,7 @@
         private static string GetScheduleName(string name)
         {
             var ti = CultureInfo.CurrentCulture.TextInfo;
-            return ti.ToTitleCase(name.Substring(0, name.IndexOf(".schedule", StringComparison.OrdinalIgnoreCase)));
+            return ti.ToTitleCase(name[..name.IndexOf(".schedule", StringComparison.OrdinalIgnoreCase)]);
         }
 
         /// <summary>
@@ -156,7 +162,7 @@
         /// <returns>The <see cref="TeamRankingPolicy[]"/></returns>
         private static TeamRankingPolicy[] LoadRankingPolicies(string procedure)
         {
-            return procedure.ToUpperInvariant().Select(TeamRankingPolicyFromChar).ToArray();
+            return procedure.Select(TeamRankingPolicyFromChar).ToArray();
         }
 
         /// <summary>
@@ -208,10 +214,8 @@
         /// <returns>The <see cref="XDocument"/></returns>
         private static XDocument LoadXml(FileInfo file)
         {
-            using (var stream = file.OpenRead())
-            {
-                return XDocument.Load(stream);
-            }
+            using var stream = file.OpenRead();
+            return XDocument.Load(stream);
         }
 
         /// <summary>
@@ -221,25 +225,15 @@
         /// <returns>The <see cref="TeamRankingPolicy"/></returns>
         private static TeamRankingPolicy TeamRankingPolicyFromChar(char c)
         {
-            switch (c)
+            return char.ToUpperInvariant(c) switch
             {
-                case 'W':
-                    return new WinPercentageTeamRankingPolicy();
-
-                case 'S':
-                    return new ScoreTeamRankingPolicy();
-
-                case 'E':
-                    return new ErrorTeamRankingPolicy();
-
-                case 'H':
-                    return new HeadToHeadTeamRankingPolicy();
-
-                case 'L':
-                    return new LossCountTeamRankingPolicy();
-            }
-
-            return new NullTeamRankingPolicy();
+                'W' => new WinPercentageTeamRankingPolicy(),
+                'S' => new ScoreTeamRankingPolicy(),
+                'E' => new ErrorTeamRankingPolicy(),
+                'H' => new HeadToHeadTeamRankingPolicy(),
+                'L' => new LossCountTeamRankingPolicy(),
+                _ => new NullTeamRankingPolicy(),
+            };
         }
     }
 }

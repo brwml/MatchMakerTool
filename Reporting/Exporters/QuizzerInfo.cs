@@ -2,6 +2,8 @@
 {
     using System;
 
+    using Ardalis.GuardClauses;
+
     using MatchMaker.Reporting.Models;
 
     /// <summary>
@@ -18,6 +20,11 @@
         /// <param name="team">The team</param>
         public QuizzerInfo(Quizzer quizzer, QuizzerSummary summary, Church church, Team team)
         {
+            Guard.Against.Null(quizzer, nameof(quizzer));
+            Guard.Against.Null(summary, nameof(summary));
+            Guard.Against.Null(church, nameof(church));
+            Guard.Against.Null(team, nameof(team));
+
             this.Id = quizzer.Id;
             this.FirstName = quizzer.FirstName;
             this.LastName = quizzer.LastName;

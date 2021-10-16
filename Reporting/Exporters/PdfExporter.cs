@@ -4,6 +4,8 @@
     using System.IO;
     using System.Linq;
 
+    using Ardalis.GuardClauses;
+
     using iText.IO.Font.Constants;
     using iText.Kernel.Font;
     using iText.Kernel.Pdf;
@@ -13,7 +15,6 @@
     using iText.Layout.Properties;
 
     using MatchMaker.Reporting.Models;
-    using MatchMaker.Utilities;
 
     /// <summary>
     /// Defines the <see cref="PdfExporter" />
@@ -27,7 +28,8 @@
         /// <param name="folder">The output folder</param>
         public override void Export(Summary summary, string folder)
         {
-            Arg.NotNull(summary, nameof(summary));
+            Guard.Against.Null(summary, nameof(summary));
+            Guard.Against.NullOrWhiteSpace(folder, nameof(folder));
 
             var fileName = Path.Combine(folder, $"{summary.Name}.pdf");
 

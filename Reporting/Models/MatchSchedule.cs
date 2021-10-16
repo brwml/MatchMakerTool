@@ -4,6 +4,8 @@
     using System.Runtime.Serialization;
     using System.Xml.Linq;
 
+    using Ardalis.GuardClauses;
+
     /// <summary>
     /// Defines the <see cref="MatchSchedule" />
     /// </summary>
@@ -31,15 +33,21 @@
         /// <summary>
         /// Creates a <see cref="MatchSchedule"/> instance from an XML element.
         /// </summary>
-        /// <param name="x">The <see cref="XElement"/> instance</param>
+        /// <param name="xml">The <see cref="XElement"/> instance</param>
         /// <returns>The <see cref="MatchSchedule"/> instance</returns>
-        internal static MatchSchedule FromXml(XElement x)
+        public static MatchSchedule FromXml(XElement xml)
         {
+            Guard.Against.Null(xml, nameof(xml));
+
             return new MatchSchedule
             {
-                Id = x.GetAttribute<int>("id"),
-                Room = x.GetAttribute<int>("room"),
-                Teams = new[] { x.GetAttribute<int>("team1"), x.GetAttribute<int>("team2") }
+                Id = xml.GetAttribute<int>("id"),
+                Room = xml.GetAttribute<int>("room"),
+                Teams = new[]
+                {
+                    xml.GetAttribute<int>("team1"),
+                    xml.GetAttribute<int>("team2")
+                }
             };
         }
     }

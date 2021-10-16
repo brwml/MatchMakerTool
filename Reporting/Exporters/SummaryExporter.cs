@@ -4,6 +4,8 @@
     using System.IO;
     using System.Linq;
 
+    using Ardalis.GuardClauses;
+
     using ClosedXML.Excel;
 
     using MatchMaker.Reporting.Models;
@@ -20,11 +22,12 @@
         /// <param name="folder">The output folder</param>
         public static void Export(IEnumerable<Summary> summaries, string folder)
         {
-            using (var workbook = new XLWorkbook())
-            {
-                Export(workbook, summaries);
-                SaveWorkbook(workbook, folder);
-            }
+            Guard.Against.NullOrEmpty(summaries, nameof(summaries));
+            Guard.Against.NullOrWhiteSpace(folder, nameof(folder));
+
+            using var workbook = new XLWorkbook();
+            Export(workbook, summaries);
+            SaveWorkbook(workbook, folder);
         }
 
         /// <summary>

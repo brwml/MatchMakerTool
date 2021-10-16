@@ -2,8 +2,9 @@
 {
     using System.IO;
 
+    using Ardalis.GuardClauses;
+
     using MatchMaker.Reporting.Models;
-    using MatchMaker.Utilities;
 
     using Newtonsoft.Json;
 
@@ -19,7 +20,8 @@
         /// <param name="folder">The folder</param>
         public void Export(Summary summary, string folder)
         {
-            Arg.NotNull(summary, nameof(summary));
+            Guard.Against.Null(summary, nameof(summary));
+            Guard.Against.NullOrWhiteSpace(folder, nameof(folder));
 
             var name = summary.Name;
             var path = Path.Combine(folder, name + ".summary");

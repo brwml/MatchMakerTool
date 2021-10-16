@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Ardalis.GuardClauses;
+
     using MatchMaker.Reporting.Models;
 
     /// <summary>
@@ -26,6 +28,9 @@
         /// <returns>The church</returns>
         protected static Church GetChurch(Summary summary, Quizzer quizzer)
         {
+            Guard.Against.Null(summary, nameof(summary));
+            Guard.Against.Null(quizzer, nameof(quizzer));
+
             return summary.Result.Schedule.Churches[quizzer.ChurchId];
         }
 
@@ -37,6 +42,9 @@
         /// <returns>The team</returns>
         protected static Team GetTeam(Summary summary, Quizzer quizzer)
         {
+            Guard.Against.Null(summary, nameof(summary));
+            Guard.Against.Null(quizzer, nameof(quizzer));
+
             return summary.Result.Schedule.Teams[quizzer.TeamId];
         }
 
@@ -47,6 +55,8 @@
         /// <returns>The quizzer information</returns>
         protected static IEnumerable<QuizzerInfo> GetQuizzerInfo(Summary summary)
         {
+            Guard.Against.Null(summary, nameof(summary));
+
             var quizzers = summary.Result.Schedule.Quizzers;
 
             var quizzerInfo = summary.QuizzerSummaries
@@ -56,7 +66,7 @@
                                            (s, q) => new QuizzerInfo(q.Value, s.Value, GetChurch(summary, q.Value), GetTeam(summary, q.Value)))
                                      .OrderBy(x => (x.Place, x.LastName, x.FirstName)).ToArray();
 
-            for (int i = 1; i < quizzerInfo.Length; i++)
+            for (var i = 1; i < quizzerInfo.Length; i++)
             {
                 quizzerInfo[i].ShowPlace = quizzerInfo[i - 1].Place != quizzerInfo[i].Place;
             }
@@ -78,6 +88,8 @@
         /// <returns>The team information</returns>
         protected static IEnumerable<TeamInfo> GetTeamInfo(Summary summary)
         {
+            Guard.Against.Null(summary, nameof(summary));
+
             var teams = summary.Result.Schedule.Teams;
 
             var teamInfo = summary.TeamSummaries
@@ -87,7 +99,7 @@
                                 (s, t) => new TeamInfo(t.Value, s.Value))
                           .OrderBy(x => (x.Place, x.Name)).ToArray();
 
-            for (int i = 1; i < teamInfo.Length; i++)
+            for (var i = 1; i < teamInfo.Length; i++)
             {
                 teamInfo[i].ShowPlace = teamInfo[i - 1].Place != teamInfo[i].Place;
             }

@@ -3,6 +3,8 @@
     using System.Runtime.Serialization;
     using System.Xml.Linq;
 
+    using Ardalis.GuardClauses;
+
     /// <summary>
     /// Defines the <see cref="TeamResult" />
     /// </summary>
@@ -40,6 +42,8 @@
         /// <returns>The <see cref="TeamResult"/></returns>
         public static TeamResult FromXml(XElement xml)
         {
+            Guard.Against.Null(xml, nameof(xml));
+
             return new TeamResult
             {
                 TeamId = xml.GetAttribute<int>("id"),

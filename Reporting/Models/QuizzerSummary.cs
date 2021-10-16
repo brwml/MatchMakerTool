@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Runtime.Serialization;
 
+    using Ardalis.GuardClauses;
+
     using MatchMaker.Reporting.Policies;
 
     /// <summary>
@@ -71,6 +73,8 @@
         /// <returns>The <see cref="IDictionary{int, QuizzerSummary}"/> instance</returns>
         public static IDictionary<int, QuizzerSummary> FromResult(Result result)
         {
+            Guard.Against.Null(result, nameof(result));
+
             var summaries = GetAllQuizzerSummaries(result)
                 .GroupBy(s => s.QuizzerId)
                 .Select(s => AggregateQuizzerSummary(s))

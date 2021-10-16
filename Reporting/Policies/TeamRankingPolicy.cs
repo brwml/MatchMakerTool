@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Ardalis.GuardClauses;
+
     using MatchMaker.Reporting.Models;
 
     /// <summary>
@@ -23,6 +25,8 @@
         /// <param name="result">The <see cref="Result"/></param>
         public void Rank(IEnumerable<TeamSummary> summaries, Result result)
         {
+            Guard.Against.NullOrEmpty(summaries, nameof(summaries));
+
             this.Result = result;
             var groups = summaries.GroupBy(s => s.Place);
 

@@ -6,7 +6,7 @@
     using System.Runtime.Serialization;
     using System.Xml.Linq;
 
-    using MatchMaker.Utilities;
+    using Ardalis.GuardClauses;
 
     /// <summary>
     /// Defines the <see cref="Round" />
@@ -39,7 +39,7 @@
         /// <returns>The <see cref="Round"/></returns>
         public static Round FromXml(XElement xml)
         {
-            Arg.NotNull(xml, nameof(xml));
+            Guard.Against.Null(xml, nameof(xml));
 
             return new Round
             {

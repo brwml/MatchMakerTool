@@ -5,10 +5,11 @@
     using System.IO;
     using System.Linq;
 
+    using Ardalis.GuardClauses;
+
     using ClosedXML.Excel;
 
     using MatchMaker.Reporting.Models;
-    using MatchMaker.Utilities;
 
     /// <summary>
     /// Defines the <see cref="TournamentExporter" />
@@ -24,32 +25,33 @@
         /// <param name="outputFolder">The output folder</param>
         public static void Create(Summary summary, int numberOfTournamentTeams, int numberOfAlternateTeams, string outputFolder)
         {
-            summary = Arg.NotNull(summary, nameof(summary));
+            Guard.Against.Null(summary, nameof(summary));
+            Guard.Against.NegativeOrZero(numberOfTournamentTeams, nameof(numberOfTournamentTeams));
+            Guard.Against.NegativeOrZero(numberOfAlternateTeams, nameof(numberOfAlternateTeams));
+            Guard.Against.NullOrWhiteSpace(outputFolder, nameof(outputFolder));
 
             var quizzers = GetQuizzers(summary, numberOfTournamentTeams);
             var teams = GetTeams(quizzers, numberOfAlternateTeams);
 
             var fileName = Path.Combine(outputFolder, $"{summary.Name}_TournamentTeams.xlsx");
 
-            using (var workbook = new XLWorkbook())
+            using var workbook = new XLWorkbook();
+            var sheet = workbook.AddWorksheet("Teams");
+
+            for (var column = 0; column < teams.Count; column++)
             {
-                var sheet = workbook.AddWorksheet("Teams");
+                var team = teams[column];
 
-                for (var column = 0; column < teams.Count; column++)
+                for (var row = 0; row < team.Count; row++)
                 {
-                    var team = teams[column];
-
-                    for (var row = 0; row < team.Count; row++)
-                    {
-                        var quizzer = team[row];
-                        sheet.Cell(row + 1, column + 1).SetValue($"{quizzer.FirstName} {quizzer.LastName}");
-                    }
-
-                    sheet.Column(column + 1).Width = 20.0;
+                    var quizzer = team[row];
+                    sheet.Cell(row + 1, column + 1).SetValue($"{quizzer.FirstName} {quizzer.LastName}");
                 }
 
-                workbook.SaveAs(fileName);
+                sheet.Column(column + 1).Width = 20.0;
             }
+
+            workbook.SaveAs(fileName);
         }
 
         /// <summary>

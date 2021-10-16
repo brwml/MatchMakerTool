@@ -4,6 +4,8 @@
     using System.Globalization;
     using System.Xml.Linq;
 
+    using Ardalis.GuardClauses;
+
     /// <summary>
     /// Defines the <see cref="XmlExtensions" />
     /// </summary>
@@ -18,7 +20,9 @@
         /// <returns>The <see cref="T"/> value instance</returns>
         public static T GetAttribute<T>(this XElement xml, string name)
         {
-            if (xml == null)
+            Guard.Against.NullOrWhiteSpace(name, nameof(name));
+
+            if (xml is null)
             {
                 return default;
             }
@@ -35,7 +39,9 @@
         /// <returns>The <see cref="T"/> value instance</returns>
         public static T GetElement<T>(this XContainer xml, string name)
         {
-            if (xml == null)
+            Guard.Against.NullOrWhiteSpace(name, nameof(name));
+
+            if (xml is null)
             {
                 return default;
             }

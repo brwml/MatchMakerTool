@@ -11,6 +11,7 @@ namespace MatchMaker.Scheduling
     {
         public static Schedule Create(Schedule schedule)
         {
+            throw new NotImplementedException();
         }
     }
 }

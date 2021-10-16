@@ -3,7 +3,7 @@
     using System.Runtime.Serialization;
     using System.Xml.Linq;
 
-    using MatchMaker.Utilities;
+    using Ardalis.GuardClauses;
 
     /// <summary>
     /// Defines the <see cref="Quizzer" />
@@ -60,7 +60,7 @@
         /// <returns>The <see cref="Quizzer"/> instance</returns>
         public static Quizzer FromXml(XElement xml)
         {
-            Arg.NotNull(xml, nameof(xml));
+            Guard.Against.Null(xml, nameof(xml));
 
             return new Quizzer
             {

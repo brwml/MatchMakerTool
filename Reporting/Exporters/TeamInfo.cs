@@ -2,6 +2,8 @@
 {
     using System;
 
+    using Ardalis.GuardClauses;
+
     using MatchMaker.Reporting.Models;
 
     /// <summary>
@@ -16,6 +18,9 @@
         /// <param name="summary">The team summary</param>
         public TeamInfo(Team team, TeamSummary summary)
         {
+            Guard.Against.Null(team, nameof(team));
+            Guard.Against.Null(summary, nameof(summary));
+
             this.Abbreviation = team.Abbreviation;
             this.Id = team.Id;
             this.Name = team.Name;
