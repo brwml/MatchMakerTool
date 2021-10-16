@@ -1,103 +1,103 @@
 {
-    "Matches": {
-        "101": {
-            "Id": 1,
-            "QuizzerResults": [
-                {
-                    "Errors": 0,
-                    "QuizzerId": 1,
-                    "Score": 40
-                },
-                {
-                    "Errors": 0,
-                    "QuizzerId": 2,
-                    "Score": 30
-                }
-            ],
-            "Room": 1,
-            "Round": 1,
-            "ScheduleId": 101,
-            "TeamResults": [
-                {
-                    "Errors": 0,
-                    "Place": 1,
-                    "Score": 40,
-                    "TeamId": 1
-                },
-                {
-                    "Errors": 0,
-                    "Place": 2,
-                    "Score": 30,
-                    "TeamId": 2
-                }
-            ]
+  "Matches": {
+    "101": {
+      "Id": 1,
+      "QuizzerResults": [
+        {
+          "Errors": 0,
+          "QuizzerId": 1,
+          "Score": 40
+        },
+        {
+          "Errors": 0,
+          "QuizzerId": 2,
+          "Score": 30
         }
+      ],
+      "Room": 1,
+      "Round": 1,
+      "ScheduleId": 101,
+      "TeamResults": [
+        {
+          "Errors": 0,
+          "Place": 1,
+          "Score": 40,
+          "TeamId": 1
+        },
+        {
+          "Errors": 0,
+          "Place": 2,
+          "Score": 30,
+          "TeamId": 2
+        }
+      ]
+    }
+  },
+  "Name": "Test 1",
+  "Schedule": {
+    "Churches": {
+      "1": {
+        "Id": 1,
+        "Name": "Church 1"
+      },
+      "2": {
+        "Id": 2,
+        "Name": "Church 2"
+      },
+      "3": {
+        "Id": 3,
+        "Name": "Church 3"
+      }
     },
     "Name": "Test 1",
-    "Schedule": {
-        "Churches": {
-            "1": {
-                "Id": 1,
-                "Name": "Church 1"
-            },
-            "2": {
-                "Id": 2,
-                "Name": "Church 2"
-            },
-            "3": {
-                "Id": 3,
-                "Name": "Church 3"
-            }
-        },
-        "Name": "Test 1",
-        "Quizzers": {
-            "1": {
-                "ChurchId": 1,
-                "FirstName": "First",
-                "Gender": 1,
-                "Id": 1,
-                "LastName": "Last",
-                "RookieYear": 2015,
-                "TeamId": 1
-            },
-            "2": {
-                "ChurchId": 2,
-                "FirstName": "First",
-                "Gender": 1,
-                "Id": 2,
-                "LastName": "Last",
-                "RookieYear": 2015,
-                "TeamId": 2
-            },
-            "3": {
-                "ChurchId": 3,
-                "FirstName": "First",
-                "Gender": 1,
-                "Id": 3,
-                "LastName": "Last",
-                "RookieYear": 2015,
-                "TeamId": 3
-            }
-        },
-        "Teams": {
-            "1": {
-                "Abbreviation": "A",
-                "Division": -1,
-                "Id": 1,
-                "Name": "Team 1"
-            },
-            "2": {
-                "Abbreviation": "B",
-                "Division": -1,
-                "Id": 2,
-                "Name": "Team 2"
-            },
-            "3": {
-                "Abbreviation": "C",
-                "Division": -1,
-                "Id": 3,
-                "Name": "Team 3"
-            }
-        }
+    "Quizzers": {
+      "1": {
+        "ChurchId": 1,
+        "FirstName": "First",
+        "Gender": 1,
+        "Id": 1,
+        "LastName": "Last",
+        "RookieYear": 2015,
+        "TeamId": 1
+      },
+      "2": {
+        "ChurchId": 2,
+        "FirstName": "First",
+        "Gender": 1,
+        "Id": 2,
+        "LastName": "Last",
+        "RookieYear": 2015,
+        "TeamId": 2
+      },
+      "3": {
+        "ChurchId": 3,
+        "FirstName": "First",
+        "Gender": 1,
+        "Id": 3,
+        "LastName": "Last",
+        "RookieYear": 2015,
+        "TeamId": 3
+      }
+    },
+    "Teams": {
+      "1": {
+        "Abbreviation": "A",
+        "Division": -1,
+        "Id": 1,
+        "Name": "Team 1"
+      },
+      "2": {
+        "Abbreviation": "B",
+        "Division": -1,
+        "Id": 2,
+        "Name": "Team 2"
+      },
+      "3": {
+        "Abbreviation": "C",
+        "Division": -1,
+        "Id": 3,
+        "Name": "Team 3"
+      }
     }
+  }
 }

@@ -13,6 +13,18 @@
           "Place": 2,
           "TeamId": 3
         }
+      ],
+      "QuizzerResults": [
+        {
+          "QuizzerId": 1,
+          "Errors": 0,
+          "Score": 0
+        },
+        {
+          "QuizzerId": 2,
+          "Errors": 0,
+          "Score": 0
+        }
       ]
     },
     "201": {
@@ -27,6 +39,18 @@
         {
           "Place": 2,
           "TeamId": 3
+        }
+      ],
+      "QuizzerResults": [
+        {
+          "QuizzerId": 2,
+          "Errors": 0,
+          "Score": 0
+        },
+        {
+          "QuizzerId": 3,
+          "Errors": 0,
+          "Score": 0
         }
       ]
     },
@@ -43,6 +67,18 @@
           "Place": 2,
           "TeamId": 4
         }
+      ],
+      "QuizzerResults": [
+        {
+          "QuizzerId": 3,
+          "Errors": 0,
+          "Score": 0
+        },
+        {
+          "QuizzerId": 4,
+          "Errors": 0,
+          "Score": 0
+        }
       ]
     },
     "401": {
@@ -57,6 +93,18 @@
         {
           "Place": 2,
           "TeamId": 5
+        }
+      ],
+      "QuizzerResults": [
+        {
+          "QuizzerId": 4,
+          "Errors": 0,
+          "Score": 0
+        },
+        {
+          "QuizzerId": 5,
+          "Errors": 0,
+          "Score": 0
         }
       ]
     },
@@ -73,6 +121,18 @@
           "Place": 2,
           "TeamId": 3
         }
+      ],
+      "QuizzerResults": [
+        {
+          "QuizzerId": 5,
+          "Errors": 0,
+          "Score": 0
+        },
+        {
+          "QuizzerId": 3,
+          "Errors": 0,
+          "Score": 0
+        }
       ]
     },
     "601": {
@@ -87,6 +147,18 @@
         {
           "Place": 2,
           "TeamId": 6
+        }
+      ],
+      "QuizzerResults": [
+        {
+          "QuizzerId": 5,
+          "Errors": 0,
+          "Score": 0
+        },
+        {
+          "QuizzerId": 6,
+          "Errors": 0,
+          "Score": 0
         }
       ]
     },
@@ -103,6 +175,18 @@
           "Place": 2,
           "TeamId": 7
         }
+      ],
+      "QuizzerResults": [
+        {
+          "QuizzerId": 5,
+          "Errors": 0,
+          "Score": 0
+        },
+        {
+          "QuizzerId": 7,
+          "Errors": 0,
+          "Score": 0
+        }
       ]
     },
     "801": {
@@ -117,6 +201,18 @@
         {
           "Place": 2,
           "TeamId": 8
+        }
+      ],
+      "QuizzerResults": [
+        {
+          "QuizzerId": 6,
+          "Errors": 0,
+          "Score": 0
+        },
+        {
+          "QuizzerId": 8,
+          "Errors": 0,
+          "Score": 0
         }
       ]
     },
@@ -133,12 +229,98 @@
           "Place": 2,
           "TeamId": 8
         }
+      ],
+      "QuizzerResults": [
+        {
+          "QuizzerId": 7,
+          "Errors": 0,
+          "Score": 0
+        },
+        {
+          "QuizzerId": 8,
+          "Errors": 0,
+          "Score": 0
+        }
       ]
     }
   },
-    "Name": "Test 1",
+  "Name": "Test 1",
   "Schedule": {
     "Name": "Test 1",
+    "Quizzers": {
+      "1": {
+        "ChurchId": 1,
+        "FirstName": "First",
+        "Gender": 1,
+        "Id": 1,
+        "LastName": "Last",
+        "RookieYear": 2015,
+        "TeamId": 1
+      },
+      "2": {
+        "ChurchId": 2,
+        "FirstName": "First",
+        "Gender": 1,
+        "Id": 2,
+        "LastName": "Last",
+        "RookieYear": 2015,
+        "TeamId": 2
+      },
+      "3": {
+        "ChurchId": 3,
+        "FirstName": "First",
+        "Gender": 1,
+        "Id": 3,
+        "LastName": "Last",
+        "RookieYear": 2015,
+        "TeamId": 3
+      },
+      "4": {
+        "ChurchId": 4,
+        "FirstName": "First",
+        "Gender": 1,
+        "Id": 4,
+        "LastName": "Last",
+        "RookieYear": 2015,
+        "TeamId": 4
+      },
+      "5": {
+        "ChurchId": 5,
+        "FirstName": "First",
+        "Gender": 1,
+        "Id": 5,
+        "LastName": "Last",
+        "RookieYear": 2015,
+        "TeamId": 5
+      },
+      "6": {
+        "ChurchId": 6,
+        "FirstName": "First",
+        "Gender": 1,
+        "Id": 6,
+        "LastName": "Last",
+        "RookieYear": 2015,
+        "TeamId": 6
+      },
+      "7": {
+        "ChurchId": 7,
+        "FirstName": "First",
+        "Gender": 1,
+        "Id": 7,
+        "LastName": "Last",
+        "RookieYear": 2015,
+        "TeamId": 7
+      },
+      "8": {
+        "ChurchId": 8,
+        "FirstName": "First",
+        "Gender": 1,
+        "Id": 8,
+        "LastName": "Last",
+        "RookieYear": 2015,
+        "TeamId": 8
+      }
+    },
     "Teams": {
       "1": {
         "Abbreviation": "A",
