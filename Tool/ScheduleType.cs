@@ -1,17 +1,16 @@
-﻿namespace MatchMaker.Tool
+﻿namespace MatchMaker.Tool;
+
+/// <summary>
+/// Defines the ScheduleType
+/// </summary>
+internal enum ScheduleType
 {
     /// <summary>
-    /// Defines the ScheduleType
+    /// Defines the round robin schedule type
     /// </summary>
-    internal enum ScheduleType
-    {
-        /// <summary>
-        /// Defines the round robin schedule type
-        /// </summary>
-        RoundRobin,
-        /// <summary>
-        /// Defines the Swiss schedule type
-        /// </summary>
-        Swiss
-    }
+    RoundRobin,
+    /// <summary>
+    /// Defines the Swiss schedule type
+    /// </summary>
+    Swiss
 }

@@ -1,26 +1,25 @@
-﻿namespace MatchMaker.Reporting.Models
+﻿namespace MatchMaker.Reporting.Models;
+
+using System.Runtime.Serialization;
+
+/// <summary>
+/// Defines the <see cref="Gender"/>
+/// </summary>
+[DataContract]
+public enum Gender
 {
-    using System.Runtime.Serialization;
+    /// <summary>
+    /// Defines the Unknown
+    /// </summary>
+    [EnumMember] Unknown,
 
     /// <summary>
-    /// Defines the <see cref="Gender"/>
+    /// Defines the Male
     /// </summary>
-    [DataContract]
-    public enum Gender
-    {
-        /// <summary>
-        /// Defines the Unknown
-        /// </summary>
-        [EnumMember] Unknown,
+    [EnumMember] Male,
 
-        /// <summary>
-        /// Defines the Male
-        /// </summary>
-        [EnumMember] Male,
-
-        /// <summary>
-        /// Defines the Female
-        /// </summary>
-        [EnumMember] Female
-    }
+    /// <summary>
+    /// Defines the Female
+    /// </summary>
+    [EnumMember] Female
 }

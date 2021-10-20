@@ -1,42 +1,41 @@
-﻿namespace MatchMaker.Reporting.Models
-{
-    using System.Runtime.Serialization;
-    using System.Xml.Linq;
+﻿namespace MatchMaker.Reporting.Models;
 
-    using Ardalis.GuardClauses;
+using System.Runtime.Serialization;
+using System.Xml.Linq;
+
+using Ardalis.GuardClauses;
+
+/// <summary>
+/// Defines the <see cref="Church" /> class
+/// </summary>
+[DataContract]
+public class Church
+{
+    /// <summary>
+    /// Gets or sets the Id
+    /// </summary>
+    [DataMember]
+    public int Id { get; set; }
 
     /// <summary>
-    /// Defines the <see cref="Church" /> class
+    /// Gets or sets the Name
     /// </summary>
-    [DataContract]
-    public class Church
+    [DataMember]
+    public string Name { get; set; }
+
+    /// <summary>
+    /// Gets a <see cref="Church"/> instance from an XML element
+    /// </summary>
+    /// <param name="xml">The xml element</param>
+    /// <returns>The <see cref="Church"/></returns>
+    public static Church FromXml(XElement xml)
     {
-        /// <summary>
-        /// Gets or sets the Id
-        /// </summary>
-        [DataMember]
-        public int Id { get; set; }
+        Guard.Against.Null(xml, nameof(xml));
 
-        /// <summary>
-        /// Gets or sets the Name
-        /// </summary>
-        [DataMember]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets a <see cref="Church"/> instance from an XML element
-        /// </summary>
-        /// <param name="xml">The xml element</param>
-        /// <returns>The <see cref="Church"/></returns>
-        public static Church FromXml(XElement xml)
+        return new Church
         {
-            Guard.Against.Null(xml, nameof(xml));
-
-            return new Church
-            {
-                Id = xml.GetAttribute<int>("id"),
-                Name = xml.Value
-            };
-        }
+            Id = xml.GetAttribute<int>("id"),
+            Name = xml.Value
+        };
     }
 }

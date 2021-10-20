@@ -1,74 +1,73 @@
-﻿namespace Reporting.Test.Policies
+﻿namespace Reporting.Test.Policies;
+
+using System.Collections.Generic;
+using System.Linq;
+
+using Bogus;
+
+using MatchMaker.Reporting.Models;
+using MatchMaker.Reporting.Policies;
+
+using Xunit;
+
+public class ScoreTeamRankingPolicyTests
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using Bogus;
-
-    using MatchMaker.Reporting.Models;
-    using MatchMaker.Reporting.Policies;
-
-    using Xunit;
-
-    public class ScoreTeamRankingPolicyTests
+    [Theory]
+    [MemberData(nameof(GetTestCases))]
+    public void TeamScoreTests(IEnumerable<TeamSummary> summaries, IDictionary<int, int> places)
     {
-        [Theory]
-        [MemberData(nameof(GetTestCases))]
-        public void TeamScoreTests(IEnumerable<TeamSummary> summaries, IDictionary<int, int> places)
-        {
-            var policy = new ScoreTeamRankingPolicy();
-            policy.Rank(summaries, null);
+        var policy = new ScoreTeamRankingPolicy();
+        policy.Rank(summaries, null);
 
-            Assert.Equal(places, summaries.ToDictionary(x => x.TeamId, y => y.Place));
-        }
+        Assert.Equal(places, summaries.ToDictionary(x => x.TeamId, y => y.Place));
+    }
 
-        public static IEnumerable<object[]> GetTestCases()
-        {
-            return new List<object[]>
+    public static IEnumerable<object[]> GetTestCases()
+    {
+        return new List<object[]>
             {
                 GetTestCase1(),
                 GetTestCase2()
             };
-        }
+    }
 
-        private static object[] GetTestCase1()
-        {
-            var faker = new Faker();
-            var score = faker.Random.Number(100, 1000);
+    private static object[] GetTestCase1()
+    {
+        var faker = new Faker();
+        var score = faker.Random.Number(100, 1000);
 
-            var summaries = new List<TeamSummary>
+        var summaries = new List<TeamSummary>
             {
                 new TeamSummary { TeamId = 1, TotalScore = score, Wins = 1 },
                 new TeamSummary { TeamId = 2, TotalScore = score - 10, Wins = 1 }
             };
 
-            var places = new Dictionary<int, int>
+        var places = new Dictionary<int, int>
             {
                 { 1, 1 },
                 { 2, 2 }
             };
 
-            return new object[] { summaries, places };
-        }
+        return new object[] { summaries, places };
+    }
 
-        private static object[] GetTestCase2()
-        {
-            var faker = new Faker();
-            var score = faker.Random.Number(100, 1000);
+    private static object[] GetTestCase2()
+    {
+        var faker = new Faker();
+        var score = faker.Random.Number(100, 1000);
 
-            var summaries = new List<TeamSummary>
+        var summaries = new List<TeamSummary>
             {
                 new TeamSummary { TeamId = 1, TotalScore = score, Wins = 1 },
                 new TeamSummary { TeamId = 2, TotalScore = score, Wins = 1 }
             };
 
-            var places = new Dictionary<int, int>
+        var places = new Dictionary<int, int>
             {
                 { 1, 1 },
                 { 2, 1 }
             };
 
-            return new object[] { summaries, places };
-        }
+        return new object[] { summaries, places };
     }
 }

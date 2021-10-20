@@ -1,22 +1,21 @@
-﻿namespace MatchMaker.Tool
+﻿namespace MatchMaker.Tool;
+
+using Ardalis.GuardClauses;
+
+/// <summary>
+/// Defines the <see cref="Scheduling" />
+/// </summary>
+internal static class Scheduling
 {
-    using Ardalis.GuardClauses;
-
     /// <summary>
-    /// Defines the <see cref="Scheduling" />
+    /// Processes the scheduling options
     /// </summary>
-    internal static class Scheduling
+    /// <param name="options">The <see cref="ScheduleOptions"/></param>
+    /// <returns>The <see cref="bool"/></returns>
+    public static bool Process(ScheduleOptions options)
     {
-        /// <summary>
-        /// Processes the scheduling options
-        /// </summary>
-        /// <param name="options">The <see cref="ScheduleOptions"/></param>
-        /// <returns>The <see cref="bool"/></returns>
-        public static bool Process(ScheduleOptions options)
-        {
-            Guard.Against.Null(options, nameof(options));
+        Guard.Against.Null(options, nameof(options));
 
-            return true;
-        }
+        return true;
     }
 }

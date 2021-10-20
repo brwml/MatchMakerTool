@@ -1,49 +1,48 @@
-﻿namespace MatchMaker.Reporting.Models
-{
-    using System.Runtime.Serialization;
-    using System.Xml.Linq;
+﻿namespace MatchMaker.Reporting.Models;
 
-    using Ardalis.GuardClauses;
+using System.Runtime.Serialization;
+using System.Xml.Linq;
+
+using Ardalis.GuardClauses;
+
+/// <summary>
+/// Defines the <see cref="QuizzerResult" />
+/// </summary>
+[DataContract]
+public class QuizzerResult
+{
+    /// <summary>
+    /// Gets or sets the Errors
+    /// </summary>
+    [DataMember]
+    public int Errors { get; set; }
 
     /// <summary>
-    /// Defines the <see cref="QuizzerResult" />
+    /// Gets or sets the quizzer identifier
     /// </summary>
-    [DataContract]
-    public class QuizzerResult
+    [DataMember]
+    public int QuizzerId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the Score
+    /// </summary>
+    [DataMember]
+    public int Score { get; set; }
+
+    /// <summary>
+    /// Creates a <see cref="QuizzerResult"/> instance from an XML element.
+    /// </summary>
+    /// <param name="xml">The xml<see cref="XElement"/> instance</param>
+    /// <returns>The <see cref="QuizzerResult"/> instance</returns>
+    public static QuizzerResult FromXml(XElement xml)
     {
-        /// <summary>
-        /// Gets or sets the Errors
-        /// </summary>
-        [DataMember]
-        public int Errors { get; set; }
+        Guard.Against.Null(xml, nameof(xml));
 
-        /// <summary>
-        /// Gets or sets the quizzer identifier
-        /// </summary>
-        [DataMember]
-        public int QuizzerId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Score
-        /// </summary>
-        [DataMember]
-        public int Score { get; set; }
-
-        /// <summary>
-        /// Creates a <see cref="QuizzerResult"/> instance from an XML element.
-        /// </summary>
-        /// <param name="xml">The xml<see cref="XElement"/> instance</param>
-        /// <returns>The <see cref="QuizzerResult"/> instance</returns>
-        public static QuizzerResult FromXml(XElement xml)
+        return new QuizzerResult
         {
-            Guard.Against.Null(xml, nameof(xml));
-
-            return new QuizzerResult
-            {
-                QuizzerId = xml.GetAttribute<int>("id"),
-                Score = xml.GetAttribute<int>("score"),
-                Errors = xml.GetAttribute<int>("errors")
-            };
-        }
+            QuizzerId = xml.GetAttribute<int>("id"),
+            Score = xml.GetAttribute<int>("score"),
+            Errors = xml.GetAttribute<int>("errors")
+        };
     }
 }
