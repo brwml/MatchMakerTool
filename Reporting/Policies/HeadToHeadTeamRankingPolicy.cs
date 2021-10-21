@@ -7,12 +7,12 @@ using Ardalis.GuardClauses;
 
 using MatchMaker.Reporting.Models;
 
-using QuickGraph;
-using QuickGraph.Algorithms;
-using QuickGraph.Algorithms.Condensation;
+using QuikGraph;
+using QuikGraph.Algorithms;
+using QuikGraph.Algorithms.Condensation;
 
-using DependencyGraph = QuickGraph.AdjacencyGraph<int, QuickGraph.Edge<int>>;
-using GraphEdge = QuickGraph.Edge<int>;
+using DependencyGraph = QuikGraph.AdjacencyGraph<int, QuikGraph.Edge<int>>;
+using GraphEdge = QuikGraph.Edge<int>;
 using GraphVertex = System.Int32;
 
 /// <summary>

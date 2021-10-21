@@ -12,7 +12,6 @@
 
         <NoWarn />
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <WarningsAsErrors />
         <WarningLevel>5</WarningLevel>
     </PropertyGroup>
 </Project>

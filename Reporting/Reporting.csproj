@@ -16,7 +16,7 @@
     <PackageReference Include="Humanizer.Core" Version="2.11.10" />
     <PackageReference Include="itext7" Version="7.1.16" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="QuickGraph" Version="4.0.0" />
+    <PackageReference Include="QuikGraph" Version="2.3.0" />
     <PackageReference Include="StringTemplate4" Version="4.0.8" />
     <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
   </ItemGroup>
