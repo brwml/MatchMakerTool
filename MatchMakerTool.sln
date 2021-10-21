@@ -12,7 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{73F235C5-5D94-4BC2-A0D3-A8F6CCDCAE08}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		nuget.config = nuget.config
 	EndProjectSection
 EndProject
 Global
