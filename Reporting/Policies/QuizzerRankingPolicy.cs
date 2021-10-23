@@ -44,14 +44,9 @@ public abstract class QuizzerRankingPolicy
 
         for (var i = 1; i < summaries.Count; i++)
         {
-            if (areEqual(summaries[i], summaries[i - 1]))
-            {
-                summaries[i].Place = summaries[i - 1].Place;
-            }
-            else
-            {
-                summaries[i].Place = initial + i;
-            }
+            summaries[i].Place = areEqual(summaries[i], summaries[i - 1])
+                ? summaries[i - 1].Place
+                : initial + i;
         }
     }
 

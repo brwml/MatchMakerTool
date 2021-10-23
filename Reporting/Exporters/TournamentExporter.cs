@@ -141,12 +141,9 @@ public static class TournamentExporter
         {
             var row = (index / numberOfAlternateTeams) % 2;
 
-            if (row == 0)
-            {
-                return index % numberOfAlternateTeams;
-            }
-
-            return numberOfAlternateTeams - (index % numberOfAlternateTeams) - 1;
+            return row == 0
+                ? index % numberOfAlternateTeams
+                : numberOfAlternateTeams - (index % numberOfAlternateTeams) - 1;
         }
 
         for (var i = 0; i < numberOfAlternateTeams; i++)

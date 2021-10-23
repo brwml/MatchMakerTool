@@ -22,12 +22,9 @@ public static class XmlExtensions
     {
         Guard.Against.NullOrWhiteSpace(name, nameof(name));
 
-        if (xml is null)
-        {
-            return default;
-        }
-
-        return (T)Convert.ChangeType(xml.Attribute(name).Value, typeof(T), CultureInfo.InvariantCulture);
+        return xml is null
+            ? default :
+            (T)Convert.ChangeType(xml.Attribute(name).Value, typeof(T), CultureInfo.InvariantCulture);
     }
 
     /// <summary>
@@ -41,11 +38,8 @@ public static class XmlExtensions
     {
         Guard.Against.NullOrWhiteSpace(name, nameof(name));
 
-        if (xml is null)
-        {
-            return default;
-        }
-
-        return (T)Convert.ChangeType(xml.Element(name).Value, typeof(T), CultureInfo.InvariantCulture);
+        return xml is null
+            ? default
+            : (T)Convert.ChangeType(xml.Element(name).Value, typeof(T), CultureInfo.InvariantCulture);
     }
 }

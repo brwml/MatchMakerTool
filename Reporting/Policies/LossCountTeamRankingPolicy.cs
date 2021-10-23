@@ -36,17 +36,10 @@ public class LossCountTeamRankingPolicy : TeamRankingPolicy
     /// <returns>The result of the comparison.</returns>
     private static int Compare(TeamSummary x, TeamSummary y)
     {
-        if (x.Losses < y.Losses)
-        {
-            return -1;
-        }
-        else if (x.Losses > y.Losses)
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
+        return x.Losses < y.Losses
+            ? -1
+            : x.Losses > y.Losses
+                ? 1
+                : 0;
     }
 }

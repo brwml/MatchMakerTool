@@ -36,17 +36,10 @@ public class WinPercentageTeamRankingPolicy : TeamRankingPolicy
     /// <returns>The comparison result</returns>
     private static int Compare(TeamSummary x, TeamSummary y)
     {
-        if (x.WinPercentage > y.WinPercentage)
-        {
-            return -1;
-        }
-        else if (x.WinPercentage < y.WinPercentage)
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
+        return x.WinPercentage > y.WinPercentage
+            ? -1
+            : x.WinPercentage < y.WinPercentage
+                ? 1
+                : 0;
     }
 }
