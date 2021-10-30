@@ -27,10 +27,16 @@ public class Round
     public IDictionary<int, MatchSchedule> Matches { get; set; }
 
     /// <summary>
-    /// Gets or sets the start time
+    /// Gets or sets the date of the round.
     /// </summary>
     [DataMember]
-    public DateTime StartTime { get; set; }
+    public DateOnly Date { get; set; }
+
+    /// <summary>
+    /// Gets or sets the time of the round.
+    /// </summary>
+    [DataMember]
+    public TimeOnly Time { get; set; }
 
     /// <summary>
     /// Creates a <see cref="Round"/> from an XML element
@@ -44,18 +50,29 @@ public class Round
         return new Round
         {
             Id = xml.GetAttribute<int>("id"),
-            StartTime = ConvertDateTime(xml.Attribute("date").Value + " " + xml.Attribute("time").Value),
+            Date = ConvertDate(xml.GetAttribute<string>("date")),
+            Time = ConvertTime(xml.GetAttribute<string>("time")),
             Matches = xml.Elements("match").Select(x => MatchSchedule.FromXml(x)).ToDictionary(k => k.Id, v => v)
         };
     }
 
     /// <summary>
-    /// Converts the date-time string to a <see cref="DateTime"/>
+    /// Converts the given date string to a date object.
     /// </summary>
-    /// <param name="dateTime">The date-time <see cref="string"/></param>
-    /// <returns>The <see cref="DateTime"/></returns>
-    private static DateTime ConvertDateTime(string dateTime)
+    /// <param name="date">The date string</param>
+    /// <returns>The <see cref="DateOnly"/> instance. If the date cannot be parsed then the current date is returned.</returns>
+    private static DateOnly ConvertDate(string date)
     {
-        return DateTime.TryParse(dateTime, out var result) ? result : DateTime.Today;
+        return DateOnly.TryParse(date, out var dateOnly) ? dateOnly : DateOnly.FromDateTime(DateTime.Now);
+    }
+
+    /// <summary>
+    /// Converts the given time string to a time object.
+    /// </summary>
+    /// <param name="time">The time string</param>
+    /// <returns>The <see cref="TimeOnly"/> instance. If the time cannot be parsed then the current time is returned.</returns>
+    private static TimeOnly ConvertTime(string time)
+    {
+        return TimeOnly.TryParse(time, out var timeOnly) ? timeOnly : TimeOnly.FromDateTime(DateTime.Now);
     }
 }

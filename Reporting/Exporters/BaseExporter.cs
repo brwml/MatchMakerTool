@@ -71,7 +71,7 @@ public abstract class BaseExporter : IExporter
             quizzerInfo[i].ShowPlace = quizzerInfo[i - 1].Place != quizzerInfo[i].Place;
         }
 
-        var rookieYear = summary.Result.Schedule.Rounds.Min(x => x.Value.StartTime).Subtract(TimeSpan.FromDays(180)).Year;
+        var rookieYear = summary.Result.Schedule.Rounds.Min(x => x.Value.Date).AddDays(-180).Year;
 
         foreach (var quizzer in quizzerInfo)
         {

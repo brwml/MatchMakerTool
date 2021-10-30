@@ -15,11 +15,11 @@ public class TieBreakHeadToHead : TieBreak
     /// <summary>
     /// Initializes a new instance of the <see cref="TieBreakHeadToHead"/> class.
     /// </summary>
-    /// <param name="results">The <see cref="IEnumerable{MatchResult}"/></param>
+    /// <param name="results">The <see cref="IEnumerable{MatchResult}"/>. This </param>
     /// <param name="teams">The <see cref="IDictionary{int, Team}"/></param>
     public TieBreakHeadToHead(IEnumerable<MatchResult> results, IDictionary<int, Team> teams)
     {
-        Guard.Against.NullOrEmpty(results, nameof(results));
+        Guard.Against.Null(results, nameof(results));
         Guard.Against.NullOrEmpty(teams, nameof(teams));
 
         this.Reason = TieBreakReason.HeadToHead;

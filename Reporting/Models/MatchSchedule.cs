@@ -45,9 +45,9 @@ public class MatchSchedule
             Room = xml.GetAttribute<int>("room"),
             Teams = new[]
             {
-                    xml.GetAttribute<int>("team1"),
-                    xml.GetAttribute<int>("team2")
-                }
+                xml.GetAttribute<int>("team1"),
+                xml.GetAttribute<int>("team2")
+            }
         };
     }
 }
