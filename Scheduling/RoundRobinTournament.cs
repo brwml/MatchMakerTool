@@ -31,15 +31,14 @@ public class RoundRobinTournament
     /// <returns>The <see cref="IEnumerable{Round}"/> instance</returns>
     private static IEnumerable<Round> CreateRounds(IEnumerable<Team> teams, int availableRooms)
     {
-        var matchQueue = new Queue<MatchSchedule>(CreateMatchSchedules(teams));
+        var matches = CreateMatchSchedules(teams);
         var currentRoom = 0;
         var currentRound = CreateRound();
 
         availableRooms = Math.Min(teams.Count() / 2, availableRooms);
 
-        while (matchQueue.Any())
-        {
-            var match = matchQueue.Dequeue();
+        foreach (var match in matches)
+        { 
             match.Room = (currentRoom++ % availableRooms) + 1;
 
             currentRound.Matches.Add(match.Id, match);
