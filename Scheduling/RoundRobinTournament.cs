@@ -88,6 +88,7 @@ public class RoundRobinTournament
         var matchCount = teamsCount / 2;
         var rotationIndex = (teamsCount + 1) % 2;
         var iterations = teamsCount - rotationIndex;
+        var multiplier = CreateMatchIdMultiplier(matchCount);
 
         for (var i = 0; i < iterations; i++)
         {
@@ -98,7 +99,7 @@ public class RoundRobinTournament
 
                 yield return new MatchSchedule
                 {
-                    Id = CreateMatchId(i, j),
+                    Id = CreateMatchId(i + 1, j + 1, multiplier),
                     Teams = new List<int> { team1, team2 }
                 };
             }
@@ -110,13 +111,33 @@ public class RoundRobinTournament
     }
 
     /// <summary>
-    /// Create the match identifier given the identifier of the two teams.
+    /// Create the match identifier given the identifier of the two teams. Note that the instance identifier
+    /// cannot be larger than 
     /// </summary>
     /// <param name="groupId">The group identifier</param>
     /// <param name="instanceId">The instance identifier</param>
+    /// <param name="multiplier">The group multiplier</param>
     /// <returns>The match identifier</returns>
-    private static int CreateMatchId(int groupId, int instanceId)
+    private static int CreateMatchId(int groupId, int instanceId, int multiplier)
     {
-        return groupId * 1000 + instanceId;
+        return groupId * multiplier + instanceId;
+    }
+
+    /// <summary>
+    /// Creates the multiplier for the match identifier.
+    /// </summary>
+    /// <param name="groupSize">The group size</param>
+    /// <returns>The multiplier</returns>
+    private static int CreateMatchIdMultiplier(int groupSize)
+    {
+        var multiplier = 1;
+
+        while (groupSize > 0)
+        {
+            multiplier *= 10;
+            groupSize /= 10;
+        }
+
+        return multiplier;
     }
 }
