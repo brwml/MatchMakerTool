@@ -87,7 +87,7 @@ public class RoundRobinTournament
         var teamsCount = teamList.Count;
         var matchCount = teamsCount / 2;
         var rotationIndex = (teamsCount + 1) % 2;
-        var iterations = teamsCount + (teamsCount % 2 - 1);
+        var iterations = teamsCount - rotationIndex;
 
         for (var i = 0; i < iterations; i++)
         {
