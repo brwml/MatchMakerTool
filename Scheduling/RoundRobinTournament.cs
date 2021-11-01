@@ -111,8 +111,7 @@ public class RoundRobinTournament
     }
 
     /// <summary>
-    /// Create the match identifier given the identifier of the two teams. Note that the instance identifier
-    /// cannot be larger than 
+    /// Create the match identifier given the identifier of the two teams.
     /// </summary>
     /// <param name="groupId">The group identifier</param>
     /// <param name="instanceId">The instance identifier</param>
