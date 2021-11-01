@@ -80,7 +80,6 @@ public class RoundRobinTournamentTests
         {
             foreach (var match in round.Matches.Select(x => x.Value))
             {
-                Assert.Equal(match.Id, CreateMatchId(match));
                 Assert.False(matchSet.Contains(match.Id));
                 matchSet.Add(match.Id);
             }
@@ -110,11 +109,6 @@ public class RoundRobinTournamentTests
                 yield return new object[] { numTeams, numRooms, numRounds };
             }
         }
-    }
-
-    private static int CreateMatchId(MatchSchedule match)
-    {
-        return (match.Teams.Min() << 16) + match.Teams.Max();
     }
 
     private static Schedule CreateSchedule(int numTeams)

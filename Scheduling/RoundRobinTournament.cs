@@ -98,7 +98,7 @@ public class RoundRobinTournament
 
                 yield return new MatchSchedule
                 {
-                    Id = CreateMatchId(team1, team2),
+                    Id = CreateMatchId(i, j),
                     Teams = new List<int> { team1, team2 }
                 };
             }
@@ -112,13 +112,11 @@ public class RoundRobinTournament
     /// <summary>
     /// Create the match identifier given the identifier of the two teams.
     /// </summary>
-    /// <param name="team1">The first team</param>
-    /// <param name="team2">The second team</param>
+    /// <param name="groupId">The group identifier</param>
+    /// <param name="instanceId">The instance identifier</param>
     /// <returns>The match identifier</returns>
-    private static int CreateMatchId(int team1, int team2)
+    private static int CreateMatchId(int groupId, int instanceId)
     {
-        const int BitsPerByte = 8;
-        const int ShiftSize = sizeof(int) * BitsPerByte / 2;
-        return (Math.Min(team1, team2) << ShiftSize) + Math.Max(team1, team2);
+        return groupId * 1000 + instanceId;
     }
 }
