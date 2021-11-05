@@ -109,7 +109,7 @@ internal static class Reporting
         return Directory
             .EnumerateFiles(folder, "*.schedule.xml", SearchOption.TopDirectoryOnly)
             .Select(x => new FileInfo(x))
-            .FirstOrDefault();
+            .First();
     }
 
     /// <summary>

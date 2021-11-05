@@ -45,7 +45,7 @@ internal class Program
     {
         if (options.Verbose)
         {
-            Trace.Listeners.Add(new ColorConsoleTraceListener());
+            Trace.Listeners.Add(new ConsoleTraceListener());
             Trace.IndentSize = 2;
         }
     }

@@ -3,6 +3,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>MatchMaker.Scheduling</RootNamespace>
     <AssemblyName>MatchMaker.Scheduling</AssemblyName>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <Import Project="..\Shared\Project.xml" />
   <ItemGroup>

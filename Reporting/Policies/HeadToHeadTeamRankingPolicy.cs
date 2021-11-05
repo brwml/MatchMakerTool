@@ -13,7 +13,7 @@ using QuikGraph.Algorithms.Condensation;
 
 using DependencyGraph = QuikGraph.AdjacencyGraph<int, QuikGraph.Edge<int>>;
 using GraphEdge = QuikGraph.Edge<int>;
-using GraphVertex = System.Int32;
+using GraphVertex = Int32;
 
 /// <summary>
 /// Defines the <see cref="HeadToHeadTeamRankingPolicy" />
@@ -89,7 +89,7 @@ public class HeadToHeadTeamRankingPolicy : TeamRankingPolicy
     /// <returns>The <see cref="IEnumerable{MatchResult}"/> instance</returns>
     private IEnumerable<MatchResult> GetMatchesForTeamSummaries(IEnumerable<TeamSummary> summaries)
     {
-        return this.Result.Matches.Select(m => m.Value).Where(m => m.TeamResults.All(t => summaries.Any(s => s.TeamId == t.TeamId)));
+        return this.Result?.Matches.Select(m => m.Value).Where(m => m.TeamResults.All(t => summaries.Any(s => s.TeamId == t.TeamId))) ?? Enumerable.Empty<MatchResult>();
     }
 
     /// <summary>
@@ -142,7 +142,7 @@ public class HeadToHeadTeamRankingPolicy : TeamRankingPolicy
             {
                 var teamSummary = summaryLookup[team];
                 teamSummary.Place = place;
-                summaryLookup[team].TieBreak = new TieBreakHeadToHead(matches.Where(x => x.TeamResults.Any(y => y.TeamId == teamSummary.TeamId)), this.Result.Schedule.Teams);
+                summaryLookup[team].TieBreak = new TieBreakHeadToHead(matches.Where(x => x.TeamResults.Any(y => y.TeamId == teamSummary.TeamId)), this.Result?.Schedule.Teams ?? new Dictionary<int, Team>());
             }
 
             place += teams.Length;

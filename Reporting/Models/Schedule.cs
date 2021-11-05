@@ -14,6 +14,15 @@ using Ardalis.GuardClauses;
 [DataContract]
 public class Schedule
 {
+    public Schedule(string name, IDictionary<int, Church> churches, IDictionary<int, Quizzer> quizzers, IDictionary<int, Team> teams, IDictionary<int, Round> rounds)
+    {
+        this.Name = name;
+        this.Churches = churches;
+        this.Teams = teams;
+        this.Quizzers = quizzers;
+        this.Rounds = rounds;
+    }
+
     /// <summary>
     /// Gets or sets the Churches
     /// </summary>
@@ -55,9 +64,7 @@ public class Schedule
         Guard.Against.Null(document, nameof(document));
         Guard.Against.NullOrWhiteSpace(name, nameof(name));
 
-        var schedule = PopulateSchedule(new Schedule(), document);
-        schedule.Name = name;
-        return schedule;
+        return PopulateSchedule(document, name);
     }
 
     /// <summary>
@@ -111,16 +118,16 @@ public class Schedule
     /// <summary>
     /// Populates the schedule.
     /// </summary>
-    /// <param name="schedule">The <see cref="Schedule"/></param>
     /// <param name="document">The <see cref="XDocument"/></param>
+    /// <param name="name">The name</param>
     /// <returns>The <see cref="Schedule"/></returns>
-    private static Schedule PopulateSchedule(Schedule schedule, XDocument document)
+    private static Schedule PopulateSchedule(XDocument document, string name)
     {
-        schedule.Churches = LoadChurches(document);
-        schedule.Teams = LoadTeams(document);
-        schedule.Quizzers = LoadQuizzers(document);
-        schedule.Rounds = LoadRounds(document);
-        return schedule;
+        var churches = LoadChurches(document);
+        var teams = LoadTeams(document);
+        var quizzers = LoadQuizzers(document);
+        var rounds = LoadRounds(document);
+        return new Schedule(name, churches, quizzers, teams, rounds);
     }
 }
 
@@ -137,7 +144,9 @@ public static class ScheduleExtensions
     /// <returns>The schedule</returns>
     public static Schedule WithName(this Schedule schedule, string name)
     {
-        if (schedule is not null && !string.IsNullOrWhiteSpace(name))
+        Guard.Against.Null(schedule, nameof(schedule));
+
+        if (!string.IsNullOrWhiteSpace(name))
         {
             schedule.Name = name;
         }

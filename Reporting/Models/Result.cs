@@ -15,6 +15,17 @@ using Ardalis.GuardClauses;
 public class Result
 {
     /// <summary>
+    /// Initializes an instance of the <see cref="Result"/> class.
+    /// </summary>
+    /// <param name="schedule">The schedule</param>
+    /// <param name="matches">The matches</param>
+    public Result(Schedule schedule, IDictionary<int, MatchResult> matches)
+    {
+        this.Schedule = schedule;
+        this.Matches = matches;
+    }
+
+    /// <summary>
     /// Gets or sets the Matches
     /// </summary>
     [DataMember]
@@ -43,11 +54,9 @@ public class Result
         Guard.Against.NullOrEmpty(documents, nameof(documents));
         Guard.Against.Null(schedule, nameof(schedule));
 
-        return new Result
-        {
-            Schedule = schedule,
-            Matches = documents.SelectMany(x => LoadMatches(x)).ToDictionary(m => m.ScheduleId, m => m)
-        };
+        var matches = documents.SelectMany(x => LoadMatches(x)).ToDictionary(m => m.ScheduleId, m => m);
+
+        return new Result(schedule, matches);
     }
 
     /// <summary>

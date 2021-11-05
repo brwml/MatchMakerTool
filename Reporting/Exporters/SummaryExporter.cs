@@ -40,11 +40,7 @@ public static class SummaryExporter
     {
         var quizzer = summary.Result.Schedule.Quizzers[quizzerSummary.QuizzerId];
         var church = summary.Result.Schedule.Churches[quizzer.ChurchId];
-        return new InternalQuizzerSummary
-        {
-            Church = church.Name,
-            Name = $"{quizzer.LastName}, {quizzer.FirstName}"
-        };
+        return new InternalQuizzerSummary($"{quizzer.LastName}, {quizzer.FirstName}", church.Name);
     }
 
     /// <summary>
@@ -152,6 +148,17 @@ public static class SummaryExporter
     /// </summary>
     private class InternalQuizzerSummary
     {
+        /// <summary>
+        /// Initializes an instance of the <see cref="InternalQuizzerSummary"/> class.
+        /// </summary>
+        /// <param name="name">The quizzer name</param>
+        /// <param name="church">The quizzer church</param>
+        public InternalQuizzerSummary(string name, string church)
+        {
+            this.Name = name;
+            this.Church = church;
+        }
+
         /// <summary>
         /// Gets or sets the Church
         /// </summary>

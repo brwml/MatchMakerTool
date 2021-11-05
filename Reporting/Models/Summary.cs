@@ -14,6 +14,19 @@ using MatchMaker.Reporting.Policies;
 public class Summary
 {
     /// <summary>
+    /// Initializes an instance of the <see cref="Summary"/> class.
+    /// </summary>
+    /// <param name="result">The results</param>
+    /// <param name="teamSummaries">The team summaries</param>
+    /// <param name="quizzerSummaries">The quizzer summaries</param>
+    public Summary(Result result, IEnumerable<TeamRankingPolicy> policies)
+    {
+        this.Result = result;
+        this.TeamSummaries = TeamSummary.FromResult(result, policies);
+        this.QuizzerSummaries = QuizzerSummary.FromResult(result);
+    }
+
+    /// <summary>
     /// Gets or sets the quizzer summaries
     /// </summary>
     [DataMember]
@@ -48,11 +61,6 @@ public class Summary
         Guard.Against.Null(result, nameof(result));
         Guard.Against.NullOrEmpty(policies, nameof(policies));
 
-        return new Summary
-        {
-            Result = result,
-            TeamSummaries = TeamSummary.FromResult(result, policies),
-            QuizzerSummaries = QuizzerSummary.FromResult(result)
-        };
+        return new Summary(result, policies);
     }
 }

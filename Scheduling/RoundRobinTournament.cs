@@ -64,11 +64,7 @@ public class RoundRobinTournament
     /// <returns>The <see cref="Round"/> instance</returns>
     private static Round CreateRound(int currentRound = 0)
     {
-        return new Round
-        {
-            Id = currentRound + 1,
-            Matches = new Dictionary<int, MatchSchedule>()
-        };
+        return new Round(currentRound + 1);
     }
 
     /// <summary>
@@ -97,11 +93,10 @@ public class RoundRobinTournament
                 var team1 = teamList[j].Id;
                 var team2 = teamList[teamsCount - j - 1].Id;
 
-                yield return new MatchSchedule
-                {
-                    Id = CreateMatchId(i + 1, j + 1, multiplier),
-                    Teams = new List<int> { team1, team2 }
-                };
+                var id = CreateMatchId(i + 1, j + 1, multiplier);
+                var match = new List<int> { team1, team2 };
+
+                yield return new MatchSchedule(id, j + 1, match);
             }
 
             var movingTeam = teamList[rotationIndex];

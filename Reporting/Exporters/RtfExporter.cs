@@ -50,6 +50,12 @@ public class RtfExporter : BaseExporter
     {
         var assembly = Assembly.GetExecutingAssembly();
         using var stream = assembly.GetManifestResourceStream(RtfTemplate);
+
+        if (stream is null)
+        {
+            throw new InvalidOperationException($"The template {RtfTemplate} was not found.");
+        }
+
         using var reader = new StreamReader(stream);
         var group = new TemplateGroupString(reader.ReadToEnd());
         group.RegisterRenderer(typeof(decimal), new DecimalAttributeRenderer());

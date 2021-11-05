@@ -12,6 +12,27 @@ using Ardalis.GuardClauses;
 public class Quizzer
 {
     /// <summary>
+    /// Initializes an instance of the <see cref="Quizzer"/> class.
+    /// </summary>
+    /// <param name="id">The identifier</param>
+    /// <param name="firstName">The first name</param>
+    /// <param name="lastName">The last name</param>
+    /// <param name="gender">The gender</param>
+    /// <param name="rookieYear">The rookie year</param>
+    /// <param name="teamId">The team identifier</param>
+    /// <param name="churchId">The church identifier</param>
+    public Quizzer(int id, string firstName, string lastName, Gender gender, int rookieYear, int teamId, int churchId)
+    {
+        this.Id = id;
+        this.FirstName = firstName;
+        this.LastName = lastName;
+        this.Gender = gender;
+        this.RookieYear = rookieYear;
+        this.TeamId = teamId;
+        this.ChurchId = churchId;
+    }
+
+    /// <summary>
     /// Gets or sets the church identifier
     /// </summary>
     [DataMember]
@@ -62,15 +83,14 @@ public class Quizzer
     {
         Guard.Against.Null(xml, nameof(xml));
 
-        return new Quizzer
-        {
-            Id = xml.GetAttribute<int>("id"),
-            TeamId = xml.GetElement<int>("teamID"),
-            ChurchId = xml.GetElement<int>("churchID"),
-            FirstName = xml.Element("firstname").Value.Trim(),
-            LastName = xml.Element("lastname").Value.Trim(),
-            Gender = xml.Element("gender").Value == "M" ? Gender.Male : Gender.Female,
-            RookieYear = xml.GetElement<int>("rookieYear")
-        };
+        var id = xml.GetAttribute<int>("id");
+        var teamId = xml.GetElement<int>("teamID");
+        var churchId = xml.GetElement<int>("churchID");
+        var firstName = xml.Element("firstname")?.Value.Trim() ?? string.Empty;
+        var lastName = xml.Element("lastname")?.Value.Trim() ?? string.Empty;
+        var gender = xml.Element("gender")?.Value == "M" ? Gender.Male : Gender.Female;
+        var rookieYear = xml.GetElement<int>("rookieYear");
+
+        return new Quizzer(id, firstName, lastName, gender, rookieYear, teamId, churchId);
     }
 }

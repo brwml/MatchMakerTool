@@ -113,10 +113,8 @@ public class RoundRobinTournamentTests
 
     private static Schedule CreateSchedule(int numTeams)
     {
-        return new Schedule
-        {
-            Teams = CreateSequence(numTeams).ToDictionary(x => x, x => new Team { Id = x })
-        };
+        var teams = CreateSequence(numTeams).ToDictionary(x => x, x => new Team(x, string.Empty, string.Empty, 0));
+        return new Schedule(string.Empty, new Dictionary<int, Church>(), new Dictionary<int, Quizzer>(), teams, new Dictionary<int, Round>());
     }
 
     private static IEnumerable<int> CreateSequence(int num)

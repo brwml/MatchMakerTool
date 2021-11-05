@@ -13,6 +13,19 @@ using Ardalis.GuardClauses;
 public class MatchSchedule
 {
     /// <summary>
+    /// Initializes an instance of the <see cref="MatchSchedule"/> class.
+    /// </summary>
+    /// <param name="id">The identifier</param>
+    /// <param name="room">The room</param>
+    /// <param name="teams">The teams</param>
+    public MatchSchedule(int id, int room, IList<int> teams)
+    {
+        this.Id = id;
+        this.Room = room;
+        this.Teams = teams;
+    }
+
+    /// <summary>
     /// Gets or sets the Id
     /// </summary>
     [DataMember]
@@ -39,15 +52,14 @@ public class MatchSchedule
     {
         Guard.Against.Null(xml, nameof(xml));
 
-        return new MatchSchedule
+        var id = xml.GetAttribute<int>("id");
+        var room = xml.GetAttribute<int>("room");
+        var teams = new[]
         {
-            Id = xml.GetAttribute<int>("id"),
-            Room = xml.GetAttribute<int>("room"),
-            Teams = new[]
-            {
-                xml.GetAttribute<int>("team1"),
-                xml.GetAttribute<int>("team2")
-            }
+            xml.GetAttribute<int>("team1"),
+            xml.GetAttribute<int>("team2")
         };
+
+        return new MatchSchedule(id, room, teams);
     }
 }

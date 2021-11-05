@@ -20,9 +20,16 @@ public class HeadToHeadTeamRankingTests
     public void HeadToHeadTests(string fileName, IDictionary<int, int> places)
     {
         var results = JsonConvert.DeserializeObject<Result>(File.ReadAllText(fileName));
-        var summary = Summary.FromResult(results, new[] { new HeadToHeadTeamRankingPolicy() });
 
-        Assert.All(summary.TeamSummaries, x => Assert.Equal(x.Value.Place, places[x.Key]));
+        if (results is not null)
+        {
+            var summary = Summary.FromResult(results, new[] { new HeadToHeadTeamRankingPolicy() });
+            Assert.All(summary.TeamSummaries, x => Assert.Equal(x.Value.Place, places[x.Key]));
+        }
+        else
+        {
+            throw new InvalidOperationException("The results cannot be null.");
+        }
     }
 
     public static IEnumerable<object[]> GetHeadToHeadTestCases()

@@ -16,14 +16,14 @@ public abstract class TeamRankingPolicy
     /// <summary>
     /// Gets or sets the Result
     /// </summary>
-    protected Result Result { get; set; }
+    protected Result? Result { get; private set; }
 
     /// <summary>
     /// Ranks the teams.
     /// </summary>
     /// <param name="summaries">The <see cref="IEnumerable{TeamSummary}"/></param>
     /// <param name="result">The <see cref="Result"/></param>
-    public void Rank(IEnumerable<TeamSummary> summaries, Result result)
+    public void Rank(IEnumerable<TeamSummary> summaries, Result? result)
     {
         Guard.Against.NullOrEmpty(summaries, nameof(summaries));
 

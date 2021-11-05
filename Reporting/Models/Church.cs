@@ -12,6 +12,17 @@ using Ardalis.GuardClauses;
 public class Church
 {
     /// <summary>
+    /// Initializes an instance of the <see cref="Church"/> class.
+    /// </summary>
+    /// <param name="id">The identifier</param>
+    /// <param name="name">The name</param>
+    public Church(int id, string name)
+    {
+        this.Id = id;
+        this.Name = name;
+    }
+
+    /// <summary>
     /// Gets or sets the Id
     /// </summary>
     [DataMember]
@@ -32,10 +43,9 @@ public class Church
     {
         Guard.Against.Null(xml, nameof(xml));
 
-        return new Church
-        {
-            Id = xml.GetAttribute<int>("id"),
-            Name = xml.Value
-        };
+        var id = xml.GetAttribute<int>("id");
+        var name = xml.Value;
+
+        return new Church(id, name);
     }
 }

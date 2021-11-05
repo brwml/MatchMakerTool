@@ -1,5 +1,7 @@
 ﻿namespace MatchMaker.Tool;
 
+#pragma warning disable CS8618
+
 using CommandLine;
 
 /// <summary>

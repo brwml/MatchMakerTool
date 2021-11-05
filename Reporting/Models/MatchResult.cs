@@ -14,6 +14,23 @@ using Ardalis.GuardClauses;
 public class MatchResult
 {
     /// <summary>
+    /// Initializes an instance of the <see cref="MatchResult"/> class.
+    /// </summary>
+    /// <param name="id">The result identifier</param>
+    /// <param name="room">The room</param>
+    /// <param name="round">The round</param>
+    /// <param name="teamResults">The team results</param>
+    /// <param name="quizzerResults">The quizzer results</param>
+    public MatchResult(int id, int room, int round, IList<TeamResult> teamResults, IList<QuizzerResult> quizzerResults)
+    {
+        this.Id = id;
+        this.Room = room;
+        this.Round = round;
+        this.TeamResults = teamResults;
+        this.QuizzerResults = quizzerResults;
+    }
+
+    /// <summary>
     /// Gets or sets the match identifier
     /// </summary>
     [DataMember]
@@ -58,13 +75,12 @@ public class MatchResult
     {
         Guard.Against.Null(xml, nameof(xml));
 
-        return new MatchResult
-        {
-            Id = xml.GetAttribute<int>("id"),
-            Round = xml.GetAttribute<int>("round"),
-            Room = xml.GetAttribute<int>("room"),
-            TeamResults = xml.Elements("team").Select(x => TeamResult.FromXml(x)).ToArray(),
-            QuizzerResults = xml.Elements("quizzer").Select(x => QuizzerResult.FromXml(x)).ToArray()
-        };
+        var id = xml.GetAttribute<int>("id");
+        var round = xml.GetAttribute<int>("round");
+        var room = xml.GetAttribute<int>("room");
+        var teamResults = xml.Elements("team").Select(x => TeamResult.FromXml(x)).ToArray();
+        var quizzerResults = xml.Elements("quizzer").Select(x => QuizzerResult.FromXml(x)).ToArray();
+
+        return new MatchResult(id, room, round, teamResults, quizzerResults);
     }
 }

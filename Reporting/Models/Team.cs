@@ -12,6 +12,21 @@ using Ardalis.GuardClauses;
 public class Team
 {
     /// <summary>
+    /// Initializes an instance of the <see cref="Team"/> class.
+    /// </summary>
+    /// <param name="id">The team identifier</param>
+    /// <param name="name">The team name</param>
+    /// <param name="abbreviation">The team abbreviation</param>
+    /// <param name="division">The team division</param>
+    public Team(int id, string name, string abbreviation, int division)
+    {
+        this.Id = id;
+        this.Name = name;
+        this.Abbreviation = abbreviation;
+        this.Division = division;
+    }
+
+    /// <summary>
     /// Gets or sets the Abbreviation
     /// </summary>
     [DataMember]
@@ -44,12 +59,11 @@ public class Team
     {
         Guard.Against.Null(xml, nameof(xml));
 
-        return new Team
-        {
-            Id = xml.GetAttribute<int>("id"),
-            Division = xml.GetAttribute<int>("div"),
-            Abbreviation = xml.Attribute("abbrev").Value,
-            Name = xml.Value
-        };
+        var id = xml.GetAttribute<int>("id");
+        var division = xml.GetAttribute<int>("div");
+        var abbreviation = xml.Attribute("abbrev")?.Value ?? string.Empty;
+        var name = xml.Value;
+
+        return new Team(id, name, abbreviation, division);
     }
 }

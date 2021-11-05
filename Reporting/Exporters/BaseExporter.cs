@@ -1,6 +1,4 @@
 ﻿namespace MatchMaker.Reporting.Exporters;
-
-using System;
 using System.Collections.Generic;
 using System.Linq;
 

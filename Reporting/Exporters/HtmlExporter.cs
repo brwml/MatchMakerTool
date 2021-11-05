@@ -256,6 +256,12 @@ public partial class HtmlExporter : BaseExporter
     {
         var assembly = Assembly.GetExecutingAssembly();
         using var stream = assembly.GetManifestResourceStream(name);
+
+        if (stream is null)
+        {
+            throw new InvalidOperationException($"The manifest resource {name} was not found.");
+        }
+
         using var reader = new StreamReader(stream);
         var group = new TemplateGroupString(reader.ReadToEnd());
         group.RegisterRenderer(typeof(decimal), new DecimalAttributeRenderer());
@@ -348,8 +354,11 @@ public partial class HtmlExporter : BaseExporter
     {
         var assembly = Assembly.GetExecutingAssembly();
         using var stream = assembly.GetManifestResourceStream(StyleSheet);
-        using var destination = File.OpenWrite(Path.Combine(folder, StyleSheetFileName));
-        stream.CopyTo(destination);
+        if (stream is not null)
+        {
+            using var destination = File.OpenWrite(Path.Combine(folder, StyleSheetFileName));
+            stream.CopyTo(destination);
+        }
     }
 
     /// <summary>
