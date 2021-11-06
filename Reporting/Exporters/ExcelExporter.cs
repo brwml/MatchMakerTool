@@ -27,6 +27,11 @@ public class ExcelExporter : BaseExporter
     private const double QuizzerNameColumnWidth = 20.0;
 
     /// <summary>
+    /// Defines the quizzer team column width
+    /// </summary>
+    private const double QuizzerTeamColumnWidth = 20.0;
+
+    /// <summary>
     /// Defines the team name column width
     /// </summary>
     private const double TeamNameColumnWidth = 20.0;
@@ -100,6 +105,7 @@ public class ExcelExporter : BaseExporter
         row.Cell(QuizzerColumns.AverageErrors).SetValue(nameof(QuizzerColumns.AverageErrors).Titleize());
 
         row.Cell(QuizzerColumns.Name).WorksheetColumn().Width = QuizzerNameColumnWidth;
+        row.Cell(QuizzerColumns.Team).WorksheetColumn().Width = QuizzerTeamColumnWidth;
         row.Cell(QuizzerColumns.Church).WorksheetColumn().Width = QuizzerChurchColumnWidth;
         row.Cell(QuizzerColumns.ID).WorksheetColumn().Hide();
     }
