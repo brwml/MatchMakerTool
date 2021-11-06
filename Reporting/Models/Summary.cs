@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Xml.Linq;
 
 using Ardalis.GuardClauses;
 
@@ -62,5 +63,19 @@ public class Summary
         Guard.Against.NullOrEmpty(policies, nameof(policies));
 
         return new Summary(result, policies);
+    }
+
+    /// <summary>
+    /// Converts the <see cref="Summary"/> instance to XML.
+    /// </summary>
+    /// <returns>The <see cref="XDocument"/> instance</returns>
+    public XDocument ToXml()
+    {
+        var scheduleXml = this.Result.Schedule.ToXml();
+        var resultXml = this.Result.ToXml();
+
+        scheduleXml.Root?.Add(resultXml.Descendants("results"));
+
+        return scheduleXml;
     }
 }

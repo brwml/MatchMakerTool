@@ -36,7 +36,7 @@ internal class ReportingOptions : BaseOptions
     /// <summary>
     /// Gets or sets the output format
     /// </summary>
-    [Option('f', Default = OutputFormat.All, HelpText = "Output format for the report. Possible values are Excel, Html, Pdf, and Rtf.")]
+    [Option('f', Default = OutputFormat.All, HelpText = "Output format for the report. Possible values are Excel, Html, Pdf, Rtf, and Xml.")]
     public OutputFormat OutputFormat { get; set; }
 
     /// <summary>

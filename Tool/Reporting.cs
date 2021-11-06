@@ -141,6 +141,11 @@ internal static class Reporting
             list.Add(new RtfExporter());
         }
 
+        if (format.HasFlag(OutputFormat.Xml))
+        {
+            list.Add(new XmlExporter());
+        }
+
         return list;
     }
 

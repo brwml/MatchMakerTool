@@ -82,7 +82,7 @@ public class Schedule
     public XDocument ToXml()
     {
         return new XDocument(
-            new XDeclaration("1.0", "iso-8859-1", "true"),
+            new XmlDocumentDeclaration(),
             new XElement(
                 "members",
                 new XElement(

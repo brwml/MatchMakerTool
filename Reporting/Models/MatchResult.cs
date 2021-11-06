@@ -92,10 +92,10 @@ public class MatchResult
     {
         return new XElement(
             "match",
-            new XAttribute("id", this.Id),
+            new XAttribute("id", this.ScheduleId),
             new XAttribute("round", this.Round),
             new XAttribute("room", this.Room),
-            this.TeamResults.Select(x => x.ToXml()),
-            this.QuizzerResults.Select(x => x.ToXml()));
+            this.TeamResults.OrderBy(x => x.TeamId).Select(x => x.ToXml()),
+            this.QuizzerResults.OrderBy(x => x.QuizzerId).Select(x => x.ToXml()));
     }
 }
