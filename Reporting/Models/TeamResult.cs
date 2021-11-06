@@ -52,4 +52,18 @@ public class TeamResult
             Place = xml.GetAttribute<int>("place")
         };
     }
+
+    /// <summary>
+    /// Converts the <see cref="TeamResult"/> instance to XML.
+    /// </summary>
+    /// <returns>The <see cref="XElement"/> instance</returns>
+    public XElement ToXml()
+    {
+        return new XElement(
+            "team",
+            new XAttribute("id", this.TeamId),
+            new XAttribute("score", this.Score),
+            new XAttribute("errors", this.Errors),
+            new XAttribute("place", this.Place));
+    }
 }

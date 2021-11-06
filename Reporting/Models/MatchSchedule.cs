@@ -62,4 +62,18 @@ public class MatchSchedule
 
         return new MatchSchedule(id, room, teams);
     }
+
+    /// <summary>
+    /// Converts the <see cref="MatchSchedule" /> instance to XML.
+    /// </summary>
+    /// <returns>The <see cref="XElement"/> instance</returns>
+    public XElement ToXml()
+    {
+        return new XElement(
+            "match",
+            new XAttribute("id", this.Id),
+            new XAttribute("room", this.Room),
+            new XAttribute("team1", this.Teams[0]),
+            new XAttribute("team2", this.Teams[1]));
+    }
 }

@@ -83,4 +83,19 @@ public class MatchResult
 
         return new MatchResult(id, room, round, teamResults, quizzerResults);
     }
+
+    /// <summary>
+    /// Converts the <see cref="MatchResult"/> instance to XML.
+    /// </summary>
+    /// <returns>The <see cref="XElement"/> instance</returns>
+    public XElement ToXml()
+    {
+        return new XElement(
+            "match",
+            new XAttribute("id", this.Id),
+            new XAttribute("round", this.Round),
+            new XAttribute("room", this.Room),
+            this.TeamResults.Select(x => x.ToXml()),
+            this.QuizzerResults.Select(x => x.ToXml()));
+    }
 }

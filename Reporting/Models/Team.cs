@@ -66,4 +66,18 @@ public class Team
 
         return new Team(id, name, abbreviation, division);
     }
+
+    /// <summary>
+    /// Converts the <see cref="Team"/> to XML.
+    /// </summary>
+    /// <returns>The <see cref="XElement"/> instance</returns>
+    public XElement ToXml()
+    {
+        return new XElement(
+            "team",
+            new XAttribute("id", this.Id),
+            new XAttribute("div", this.Division),
+            new XAttribute("abbrev", this.Abbreviation),
+            new XText(this.Name));
+    }
 }

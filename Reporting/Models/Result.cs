@@ -44,6 +44,15 @@ public class Result
     public string Name => this.Schedule?.Name ?? string.Empty;
 
     /// <summary>
+    /// Converts the <see cref="Result"/> instance to XML.
+    /// </summary>
+    /// <returns>The <see cref="XElement"/> instance</returns>
+    public XElement ToXml()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
     /// Creates a <see cref="Result"/> from XML documents and corresponding <see cref="Schedule"/>.
     /// </summary>
     /// <param name="documents">The <see cref="XDocument"/> instances</param>

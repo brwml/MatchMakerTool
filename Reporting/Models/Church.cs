@@ -48,4 +48,16 @@ public class Church
 
         return new Church(id, name);
     }
+
+    /// <summary>
+    /// Converts the <see cref="Church"/> instance to XML.
+    /// </summary>
+    /// <returns>The <see cref="XElement"/> instance</returns>
+    public XElement ToXml()
+    {
+        return new XElement(
+            "church",
+            this.Name,
+            new XAttribute("id", this.Id));
+    }
 }

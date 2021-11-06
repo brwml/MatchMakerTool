@@ -45,4 +45,17 @@ public class QuizzerResult
             Errors = xml.GetAttribute<int>("errors")
         };
     }
+
+    /// <summary>
+    /// Converts the <see cref="QuizzerResult"/> instance to XML.
+    /// </summary>
+    /// <returns>The <see cref="XElement"/> instance</returns>
+    public XElement ToXml()
+    {
+        return new XElement(
+            "quizzer",
+            new XAttribute("id", QuizzerId),
+            new XAttribute("score", this.Score),
+            new XAttribute("errors", this.Errors));
+    }
 }

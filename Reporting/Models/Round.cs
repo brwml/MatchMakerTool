@@ -80,6 +80,20 @@ public class Round
     }
 
     /// <summary>
+    /// Converts the <see cref="Round"/> instance to XML.
+    /// </summary>
+    /// <returns>The <see cref="XElement"/> instance</returns>
+    public XElement ToXml()
+    {
+        return new XElement(
+            "round",
+            new XAttribute("id", this.Id),
+            new XAttribute("date", this.Date),
+            new XAttribute("time", this.Time),
+            this.Matches.Select(x => x.Value.ToXml()));
+    }
+
+    /// <summary>
     /// Converts the given date string to a date object.
     /// </summary>
     /// <param name="date">The date string</param>

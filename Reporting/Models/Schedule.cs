@@ -14,6 +14,14 @@ using Ardalis.GuardClauses;
 [DataContract]
 public class Schedule
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Schedule"/> class.
+    /// </summary>
+    /// <param name="name">The schedule name</param>
+    /// <param name="churches">The churches</param>
+    /// <param name="quizzers">The quizzers</param>
+    /// <param name="teams">The teams</param>
+    /// <param name="rounds">The rounds</param>
     public Schedule(string name, IDictionary<int, Church> churches, IDictionary<int, Quizzer> quizzers, IDictionary<int, Team> teams, IDictionary<int, Round> rounds)
     {
         this.Name = name;
@@ -65,6 +73,30 @@ public class Schedule
         Guard.Against.NullOrWhiteSpace(name, nameof(name));
 
         return PopulateSchedule(document, name);
+    }
+
+    /// <summary>
+    /// Converts the <see cref="Schedule"/> instance to XML.
+    /// </summary>
+    /// <returns>The <see cref="XDocument"/> instance</returns>
+    public XDocument ToXml()
+    {
+        return new XDocument(
+            new XDeclaration("1.0", "iso-8859-1", "true"),
+            new XElement(
+                "members",
+                new XElement(
+                    "churches",
+                    this.Churches.Select(x => x.Value.ToXml())),
+                new XElement(
+                    "teams",
+                    this.Teams.Select(x => x.Value.ToXml())),
+                new XElement(
+                    "quizzers",
+                    this.Quizzers.Select(x => x.Value.ToXml())),
+                new XElement(
+                    "schedule",
+                    this.Rounds.Select(x => x.Value.ToXml()))));
     }
 
     /// <summary>

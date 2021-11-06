@@ -93,4 +93,28 @@ public class Quizzer
 
         return new Quizzer(id, firstName, lastName, gender, rookieYear, teamId, churchId);
     }
+
+    /// <summary>
+    /// Converts the <see cref="Quizzer"/> instance to XML.
+    /// </summary>
+    /// <returns>The <see cref="XElement"/> instance</returns>
+    public XElement ToXml()
+    {
+        var gender = this.Gender switch
+        {
+            Gender.Male => "M",
+            Gender.Female => "F",
+            _ => string.Empty
+        };
+
+        return new XElement(
+            "quizzer",
+            new XAttribute("id", this.Id),
+            new XElement("teamID", this.TeamId),
+            new XElement("churchID", this.ChurchId),
+            new XElement("firstname", this.FirstName),
+            new XElement("lastname", this.LastName),
+            new XElement("gender", gender),
+            new XElement("rookieYear", this.RookieYear));
+    }
 }
