@@ -8,9 +8,7 @@ on:
 
 jobs:
   build:
-
     runs-on: windows-latest
-
     steps:
     - uses: actions/checkout@v2
       with:
@@ -24,15 +22,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
     - name: Test
-      run: dotnet test --no-build --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
-    - name: Copy Coverage To Predictable Location
-      run: cp coverage/**/coverage.cobertura.xml coverage/coverage.cobertura.xml
-    - name: Code Coverage Summary Report
-      uses: irongut/CodeCoverageSummary@v1.1.0
-      with:
-        filename: coverage/coverage.cobertura.xml
-        badge: true
-        fail_below_min: false
-        format: 'markdown'
-        output: 'both'
-        thresholds: '50 75'
+      run: dotnet test --no-build --configuration Release --verbosity normal
