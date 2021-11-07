@@ -1,12 +1,11 @@
 ﻿namespace MatchMaker.Reporting.Exporters;
 
 using System.IO;
+using System.Text.Json;
 
 using Ardalis.GuardClauses;
 
 using MatchMaker.Reporting.Models;
-
-using Newtonsoft.Json;
 
 /// <summary>
 /// Defines the <see cref="DefaultExporter" />
@@ -23,8 +22,13 @@ public class DefaultExporter : IExporter
         Guard.Against.Null(summary, nameof(summary));
         Guard.Against.NullOrWhiteSpace(folder, nameof(folder));
 
-        var name = summary.Name;
-        var path = Path.Combine(folder, name + ".summary.json");
-        File.WriteAllText(path, JsonConvert.SerializeObject(summary, Formatting.Indented, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto }));
+        var path = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.summary.json"));
+        var options = new JsonSerializerOptions
+        {
+            IgnoreReadOnlyProperties = false,
+            IncludeFields = false,
+            WriteIndented = true
+        };
+        File.WriteAllText(path, JsonSerializer.Serialize(summary, options));
     }
 }

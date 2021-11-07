@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<members>
+  <!-- A cycle between two teams -->
+  <results>
+    <match id="101" round="1" room="1">
+      <team id="1" score="0" errors="0" place="1" />
+      <team id="2" score="0" errors="0" place="2" />
+      <quizzer id="1" score="0" errors="0" />
+      <quizzer id="2" score="0" errors="0" />
+    </match>
+    <match id="201" round="2" room="1">
+      <team id="2" score="0" errors="0" place="2" />
+      <team id="3" score="0" errors="0" place="1" />
+      <quizzer id="1" score="0" errors="0" />
+      <quizzer id="2" score="0" errors="0" />
+    </match>
+  </results>
+</members>

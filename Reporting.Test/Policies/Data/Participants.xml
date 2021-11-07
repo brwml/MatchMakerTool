@@ -1,0 +1,882 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<members>
+  <churches>
+    <church id="1">Antioch</church>
+    <church id="2">Bethlehem</church>
+    <church id="3">Capernaum</church>
+    <church id="4">Damascus</church>
+    <church id="5">Ephesus</church>
+    <church id="6">Gaza</church>
+    <church id="7">Hebron</church>
+    <church id="8">Iconium</church>
+    <church id="9">Jerusalem</church>
+    <church id="10">Magdala</church>
+    <church id="11">Nazareth</church>
+    <church id="12">Philippi</church>
+    <church id="13">Rome</church>
+    <church id="14">Shechem</church>
+    <church id="15">Tarsus</church>
+  </churches>
+  <teams>
+    <team id="1" div="-1" abbrev="A">Sea Lions</team>
+    <team id="2" div="-1" abbrev="B">Goats</team>
+    <team id="3" div="-1" abbrev="C">Squirrels</team>
+    <team id="4" div="-1" abbrev="D">Wolverines</team>
+    <team id="5" div="-1" abbrev="E">Mice</team>
+    <team id="6" div="-1" abbrev="F">Dinosaurs</team>
+    <team id="7" div="-1" abbrev="G">Bears</team>
+    <team id="8" div="-1" abbrev="H">Ferrets</team>
+    <team id="9" div="-1" abbrev="I">Pigs</team>
+    <team id="10" div="-1" abbrev="J">Hares</team>
+    <team id="11" div="-1" abbrev="K">Wolves</team>
+    <team id="12" div="-1" abbrev="L">Aardvarks</team>
+    <team id="13" div="-1" abbrev="M">Herons</team>
+    <team id="14" div="-1" abbrev="N">Flamingos</team>
+    <team id="15" div="-1" abbrev="O">Grouses</team>
+    <team id="16" div="-1" abbrev="P">Reindeers</team>
+    <team id="17" div="-1" abbrev="Q">Whales</team>
+    <team id="18" div="-1" abbrev="R">Manatees</team>
+    <team id="19" div="-1" abbrev="S">Baboons</team>
+    <team id="20" div="-1" abbrev="T">Koupreys</team>
+    <team id="21" div="-1" abbrev="U">Camels</team>
+    <team id="22" div="-1" abbrev="V">Elephants</team>
+    <team id="23" div="-1" abbrev="W">Dinosaurs</team>
+    <team id="24" div="-1" abbrev="X">Rats</team>
+    <team id="25" div="-1" abbrev="Y">Vultures</team>
+    <team id="26" div="-1" abbrev="Z">Walruses</team>
+  </teams>
+  <quizzers>
+    <quizzer id="1">
+      <teamID>1</teamID>
+      <churchID>1</churchID>
+      <firstname>Gracie</firstname>
+      <lastname>Bielser</lastname>
+      <gender>F</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="2">
+      <teamID>2</teamID>
+      <churchID>2</churchID>
+      <firstname>Jesica</firstname>
+      <lastname>Firpi</lastname>
+      <gender>F</gender>
+      <rookieYear>2021</rookieYear>
+    </quizzer>
+    <quizzer id="3">
+      <teamID>3</teamID>
+      <churchID>3</churchID>
+      <firstname>Annelle</firstname>
+      <lastname>Koulabout</lastname>
+      <gender>F</gender>
+      <rookieYear>2018</rookieYear>
+    </quizzer>
+    <quizzer id="4">
+      <teamID>4</teamID>
+      <churchID>4</churchID>
+      <firstname>Terese</firstname>
+      <lastname>Wagemann</lastname>
+      <gender>F</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="5">
+      <teamID>5</teamID>
+      <churchID>5</churchID>
+      <firstname>Tajuana</firstname>
+      <lastname>Gutmann</lastname>
+      <gender>F</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="6">
+      <teamID>6</teamID>
+      <churchID>6</churchID>
+      <firstname>Bessie</firstname>
+      <lastname>Cissell</lastname>
+      <gender>F</gender>
+      <rookieYear>2018</rookieYear>
+    </quizzer>
+    <quizzer id="7">
+      <teamID>7</teamID>
+      <churchID>7</churchID>
+      <firstname>Marla</firstname>
+      <lastname>Schaible</lastname>
+      <gender>F</gender>
+      <rookieYear>2017</rookieYear>
+    </quizzer>
+    <quizzer id="8">
+      <teamID>8</teamID>
+      <churchID>8</churchID>
+      <firstname>Felisa</firstname>
+      <lastname>Banbury</lastname>
+      <gender>F</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="9">
+      <teamID>9</teamID>
+      <churchID>9</churchID>
+      <firstname>Rochel</firstname>
+      <lastname>Cerenzia</lastname>
+      <gender>F</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="10">
+      <teamID>10</teamID>
+      <churchID>10</churchID>
+      <firstname>Marylou</firstname>
+      <lastname>Lapradd</lastname>
+      <gender>F</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="11">
+      <teamID>11</teamID>
+      <churchID>11</churchID>
+      <firstname>Normand</firstname>
+      <lastname>Sheaff</lastname>
+      <gender>M</gender>
+      <rookieYear>2021</rookieYear>
+    </quizzer>
+    <quizzer id="12">
+      <teamID>12</teamID>
+      <churchID>12</churchID>
+      <firstname>Charlott</firstname>
+      <lastname>Palevic</lastname>
+      <gender>F</gender>
+      <rookieYear>2017</rookieYear>
+    </quizzer>
+    <quizzer id="13">
+      <teamID>13</teamID>
+      <churchID>13</churchID>
+      <firstname>Fausto</firstname>
+      <lastname>Feamster</lastname>
+      <gender>M</gender>
+      <rookieYear>2021</rookieYear>
+    </quizzer>
+    <quizzer id="14">
+      <teamID>14</teamID>
+      <churchID>14</churchID>
+      <firstname>Horace</firstname>
+      <lastname>Lejeune</lastname>
+      <gender>M</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="15">
+      <teamID>15</teamID>
+      <churchID>15</churchID>
+      <firstname>Jarod</firstname>
+      <lastname>Cherne</lastname>
+      <gender>M</gender>
+      <rookieYear>2018</rookieYear>
+    </quizzer>
+    <quizzer id="16">
+      <teamID>16</teamID>
+      <churchID>1</churchID>
+      <firstname>Billie</firstname>
+      <lastname>Eastland</lastname>
+      <gender>M</gender>
+      <rookieYear>2021</rookieYear>
+    </quizzer>
+    <quizzer id="17">
+      <teamID>17</teamID>
+      <churchID>2</churchID>
+      <firstname>Nathan</firstname>
+      <lastname>Yannotti</lastname>
+      <gender>M</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="18">
+      <teamID>18</teamID>
+      <churchID>3</churchID>
+      <firstname>Rodger</firstname>
+      <lastname>Kennemur</lastname>
+      <gender>M</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="19">
+      <teamID>19</teamID>
+      <churchID>4</churchID>
+      <firstname>Clement</firstname>
+      <lastname>Gage</lastname>
+      <gender>M</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="20">
+      <teamID>20</teamID>
+      <churchID>5</churchID>
+      <firstname>Duncan</firstname>
+      <lastname>Alalem</lastname>
+      <gender>M</gender>
+      <rookieYear>2018</rookieYear>
+    </quizzer>
+    <quizzer id="21">
+      <teamID>21</teamID>
+      <churchID>6</churchID>
+      <firstname>Merlyn</firstname>
+      <lastname>Pisula</lastname>
+      <gender>F</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="22">
+      <teamID>22</teamID>
+      <churchID>7</churchID>
+      <firstname>Joesph</firstname>
+      <lastname>Nist</lastname>
+      <gender>M</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="23">
+      <teamID>23</teamID>
+      <churchID>8</churchID>
+      <firstname>Lonny</firstname>
+      <lastname>Skogen</lastname>
+      <gender>M</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="24">
+      <teamID>24</teamID>
+      <churchID>9</churchID>
+      <firstname>Chong</firstname>
+      <lastname>Cerminaro</lastname>
+      <gender>M</gender>
+      <rookieYear>2017</rookieYear>
+    </quizzer>
+    <quizzer id="25">
+      <teamID>25</teamID>
+      <churchID>10</churchID>
+      <firstname>Maisie</firstname>
+      <lastname>Coufal</lastname>
+      <gender>F</gender>
+      <rookieYear>2017</rookieYear>
+    </quizzer>
+    <quizzer id="26">
+      <teamID>26</teamID>
+      <churchID>11</churchID>
+      <firstname>Suzie</firstname>
+      <lastname>Vankirk</lastname>
+      <gender>F</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="27">
+      <teamID>1</teamID>
+      <churchID>12</churchID>
+      <firstname>Jaymie</firstname>
+      <lastname>Jackiewicz</lastname>
+      <gender>F</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="28">
+      <teamID>2</teamID>
+      <churchID>13</churchID>
+      <firstname>Senaida</firstname>
+      <lastname>Knewtson</lastname>
+      <gender>F</gender>
+      <rookieYear>2015</rookieYear>
+    </quizzer>
+    <quizzer id="29">
+      <teamID>3</teamID>
+      <churchID>14</churchID>
+      <firstname>Branda</firstname>
+      <lastname>Sable</lastname>
+      <gender>F</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="30">
+      <teamID>4</teamID>
+      <churchID>15</churchID>
+      <firstname>Tressie</firstname>
+      <lastname>Pockette</lastname>
+      <gender>F</gender>
+      <rookieYear>2015</rookieYear>
+    </quizzer>
+    <quizzer id="31">
+      <teamID>5</teamID>
+      <churchID>1</churchID>
+      <firstname>Delmy</firstname>
+      <lastname>Knilands</lastname>
+      <gender>F</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="32">
+      <teamID>6</teamID>
+      <churchID>2</churchID>
+      <firstname>Brittanie</firstname>
+      <lastname>Birdsey</lastname>
+      <gender>F</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="33">
+      <teamID>7</teamID>
+      <churchID>3</churchID>
+      <firstname>Harley</firstname>
+      <lastname>Bundschuh</lastname>
+      <gender>M</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="34">
+      <teamID>8</teamID>
+      <churchID>4</churchID>
+      <firstname>Thersa</firstname>
+      <lastname>Domke</lastname>
+      <gender>F</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="35">
+      <teamID>9</teamID>
+      <churchID>5</churchID>
+      <firstname>Johnny</firstname>
+      <lastname>Feerst</lastname>
+      <gender>M</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="36">
+      <teamID>10</teamID>
+      <churchID>6</churchID>
+      <firstname>Monte</firstname>
+      <lastname>Wentcell</lastname>
+      <gender>M</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="37">
+      <teamID>11</teamID>
+      <churchID>7</churchID>
+      <firstname>Skye</firstname>
+      <lastname>Jarell</lastname>
+      <gender>F</gender>
+      <rookieYear>2021</rookieYear>
+    </quizzer>
+    <quizzer id="38">
+      <teamID>12</teamID>
+      <churchID>8</churchID>
+      <firstname>Kylie</firstname>
+      <lastname>Haslinger</lastname>
+      <gender>F</gender>
+      <rookieYear>2018</rookieYear>
+    </quizzer>
+    <quizzer id="39">
+      <teamID>13</teamID>
+      <churchID>9</churchID>
+      <firstname>Miss</firstname>
+      <lastname>Stelzl</lastname>
+      <gender>F</gender>
+      <rookieYear>2017</rookieYear>
+    </quizzer>
+    <quizzer id="40">
+      <teamID>14</teamID>
+      <churchID>10</churchID>
+      <firstname>Bruno</firstname>
+      <lastname>Garling</lastname>
+      <gender>M</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="41">
+      <teamID>15</teamID>
+      <churchID>11</churchID>
+      <firstname>Julene</firstname>
+      <lastname>Daum</lastname>
+      <gender>F</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="42">
+      <teamID>16</teamID>
+      <churchID>12</churchID>
+      <firstname>Hayden</firstname>
+      <lastname>Sullen</lastname>
+      <gender>M</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="43">
+      <teamID>17</teamID>
+      <churchID>13</churchID>
+      <firstname>Nathanial</firstname>
+      <lastname>Balluch</lastname>
+      <gender>M</gender>
+      <rookieYear>2018</rookieYear>
+    </quizzer>
+    <quizzer id="44">
+      <teamID>18</teamID>
+      <churchID>14</churchID>
+      <firstname>Gregg</firstname>
+      <lastname>Fedak</lastname>
+      <gender>M</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="45">
+      <teamID>19</teamID>
+      <churchID>15</churchID>
+      <firstname>Julius</firstname>
+      <lastname>Caudle</lastname>
+      <gender>M</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="46">
+      <teamID>20</teamID>
+      <churchID>1</churchID>
+      <firstname>Rosario</firstname>
+      <lastname>Balloon</lastname>
+      <gender>M</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="47">
+      <teamID>21</teamID>
+      <churchID>2</churchID>
+      <firstname>Ida</firstname>
+      <lastname>Timmins</lastname>
+      <gender>F</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="48">
+      <teamID>22</teamID>
+      <churchID>3</churchID>
+      <firstname>Sherman</firstname>
+      <lastname>Meacham</lastname>
+      <gender>M</gender>
+      <rookieYear>2017</rookieYear>
+    </quizzer>
+    <quizzer id="49">
+      <teamID>23</teamID>
+      <churchID>4</churchID>
+      <firstname>Ignacia</firstname>
+      <lastname>Pouliotte</lastname>
+      <gender>F</gender>
+      <rookieYear>2017</rookieYear>
+    </quizzer>
+    <quizzer id="50">
+      <teamID>24</teamID>
+      <churchID>5</churchID>
+      <firstname>Yoko</firstname>
+      <lastname>Klohr</lastname>
+      <gender>F</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="51">
+      <teamID>25</teamID>
+      <churchID>6</churchID>
+      <firstname>Eleni</firstname>
+      <lastname>Struck</lastname>
+      <gender>F</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="52">
+      <teamID>26</teamID>
+      <churchID>7</churchID>
+      <firstname>Viva</firstname>
+      <lastname>Icenogle</lastname>
+      <gender>F</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="53">
+      <teamID>1</teamID>
+      <churchID>8</churchID>
+      <firstname>Bessie</firstname>
+      <lastname>Melman</lastname>
+      <gender>F</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="54">
+      <teamID>2</teamID>
+      <churchID>9</churchID>
+      <firstname>Ivan</firstname>
+      <lastname>Couts</lastname>
+      <gender>M</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="55">
+      <teamID>3</teamID>
+      <churchID>10</churchID>
+      <firstname>Orval</firstname>
+      <lastname>Nemani</lastname>
+      <gender>M</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="56">
+      <teamID>4</teamID>
+      <churchID>11</churchID>
+      <firstname>Ranae</firstname>
+      <lastname>Kuamoo</lastname>
+      <gender>F</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="57">
+      <teamID>5</teamID>
+      <churchID>12</churchID>
+      <firstname>Johnny</firstname>
+      <lastname>Silevinac</lastname>
+      <gender>M</gender>
+      <rookieYear>2021</rookieYear>
+    </quizzer>
+    <quizzer id="58">
+      <teamID>6</teamID>
+      <churchID>13</churchID>
+      <firstname>Jeanetta</firstname>
+      <lastname>Rodebaugh</lastname>
+      <gender>F</gender>
+      <rookieYear>2021</rookieYear>
+    </quizzer>
+    <quizzer id="59">
+      <teamID>7</teamID>
+      <churchID>14</churchID>
+      <firstname>Wade</firstname>
+      <lastname>Triplett</lastname>
+      <gender>M</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="60">
+      <teamID>8</teamID>
+      <churchID>15</churchID>
+      <firstname>Tilda</firstname>
+      <lastname>Ingraffea</lastname>
+      <gender>F</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="61">
+      <teamID>9</teamID>
+      <churchID>1</churchID>
+      <firstname>Dario</firstname>
+      <lastname>Simpelo</lastname>
+      <gender>M</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="62">
+      <teamID>10</teamID>
+      <churchID>2</churchID>
+      <firstname>Matthew</firstname>
+      <lastname>Bucchin</lastname>
+      <gender>M</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="63">
+      <teamID>11</teamID>
+      <churchID>3</churchID>
+      <firstname>Reyes</firstname>
+      <lastname>Munt</lastname>
+      <gender>M</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="64">
+      <teamID>12</teamID>
+      <churchID>4</churchID>
+      <firstname>Gaynell</firstname>
+      <lastname>Lanzalotti</lastname>
+      <gender>F</gender>
+      <rookieYear>2021</rookieYear>
+    </quizzer>
+    <quizzer id="65">
+      <teamID>13</teamID>
+      <churchID>5</churchID>
+      <firstname>Summer</firstname>
+      <lastname>Stehlik</lastname>
+      <gender>F</gender>
+      <rookieYear>2018</rookieYear>
+    </quizzer>
+    <quizzer id="66">
+      <teamID>14</teamID>
+      <churchID>6</churchID>
+      <firstname>Mitchel</firstname>
+      <lastname>Bramble</lastname>
+      <gender>M</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="67">
+      <teamID>15</teamID>
+      <churchID>7</churchID>
+      <firstname>Laurena</firstname>
+      <lastname>Alvaro</lastname>
+      <gender>F</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="68">
+      <teamID>16</teamID>
+      <churchID>8</churchID>
+      <firstname>Roger</firstname>
+      <lastname>Barfuss</lastname>
+      <gender>M</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="69">
+      <teamID>17</teamID>
+      <churchID>9</churchID>
+      <firstname>Hans</firstname>
+      <lastname>Dundlow</lastname>
+      <gender>M</gender>
+      <rookieYear>2021</rookieYear>
+    </quizzer>
+    <quizzer id="70">
+      <teamID>18</teamID>
+      <churchID>10</churchID>
+      <firstname>Dorsey</firstname>
+      <lastname>Ilalio</lastname>
+      <gender>M</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="71">
+      <teamID>19</teamID>
+      <churchID>11</churchID>
+      <firstname>Ilona</firstname>
+      <lastname>Mitcham</lastname>
+      <gender>F</gender>
+      <rookieYear>2018</rookieYear>
+    </quizzer>
+    <quizzer id="72">
+      <teamID>20</teamID>
+      <churchID>12</churchID>
+      <firstname>Val</firstname>
+      <lastname>Criqui</lastname>
+      <gender>M</gender>
+      <rookieYear>2018</rookieYear>
+    </quizzer>
+    <quizzer id="73">
+      <teamID>21</teamID>
+      <churchID>13</churchID>
+      <firstname>Humberto</firstname>
+      <lastname>Rayner</lastname>
+      <gender>M</gender>
+      <rookieYear>2017</rookieYear>
+    </quizzer>
+    <quizzer id="74">
+      <teamID>22</teamID>
+      <churchID>14</churchID>
+      <firstname>Avery</firstname>
+      <lastname>Ribar</lastname>
+      <gender>M</gender>
+      <rookieYear>2017</rookieYear>
+    </quizzer>
+    <quizzer id="75">
+      <teamID>23</teamID>
+      <churchID>15</churchID>
+      <firstname>Callie</firstname>
+      <lastname>Marston</lastname>
+      <gender>F</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="76">
+      <teamID>24</teamID>
+      <churchID>1</churchID>
+      <firstname>Hallie</firstname>
+      <lastname>Domebo</lastname>
+      <gender>F</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="77">
+      <teamID>25</teamID>
+      <churchID>2</churchID>
+      <firstname>Jordan</firstname>
+      <lastname>Schauf</lastname>
+      <gender>M</gender>
+      <rookieYear>2018</rookieYear>
+    </quizzer>
+    <quizzer id="78">
+      <teamID>26</teamID>
+      <churchID>3</churchID>
+      <firstname>Dong</firstname>
+      <lastname>Rensen</lastname>
+      <gender>M</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="79">
+      <teamID>1</teamID>
+      <churchID>4</churchID>
+      <firstname>Arnoldo</firstname>
+      <lastname>Garfinkle</lastname>
+      <gender>M</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="80">
+      <teamID>2</teamID>
+      <churchID>5</churchID>
+      <firstname>Tobias</firstname>
+      <lastname>Hasting</lastname>
+      <gender>M</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="81">
+      <teamID>3</teamID>
+      <churchID>6</churchID>
+      <firstname>Julissa</firstname>
+      <lastname>Needle</lastname>
+      <gender>F</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="82">
+      <teamID>4</teamID>
+      <churchID>7</churchID>
+      <firstname>Linwood</firstname>
+      <lastname>Weisbecker</lastname>
+      <gender>M</gender>
+      <rookieYear>2017</rookieYear>
+    </quizzer>
+    <quizzer id="83">
+      <teamID>5</teamID>
+      <churchID>8</churchID>
+      <firstname>Verlene</firstname>
+      <lastname>Balkcom</lastname>
+      <gender>F</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="84">
+      <teamID>6</teamID>
+      <churchID>9</churchID>
+      <firstname>Lance</firstname>
+      <lastname>Ovsanik</lastname>
+      <gender>M</gender>
+      <rookieYear>2019</rookieYear>
+    </quizzer>
+    <quizzer id="85">
+      <teamID>7</teamID>
+      <churchID>10</churchID>
+      <firstname>Liza</firstname>
+      <lastname>Boisselle</lastname>
+      <gender>F</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="86">
+      <teamID>8</teamID>
+      <churchID>11</churchID>
+      <firstname>Kendrick</firstname>
+      <lastname>Mitra</lastname>
+      <gender>M</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="87">
+      <teamID>9</teamID>
+      <churchID>12</churchID>
+      <firstname>Roseline</firstname>
+      <lastname>Trubey</lastname>
+      <gender>F</gender>
+      <rookieYear>2017</rookieYear>
+    </quizzer>
+    <quizzer id="88">
+      <teamID>10</teamID>
+      <churchID>13</churchID>
+      <firstname>Marcel</firstname>
+      <lastname>Parks</lastname>
+      <gender>M</gender>
+      <rookieYear>2021</rookieYear>
+    </quizzer>
+    <quizzer id="89">
+      <teamID>11</teamID>
+      <churchID>14</churchID>
+      <firstname>Max</firstname>
+      <lastname>Pittmann</lastname>
+      <gender>M</gender>
+      <rookieYear>2017</rookieYear>
+    </quizzer>
+    <quizzer id="90">
+      <teamID>12</teamID>
+      <churchID>15</churchID>
+      <firstname>Hosea</firstname>
+      <lastname>Hofacker</lastname>
+      <gender>M</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="91">
+      <teamID>13</teamID>
+      <churchID>1</churchID>
+      <firstname>Jeffrey</firstname>
+      <lastname>Aroca</lastname>
+      <gender>M</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="92">
+      <teamID>14</teamID>
+      <churchID>2</churchID>
+      <firstname>Laureen</firstname>
+      <lastname>Stouder</lastname>
+      <gender>F</gender>
+      <rookieYear>2015</rookieYear>
+    </quizzer>
+    <quizzer id="93">
+      <teamID>15</teamID>
+      <churchID>3</churchID>
+      <firstname>Bernardo</firstname>
+      <lastname>Resnikoff</lastname>
+      <gender>M</gender>
+      <rookieYear>2017</rookieYear>
+    </quizzer>
+    <quizzer id="94">
+      <teamID>16</teamID>
+      <churchID>4</churchID>
+      <firstname>Jorge</firstname>
+      <lastname>Humetewa</lastname>
+      <gender>M</gender>
+      <rookieYear>2017</rookieYear>
+    </quizzer>
+    <quizzer id="95">
+      <teamID>17</teamID>
+      <churchID>5</churchID>
+      <firstname>Suzan</firstname>
+      <lastname>Gilzow</lastname>
+      <gender>F</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="96">
+      <teamID>18</teamID>
+      <churchID>6</churchID>
+      <firstname>Rufus</firstname>
+      <lastname>Ungerland</lastname>
+      <gender>M</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="97">
+      <teamID>19</teamID>
+      <churchID>7</churchID>
+      <firstname>Lesa</firstname>
+      <lastname>Tincher</lastname>
+      <gender>F</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="98">
+      <teamID>20</teamID>
+      <churchID>8</churchID>
+      <firstname>Yer</firstname>
+      <lastname>Dolcetto</lastname>
+      <gender>F</gender>
+      <rookieYear>2018</rookieYear>
+    </quizzer>
+    <quizzer id="99">
+      <teamID>21</teamID>
+      <churchID>9</churchID>
+      <firstname>Un</firstname>
+      <lastname>Zitzow</lastname>
+      <gender>F</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="100">
+      <teamID>22</teamID>
+      <churchID>10</churchID>
+      <firstname>Travis</firstname>
+      <lastname>Dasouza</lastname>
+      <gender>M</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="101">
+      <teamID>23</teamID>
+      <churchID>11</churchID>
+      <firstname>Demetrius</firstname>
+      <lastname>Belkin</lastname>
+      <gender>F</gender>
+      <rookieYear>2016</rookieYear>
+    </quizzer>
+    <quizzer id="102">
+      <teamID>24</teamID>
+      <churchID>12</churchID>
+      <firstname>Eve</firstname>
+      <lastname>Stokely</lastname>
+      <gender>F</gender>
+      <rookieYear>2021</rookieYear>
+    </quizzer>
+    <quizzer id="103">
+      <teamID>25</teamID>
+      <churchID>13</churchID>
+      <firstname>Leon</firstname>
+      <lastname>Kerney</lastname>
+      <gender>M</gender>
+      <rookieYear>2020</rookieYear>
+    </quizzer>
+    <quizzer id="104">
+      <teamID>26</teamID>
+      <churchID>14</churchID>
+      <firstname>Angel</firstname>
+      <lastname>Leisch</lastname>
+      <gender>M</gender>
+      <rookieYear>2021</rookieYear>
+    </quizzer>
+  </quizzers>
+</members>

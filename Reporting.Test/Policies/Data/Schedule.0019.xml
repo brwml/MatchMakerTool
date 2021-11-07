@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<schedule>
+  <round id="1" date="-1" time="-1">
+    <match id="101" room="1" team1="1" team2="2" />
+  </round>
+  <round id="2" date="-1" time="-1">
+    <match id="201" room="1" team1="2" team2="3" />
+  </round>
+  <round id="3" date="-1" time="-1">
+    <match id="301" room="1" team1="3" team2="4" />
+  </round>
+</schedule>

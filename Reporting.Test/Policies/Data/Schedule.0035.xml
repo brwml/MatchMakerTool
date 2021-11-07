@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<schedule>
+  <round id="1" date="-1" time="-1">
+    <match id="101" room="1" team1="1" team2="3" />
+  </round>
+  <round id="2" date="-1" time="-1">
+    <match id="201" room="1" team1="2" team2="3" />
+  </round>
+  <round id="3" date="-1" time="-1">
+    <match id="301" room="1" team1="3" team2="4" />
+  </round>
+  <round id="4" date="-1" time="-1">
+    <match id="401" room="1" team1="4" team2="5" />
+  </round>
+  <round id="5" date="-1" time="-1">
+    <match id="501" room="1" team1="3" team2="5" />
+  </round>
+  <round id="6" date="-1" time="-1">
+    <match id="601" room="1" team1="5" team2="6" />
+  </round>
+  <round id="7" date="-1" time="-1">
+    <match id="701" room="1" team1="5" team2="7" />
+  </round>
+  <round id="8" date="-1" time="-1">
+    <match id="801" room="1" team1="6" team2="8" />
+  </round>
+  <round id="9" date="-1" time="-1">
+    <match id="901" room="1" team1="7" team2="8" />
+  </round>
+</schedule>
