@@ -38,7 +38,7 @@ public class RoundRobinTournament
         availableRooms = Math.Min(teams.Count() / 2, availableRooms);
 
         foreach (var match in matches)
-        { 
+        {
             match.Room = (currentRoom++ % availableRooms) + 1;
 
             currentRound.Matches.Add(match.Id, match);

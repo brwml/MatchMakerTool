@@ -54,7 +54,7 @@ public class QuizzerResult
     {
         return new XElement(
             "quizzer",
-            new XAttribute("id", QuizzerId),
+            new XAttribute("id", this.QuizzerId),
             new XAttribute("score", this.Score),
             new XAttribute("errors", this.Errors));
     }

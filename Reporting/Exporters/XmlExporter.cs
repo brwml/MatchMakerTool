@@ -1,7 +1,6 @@
 ﻿namespace MatchMaker.Reporting.Exporters;
 
 using System;
-using System.Xml.Linq;
 
 using Ardalis.GuardClauses;
 
