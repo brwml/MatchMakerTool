@@ -81,12 +81,12 @@ public class PdfExporter : BaseExporter
     {
         return new[]
         {
-                CreateHeaderCell(string.Empty),
-                CreateHeaderCell("Quizzer Name"),
-                CreateHeaderCell("Church"),
-                CreateHeaderCell("Score"),
-                CreateHeaderCell("Errors")
-            };
+            CreateHeaderCell(string.Empty),
+            CreateHeaderCell("Quizzer Name"),
+            CreateHeaderCell("Church"),
+            CreateHeaderCell("Score"),
+            CreateHeaderCell("Errors")
+        };
     }
 
     /// <summary>
@@ -108,12 +108,12 @@ public class PdfExporter : BaseExporter
     {
         return new[]
         {
-                CreateCell(quizzer.ShowPlace ? quizzer.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
-                CreateCell($"{quizzer.FullName}{GetRookieTag(quizzer.IsRookie)}"),
-                CreateCell($"{quizzer.Church?.Name ?? string.Empty}"),
-                CreateCell($"{quizzer.AverageScore.ToString("N2", CultureInfo.CurrentCulture)}"),
-                CreateCell($"{quizzer.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)}")
-            };
+            CreateCell(quizzer.ShowPlace ? quizzer.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
+            CreateCell($"{quizzer.FullName}{GetRookieTag(quizzer.IsRookie)}"),
+            CreateCell($"{quizzer.Church?.Name ?? string.Empty}"),
+            CreateCell($"{quizzer.AverageScore.ToString("N2", CultureInfo.CurrentCulture)}"),
+            CreateCell($"{quizzer.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)}")
+        };
     }
 
     /// <summary>
@@ -134,14 +134,14 @@ public class PdfExporter : BaseExporter
     {
         return new[]
         {
-                CreateHeaderCell(string.Empty),
-                CreateHeaderCell("Team Name"),
-                CreateHeaderCell("W"),
-                CreateHeaderCell("L"),
-                CreateHeaderCell("Score"),
-                CreateHeaderCell("Errors"),
-                CreateHeaderCell("Tie Breaker")
-            };
+            CreateHeaderCell(string.Empty),
+            CreateHeaderCell("Team Name"),
+            CreateHeaderCell("W"),
+            CreateHeaderCell("L"),
+            CreateHeaderCell("Score"),
+            CreateHeaderCell("Errors"),
+            CreateHeaderCell("Tie Breaker")
+        };
     }
 
     /// <summary>
@@ -167,14 +167,14 @@ public class PdfExporter : BaseExporter
     {
         return new[]
         {
-                CreateCell(team.ShowPlace ? team.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
-                CreateCell(team.Name),
-                CreateCell(team.Wins.ToString(CultureInfo.CurrentCulture)),
-                CreateCell(team.Losses.ToString(CultureInfo.CurrentCulture)),
-                CreateCell(team.AverageScore.ToString("N2", CultureInfo.CurrentCulture)),
-                CreateCell(team.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)),
-                CreateCell(team.TieBreak.ToString())
-            };
+            CreateCell(team.ShowPlace ? team.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
+            CreateCell(team.Name),
+            CreateCell(team.Wins.ToString(CultureInfo.CurrentCulture)),
+            CreateCell(team.Losses.ToString(CultureInfo.CurrentCulture)),
+            CreateCell(team.AverageScore.ToString("N2", CultureInfo.CurrentCulture)),
+            CreateCell(team.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)),
+            CreateCell(team.TieBreak.ToString())
+        };
     }
 
     /// <summary>
