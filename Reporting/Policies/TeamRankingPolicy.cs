@@ -48,10 +48,9 @@ public abstract class TeamRankingPolicy
     /// <param name="tieBreak">The <see cref="TieBreak"/> method that was used.</param>
     protected static void SetRelativePlaces(IList<TeamSummary> summaries, int initial, Func<TeamSummary, TeamSummary, bool> areEqual, TieBreak tieBreak)
     {
-        if (summaries is null || areEqual is null)
-        {
-            return;
-        }
+        Guard.Against.Null(summaries, nameof(summaries));
+        Guard.Against.NegativeOrZero(initial, nameof(initial));
+        Guard.Against.Null(areEqual, nameof(areEqual));
 
         for (var i = 1; i < summaries.Count; i++)
         {

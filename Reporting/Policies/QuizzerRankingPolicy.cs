@@ -37,10 +37,9 @@ public abstract class QuizzerRankingPolicy
     /// <param name="areEqual">A <see cref="Func{QuizzerSummary, QuizzerSummary, Boolean}"/> indicating whether two placements are equal.</param>
     protected static void SetRelativePlaces(IList<QuizzerSummary> summaries, int initial, Func<QuizzerSummary, QuizzerSummary, bool> areEqual)
     {
-        if (summaries is null || areEqual is null)
-        {
-            return;
-        }
+        Guard.Against.Null(summaries, nameof(summaries));
+        Guard.Against.NegativeOrZero(initial, nameof(initial));
+        Guard.Against.Null(areEqual, nameof(areEqual));
 
         for (var i = 1; i < summaries.Count; i++)
         {

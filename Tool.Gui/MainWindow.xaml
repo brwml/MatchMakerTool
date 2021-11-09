@@ -6,6 +6,25 @@
         xmlns:local="clr-namespace:MatchMaker.Tool.Gui"
         mc:Ignorable="d"
         Title="MatchMaker™ Tournament Management Tool" Height="450" Width="800">
-    <Grid>
-    </Grid>
+        <TabControl>
+            <TabItem Header="Participants">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Schedule">
+                
+            </TabItem>
+            <TabItem Header="Results">
+                
+            </TabItem>
+        </TabControl>
 </Window>
