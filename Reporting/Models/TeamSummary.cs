@@ -14,7 +14,7 @@ using MatchMaker.Reporting.Policies;
 /// Defines the <see cref="TeamSummary" />
 /// </summary>
 [DataContract]
-[DebuggerDisplay("Team Summary (Team {TeamId}, {Wins}-{Losses}, Rounds {Rounds}, Score {TotalScore}, Errors {TotalErrors}, Place {Place})")]
+[DebuggerDisplay("Team Summary (Team {TeamId}, {Wins}-{Losses}, Rounds {TotalRounds}, Score {TotalScore}, Errors {TotalErrors}, Place {Place})")]
 public class TeamSummary
 {
     /// <summary>
