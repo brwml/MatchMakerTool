@@ -1,6 +1,7 @@
 ﻿namespace MatchMaker.Reporting.Models;
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml.Linq;
@@ -12,6 +13,7 @@ using Ardalis.GuardClauses;
 /// Defines the <see cref="Schedule" />
 /// </summary>
 [DataContract]
+[DebuggerDisplay("Schedule {Name}")]
 public class Schedule
 {
     /// <summary>

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -13,6 +14,7 @@ using MatchMaker.Reporting.Policies;
 /// Defines the <see cref="QuizzerSummary" />
 /// </summary>
 [DataContract]
+[DebuggerDisplay("Quizzer Summary (Quizzer {QuizzerId}, Rounds {TotalRounds}, Score {TotalScore}, Errors {TotalErrors}, Place {Place})")]
 public class QuizzerSummary
 {
     /// <summary>

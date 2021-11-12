@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -13,6 +14,7 @@ using MatchMaker.Reporting.Policies;
 /// Defines the <see cref="TeamSummary" />
 /// </summary>
 [DataContract]
+[DebuggerDisplay("Team Summary (Team {TeamId}, {Wins}-{Losses}, Rounds {Rounds}, Score {TotalScore}, Errors {TotalErrors}, Place {Place})")]
 public class TeamSummary
 {
     /// <summary>

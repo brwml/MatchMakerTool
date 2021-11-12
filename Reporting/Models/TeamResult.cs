@@ -1,5 +1,6 @@
 ﻿namespace MatchMaker.Reporting.Models;
 
+using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Xml.Linq;
 
@@ -9,6 +10,7 @@ using Ardalis.GuardClauses;
 /// Defines the <see cref="TeamResult" />
 /// </summary>
 [DataContract]
+[DebuggerDisplay("Team Result (Team {TeamId}, Score {Score}, Errors {Errors}, Place {Place})")]
 public class TeamResult
 {
     /// <summary>

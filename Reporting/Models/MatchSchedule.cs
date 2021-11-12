@@ -1,6 +1,7 @@
 ﻿namespace MatchMaker.Reporting.Models;
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Xml.Linq;
 
@@ -10,6 +11,7 @@ using Ardalis.GuardClauses;
 /// Defines the <see cref="MatchSchedule" />
 /// </summary>
 [DataContract]
+[DebuggerDisplay("Match {Id} (Room {Room})")]
 public class MatchSchedule
 {
     /// <summary>
