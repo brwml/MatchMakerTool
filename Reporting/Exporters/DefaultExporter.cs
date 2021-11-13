@@ -31,9 +31,9 @@ public class DefaultExporter : IExporter
             IncludeFields = false,
             WriteIndented = true
         };
-        options.Converters.Add(new DateOnlyConverter());
-        options.Converters.Add(new TimeOnlyConverter());
-        options.Converters.Add(new DecimalConverter());
+        options.Converters.Add(new DateOnlyJsonConverter());
+        options.Converters.Add(new TimeOnlyJsonConverter());
+        options.Converters.Add(new DecimalJsonConverter());
 
         File.WriteAllText(path, JsonSerializer.Serialize(summary, options));
     }
@@ -42,7 +42,7 @@ public class DefaultExporter : IExporter
 /// <summary>
 /// A JSON serialization converter for <see cref="DateOnly"/> objects.
 /// </summary>
-internal class DateOnlyConverter : JsonConverter<DateOnly>
+internal class DateOnlyJsonConverter : JsonConverter<DateOnly>
 {
     /// <summary>
     /// Reads the <see cref="DateOnly"/> value from the JSON payload.
@@ -74,7 +74,7 @@ internal class DateOnlyConverter : JsonConverter<DateOnly>
 /// <summary>
 /// A JSON serialization converter for <see cref="TimeOnly"/> objects.
 /// </summary>
-internal class TimeOnlyConverter : JsonConverter<TimeOnly>
+internal class TimeOnlyJsonConverter : JsonConverter<TimeOnly>
 {
     /// <summary>
     /// Reads the <see cref="TimeOnly"/> value from the JSON payload.
@@ -106,7 +106,7 @@ internal class TimeOnlyConverter : JsonConverter<TimeOnly>
 /// <summary>
 /// A JSON serialization converter for <see cref="decimal"/> objects.
 /// </summary>
-internal class DecimalConverter : JsonConverter<decimal>
+internal class DecimalJsonConverter : JsonConverter<decimal>
 {
     /// <summary>
     /// Reads the <see cref="decimal"/> value from the JSON payload.
