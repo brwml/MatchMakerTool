@@ -40,7 +40,7 @@ public static class SummaryExporter
     {
         var quizzer = summary.Result.Schedule.Quizzers[quizzerSummary.QuizzerId];
         var church = summary.Result.Schedule.Churches[quizzer.ChurchId];
-        return new InternalQuizzerSummary($"{quizzer.LastName}, {quizzer.FirstName}", church.Name);
+        return new InternalQuizzerSummary(FormattableString.Invariant($"{quizzer.LastName}, {quizzer.FirstName}"), church.Name);
     }
 
     /// <summary>

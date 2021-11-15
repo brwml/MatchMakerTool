@@ -39,7 +39,9 @@ public class RtfExporter : BaseExporter
         template.Add("summary", summary);
         template.Add("teams", GetTeamInfo(summary));
         template.Add("quizzers", GetQuizzerInfo(summary));
-        File.WriteAllText(Path.Combine(folder, $"{summary.Name}.rtf"), template.Render());
+
+        var path = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.rtf"));
+        File.WriteAllText(path, template.Render());
     }
 
     /// <summary>
@@ -53,7 +55,7 @@ public class RtfExporter : BaseExporter
 
         if (stream is null)
         {
-            throw new InvalidOperationException($"The template {RtfTemplate} was not found.");
+            throw new InvalidOperationException(FormattableString.Invariant($"The template {RtfTemplate} was not found."));
         }
 
         using var reader = new StreamReader(stream);

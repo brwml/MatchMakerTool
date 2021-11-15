@@ -45,7 +45,7 @@ public class TieBreakHeadToHead : TieBreak
     /// <returns>The <see cref="string"/></returns>
     public override string ToString()
     {
-        return $"{base.ToString()} ({string.Join(", ", this.Results.Select(x => $"{this.GetWinner(x)}->{this.GetLoser(x)}"))})";
+        return FormattableString.Invariant($"{base.ToString()} ({string.Join(", ", this.Results.Select(x => FormattableString.Invariant($"{this.GetWinner(x)}->{this.GetLoser(x)}")))})");
     }
 
     /// <summary>

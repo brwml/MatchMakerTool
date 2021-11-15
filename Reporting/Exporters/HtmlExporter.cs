@@ -112,7 +112,7 @@ public partial class HtmlExporter : BaseExporter
     /// <param name="resultsFolder">The results folder.</param>
     private static void CreateZipFile(Summary summary, string folder, string resultsFolder)
     {
-        var zipPath = Path.Combine(folder, $"{summary.Name} (Results).zip");
+        var zipPath = Path.Combine(folder, FormattableString.Invariant($"{summary.Name} (Results).zip"));
 
         if (File.Exists(zipPath))
         {
@@ -259,7 +259,7 @@ public partial class HtmlExporter : BaseExporter
 
         if (stream is null)
         {
-            throw new InvalidOperationException($"The manifest resource {name} was not found.");
+            throw new InvalidOperationException(FormattableString.Invariant($"The manifest resource {name} was not found."));
         }
 
         using var reader = new StreamReader(stream);
@@ -311,7 +311,8 @@ public partial class HtmlExporter : BaseExporter
         template.Add("quizzer", quizzerInfo);
         template.Add("details", details);
 
-        File.WriteAllText(Path.Combine(folder, $"{quizzerId}.html"), template.Render(CultureInfo.CurrentCulture));
+        var path = Path.Combine(folder, FormattableString.Invariant($"{quizzerId}.html"));
+        File.WriteAllText(path, template.Render(CultureInfo.CurrentCulture));
     }
 
     /// <summary>
@@ -394,7 +395,8 @@ public partial class HtmlExporter : BaseExporter
         template.Add("details", details);
         template.Add("quizzers", quizzers);
 
-        File.WriteAllText(Path.Combine(folder, $"{team.Id}.html"), template.Render(CultureInfo.CurrentCulture));
+        var path = Path.Combine(folder, FormattableString.Invariant($"{team.Id}.html"));
+        File.WriteAllText(path, template.Render(CultureInfo.CurrentCulture));
     }
 
     /// <summary>

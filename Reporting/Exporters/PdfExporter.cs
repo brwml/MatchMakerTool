@@ -31,7 +31,7 @@ public class PdfExporter : BaseExporter
         Guard.Against.Null(summary, nameof(summary));
         Guard.Against.NullOrWhiteSpace(folder, nameof(folder));
 
-        var fileName = Path.Combine(folder, $"{summary.Name}.pdf");
+        var fileName = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.pdf"));
 
         using var document = OpenDocument(fileName);
         CreateTeamPageTitle(summary, document);
@@ -109,10 +109,10 @@ public class PdfExporter : BaseExporter
         return new[]
         {
             CreateCell(quizzer.ShowPlace ? quizzer.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
-            CreateCell($"{quizzer.FullName}{GetRookieTag(quizzer.IsRookie)}"),
-            CreateCell($"{quizzer.Church?.Name ?? string.Empty}"),
-            CreateCell($"{quizzer.AverageScore.ToString("N2", CultureInfo.CurrentCulture)}"),
-            CreateCell($"{quizzer.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)}")
+            CreateCell(FormattableString.Invariant($"{quizzer.FullName}{GetRookieTag(quizzer.IsRookie)}")),
+            CreateCell(FormattableString.Invariant($"{quizzer.Church?.Name ?? string.Empty}")),
+            CreateCell(FormattableString.Invariant($"{quizzer.AverageScore.ToString("N2", CultureInfo.CurrentCulture)}")),
+            CreateCell(FormattableString.Invariant($"{quizzer.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)}"))
         };
     }
 

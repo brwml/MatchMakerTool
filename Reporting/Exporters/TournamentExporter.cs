@@ -33,7 +33,7 @@ public static class TournamentExporter
         var quizzers = GetQuizzers(summary, numberOfTournamentTeams);
         var teams = GetTeams(quizzers, numberOfAlternateTeams);
 
-        var fileName = Path.Combine(outputFolder, $"{summary.Name}_TournamentTeams.xlsx");
+        var fileName = Path.Combine(outputFolder, FormattableString.Invariant($"{summary.Name}_TournamentTeams.xlsx"));
 
         using var workbook = new XLWorkbook();
         var sheet = workbook.AddWorksheet("Teams");
@@ -45,7 +45,7 @@ public static class TournamentExporter
             for (var row = 0; row < team.Count; row++)
             {
                 var quizzer = team[row];
-                sheet.Cell(row + 1, column + 1).SetValue($"{quizzer.FirstName} {quizzer.LastName}");
+                sheet.Cell(row + 1, column + 1).SetValue(FormattableString.Invariant($"{quizzer.FirstName} {quizzer.LastName}"));
             }
 
             sheet.Column(column + 1).Width = 20.0;

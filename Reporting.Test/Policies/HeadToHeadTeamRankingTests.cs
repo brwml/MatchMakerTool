@@ -17,7 +17,10 @@ public class HeadToHeadTeamRankingTests
     [MemberData(nameof(GetHeadToHeadTestCases))]
     public void HeadToHeadTests(string testId, IDictionary<int, int> places)
     {
-        var summary = LoadSummary(@".\Policies\Data\Participants.xml", @$".\Policies\Data\Schedule.{testId}.xml", @$".\Policies\Data\Results.{testId}.xml");
+        var summary = LoadSummary(
+            @".\Policies\Data\Participants.xml",
+            FormattableString.Invariant(@$".\Policies\Data\Schedule.{testId}.xml"),
+            FormattableString.Invariant(@$".\Policies\Data\Results.{testId}.xml"));
         Assert.All(summary.TeamSummaries, x => Assert.Equal(x.Value.Place, places[x.Key]));
     }
 
