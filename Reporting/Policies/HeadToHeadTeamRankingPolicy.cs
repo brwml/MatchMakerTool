@@ -44,7 +44,9 @@ public class HeadToHeadTeamRankingPolicy : TeamRankingPolicy
     }
 
     /// <summary>
-    /// Resolves indeterminant orderings.
+    /// Resolves indeterminant orderings. An ordering is indeterminant when a path does not exist
+    /// between all members of one position and the next. When this occurs the two positions are
+    /// combined into a single position so that the two remain tied.
     /// </summary>
     /// <param name="condensated">The condensated graph</param>
     /// <param name="ordered">The ordered dependency graph</param>

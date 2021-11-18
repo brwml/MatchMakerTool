@@ -65,13 +65,16 @@
                 </Style>
             </TabControl.Resources>
             <TabItem Header="Participants">
-                <Grid Style="{StaticResource tabGrids}"/>
+                <Grid Style="{StaticResource tabGrids}">
+                </Grid>
             </TabItem>
             <TabItem Header="Schedule">
-                <Grid Style="{StaticResource tabGrids}"/>
+                <Grid Style="{StaticResource tabGrids}">
+                </Grid>
             </TabItem>
             <TabItem Header="Results">
-                <Grid Style="{StaticResource tabGrids}"/>
+                <Grid Style="{StaticResource tabGrids}">
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>
