@@ -259,7 +259,7 @@ public partial class HtmlExporter : BaseExporter
 
         if (stream is null)
         {
-            throw new InvalidOperationException(FormattableString.Invariant($"The manifest resource {name} was not found."));
+            throw new InvalidOperationException(FormattableString.Invariant($"The manifest resource stream {name} was not found."));
         }
 
         using var reader = new StreamReader(stream);
@@ -355,6 +355,7 @@ public partial class HtmlExporter : BaseExporter
     {
         var assembly = Assembly.GetExecutingAssembly();
         using var stream = assembly.GetManifestResourceStream(StyleSheet);
+
         if (stream is not null)
         {
             using var destination = File.OpenWrite(Path.Combine(folder, StyleSheetFileName));
@@ -375,14 +376,14 @@ public partial class HtmlExporter : BaseExporter
             .Where(x => x.Value.TeamResults.Any(t => t.TeamId == teamId))
             .OrderBy(x => x.Value.Round)
             .Select(x => new
-            {
-                Round = GetRoundNumber(x.Value),
-                OpponentId = GetOpponentId(x.Value, teamId),
-                Opponent = GetOpponentName(summary, x.Value, teamId),
-                Score = GetTeamScore(x.Value, teamId),
-                OpponentScore = GetOpponentScore(x.Value, teamId),
-                Win = GetTeamPlace(x.Value, teamId) == 1
-            });
+                {
+                    Round = GetRoundNumber(x.Value),
+                    OpponentId = GetOpponentId(x.Value, teamId),
+                    Opponent = GetOpponentName(summary, x.Value, teamId),
+                    Score = GetTeamScore(x.Value, teamId),
+                    OpponentScore = GetOpponentScore(x.Value, teamId),
+                    Win = GetTeamPlace(x.Value, teamId) == 1
+                });
 
         var team = summary.Result.Schedule.Teams[teamId];
         var teamInfo = new TeamInfo(team, teamSummary);
