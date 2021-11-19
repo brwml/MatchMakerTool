@@ -96,7 +96,8 @@ public class PdfExporter : BaseExporter
     private static void CreateQuizzerPageTitle(Document document)
     {
         document.Add(new AreaBreak());
-        document.Add(new Paragraph("Quizzer Results").SetSubtitleFont());
+        document.Add(new Paragraph("Quizzer Results")
+                .SetSubtitleFont());
     }
 
     /// <summary>
@@ -226,10 +227,7 @@ public class PdfExporter : BaseExporter
     /// <returns>The <see cref="Document"/> instance</returns>
     private static Document OpenDocument(string fileName)
     {
-        var writer = new PdfWriter(fileName);
-        var pdf = new PdfDocument(writer);
-        var document = new Document(pdf);
-        return document;
+        return new Document(new PdfDocument(new PdfWriter(fileName)));
     }
 }
 
@@ -293,7 +291,9 @@ internal static class ParagraphExtensions
     /// <returns>The paragraph</returns>
     public static Paragraph SetTitleFont(this Paragraph paragraph)
     {
-        return paragraph.SetFont(PdfFontFactory.CreateFont(StandardFonts.TIMES_BOLDITALIC)).SetFontSize(27).SetTextAlignment(TextAlignment.CENTER);
+        return paragraph.SetFont(PdfFontFactory.CreateFont(StandardFonts.TIMES_BOLDITALIC))
+                        .SetFontSize(27)
+                        .SetTextAlignment(TextAlignment.CENTER);
     }
 
     /// <summary>
@@ -303,6 +303,8 @@ internal static class ParagraphExtensions
     /// <returns>The paragraph</returns>
     public static Paragraph SetSubtitleFont(this Paragraph paragraph)
     {
-        return paragraph.SetFont(PdfFontFactory.CreateFont(StandardFonts.TIMES_BOLDITALIC)).SetFontSize(18).SetTextAlignment(TextAlignment.CENTER);
+        return paragraph.SetFont(PdfFontFactory.CreateFont(StandardFonts.TIMES_BOLDITALIC))
+                        .SetFontSize(18)
+                        .SetTextAlignment(TextAlignment.CENTER);
     }
 }
