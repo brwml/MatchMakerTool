@@ -19,7 +19,7 @@ public class QuizzerResult
     /// <param name="id">The quizzer identifier</param>
     /// <param name="score">The quizzer score</param>
     /// <param name="errors">The quizzer errors</param>
-    private QuizzerResult(int id, int score, int errors)
+    public QuizzerResult(int id, int score, int errors)
     {
         this.QuizzerId = id;
         this.Score = score;
