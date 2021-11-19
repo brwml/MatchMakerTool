@@ -57,18 +57,12 @@ public class ExcelExporter : BaseExporter
     /// </summary>
     /// <param name="workbook">The workbook/></param>
     /// <param name="summary">The summary/></param>
-    protected static void ExportQuizzerResults(XLWorkbook workbook, Summary summary)
+    private static void ExportQuizzerResults(XLWorkbook workbook, Summary summary)
     {
-        // TODO: Does this need a guard?
-        Guard.Against.Null(workbook, nameof(workbook));
-        Guard.Against.Null(summary, nameof(summary));
-
         var worksheet = workbook.AddWorksheet("Quizzer Results");
 
-        var row = 1;
-
-        FillQuizzerHeaderRow(worksheet.Row(row++));
-        FillQuizzerResults(summary, worksheet, row);
+        FillQuizzerHeaderRow(worksheet.Row(1));
+        FillQuizzerResults(summary, worksheet, 2);
     }
 
     /// <summary>
@@ -80,10 +74,8 @@ public class ExcelExporter : BaseExporter
     {
         var worksheet = workbook.AddWorksheet("Team Results");
 
-        var row = 1;
-
-        FillTeamHeaderRow(worksheet.Row(row++));
-        FillTeamResults(summary, worksheet, row);
+        FillTeamHeaderRow(worksheet.Row(1));
+        FillTeamResults(summary, worksheet, 2);
     }
 
     /// <summary>
