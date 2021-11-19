@@ -28,13 +28,13 @@ public class Church
     /// Gets or sets the Id
     /// </summary>
     [DataMember]
-    public int Id { get; set; }
+    public int Id { get; }
 
     /// <summary>
     /// Gets or sets the Name
     /// </summary>
     [DataMember]
-    public string Name { get; set; }
+    public string Name { get; }
 
     /// <summary>
     /// Gets a <see cref="Church"/> instance from an XML element
