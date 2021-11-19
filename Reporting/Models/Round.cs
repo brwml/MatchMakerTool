@@ -42,25 +42,25 @@ public class Round
     /// Gets or sets the Id
     /// </summary>
     [DataMember]
-    public int Id { get; set; }
+    public int Id { get; }
 
     /// <summary>
     /// Gets or sets the Matches
     /// </summary>
     [DataMember]
-    public IDictionary<int, MatchSchedule> Matches { get; set; }
+    public IDictionary<int, MatchSchedule> Matches { get; }
 
     /// <summary>
     /// Gets or sets the date of the round.
     /// </summary>
     [DataMember]
-    public DateOnly Date { get; set; }
+    public DateOnly Date { get; }
 
     /// <summary>
     /// Gets or sets the time of the round.
     /// </summary>
     [DataMember]
-    public TimeOnly Time { get; set; }
+    public TimeOnly Time { get; }
 
     /// <summary>
     /// Creates a <see cref="Round"/> from an XML element

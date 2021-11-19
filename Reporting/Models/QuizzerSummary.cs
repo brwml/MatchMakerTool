@@ -13,6 +13,9 @@ using MatchMaker.Reporting.Policies;
 /// <summary>
 /// Defines the <see cref="QuizzerSummary" />
 /// </summary>
+/// <remarks>
+/// TODO: Make the properties read-only.
+/// </remarks>
 [DataContract]
 [DebuggerDisplay("Quizzer Summary (Quizzer {QuizzerId}, Rounds {TotalRounds}, Score {TotalScore}, Errors {TotalErrors}, Place {Place})")]
 public class QuizzerSummary
