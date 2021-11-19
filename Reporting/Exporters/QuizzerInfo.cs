@@ -18,7 +18,7 @@ public class QuizzerInfo
     /// <param name="summary">The quizzer summary</param>
     /// <param name="church">The church</param>
     /// <param name="team">The team</param>
-    public QuizzerInfo(Quizzer quizzer, QuizzerSummary summary, Church church, Team team, int rookieYear)
+    public QuizzerInfo(Quizzer quizzer, QuizzerSummary summary, Church church, Team team)
     {
         Guard.Against.Null(quizzer, nameof(quizzer));
         Guard.Against.Null(summary, nameof(summary));
@@ -29,7 +29,6 @@ public class QuizzerInfo
         this.FirstName = quizzer.FirstName;
         this.LastName = quizzer.LastName;
         this.RookieYear = quizzer.RookieYear;
-        this.IsRookie = quizzer.RookieYear == rookieYear;
         this.Church = church;
         this.Team = team;
         this.Place = summary.Place;
@@ -67,7 +66,7 @@ public class QuizzerInfo
     /// <summary>
     /// Gets or sets a value indicating whether the quizzing is a rookie.
     /// </summary>
-    public bool IsRookie { get; }
+    public bool IsRookie { get; set; }
 
     /// <summary>
     /// Gets the church
