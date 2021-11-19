@@ -57,23 +57,18 @@ public abstract class BaseExporter : IExporter
 
         var quizzers = summary.Result.Schedule.Quizzers;
 
+        var rookieYear = summary.Result.Schedule.Rounds.Min(x => x.Value.Date).AddDays(-180).Year;
+
         var quizzerInfo = summary.QuizzerSummaries
                                  .Join(quizzers,
                                        x => x.Key,
                                        x => x.Key,
-                                       (s, q) => new QuizzerInfo(q.Value, s.Value, GetChurch(summary, q.Value), GetTeam(summary, q.Value)))
+                                       (s, q) => new QuizzerInfo(q.Value, s.Value, GetChurch(summary, q.Value), GetTeam(summary, q.Value), rookieYear))
                                  .OrderBy(x => (x.Place, x.LastName, x.FirstName)).ToArray();
 
         for (var i = 1; i < quizzerInfo.Length; i++)
         {
             quizzerInfo[i].ShowPlace = quizzerInfo[i - 1].Place != quizzerInfo[i].Place;
-        }
-
-        var rookieYear = summary.Result.Schedule.Rounds.Min(x => x.Value.Date).AddDays(-180).Year;
-
-        foreach (var quizzer in quizzerInfo)
-        {
-            quizzer.IsRookie = quizzer.RookieYear == rookieYear;
         }
 
         return quizzerInfo;
