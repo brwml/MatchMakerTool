@@ -37,7 +37,7 @@ public class Schedule
     /// Gets or sets the Churches
     /// </summary>
     [DataMember]
-    public IDictionary<int, Church> Churches { get; set; }
+    public IDictionary<int, Church> Churches { get; }
 
     /// <summary>
     /// Gets or sets the Name
@@ -49,11 +49,14 @@ public class Schedule
     /// Gets or sets the Quizzers
     /// </summary>
     [DataMember]
-    public IDictionary<int, Quizzer> Quizzers { get; set; }
+    public IDictionary<int, Quizzer> Quizzers { get; }
 
     /// <summary>
     /// Gets or sets the Rounds
     /// </summary>
+    /// <remarks>
+    /// TODO: Make property read-only.
+    /// </remarks>
     [DataMember]
     public IDictionary<int, Round> Rounds { get; set; }
 
@@ -61,7 +64,7 @@ public class Schedule
     /// Gets or sets the Teams
     /// </summary>
     [DataMember]
-    public IDictionary<int, Team> Teams { get; set; }
+    public IDictionary<int, Team> Teams { get; }
 
     /// <summary>
     /// Creates a <see cref="Schedule"/> from an <see cref="XDocument"/> and a <paramref name="name"/>.
