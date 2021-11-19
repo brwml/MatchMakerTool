@@ -38,43 +38,43 @@ public class Quizzer
     /// Gets or sets the church identifier
     /// </summary>
     [DataMember]
-    public int ChurchId { get; set; }
+    public int ChurchId { get; }
 
     /// <summary>
     /// Gets or sets the first name
     /// </summary>
     [DataMember]
-    public string FirstName { get; set; }
+    public string FirstName { get; }
 
     /// <summary>
     /// Gets or sets the Gender
     /// </summary>
     [DataMember]
-    public Gender Gender { get; set; }
+    public Gender Gender { get; }
 
     /// <summary>
     /// Gets or sets the Id
     /// </summary>
     [DataMember]
-    public int Id { get; set; }
+    public int Id { get; }
 
     /// <summary>
     /// Gets or sets the last name
     /// </summary>
     [DataMember]
-    public string LastName { get; set; }
+    public string LastName { get; }
 
     /// <summary>
     /// Gets or sets the rookie year
     /// </summary>
     [DataMember]
-    public int RookieYear { get; set; }
+    public int RookieYear { get; }
 
     /// <summary>
     /// Gets or sets the team identifier
     /// </summary>
     [DataMember]
-    public int TeamId { get; set; }
+    public int TeamId { get; }
 
     /// <summary>
     /// Creates a new <see cref="Quizzer"/> instance from an XML element.
