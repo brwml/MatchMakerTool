@@ -23,6 +23,6 @@ public class ScoreTeamRankingPolicy : TeamRankingPolicy
         Guard.Against.NegativeOrZero(initial, nameof(initial));
 
         var list = summaries.OrderByDescending(s => s.AverageScore).ToList();
-        SetRelativePlaces(list, initial, (s1, s2) => s1.AverageScore == s2.AverageScore, new TieBreak { Reason = TieBreakReason.AverageScore });
+        SetRelativePlaces(list, initial, (s1, s2) => s1.AverageScore == s2.AverageScore, new TieBreak(TieBreakReason.AverageScore));
     }
 }

@@ -18,11 +18,11 @@ public class TieBreakHeadToHead : TieBreak
     /// <param name="results">The <see cref="IEnumerable{MatchResult}"/>. This </param>
     /// <param name="teams">The <see cref="IDictionary{int, Team}"/></param>
     public TieBreakHeadToHead(IEnumerable<MatchResult> results, IDictionary<int, Team> teams)
+        : base(TieBreakReason.HeadToHead)
     {
         Guard.Against.Null(results, nameof(results));
         Guard.Against.NullOrEmpty(teams, nameof(teams));
 
-        this.Reason = TieBreakReason.HeadToHead;
         this.Results = results;
         this.Teams = teams;
     }
@@ -37,7 +37,7 @@ public class TieBreakHeadToHead : TieBreak
     /// Gets or sets the Results
     /// </summary>
     [DataMember]
-    private IEnumerable<MatchResult> Results { get; set; }
+    private IEnumerable<MatchResult> Results { get; }
 
     /// <summary>
     /// Creates a <see cref="string"/> describing the head-to-head matches that produced the tie breaker.

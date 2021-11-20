@@ -23,6 +23,6 @@ public class ErrorTeamRankingPolicy : TeamRankingPolicy
         Guard.Against.NegativeOrZero(initial, nameof(initial));
 
         var list = summaries.OrderBy(s => s.AverageErrors).ToList();
-        SetRelativePlaces(list, initial, (s1, s2) => s1.AverageErrors == s2.AverageErrors, new TieBreak { Reason = TieBreakReason.AverageErrors });
+        SetRelativePlaces(list, initial, (s1, s2) => s1.AverageErrors == s2.AverageErrors, new TieBreak(TieBreakReason.AverageErrors));
     }
 }
