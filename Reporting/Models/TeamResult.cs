@@ -14,28 +14,43 @@ using Ardalis.GuardClauses;
 public class TeamResult
 {
     /// <summary>
+    /// Initializes a new instance of the <see cref="TeamResult"/> class.
+    /// </summary>
+    /// <param name="id">The team identifier</param>
+    /// <param name="score">The team score</param>
+    /// <param name="errors">The team score</param>
+    /// <param name="place">The team place</param>
+    public TeamResult(int id, int score, int errors, int place = 1)
+    {
+        this.TeamId = id;
+        this.Score = score;
+        this.Errors = errors;
+        this.Place = place;
+    }
+
+    /// <summary>
     /// Gets or sets the Errors
     /// </summary>
     [DataMember]
-    public int Errors { get; set; }
+    public int Errors { get; }
 
     /// <summary>
     /// Gets or sets the Place
     /// </summary>
     [DataMember]
-    public int Place { get; set; }
+    public int Place { get; }
 
     /// <summary>
     /// Gets or sets the Score
     /// </summary>
     [DataMember]
-    public int Score { get; set; }
+    public int Score { get; }
 
     /// <summary>
     /// Gets or sets the team identifier
     /// </summary>
     [DataMember]
-    public int TeamId { get; set; }
+    public int TeamId { get; }
 
     /// <summary>
     /// Creates a <see cref="TeamResult"/> from an <see cref="XElement"/>
@@ -46,13 +61,11 @@ public class TeamResult
     {
         Guard.Against.Null(xml, nameof(xml));
 
-        return new TeamResult
-        {
-            TeamId = xml.GetAttribute<int>("id"),
-            Score = xml.GetAttribute<int>("score"),
-            Errors = xml.GetAttribute<int>("errors"),
-            Place = xml.GetAttribute<int>("place")
-        };
+        return new TeamResult(
+            xml.GetAttribute<int>("id"),
+            xml.GetAttribute<int>("score"),
+            xml.GetAttribute<int>("errors"),
+            xml.GetAttribute<int>("place"));
     }
 
     /// <summary>
