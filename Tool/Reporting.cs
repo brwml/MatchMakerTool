@@ -20,10 +20,10 @@ using MatchMaker.Reporting.Policies;
 internal static class Reporting
 {
     /// <summary>
-    /// Processes the reporting options
+    /// Processes the reporting options.
     /// </summary>
-    /// <param name="options">The options<see cref="ReportingOptions"/></param>
-    /// <returns>The <see cref="bool"/></returns>
+    /// <param name="options">The reporting options</param>
+    /// <returns><c>true</c> if the reporting options are processed; otherwise <c>false</c>.</returns>
     internal static bool Process(ReportingOptions options)
     {
         Guard.Against.Null(options, nameof(options));
@@ -46,10 +46,10 @@ internal static class Reporting
     }
 
     /// <summary>
-    /// Processes summary options
+    /// Processes the summary options.
     /// </summary>
-    /// <param name="options">The options<see cref="SummaryOptions"/></param>
-    /// <returns>The <see cref="bool"/></returns>
+    /// <param name="options">The summary options</param>
+    /// <returns><c>true</c> if the summary options are processed; otherwise <c>false</c>.</returns>
     internal static bool Process(SummaryOptions options)
     {
         Guard.Against.Null(options, nameof(options));
@@ -62,11 +62,11 @@ internal static class Reporting
     }
 
     /// <summary>
-    /// Creates the tournament summary
+    /// Creates the tournament summary.
     /// </summary>
     /// <param name="sourceFolder">The source folder</param>
     /// <param name="policies">The policies</param>
-    /// <returns>The <see cref="Summary"/></returns>
+    /// <returns>The tournament <see cref="Summary"/> instance</returns>
     private static Summary CreateSummary(string sourceFolder, IEnumerable<TeamRankingPolicy> policies)
     {
         var schedule = LoadScheduleFromFolder(sourceFolder);
@@ -75,10 +75,10 @@ internal static class Reporting
     }
 
     /// <summary>
-    /// Create the tournament summary
+    /// Create the tournament summary.
     /// </summary>
     /// <param name="options">The reporting options</param>
-    /// <returns>The <see cref="Summary"/> instance</returns>
+    /// <returns>The tournament <see cref="Summary"/> instance</returns>
     private static Summary CreateSummary(ReportingOptions options)
     {
         var sourceFolder = options.SourceFolder;
@@ -91,7 +91,7 @@ internal static class Reporting
     /// Finds the result files
     /// </summary>
     /// <param name="sourceFolder">The source folder</param>
-    /// <returns>The <see cref="IEnumerable{FileInfo}"/></returns>
+    /// <returns>The <see cref="IEnumerable{FileInfo}"/> instance</returns>
     private static IEnumerable<FileInfo> FindResultFiles(string sourceFolder)
     {
         return Directory
@@ -113,7 +113,7 @@ internal static class Reporting
     }
 
     /// <summary>
-    /// Gets the schedule name
+    /// Gets the schedule name.
     /// </summary>
     /// <param name="name">The tournament name</param>
     /// <returns>The schedule file name</returns>
@@ -127,59 +127,59 @@ internal static class Reporting
     /// Loads the ranking policies
     /// </summary>
     /// <param name="procedure">The team ranking policy procedure definition</param>
-    /// <returns>The <see cref="IEnumerable{TeamRankingPolicy}"/></returns>
+    /// <returns>The <see cref="IEnumerable{TeamRankingPolicy}"/> instance</returns>
     private static IEnumerable<TeamRankingPolicy> LoadRankingPolicies(string procedure)
     {
         return TeamRankingPolicyFactory.GetTeamRankingPolicies(procedure).ToArray();
     }
 
     /// <summary>
-    /// Loads the results from files
+    /// Loads the results from files.
     /// </summary>
     /// <param name="files">The files</param>
     /// <param name="schedule">The schedule</param>
-    /// <returns>The <see cref="Result"/></returns>
+    /// <returns>The tournament <see cref="Result"/> instance</returns>
     private static Result LoadResultsFromFiles(IEnumerable<FileInfo> files, Schedule schedule)
     {
         return Result.FromXml(files.Select(x => LoadXml(x)), schedule);
     }
 
     /// <summary>
-    /// Loads the results from folder
+    /// Loads the results from folder.
     /// </summary>
     /// <param name="sourceFolder">The source folder</param>
-    /// <param name="schedule">The schedule</param>
-    /// <returns>The <see cref="Result"/></returns>
+    /// <param name="schedule">The tournament schedule</param>
+    /// <returns>The tournament <see cref="Result"/> instance</returns>
     private static Result LoadResultsFromFolder(string sourceFolder, Schedule schedule)
     {
         return LoadResultsFromFiles(FindResultFiles(sourceFolder), schedule);
     }
 
     /// <summary>
-    /// Loads the schedule from file
+    /// Loads the schedule from file.
     /// </summary>
-    /// <param name="file">The file<see cref="FileInfo"/></param>
-    /// <returns>The <see cref="Schedule"/></returns>
+    /// <param name="file">The tournament file information</param>
+    /// <returns>The tournament <see cref="Schedule"/> instance</returns>
     private static Schedule LoadScheduleFromFile(FileInfo file)
     {
         return Schedule.FromXml(LoadXml(file), GetScheduleName(file.Name));
     }
 
     /// <summary>
-    /// Loads the schedule from a folder
+    /// Loads the schedule from a folder.
     /// </summary>
-    /// <param name="folder">The folder<see cref="string"/></param>
-    /// <returns>The <see cref="Schedule"/></returns>
+    /// <param name="folder">The folder</param>
+    /// <returns>The tournament <see cref="Schedule"/> instance</returns>
     private static Schedule LoadScheduleFromFolder(string folder)
     {
         return LoadScheduleFromFile(FindScheduleFile(folder));
     }
 
     /// <summary>
-    /// Loads the <see cref="XDocument"/>
+    /// Loads the <see cref="XDocument"/> file.
     /// </summary>
-    /// <param name="file">The <see cref="FileInfo"/></param>
-    /// <returns>The <see cref="XDocument"/></returns>
+    /// <param name="file">The file</param>
+    /// <returns>The <see cref="XDocument"/> instance</returns>
     private static XDocument LoadXml(FileInfo file)
     {
         using var stream = file.OpenRead();
