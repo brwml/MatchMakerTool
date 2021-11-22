@@ -67,7 +67,7 @@ internal static class Reporting
     /// <param name="sourceFolder">The source folder</param>
     /// <param name="policies">The policies</param>
     /// <returns>The <see cref="Summary"/></returns>
-    private static Summary CreateSummary(string sourceFolder, TeamRankingPolicy[] policies)
+    private static Summary CreateSummary(string sourceFolder, IEnumerable<TeamRankingPolicy> policies)
     {
         var schedule = LoadScheduleFromFolder(sourceFolder);
         var result = LoadResultsFromFolder(sourceFolder, schedule);
@@ -100,10 +100,10 @@ internal static class Reporting
     }
 
     /// <summary>
-    /// Finds the schedule file
+    /// Finds the schedule file information.
     /// </summary>
-    /// <param name="folder">The folder<see cref="string"/></param>
-    /// <returns>The <see cref="FileInfo"/></returns>
+    /// <param name="folder">The folder</param>
+    /// <returns>The <see cref="FileInfo"/> instance</returns>
     private static FileInfo FindScheduleFile(string folder)
     {
         return Directory
@@ -126,18 +126,18 @@ internal static class Reporting
     /// <summary>
     /// Loads the ranking policies
     /// </summary>
-    /// <param name="procedure">The procedure <see cref="string"/></param>
-    /// <returns>The <see cref="TeamRankingPolicy[]"/></returns>
-    private static TeamRankingPolicy[] LoadRankingPolicies(string procedure)
+    /// <param name="procedure">The team ranking policy procedure definition</param>
+    /// <returns>The <see cref="IEnumerable{TeamRankingPolicy}"/></returns>
+    private static IEnumerable<TeamRankingPolicy> LoadRankingPolicies(string procedure)
     {
-        return procedure.Select(TeamRankingPolicyFromChar).ToArray();
+        return TeamRankingPolicyFactory.GetTeamRankingPolicies(procedure).ToArray();
     }
 
     /// <summary>
     /// Loads the results from files
     /// </summary>
-    /// <param name="files">The files<see cref="IEnumerable{FileInfo}"/></param>
-    /// <param name="schedule">The schedule<see cref="Schedule"/></param>
+    /// <param name="files">The files</param>
+    /// <param name="schedule">The schedule</param>
     /// <returns>The <see cref="Result"/></returns>
     private static Result LoadResultsFromFiles(IEnumerable<FileInfo> files, Schedule schedule)
     {
@@ -147,8 +147,8 @@ internal static class Reporting
     /// <summary>
     /// Loads the results from folder
     /// </summary>
-    /// <param name="sourceFolder">The sourceFolder<see cref="string"/></param>
-    /// <param name="schedule">The schedule<see cref="Schedule"/></param>
+    /// <param name="sourceFolder">The source folder</param>
+    /// <param name="schedule">The schedule</param>
     /// <returns>The <see cref="Result"/></returns>
     private static Result LoadResultsFromFolder(string sourceFolder, Schedule schedule)
     {
@@ -184,23 +184,5 @@ internal static class Reporting
     {
         using var stream = file.OpenRead();
         return XDocument.Load(stream);
-    }
-
-    /// <summary>
-    /// Gets the team ranking policy for a character
-    /// </summary>
-    /// <param name="c">The <see cref="char"/></param>
-    /// <returns>The <see cref="TeamRankingPolicy"/></returns>
-    private static TeamRankingPolicy TeamRankingPolicyFromChar(char c)
-    {
-        return char.ToUpperInvariant(c) switch
-        {
-            'W' => new WinPercentageTeamRankingPolicy(),
-            'S' => new ScoreTeamRankingPolicy(),
-            'E' => new ErrorTeamRankingPolicy(),
-            'H' => new HeadToHeadTeamRankingPolicy(),
-            'L' => new LossCountTeamRankingPolicy(),
-            _ => new NullTeamRankingPolicy(),
-        };
     }
 }
