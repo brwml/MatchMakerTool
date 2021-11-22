@@ -32,7 +32,7 @@ internal static class Reporting
 
         var directory = Directory.CreateDirectory(options.OutputFolder);
 
-        Parallel.ForEach(GetExporters(options.OutputFormat), exporter =>
+        Parallel.ForEach(ExporterFactory.GetExporters(options.OutputFormat), exporter =>
         {
             exporter.Export(summary, directory.FullName);
         });
@@ -110,43 +110,6 @@ internal static class Reporting
             .EnumerateFiles(folder, "*.schedule.xml", SearchOption.TopDirectoryOnly)
             .Select(x => new FileInfo(x))
             .First();
-    }
-
-    /// <summary>
-    /// Gets the exporters
-    /// </summary>
-    /// <param name="format">The <see cref="OutputFormat"/></param>
-    /// <returns>The <see cref="IEnumerable{IExporter}"/></returns>
-    private static IEnumerable<IExporter> GetExporters(OutputFormat format)
-    {
-        var list = new List<IExporter> { new DefaultExporter() };
-
-        if (format.HasFlag(OutputFormat.Excel))
-        {
-            list.Add(new ExcelExporter());
-        }
-
-        if (format.HasFlag(OutputFormat.Html))
-        {
-            list.Add(new HtmlExporter());
-        }
-
-        if (format.HasFlag(OutputFormat.Pdf))
-        {
-            list.Add(new PdfExporter());
-        }
-
-        if (format.HasFlag(OutputFormat.Rtf))
-        {
-            list.Add(new RtfExporter());
-        }
-
-        if (format.HasFlag(OutputFormat.Xml))
-        {
-            list.Add(new XmlExporter());
-        }
-
-        return list;
     }
 
     /// <summary>
