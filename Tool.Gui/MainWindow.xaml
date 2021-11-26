@@ -4,40 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MatchMaker.Tool.Gui"
-        mc:Ignorable="d"
-        Title="MatchMaker™ Tournament Management Tool" Height="450" Width="800">
+        xmlns:views="clr-namespace:MatchMaker.Tool.Gui.Views"
+        mc:Ignorable="d" FontFamily="Segoe UI Light" FontSize="12"
+        Title="MatchMaker™ Tournament Management Tool" Height="540" Width="720"
+        MinHeight="540" MinWidth="720">
     <Window.Effect>
         <DropShadowEffect Opacity="0.5"/>
     </Window.Effect>
     <Grid Background="#FF423C3C">
-        <TabControl x:Name="tabControl" TabStripPlacement="Left" Margin="6,10,10,10" BorderThickness="3">
+        <TabControl x:Name="tabControl" TabStripPlacement="Left" Margin="8">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabItem}">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type TabItem}">
-                                <Grid>
-                                    <Border Name="Border" Background="#FF6E6C67" Margin="2,2,-8,0" BorderBrush="Black" BorderThickness="1,1,1,1" CornerRadius="8">
-                                        <ContentPresenter x:Name="ContentSite" ContentSource="Header" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,12,2" RecognizesAccessKey="True"/>
-                                    </Border>
-                                    <Rectangle Height="128" Width="10" Margin="0,0,-10,0" Stroke="Black" VerticalAlignment="Bottom" HorizontalAlignment="Right" StrokeThickness="0" Fill="#FFD4D0C8"/>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter Property="FontWeight" Value="Bold" />
-                                        <Setter TargetName="ContentSite" Property="Width" Value="25" />
-                                        <Setter TargetName="Border" Property="Background" Value="#FFD4D0C8" />
-                                    </Trigger>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter TargetName="Border" Property="Background" Value="#FF6E6C67" />
-                                    </Trigger>
-                                    <Trigger Property="IsMouseOver" Value="true">
-                                        <Setter Property="FontWeight" Value="Bold" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
                     <Setter Property="HeaderTemplate">
                         <Setter.Value>
                             <DataTemplate>
@@ -50,31 +27,25 @@
                         </Setter.Value>
                     </Setter>
                     <Setter Property="Background" Value="#FF6E6C67" />
-                    <Setter Property="Height" Value="120" />
                     <Setter Property="Margin" Value="0" />
-                    <Setter Property="Padding" Value="0" />
-                    <!--<Setter Property="FontFamily" Value="DokChampa" />-->
+                    <Setter Property="Padding" Value="4 32 4 32" />
                     <Setter Property="FontSize" Value="16" />
                     <Setter Property="VerticalAlignment" Value="Top" />
-                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
                     <Setter Property="UseLayoutRounding" Value="False" />
                 </Style>
                 <Style x:Key="tabGrids">
                     <Setter Property="Grid.Background" Value="#FFE5E5E5" />
-                    <!--<Setter Property="Grid.Margin" Value="0,0,0,0" />-->
                 </Style>
             </TabControl.Resources>
             <TabItem Header="Participants">
-                <Grid Style="{StaticResource tabGrids}">
-                </Grid>
+                <views:ParticipantsView Style="{StaticResource tabGrids}" />
             </TabItem>
             <TabItem Header="Schedule">
-                <Grid Style="{StaticResource tabGrids}">
-                </Grid>
+                <views:ScheduleView Style="{StaticResource tabGrids}" />
             </TabItem>
             <TabItem Header="Results">
-                <Grid Style="{StaticResource tabGrids}">
-                </Grid>
+                <views:ResultsView Style="{StaticResource tabGrids}" />
             </TabItem>
         </TabControl>
     </Grid>
