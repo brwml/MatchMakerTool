@@ -11,7 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
+    <PackageReference Include="Ardalis.GuardClauses" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Reporting\Reporting.csproj" />
+    <ProjectReference Include="..\Scheduling\Scheduling.csproj" />
   </ItemGroup>
 
 </Project>

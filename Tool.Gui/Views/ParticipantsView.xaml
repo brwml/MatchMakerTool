@@ -26,13 +26,13 @@
         </Grid.RowDefinitions>
         <GroupBox Header="Churches" Grid.Column="1" Grid.Row="1" Margin="0 0 8 0">
             <StackPanel Orientation="Vertical">
-                <TextBox Margin="4"></TextBox>
+                <TextBox x:Name="ChurchNameTextBox" Margin="4" TextChanged="ChurchNameTextBoxTextChanged"></TextBox>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Margin="4" Padding="8 4">New</Button>
-                    <Button Margin="4" Padding="8 4">Update</Button>
-                    <Button Margin="4" Padding="8 4">Delete</Button>
+                    <Button x:Name="NewChurchButton" Margin="4" Padding="8 4" Click="NewChurchButtonClicked" IsDefault="True" IsEnabled="False">New</Button>
+                    <Button x:Name="UpdateChurchButton" Margin="4" Padding="8 4" IsEnabled="False" Click="UpdateChurchButtonClicked">Update</Button>
+                    <Button x:Name="DeleteChurchButton" Margin="4" Padding="8 4" IsEnabled="False" Click="DeleteChurchButtonClicked">Delete</Button>
                 </StackPanel>
-                <ListView Height="320" Margin="4" />
+                <ListView x:Name="ChurchListView" Height="320" Margin="4" ItemTemplate="{Binding Path=Name}" SelectionChanged="ChurchListViewSelectionChanged" />
             </StackPanel>
         </GroupBox>
         <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="1" Margin="8 0 8 0">
@@ -40,27 +40,27 @@
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="4">Name</TextBlock>
-                        <TextBox Margin="4" Width="54"></TextBox>
-                        <TextBox Margin="4" Width="60"></TextBox>
+                        <TextBox x:Name="QuizzerFirstNameTextBox" Margin="4" Width="54" TextChanged="QuizzerNameTextChanged"></TextBox>
+                        <TextBox x:Name="QuizzerLastNameTextBox" Margin="4" Width="60" TextChanged="QuizzerNameTextChanged"></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Vertical">
-                            <RadioButton Margin="4 2 4 2">Male</RadioButton>
-                            <RadioButton Margin="4 0 4 2">Female</RadioButton>
+                            <RadioButton x:Name="QuizzerMaleGenderChoice" Margin="4 2 4 2" Checked="GenderChecked">Male</RadioButton>
+                            <RadioButton x:Name="QuizzerFemaleGenderChoice" Margin="4 0 4 2" Checked="GenderChecked">Female</RadioButton>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock Margin="4 0 4 0" VerticalAlignment="Center">First Year</TextBlock>
-                            <TextBox Margin="4" Width="46" VerticalAlignment="Center" />
+                            <TextBox x:Name="QuizzerRookieYearTextBox" Margin="4" Width="46" VerticalAlignment="Center" KeyDown="QuizzerRookieYearTextBoxKeyDown" TextChanged="QuizzerRookieYearTextChanged" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="4 2 4 2" VerticalAlignment="Center">Church</TextBlock>
-                        <ComboBox Margin="4 2 4 2" Width="116" />
+                        <ComboBox x:Name="QuizzerChurchComboxBox" IsTabStop="True" Margin="4 2 4 2" Width="116" SelectionChanged="QuizzerChurchSelectionChanged" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Margin="4" Padding="8 4">New</Button>
-                        <Button Margin="4" Padding="8 4">Update</Button>
-                        <Button Margin="4" Padding="8 4">Delete</Button>
+                        <Button x:Name="NewQuizzerButton" Margin="4" Padding="8 4" IsDefault="True" IsEnabled="False" Click="NewQuizzerButtonClicked">New</Button>
+                        <Button x:Name="UpdateQuizzerButton" Margin="4" Padding="8 4" IsEnabled="False" Click="UpdateQuizzerButtonClicked">Update</Button>
+                        <Button x:Name="DeleteQuizzerButton" Margin="4" Padding="8 4" IsEnabled="False" Click="DeleteQuizzerButtonClicked">Delete</Button>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
@@ -68,7 +68,7 @@
                 <StackPanel Orientation="Vertical">
                     <CheckBox Margin="4 2 4 2">Only show unplaced quizzers</CheckBox>
                     <CheckBox Margin="4 2 4 2">Filter by selected church</CheckBox>
-                    <ListView Height="202" Margin="4" Background="#A6CAF0" />
+                    <ListView x:Name="QuizzerListView" AllowDrop="True" Height="202" Margin="4" Background="#A6CAF0" SelectionChanged="QuizzerListViewSelectionChanged" />
                 </StackPanel>
             </GroupBox>
         </StackPanel>
@@ -76,17 +76,17 @@
             <GroupBox Header="Teams">
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Margin="4 2 4 2" Width="120" />
-                        <TextBox Margin="4 2 4 2" Width="32" />
+                        <TextBox x:Name="TeamNameTextBox" Margin="4 2 4 2" Width="120" TextChanged="TeamNameTextChanged" />
+                        <TextBox x:Name="TeamAbbreviationTextBox" Margin="4 2 4 2" Width="32" TextChanged="TeamAbbreviationTextChanged" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Margin="4" Padding="8 4">New</Button>
-                        <Button Margin="4" Padding="8 4">Update</Button>
-                        <Button Margin="4" Padding="8 4">Delete</Button>
+                        <Button x:Name="NewTeamButton" Margin="4" Padding="8 4" IsDefault="True" IsEnabled="False" Click="NewTeamButtonClicked">New</Button>
+                        <Button x:Name="UpdateTeamButton" Margin="4" Padding="8 4" IsEnabled="False" Click="UpdateTeamButtonClicked">Update</Button>
+                        <Button x:Name="DeleteTeamButton" Margin="4" Padding="8 4" IsEnabled="False" Click="DeleteTeamButtonClicked">Delete</Button>
                     </StackPanel>
-                    <ListView Height="176" Margin="4" />
+                    <ListView x:Name="TeamListView" Height="176" Margin="4" SelectionChanged="TeamListViewSelectionChanged" />
                     <TextBlock Margin="4 4 4 2">Quizzers on team</TextBlock>
-                    <ListView Height="120" Margin="4" Background="#A6CAF0" />
+                    <ListView x:Name="TeamQuizzerListView" Height="120" Margin="4" Background="#A6CAF0" AllowDrop="True" />
                 </StackPanel>
             </GroupBox>
         </StackPanel>
