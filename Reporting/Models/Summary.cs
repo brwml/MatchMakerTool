@@ -49,7 +49,7 @@ public class Summary
     /// Gets the Name
     /// </summary>
     [IgnoreDataMember]
-    public string Name => this.Result?.Name ?? string.Empty;
+    public string Name => this.Result.Name;
 
     /// <summary>
     /// Creates a <see cref="Summary"/> based on a <see cref="Result"/> and collection of ranking policies.

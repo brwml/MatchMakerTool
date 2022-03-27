@@ -15,6 +15,11 @@ using Ardalis.GuardClauses;
 public class Result
 {
     /// <summary>
+    /// Gets an empty result instance.
+    /// </summary>
+    public static Result Null { get; } = new Result(Schedule.Null, new Dictionary<int, MatchResult>());
+
+    /// <summary>
     /// Initializes an instance of the <see cref="Result"/> class.
     /// </summary>
     /// <param name="schedule">The schedule</param>
@@ -41,7 +46,7 @@ public class Result
     /// Gets the Name
     /// </summary>
     [IgnoreDataMember]
-    public string Name => this.Schedule?.Name ?? string.Empty;
+    public string Name => this.Schedule.Name;
 
     /// <summary>
     /// Creates a <see cref="Result"/> from XML documents and corresponding <see cref="Schedule"/>.

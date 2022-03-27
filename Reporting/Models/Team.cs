@@ -63,7 +63,7 @@ public class Team
 
         var id = xml.GetAttribute<int>("id");
         var division = xml.GetAttribute<int>("div");
-        var abbreviation = xml.Attribute("abbrev")?.Value ?? string.Empty;
+        var abbreviation = xml.GetAttribute<string>("abbrev");
         var name = xml.Value;
 
         return new Team(id, name, abbreviation, division);

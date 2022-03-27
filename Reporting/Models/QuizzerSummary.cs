@@ -123,7 +123,7 @@ public class QuizzerSummary
     /// <returns>The <see cref="QuizzerResult"/> instances</returns>
     private static IEnumerable<QuizzerResult> GetAllQuizzerResults(Result result)
     {
-        return result.Matches.SelectMany(m => m.Value.QuizzerResults ?? Array.Empty<QuizzerResult>());
+        return result.Matches.SelectMany(m => m.Value.QuizzerResults);
     }
 
     /// <summary>

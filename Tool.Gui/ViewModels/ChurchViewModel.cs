@@ -54,6 +54,6 @@ internal class ChurchViewModel : IEquatable<ChurchViewModel>
     /// <returns>The hash code</returns>
     public override int GetHashCode()
     {
-        return this.Name?.GetHashCode() ?? 0;
+        return this.Name.GetHashCode();
     }
 }

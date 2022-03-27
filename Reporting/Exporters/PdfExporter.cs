@@ -111,7 +111,7 @@ public class PdfExporter : BaseExporter
         {
             CreateCell(quizzer.ShowPlace ? quizzer.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
             CreateCell(FormattableString.Invariant($"{quizzer.FullName}{GetRookieTag(quizzer.IsRookie)}")),
-            CreateCell(FormattableString.Invariant($"{quizzer.Church?.Name ?? string.Empty}")),
+            CreateCell(FormattableString.Invariant($"{quizzer.Church.Name}")),
             CreateCell(FormattableString.Invariant($"{quizzer.AverageScore.ToString("N2", CultureInfo.CurrentCulture)}")),
             CreateCell(FormattableString.Invariant($"{quizzer.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)}"))
         };

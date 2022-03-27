@@ -17,6 +17,11 @@ using Ardalis.GuardClauses;
 public class Schedule
 {
     /// <summary>
+    /// Gets an empty schedule instance.
+    /// </summary>
+    public static Schedule Null { get; } = new Schedule(string.Empty, new Dictionary<int, Church>(), new Dictionary<int, Quizzer>(), new Dictionary<int, Team>(), new Dictionary<int, Round>());
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="Schedule"/> class.
     /// </summary>
     /// <param name="name">The schedule name</param>

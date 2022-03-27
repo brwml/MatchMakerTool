@@ -88,9 +88,9 @@ public class Quizzer
         var id = xml.GetAttribute<int>("id");
         var teamId = xml.GetElement<int>("teamID");
         var churchId = xml.GetElement<int>("churchID");
-        var firstName = xml.Element("firstname")?.Value.Trim() ?? string.Empty;
-        var lastName = xml.Element("lastname")?.Value.Trim() ?? string.Empty;
-        var gender = xml.Element("gender")?.Value == "M" ? Gender.Male : Gender.Female;
+        var firstName = xml.GetElement<string>("firstname").Trim();
+        var lastName = xml.GetElement<string>("lastname").Trim();
+        var gender = xml.GetElement<string>("gender").Equals("M", StringComparison.OrdinalIgnoreCase) ? Gender.Male : Gender.Female;
         var rookieYear = xml.GetElement<int>("rookieYear");
 
         return new Quizzer(id, firstName, lastName, gender, rookieYear, teamId, churchId);

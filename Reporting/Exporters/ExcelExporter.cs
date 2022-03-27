@@ -131,8 +131,8 @@ public class ExcelExporter : BaseExporter
         row.Cell(QuizzerColumns.Place).SetValue(quizzer.Place);
         row.Cell(QuizzerColumns.ID).SetValue(quizzer.Id);
         row.Cell(QuizzerColumns.Name).SetValue(FormattableString.Invariant($"{quizzer.FirstName} {quizzer.LastName}"));
-        row.Cell(QuizzerColumns.Team).SetValue(quizzer.Team?.Name ?? string.Empty);
-        row.Cell(QuizzerColumns.Church).SetValue(quizzer.Church?.Name ?? string.Empty);
+        row.Cell(QuizzerColumns.Team).SetValue(quizzer.Team.Name);
+        row.Cell(QuizzerColumns.Church).SetValue(quizzer.Church.Name);
         row.Cell(QuizzerColumns.IsRookie).SetValue(quizzer.IsRookie ? "R" : string.Empty);
 
         var cellRounds = row.Cell(QuizzerColumns.TotalRounds);
