@@ -296,13 +296,13 @@ public partial class HtmlExporter : BaseExporter
             .Where(x => x.Value.QuizzerResults.Any(r => r.QuizzerId == quizzerId))
             .OrderBy(x => x.Value.Round)
             .Select(x => new
-                {
-                    Round = GetRoundNumber(x.Value),
-                    OpponentId = GetOpponentId(x.Value, teamId),
-                    Opponent = GetOpponentName(summary, x.Value, teamId),
-                    Score = GetQuizzerScore(x.Value, quizzerId),
-                    Errors = GetQuizzerErrors(x.Value, quizzerId)
-                });
+            {
+                Round = GetRoundNumber(x.Value),
+                OpponentId = GetOpponentId(x.Value, teamId),
+                Opponent = GetOpponentName(summary, x.Value, teamId),
+                Score = GetQuizzerScore(x.Value, quizzerId),
+                Errors = GetQuizzerErrors(x.Value, quizzerId)
+            });
 
         var quizzerInfo = new QuizzerInfo(quizzer, quizzerSummary, GetChurch(summary, quizzer), GetTeam(summary, quizzer));
 
@@ -376,14 +376,14 @@ public partial class HtmlExporter : BaseExporter
             .Where(x => x.Value.TeamResults.Any(t => t.TeamId == teamId))
             .OrderBy(x => x.Value.Round)
             .Select(x => new
-                {
-                    Round = GetRoundNumber(x.Value),
-                    OpponentId = GetOpponentId(x.Value, teamId),
-                    Opponent = GetOpponentName(summary, x.Value, teamId),
-                    Score = GetTeamScore(x.Value, teamId),
-                    OpponentScore = GetOpponentScore(x.Value, teamId),
-                    Win = GetTeamPlace(x.Value, teamId) == 1
-                });
+            {
+                Round = GetRoundNumber(x.Value),
+                OpponentId = GetOpponentId(x.Value, teamId),
+                Opponent = GetOpponentName(summary, x.Value, teamId),
+                Score = GetTeamScore(x.Value, teamId),
+                OpponentScore = GetOpponentScore(x.Value, teamId),
+                Win = GetTeamPlace(x.Value, teamId) == 1
+            });
 
         var team = summary.Result.Schedule.Teams[teamId];
         var teamInfo = new TeamInfo(team, teamSummary);

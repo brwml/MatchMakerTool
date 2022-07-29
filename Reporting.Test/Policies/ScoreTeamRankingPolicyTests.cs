@@ -17,7 +17,7 @@ public class ScoreTeamRankingPolicyTests
     public void TeamScoreTests(IEnumerable<TeamSummary> summaries, IDictionary<int, int> places)
     {
         var policy = new ScoreTeamRankingPolicy();
-        policy.Rank(summaries, null);
+        policy.Rank(summaries, Result.Null);
 
         Assert.Equal(places, summaries.ToDictionary(x => x.TeamId, y => y.Place));
     }

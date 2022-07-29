@@ -15,7 +15,7 @@ public class LossCountTeamRankingPolicyTests
     public void LossCountTests(IEnumerable<TeamSummary> summaries, IDictionary<int, int> places)
     {
         var policy = new LossCountTeamRankingPolicy();
-        policy.Rank(summaries, null);
+        policy.Rank(summaries, Result.Null);
 
         Assert.Equal(places, summaries.ToDictionary(x => x.TeamId, y => y.Place));
     }

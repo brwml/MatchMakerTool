@@ -121,7 +121,7 @@ public class TeamSummary
     /// </summary>
     /// <param name="result">The <see cref="Result"/></param>
     /// <returns>The <see cref="IEnumerable{TeamResult}"/></returns>
-    public static IEnumerable<TeamResult> GetAllTeamResults(Result result)
+    private static IEnumerable<TeamResult> GetAllTeamResults(Result result)
     {
         Guard.Against.Null(result, nameof(result));
 
