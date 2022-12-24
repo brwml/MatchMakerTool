@@ -1,8 +1,9 @@
 ﻿namespace MatchMaker.Tool;
 
-#pragma warning disable CS8618
-
 using CommandLine;
+
+#pragma warning disable CS8618 // Nullable types are either required or have default values.
+#pragma warning disable CA1812 // The class is instantiate by the command line parser.
 
 /// <summary>
 /// Defines the <see cref="ReportingOptions" />

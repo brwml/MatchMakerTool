@@ -227,7 +227,9 @@ public class PdfExporter : BaseExporter
     /// <returns>The <see cref="Document"/> instance</returns>
     private static Document OpenDocument(string fileName)
     {
-        return new Document(new PdfDocument(new PdfWriter(fileName)));
+        using var writer = new PdfWriter(fileName);
+        using var pdfDoc = new PdfDocument(writer);
+        return new Document(pdfDoc);
     }
 }
 

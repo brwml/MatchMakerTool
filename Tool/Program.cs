@@ -5,6 +5,8 @@ using System.Diagnostics;
 
 using CommandLine;
 
+#pragma warning disable CA1031 // This the main program code and may catch any exception type.
+
 /// <summary>
 /// Defines the <see cref="Program" />
 /// </summary>

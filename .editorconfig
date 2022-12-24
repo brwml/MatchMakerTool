@@ -218,3 +218,9 @@ dotnet_naming_style.begins_with_i.required_prefix = I
 dotnet_naming_style.begins_with_i.required_suffix = 
 dotnet_naming_style.begins_with_i.word_separator = 
 dotnet_naming_style.begins_with_i.capitalization = pascal_case
+
+# Code Analysis Warnings
+
+# CA1852 says that types with no subtypes in its containing assembly and are not externally visible should be sealed.
+# Sealing a class should be done intentionally and only when creating a subtype should not be done.
+dotnet_diagnostic.CA1852.severity = none

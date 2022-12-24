@@ -1,5 +1,6 @@
 ﻿namespace MatchMaker.Reporting.Exporters;
 
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 
@@ -41,7 +42,7 @@ public class RtfExporter : BaseExporter
         template.Add("quizzers", GetQuizzerInfo(summary));
 
         var path = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.rtf"));
-        File.WriteAllText(path, template.Render());
+        File.WriteAllText(path, template.Render(CultureInfo.InvariantCulture));
     }
 
     /// <summary>

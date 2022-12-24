@@ -96,7 +96,7 @@ public static class TournamentExporter
     /// <returns>The new team assignment</returns>
     private static int FindTeamWithoutSameChurches(List<List<Quizzer>> quizzers, int fromTeam, int quizzer, int church)
     {
-        var churches = quizzers[fromTeam].Select(x => x.ChurchId);
+        var churches = quizzers[fromTeam].Select(x => x.ChurchId).ToList();
 
         for (var team = 0; team < quizzers.Count; team++)
         {

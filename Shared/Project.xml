@@ -11,7 +11,11 @@
         <RepositoryType>GitHub</RepositoryType>
 
         <NoWarn />
+        <AnalysisLevel>latest-all</AnalysisLevel>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <WarningLevel>5</WarningLevel>
+        <WarningLevel>9999</WarningLevel>
+
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 </Project>

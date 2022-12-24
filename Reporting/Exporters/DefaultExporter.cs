@@ -1,5 +1,6 @@
 ﻿namespace MatchMaker.Reporting.Exporters;
 
+using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -67,7 +68,7 @@ internal class DateOnlyJsonConverter : JsonConverter<DateOnly>
         Guard.Against.Null(writer, nameof(writer));
         Guard.Against.Null(value, nameof(value));
 
-        writer.WriteStringValue(value.ToString("o"));
+        writer.WriteStringValue(value.ToString("o", CultureInfo.InvariantCulture));
     }
 }
 
@@ -99,7 +100,7 @@ internal class TimeOnlyJsonConverter : JsonConverter<TimeOnly>
         Guard.Against.Null(writer, nameof(writer));
         Guard.Against.Null(value, nameof(value));
 
-        writer.WriteStringValue(value.ToString("o"));
+        writer.WriteStringValue(value.ToString("o", CultureInfo.InvariantCulture));
     }
 }
 
@@ -117,7 +118,7 @@ internal class DecimalJsonConverter : JsonConverter<decimal>
     /// <returns>The <see cref="DateOnly"/> instance</returns>
     public override decimal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return decimal.Parse(reader.GetString() ?? string.Empty);
+        return decimal.Parse(reader.GetString() ?? string.Empty, CultureInfo.InvariantCulture);
     }
 
     /// <summary>
@@ -131,6 +132,6 @@ internal class DecimalJsonConverter : JsonConverter<decimal>
         Guard.Against.Null(writer, nameof(writer));
         Guard.Against.Null(value, nameof(value));
 
-        writer.WriteStringValue(value.ToString("F3"));
+        writer.WriteStringValue(value.ToString("F3", CultureInfo.InvariantCulture));
     }
 }

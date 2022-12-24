@@ -133,9 +133,9 @@ public static class SummaryExporter
 
             for (var i = 0; i < summaryNames.Length; i++)
             {
-                if (item.Value.Results.ContainsKey(summaryNames[i]))
+                if (item.Value.Results.TryGetValue(summaryNames[i], out var results))
                 {
-                    worksheet.Cell(row, i + 4).Value = item.Value.Results[summaryNames[i]].AverageScore;
+                    worksheet.Cell(row, i + 4).Value = results.AverageScore;
                 }
             }
 

@@ -4,8 +4,7 @@
     <RootNamespace>MatchMaker.Tool</RootNamespace>
     <AssemblyName>mmt</AssemblyName>
     <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <PackAsTool>True</PackAsTool>
   </PropertyGroup>
   <Import Project="..\Shared\Project.xml" />
   <ItemGroup>
