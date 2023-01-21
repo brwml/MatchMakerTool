@@ -43,8 +43,8 @@ public class ExcelExporter : BaseExporter
     /// <param name="folder">The folder/></param>
     public override void Export(Summary summary, string folder)
     {
-        Guard.Against.Null(summary, nameof(summary));
-        Guard.Against.NullOrWhiteSpace(folder, nameof(folder));
+        Guard.Against.Null(summary);
+        Guard.Against.NullOrWhiteSpace(folder);
 
         using var workbook = new XLWorkbook();
         ExportTeamResults(workbook, summary);

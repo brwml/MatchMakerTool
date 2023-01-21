@@ -43,7 +43,7 @@ public class Church
     /// <returns>The <see cref="Church"/></returns>
     public static Church FromXml(XElement xml)
     {
-        Guard.Against.Null(xml, nameof(xml));
+        Guard.Against.Null(xml);
 
         var id = xml.GetAttribute<int>("id");
         var name = xml.Value;

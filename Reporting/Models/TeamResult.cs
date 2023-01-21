@@ -59,7 +59,7 @@ public class TeamResult
     /// <returns>The <see cref="TeamResult"/></returns>
     public static TeamResult FromXml(XElement xml)
     {
-        Guard.Against.Null(xml, nameof(xml));
+        Guard.Against.Null(xml);
 
         return new TeamResult(
             xml.GetAttribute<int>("id"),

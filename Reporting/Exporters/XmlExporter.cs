@@ -18,8 +18,8 @@ public class XmlExporter : IExporter
     /// <param name="folder">The output folder</param>
     public void Export(Summary summary, string folder)
     {
-        Guard.Against.Null(summary, nameof(summary));
-        Guard.Against.NullOrWhiteSpace(folder, nameof(folder));
+        Guard.Against.Null(summary);
+        Guard.Against.NullOrWhiteSpace(folder);
 
         var filePathSchedule = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.export.schedule.xml"));
         File.WriteAllText(filePathSchedule, summary.Result.Schedule.ToXml().ToString());

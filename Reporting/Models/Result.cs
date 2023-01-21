@@ -56,8 +56,8 @@ public class Result
     /// <returns>The <see cref="Result"/></returns>
     public static Result FromXml(IEnumerable<XDocument> documents, Schedule schedule)
     {
-        Guard.Against.NullOrEmpty(documents, nameof(documents));
-        Guard.Against.Null(schedule, nameof(schedule));
+        Guard.Against.NullOrEmpty(documents);
+        Guard.Against.Null(schedule);
 
         var matches = documents.SelectMany(x => LoadMatches(x)).ToDictionary(m => m.ScheduleId, m => m);
 

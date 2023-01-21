@@ -19,8 +19,8 @@ public class ErrorTeamRankingPolicy : TeamRankingPolicy
     /// <param name="initial">The initial place</param>
     protected override void RankGroup(IEnumerable<TeamSummary> summaries, int initial)
     {
-        Guard.Against.NullOrEmpty(summaries, nameof(summaries));
-        Guard.Against.NegativeOrZero(initial, nameof(initial));
+        Guard.Against.NullOrEmpty(summaries);
+        Guard.Against.NegativeOrZero(initial);
 
         var list = summaries.OrderBy(s => s.AverageErrors).ToList();
         SetRelativePlaces(list, initial, (s1, s2) => s1.AverageErrors == s2.AverageErrors, new TieBreak(TieBreakReason.AverageErrors));

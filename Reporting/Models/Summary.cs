@@ -59,8 +59,8 @@ public class Summary
     /// <returns>The <see cref="Summary"/></returns>
     public static Summary FromResult(Result result, IEnumerable<TeamRankingPolicy> policies)
     {
-        Guard.Against.Null(result, nameof(result));
-        Guard.Against.NullOrEmpty(policies, nameof(policies));
+        Guard.Against.Null(result);
+        Guard.Against.NullOrEmpty(policies);
 
         return new Summary(result, policies);
     }

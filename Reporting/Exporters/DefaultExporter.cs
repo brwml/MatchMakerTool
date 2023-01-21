@@ -21,8 +21,8 @@ public class DefaultExporter : IExporter
     /// <param name="folder">The folder</param>
     public void Export(Summary summary, string folder)
     {
-        Guard.Against.Null(summary, nameof(summary));
-        Guard.Against.NullOrWhiteSpace(folder, nameof(folder));
+        Guard.Against.Null(summary);
+        Guard.Against.NullOrWhiteSpace(folder);
 
         var path = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.summary.json"));
 
@@ -65,8 +65,8 @@ internal class DateOnlyJsonConverter : JsonConverter<DateOnly>
     /// <param name="options">The serialization options</param>
     public override void Write(Utf8JsonWriter writer, DateOnly value, JsonSerializerOptions options)
     {
-        Guard.Against.Null(writer, nameof(writer));
-        Guard.Against.Null(value, nameof(value));
+        Guard.Against.Null(writer);
+        Guard.Against.Null(value);
 
         writer.WriteStringValue(value.ToString("o", CultureInfo.InvariantCulture));
     }
@@ -97,8 +97,8 @@ internal class TimeOnlyJsonConverter : JsonConverter<TimeOnly>
     /// <param name="options">The serialization options</param>
     public override void Write(Utf8JsonWriter writer, TimeOnly value, JsonSerializerOptions options)
     {
-        Guard.Against.Null(writer, nameof(writer));
-        Guard.Against.Null(value, nameof(value));
+        Guard.Against.Null(writer);
+        Guard.Against.Null(value);
 
         writer.WriteStringValue(value.ToString("o", CultureInfo.InvariantCulture));
     }
@@ -129,8 +129,8 @@ internal class DecimalJsonConverter : JsonConverter<decimal>
     /// <param name="options">The serialization options</param>
     public override void Write(Utf8JsonWriter writer, decimal value, JsonSerializerOptions options)
     {
-        Guard.Against.Null(writer, nameof(writer));
-        Guard.Against.Null(value, nameof(value));
+        Guard.Against.Null(writer);
+        Guard.Against.Null(value);
 
         writer.WriteStringValue(value.ToString("F3", CultureInfo.InvariantCulture));
     }

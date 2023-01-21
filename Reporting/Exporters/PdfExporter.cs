@@ -28,8 +28,8 @@ public class PdfExporter : BaseExporter
     /// <param name="folder">The output folder</param>
     public override void Export(Summary summary, string folder)
     {
-        Guard.Against.Null(summary, nameof(summary));
-        Guard.Against.NullOrWhiteSpace(folder, nameof(folder));
+        Guard.Against.Null(summary);
+        Guard.Against.NullOrWhiteSpace(folder);
 
         var fileName = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.pdf"));
 

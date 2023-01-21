@@ -75,7 +75,7 @@ public class MatchResult
     /// <returns>The <see cref="MatchResult"/> instance</returns>
     public static MatchResult FromXml(XElement xml)
     {
-        Guard.Against.Null(xml, nameof(xml));
+        Guard.Against.Null(xml);
 
         var id = xml.GetAttribute<int>("id");
         var round = xml.GetAttribute<int>("round");

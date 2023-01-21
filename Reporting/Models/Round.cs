@@ -69,7 +69,7 @@ public class Round
     /// <returns>The <see cref="Round"/></returns>
     public static Round FromXml(XElement xml)
     {
-        Guard.Against.Null(xml, nameof(xml));
+        Guard.Against.Null(xml);
 
         var id = xml.GetAttribute<int>("id");
         var date = ConvertDate(xml.GetAttribute<string>("date"));

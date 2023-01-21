@@ -27,8 +27,8 @@ public class HeadToHeadTeamRankingPolicy : TeamRankingPolicy
     /// <param name="initial">The initial</param>
     protected override void RankGroup(IEnumerable<TeamSummary> summaries, int initial)
     {
-        Guard.Against.NullOrEmpty(summaries, nameof(summaries));
-        Guard.Against.NegativeOrZero(initial, nameof(initial));
+        Guard.Against.NullOrEmpty(summaries);
+        Guard.Against.NegativeOrZero(initial);
 
         this.RankGroupInternal(summaries, initial);
     }

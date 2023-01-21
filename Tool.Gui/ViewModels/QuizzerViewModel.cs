@@ -22,10 +22,10 @@ internal class QuizzerViewModel
     /// <param name="church">The name of the church</param>
     public QuizzerViewModel(string firstName, string lastName, bool isMale, bool isFemale, int firstYear, string church)
     {
-        Guard.Against.NullOrEmpty(firstName, nameof(firstName));
-        Guard.Against.NullOrEmpty(lastName, nameof(lastName));
-        Guard.Against.NullOrEmpty(church, nameof(church));
-        Guard.Against.NegativeOrZero(firstYear, nameof(firstYear));
+        Guard.Against.NullOrEmpty(firstName);
+        Guard.Against.NullOrEmpty(lastName);
+        Guard.Against.NullOrEmpty(church);
+        Guard.Against.NegativeOrZero(firstYear);
         Guard.Against.AgainstExpression(
             (isGender) => isGender,
             isMale ^ isFemale,

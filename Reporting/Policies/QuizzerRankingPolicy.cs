@@ -19,7 +19,7 @@ public abstract class QuizzerRankingPolicy
     /// <param name="summaries">The <see cref="QuizzerSummary"/> instances</param>
     public void Rank(IEnumerable<QuizzerSummary> summaries)
     {
-        Guard.Against.NullOrEmpty(summaries, nameof(summaries));
+        Guard.Against.NullOrEmpty(summaries);
 
         var groups = summaries.GroupBy(s => s.Place);
 
@@ -37,9 +37,9 @@ public abstract class QuizzerRankingPolicy
     /// <param name="areEqual">A <see cref="Func{QuizzerSummary, QuizzerSummary, Boolean}"/> indicating whether two placements are equal.</param>
     protected static void SetRelativePlaces(IList<QuizzerSummary> summaries, int initial, Func<QuizzerSummary, QuizzerSummary, bool> areEqual)
     {
-        Guard.Against.Null(summaries, nameof(summaries));
-        Guard.Against.NegativeOrZero(initial, nameof(initial));
-        Guard.Against.Null(areEqual, nameof(areEqual));
+        Guard.Against.Null(summaries);
+        Guard.Against.NegativeOrZero(initial);
+        Guard.Against.Null(areEqual);
 
         for (var i = 1; i < summaries.Count; i++)
         {

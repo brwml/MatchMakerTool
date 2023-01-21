@@ -20,8 +20,8 @@ public class TieBreakHeadToHead : TieBreak
     public TieBreakHeadToHead(IEnumerable<MatchResult> results, IDictionary<int, Team> teams)
         : base(TieBreakReason.HeadToHead)
     {
-        Guard.Against.Null(results, nameof(results));
-        Guard.Against.NullOrEmpty(teams, nameof(teams));
+        Guard.Against.Null(results);
+        Guard.Against.NullOrEmpty(teams);
 
         this.Results = results;
         this.Teams = teams;

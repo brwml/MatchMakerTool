@@ -51,7 +51,7 @@ public class QuizzerResult
     /// <returns>The <see cref="QuizzerResult"/> instance</returns>
     public static QuizzerResult FromXml(XElement xml)
     {
-        Guard.Against.Null(xml, nameof(xml));
+        Guard.Against.Null(xml);
 
         return new QuizzerResult(
             xml.GetAttribute<int>("id"),

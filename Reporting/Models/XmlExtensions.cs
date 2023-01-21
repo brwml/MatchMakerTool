@@ -20,8 +20,8 @@ public static class XmlExtensions
     /// <returns>The <see cref="T"/> value instance</returns>
     public static T GetAttribute<T>(this XElement xml, string name)
     {
-        Guard.Against.Null(xml, nameof(xml));
-        Guard.Against.NullOrWhiteSpace(name, nameof(name));
+        Guard.Against.Null(xml);
+        Guard.Against.NullOrWhiteSpace(name);
 
         return (T)Convert.ChangeType(xml.Attribute(name)?.Value ?? string.Empty, typeof(T), CultureInfo.InvariantCulture);
     }
@@ -35,8 +35,8 @@ public static class XmlExtensions
     /// <returns>The <see cref="T"/> value instance</returns>
     public static T GetElement<T>(this XContainer xml, string name)
     {
-        Guard.Against.Null(xml, nameof(xml));
-        Guard.Against.NullOrWhiteSpace(name, nameof(name));
+        Guard.Against.Null(xml);
+        Guard.Against.NullOrWhiteSpace(name);
 
         return (T)Convert.ChangeType(xml.Element(name)?.Value ?? string.Empty, typeof(T), CultureInfo.InvariantCulture);
     }

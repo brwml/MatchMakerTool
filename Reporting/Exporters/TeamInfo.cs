@@ -18,8 +18,8 @@ public class TeamInfo
     /// <param name="summary">The team summary</param>
     public TeamInfo(Team team, TeamSummary summary)
     {
-        Guard.Against.Null(team, nameof(team));
-        Guard.Against.Null(summary, nameof(summary));
+        Guard.Against.Null(team);
+        Guard.Against.Null(summary);
 
         this.Abbreviation = team.Abbreviation;
         this.Id = team.Id;

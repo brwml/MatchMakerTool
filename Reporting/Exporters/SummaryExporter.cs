@@ -22,8 +22,8 @@ public static class SummaryExporter
     /// <param name="folder">The output folder</param>
     public static void Export(IEnumerable<Summary> summaries, string folder)
     {
-        Guard.Against.NullOrEmpty(summaries, nameof(summaries));
-        Guard.Against.NullOrWhiteSpace(folder, nameof(folder));
+        Guard.Against.NullOrEmpty(summaries);
+        Guard.Against.NullOrWhiteSpace(folder);
 
         using var workbook = new XLWorkbook();
         Export(workbook, summaries);

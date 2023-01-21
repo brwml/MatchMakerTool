@@ -14,7 +14,7 @@ internal static class Scheduling
     /// <returns>The <see cref="bool"/></returns>
     public static bool Process(ScheduleOptions options)
     {
-        Guard.Against.Null(options, nameof(options));
+        Guard.Against.Null(options);
 
         return true;
     }

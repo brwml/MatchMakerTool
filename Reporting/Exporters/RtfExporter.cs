@@ -33,8 +33,8 @@ public class RtfExporter : BaseExporter
     /// <param name="folder">The output folder</param>
     public override void Export(Summary summary, string folder)
     {
-        Guard.Against.Null(summary, nameof(summary));
-        Guard.Against.NullOrWhiteSpace(folder, nameof(folder));
+        Guard.Against.Null(summary);
+        Guard.Against.NullOrWhiteSpace(folder);
 
         var template = LoadTemplate();
         template.Add("summary", summary);

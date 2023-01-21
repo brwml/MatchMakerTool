@@ -59,7 +59,7 @@ public class Team
     /// <returns>The <see cref="Team"/></returns>
     public static Team FromXml(XElement xml)
     {
-        Guard.Against.Null(xml, nameof(xml));
+        Guard.Against.Null(xml);
 
         var id = xml.GetAttribute<int>("id");
         var division = xml.GetAttribute<int>("div");

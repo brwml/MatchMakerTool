@@ -19,8 +19,8 @@ public class LossCountTeamRankingPolicy : TeamRankingPolicy
     /// <param name="initial">The initial placement</param>
     protected override void RankGroup(IEnumerable<TeamSummary> summaries, int initial)
     {
-        Guard.Against.NullOrEmpty(summaries, nameof(summaries));
-        Guard.Against.NegativeOrZero(initial, nameof(initial));
+        Guard.Against.NullOrEmpty(summaries);
+        Guard.Against.NegativeOrZero(initial);
 
         var list = summaries.ToList();
         list.Sort(Compare);

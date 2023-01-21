@@ -52,7 +52,7 @@ public class MatchSchedule
     /// <returns>The <see cref="MatchSchedule"/> instance</returns>
     public static MatchSchedule FromXml(XElement xml)
     {
-        Guard.Against.Null(xml, nameof(xml));
+        Guard.Against.Null(xml);
 
         var id = xml.GetAttribute<int>("id");
         var room = xml.GetAttribute<int>("room");

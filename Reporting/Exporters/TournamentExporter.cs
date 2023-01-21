@@ -25,10 +25,10 @@ public static class TournamentExporter
     /// <param name="outputFolder">The output folder</param>
     public static void Create(Summary summary, int numberOfTournamentTeams, int numberOfAlternateTeams, string outputFolder)
     {
-        Guard.Against.Null(summary, nameof(summary));
-        Guard.Against.NegativeOrZero(numberOfTournamentTeams, nameof(numberOfTournamentTeams));
-        Guard.Against.NegativeOrZero(numberOfAlternateTeams, nameof(numberOfAlternateTeams));
-        Guard.Against.NullOrWhiteSpace(outputFolder, nameof(outputFolder));
+        Guard.Against.Null(summary);
+        Guard.Against.NegativeOrZero(numberOfTournamentTeams);
+        Guard.Against.NegativeOrZero(numberOfAlternateTeams);
+        Guard.Against.NullOrWhiteSpace(outputFolder);
 
         var quizzers = GetQuizzers(summary, numberOfTournamentTeams);
         var teams = GetTeams(quizzers, numberOfAlternateTeams);

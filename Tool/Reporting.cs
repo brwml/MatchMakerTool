@@ -26,7 +26,7 @@ internal static class Reporting
     /// <returns><c>true</c> if the reporting options are processed; otherwise <c>false</c>.</returns>
     internal static bool Process(ReportingOptions options)
     {
-        Guard.Against.Null(options, nameof(options));
+        Guard.Against.Null(options);
 
         var summary = CreateSummary(options);
 
@@ -52,7 +52,7 @@ internal static class Reporting
     /// <returns><c>true</c> if the summary options are processed; otherwise <c>false</c>.</returns>
     internal static bool Process(SummaryOptions options)
     {
-        Guard.Against.Null(options, nameof(options));
+        Guard.Against.Null(options);
 
         var policies = LoadRankingPolicies(ReportingOptions.DefaultRankingProcedure);
         var summaries = options.InputPaths.Select(x => CreateSummary(x, policies));
