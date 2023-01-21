@@ -33,7 +33,10 @@ public class PdfExporter : BaseExporter
 
         var fileName = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.pdf"));
 
-        using var document = OpenDocument(fileName);
+        using var writer = new PdfWriter(fileName);
+        using var pdfDoc = new PdfDocument(writer);
+        using var document = new Document(pdfDoc);
+
         CreateTeamPageTitle(summary, document);
         ExportTeamResults(document, summary);
 
@@ -218,18 +221,6 @@ public class PdfExporter : BaseExporter
         }
 
         document.Add(table);
-    }
-
-    /// <summary>
-    /// Opens the PDF <see cref="Document"/> instance.
-    /// </summary>
-    /// <param name="fileName">The file name</param>
-    /// <returns>The <see cref="Document"/> instance</returns>
-    private static Document OpenDocument(string fileName)
-    {
-        using var writer = new PdfWriter(fileName);
-        using var pdfDoc = new PdfDocument(writer);
-        return new Document(pdfDoc);
     }
 }
 
