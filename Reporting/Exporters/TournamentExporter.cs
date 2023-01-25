@@ -12,7 +12,7 @@ using ClosedXML.Excel;
 using MatchMaker.Reporting.Models;
 
 /// <summary>
-/// Defines the <see cref="TournamentExporter" />
+/// Defines the <see cref="TournamentExporter" />. This creates another special tournament based on the results of the previous tournament.
 /// </summary>
 public static class TournamentExporter
 {
@@ -139,7 +139,7 @@ public static class TournamentExporter
 
         int CalculateTeam(int index)
         {
-            var row = (index / numberOfAlternateTeams) % 2;
+            var row = index / numberOfAlternateTeams % 2;
 
             return row == 0
                 ? index % numberOfAlternateTeams

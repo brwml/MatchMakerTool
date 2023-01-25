@@ -1,5 +1,6 @@
 ﻿namespace MatchMaker.Tool.Gui.Views;
 using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -202,7 +203,7 @@ public partial class ParticipantsView : UserControl
             this.QuizzerLastNameTextBox.Text = quizzer.LastName;
             this.QuizzerFemaleGenderChoice.IsChecked = quizzer.IsFemale;
             this.QuizzerMaleGenderChoice.IsChecked = quizzer.IsMale;
-            this.QuizzerRookieYearTextBox.Text = quizzer.FirstYear.ToString();
+            this.QuizzerRookieYearTextBox.Text = quizzer.FirstYear.ToString(CultureInfo.InvariantCulture);
             this.QuizzerChurchComboxBox.SelectedIndex = this.QuizzerChurchComboxBox.Items.IndexOf(quizzer.Church);
             // TODO: Find a way to set this.
         }

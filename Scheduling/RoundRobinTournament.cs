@@ -118,7 +118,7 @@ public static class RoundRobinTournament
     /// <returns>The match identifier</returns>
     private static int CreateMatchId(int groupId, int instanceId, int multiplier)
     {
-        return groupId * multiplier + instanceId;
+        return (groupId * multiplier) + instanceId;
     }
 
     /// <summary>

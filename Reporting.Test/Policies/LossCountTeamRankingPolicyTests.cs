@@ -62,5 +62,4 @@ public class LossCountTeamRankingPolicyTests
 
         return new object[] { summaries, places };
     }
-
 }

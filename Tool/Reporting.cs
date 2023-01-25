@@ -32,10 +32,7 @@ internal static class Reporting
 
         var directory = Directory.CreateDirectory(options.OutputFolder);
 
-        Parallel.ForEach(ExporterFactory.GetExporters(options.OutputFormat), exporter =>
-        {
-            exporter.Export(summary, directory.FullName);
-        });
+        Parallel.ForEach(ExporterFactory.GetExporters(options.OutputFormat), exporter => exporter.Export(summary, directory.FullName));
 
         if (options.NumberOfAlternateTeams > 0)
         {

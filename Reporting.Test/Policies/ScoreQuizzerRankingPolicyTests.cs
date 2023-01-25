@@ -76,5 +76,4 @@ public class ScoreQuizzerRankingPolicyTests
 
         return new object[] { summaries, places };
     }
-
 }

@@ -21,7 +21,6 @@ public class RoundRobinTournamentTests
         Assert.Equal(expectedRounds, schedule.Rounds.Count);
     }
 
-
     [Theory]
     [MemberData(nameof(CreateRoundParameters))]
     public void VerifyCorrectNumberOfRooms(int numTeams, int availableRooms, int expectedRounds)
