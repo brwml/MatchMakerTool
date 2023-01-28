@@ -34,13 +34,19 @@ public class Result
     /// Gets or sets the Matches
     /// </summary>
     [DataMember]
-    public IDictionary<int, MatchResult> Matches { get; }
+    public IDictionary<int, MatchResult> Matches
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the Schedule
     /// </summary>
     [DataMember]
-    public Schedule Schedule { get; }
+    public Schedule Schedule
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the Name

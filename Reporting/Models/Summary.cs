@@ -31,19 +31,28 @@ public class Summary
     /// Gets or sets the quizzer summaries
     /// </summary>
     [DataMember]
-    public IDictionary<int, QuizzerSummary> QuizzerSummaries { get; }
+    public IDictionary<int, QuizzerSummary> QuizzerSummaries
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the Result
     /// </summary>
     [DataMember]
-    public Result Result { get; }
+    public Result Result
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the team summaries
     /// </summary>
     [DataMember]
-    public IDictionary<int, TeamSummary> TeamSummaries { get; }
+    public IDictionary<int, TeamSummary> TeamSummaries
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the Name

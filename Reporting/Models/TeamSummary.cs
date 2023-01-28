@@ -42,31 +42,46 @@ public class TeamSummary
     /// Gets or sets the Losses
     /// </summary>
     [DataMember]
-    public int Losses { get; set; }
+    public int Losses
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets or sets the Place
     /// </summary>
     [DataMember]
-    public int Place { get; set; }
+    public int Place
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets or sets the team identifier
     /// </summary>
     [DataMember]
-    public int TeamId { get; set; }
+    public int TeamId
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets or sets the tie breaker
     /// </summary>
     [DataMember]
-    public TieBreak TieBreak { get; set; }
+    public TieBreak TieBreak
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets or sets the total errors
     /// </summary>
     [DataMember]
-    public int TotalErrors { get; set; }
+    public int TotalErrors
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets the total rounds
@@ -78,7 +93,10 @@ public class TeamSummary
     /// Gets or sets the total score
     /// </summary>
     [DataMember]
-    public int TotalScore { get; set; }
+    public int TotalScore
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets the win percentage
@@ -90,7 +108,10 @@ public class TeamSummary
     /// Gets or sets the Wins
     /// </summary>
     [DataMember]
-    public int Wins { get; set; }
+    public int Wins
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Creates a collection of placed <see cref="TeamSummary"/> instances from a <see cref="Result"/>

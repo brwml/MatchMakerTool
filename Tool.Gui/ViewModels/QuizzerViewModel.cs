@@ -57,32 +57,50 @@ internal class QuizzerViewModel
     /// <summary>
     /// Gets the first name of the quizzer
     /// </summary>
-    public string FirstName { get; }
+    public string FirstName
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the last name of the quizzer
     /// </summary>
-    public string LastName { get; }
+    public string LastName
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets a value indicating whether the quizzer is a male
     /// </summary>
-    public bool IsMale { get; }
+    public bool IsMale
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets a value indicating whether the quizzer is a female
     /// </summary>
-    public bool IsFemale { get; }
+    public bool IsFemale
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the first year of the quizzer
     /// </summary>
-    public int FirstYear { get; }
+    public int FirstYear
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the name of the church
     /// </summary>
-    public string Church { get; }
+    public string Church
+    {
+        get;
+    }
 
     /// <summary>
     /// Converts the quizzer view model to a string.

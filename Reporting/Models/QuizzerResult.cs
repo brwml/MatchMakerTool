@@ -30,19 +30,28 @@ public class QuizzerResult
     /// Gets or sets the Errors
     /// </summary>
     [DataMember]
-    public int Errors { get; }
+    public int Errors
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the quizzer identifier
     /// </summary>
     [DataMember]
-    public int QuizzerId { get; }
+    public int QuizzerId
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the Score
     /// </summary>
     [DataMember]
-    public int Score { get; }
+    public int Score
+    {
+        get;
+    }
 
     /// <summary>
     /// Creates a <see cref="QuizzerResult"/> instance from an XML element.

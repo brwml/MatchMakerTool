@@ -162,12 +162,18 @@ public static class SummaryExporter
         /// <summary>
         /// Gets or sets the Church
         /// </summary>
-        public string Church { get; set; }
+        public string Church
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets or sets the Name
         /// </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get; set;
+        }
 
         /// <summary>
         /// Gets the Results

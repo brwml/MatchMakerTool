@@ -17,7 +17,10 @@ internal class ChurchViewModel : IEquatable<ChurchViewModel>
     /// <summary>
     /// Gets the name of the church.
     /// </summary>
-    public string Name { get; set; }
+    public string Name
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Determines whether the other view model instance is equal to the current view model instance.

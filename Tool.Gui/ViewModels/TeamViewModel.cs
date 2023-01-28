@@ -19,12 +19,18 @@ internal class TeamViewModel
     /// <summary>
     /// Gets or sets the name of the team.
     /// </summary>
-    public string Name { get; set; }
+    public string Name
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets or sets the abbreviation of the team.
     /// </summary>
-    public string Abbreviation { get; set; }
+    public string Abbreviation
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets this list of quizzers.

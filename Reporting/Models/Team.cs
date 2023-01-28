@@ -32,25 +32,37 @@ public class Team
     /// Gets or sets the Abbreviation
     /// </summary>
     [DataMember]
-    public string Abbreviation { get; }
+    public string Abbreviation
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the Division
     /// </summary>
     [DataMember]
-    public int Division { get; }
+    public int Division
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the Id
     /// </summary>
     [DataMember]
-    public int Id { get; }
+    public int Id
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the Name
     /// </summary>
     [DataMember]
-    public string Name { get; }
+    public string Name
+    {
+        get;
+    }
 
     /// <summary>
     /// Creates a <see cref="Team"/> from an <see cref="XElement"/>

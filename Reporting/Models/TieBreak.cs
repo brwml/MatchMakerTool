@@ -28,7 +28,10 @@ public class TieBreak
     /// Gets or sets the Reason
     /// </summary>
     [DataMember]
-    public TieBreakReason Reason { get; }
+    public TieBreakReason Reason
+    {
+        get;
+    }
 
     /// <summary>
     /// Creates a <see cref="string"/> for the tie breaker

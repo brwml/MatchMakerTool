@@ -11,5 +11,8 @@ internal class BaseOptions
     /// Gets or sets a value indicating whether verbose output should be enabled
     /// </summary>
     [Option('v', HelpText = "Display verbose output", Default = false)]
-    public bool Verbose { get; set; }
+    public bool Verbose
+    {
+        get; set;
+    }
 }

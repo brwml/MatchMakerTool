@@ -37,52 +37,82 @@ public class TeamInfo
     /// <summary>
     /// Gets or sets the Abbreviation
     /// </summary>
-    public string Abbreviation { get; }
+    public string Abbreviation
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the Id
     /// </summary>
-    public int Id { get; }
+    public int Id
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the Name
     /// </summary>
-    public string Name { get; }
+    public string Name
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the Losses
     /// </summary>
-    public int Losses { get; }
+    public int Losses
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the Place
     /// </summary>
-    public int Place { get; }
+    public int Place
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets a value indicating whether to show the place.
     /// </summary>
-    public bool ShowPlace { get; set; }
+    public bool ShowPlace
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets or sets the tie breaker
     /// </summary>
-    public TieBreak TieBreak { get; }
+    public TieBreak TieBreak
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the total errors
     /// </summary>
-    public int TotalErrors { get; }
+    public int TotalErrors
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the total rounds
     /// </summary>
-    public int TotalRounds { get; }
+    public int TotalRounds
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the total score
     /// </summary>
-    public int TotalScore { get; }
+    public int TotalScore
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the win percentage
@@ -92,7 +122,10 @@ public class TeamInfo
     /// <summary>
     /// Gets or sets the Wins
     /// </summary>
-    public int Wins { get; }
+    public int Wins
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the average errors

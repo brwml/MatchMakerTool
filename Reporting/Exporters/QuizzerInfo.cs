@@ -41,17 +41,26 @@ public class QuizzerInfo
     /// <summary>
     /// Gets the quizzer identifier
     /// </summary>
-    public int Id { get; }
+    public int Id
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the first name
     /// </summary>
-    public string FirstName { get; }
+    public string FirstName
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the last name
     /// </summary>
-    public string LastName { get; }
+    public string LastName
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the full name
@@ -61,47 +70,74 @@ public class QuizzerInfo
     /// <summary>
     /// Gets the rookie year
     /// </summary>
-    public int RookieYear { get; }
+    public int RookieYear
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets a value indicating whether the quizzing is a rookie.
     /// </summary>
-    public bool IsRookie { get; set; }
+    public bool IsRookie
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets the church
     /// </summary>
-    public Church Church { get; }
+    public Church Church
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the team
     /// </summary>
-    public Team Team { get; }
+    public Team Team
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the place
     /// </summary>
-    public int Place { get; }
+    public int Place
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets a value indicating whether the place should be shown.
     /// </summary>
-    public bool ShowPlace { get; set; }
+    public bool ShowPlace
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets the total errors.
     /// </summary>
-    public int TotalErrors { get; }
+    public int TotalErrors
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the total rounds.
     /// </summary>
-    public int TotalRounds { get; }
+    public int TotalRounds
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the total score.
     /// </summary>
-    public int TotalScore { get; }
+    public int TotalScore
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the average errors

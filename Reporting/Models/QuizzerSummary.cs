@@ -45,31 +45,46 @@ public class QuizzerSummary
     /// Gets or sets the Place
     /// </summary>
     [DataMember]
-    public int Place { get; set; }
+    public int Place
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets or sets the quizzer identifier
     /// </summary>
     [DataMember]
-    public int QuizzerId { get; set; }
+    public int QuizzerId
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets or sets the total errors
     /// </summary>
     [DataMember]
-    public int TotalErrors { get; set; }
+    public int TotalErrors
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets or sets the total rounds
     /// </summary>
     [DataMember]
-    public int TotalRounds { get; set; }
+    public int TotalRounds
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets or sets the total score
     /// </summary>
     [DataMember]
-    public int TotalScore { get; set; }
+    public int TotalScore
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Converts a <see cref="Result"/> instance to a corresponding collection of placed <see cref="QuizzerSummary"/> instances.

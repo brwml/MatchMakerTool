@@ -31,19 +31,28 @@ public class MatchSchedule
     /// Gets or sets the Id
     /// </summary>
     [DataMember]
-    public int Id { get; }
+    public int Id
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the room identifier
     /// </summary>
     [DataMember]
-    public int Room { get; set; }
+    public int Room
+    {
+        get; set;
+    }
 
     /// <summary>
     /// Gets or sets the Teams
     /// </summary>
     [DataMember]
-    public IList<int> Teams { get; }
+    public IList<int> Teams
+    {
+        get;
+    }
 
     /// <summary>
     /// Creates a <see cref="MatchSchedule"/> instance from an XML element.

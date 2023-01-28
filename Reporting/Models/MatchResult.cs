@@ -36,25 +36,37 @@ public class MatchResult
     /// Gets or sets the match identifier
     /// </summary>
     [DataMember]
-    public int Id { get; }
+    public int Id
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the quizzer results
     /// </summary>
     [DataMember]
-    public IList<QuizzerResult> QuizzerResults { get; }
+    public IList<QuizzerResult> QuizzerResults
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the room number
     /// </summary>
     [DataMember]
-    public int Room { get; }
+    public int Room
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the round number
     /// </summary>
     [DataMember]
-    public int Round { get; }
+    public int Round
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets the schedule identifier
@@ -66,7 +78,10 @@ public class MatchResult
     /// Gets or sets the team results
     /// </summary>
     [DataMember]
-    public IList<TeamResult> TeamResults { get; }
+    public IList<TeamResult> TeamResults
+    {
+        get;
+    }
 
     /// <summary>
     /// Create a <see cref="MatchResult"/> instance from the XML element.

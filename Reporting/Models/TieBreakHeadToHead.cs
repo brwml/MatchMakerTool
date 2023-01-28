@@ -31,13 +31,19 @@ public class TieBreakHeadToHead : TieBreak
     /// Gets the Teams
     /// </summary>
     [DataMember]
-    public IDictionary<int, Team> Teams { get; }
+    public IDictionary<int, Team> Teams
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the Results
     /// </summary>
     [DataMember]
-    private IEnumerable<MatchResult> Results { get; }
+    private IEnumerable<MatchResult> Results
+    {
+        get;
+    }
 
     /// <summary>
     /// Creates a <see cref="string"/> describing the head-to-head matches that produced the tie breaker.

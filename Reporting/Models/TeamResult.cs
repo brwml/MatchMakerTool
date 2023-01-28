@@ -32,25 +32,37 @@ public class TeamResult
     /// Gets or sets the Errors
     /// </summary>
     [DataMember]
-    public int Errors { get; }
+    public int Errors
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the Place
     /// </summary>
     [DataMember]
-    public int Place { get; }
+    public int Place
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the Score
     /// </summary>
     [DataMember]
-    public int Score { get; }
+    public int Score
+    {
+        get;
+    }
 
     /// <summary>
     /// Gets or sets the team identifier
     /// </summary>
     [DataMember]
-    public int TeamId { get; }
+    public int TeamId
+    {
+        get;
+    }
 
     /// <summary>
     /// Creates a <see cref="TeamResult"/> from an <see cref="XElement"/>
