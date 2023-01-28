@@ -1,4 +1,4 @@
-﻿namespace MatchMaker.Tool;
+﻿namespace MatchMaker.Tool.Controllers;
 
 using System;
 using System.Collections.Generic;
@@ -15,9 +15,9 @@ using MatchMaker.Reporting.Models;
 using MatchMaker.Reporting.Policies;
 
 /// <summary>
-/// Defines the <see cref="Reporting" /> processor class.
+/// Defines the <see cref="ReportingController" /> processor class.
 /// </summary>
-internal static class Reporting
+internal static class ReportingController
 {
     /// <summary>
     /// Processes the reporting options.

@@ -1,4 +1,4 @@
-﻿namespace MatchMaker.Tool;
+﻿namespace MatchMaker.Tool.Controllers;
 
 using System.Collections.Generic;
 using System.Linq;

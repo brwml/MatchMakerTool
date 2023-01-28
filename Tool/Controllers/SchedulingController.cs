@@ -1,11 +1,11 @@
-﻿namespace MatchMaker.Tool;
+﻿namespace MatchMaker.Tool.Controllers;
 
 using Ardalis.GuardClauses;
 
 /// <summary>
-/// Defines the <see cref="Scheduling" />
+/// Defines the <see cref="SchedulingController" />
 /// </summary>
-internal static class Scheduling
+internal static class SchedulingController
 {
     /// <summary>
     /// Processes the scheduling options

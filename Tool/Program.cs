@@ -5,6 +5,8 @@ using System.Diagnostics;
 
 using CommandLine;
 
+using MatchMaker.Tool.Controllers;
+
 #pragma warning disable CA1031 // This the main program code and may catch any exception type.
 
 /// <summary>
@@ -15,7 +17,12 @@ internal class Program
     /// <summary>
     /// Gets the option types
     /// </summary>
-    private static Type[] OptionTypes => new[] { typeof(ReportingOptions), typeof(SummaryOptions), typeof(ScheduleOptions) };
+    private static Type[] OptionTypes => new[]
+    {
+        typeof(ReportingOptions),
+        typeof(SummaryOptions),
+        typeof(ScheduleOptions)
+    };
 
     /// <summary>
     /// The main program entry point
@@ -28,9 +35,9 @@ internal class Program
             Parser.Default.ParseArguments(args, OptionTypes)
                 .WithParsed<BaseOptions>(ProcessBaseOptions)
                 .MapResult(
-                    (ReportingOptions options) => Reporting.Process(options),
-                    (SummaryOptions options) => Reporting.Process(options),
-                    (ScheduleOptions options) => Scheduling.Process(options),
+                    (ReportingOptions options) => ReportingController.Process(options),
+                    (SummaryOptions options) => ReportingController.Process(options),
+                    (ScheduleOptions options) => SchedulingController.Process(options),
                     errors => false);
         }
         catch (Exception e)
