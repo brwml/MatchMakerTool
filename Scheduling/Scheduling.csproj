@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>MatchMaker.Scheduling</RootNamespace>
     <AssemblyName>MatchMaker.Scheduling</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>

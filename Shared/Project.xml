@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <AssemblyTitle>Tool for ACME Quiz MatchMaker</AssemblyTitle>
         <Authors>Bryan Wilhelm</Authors>
         <Product>Tool for ACME Quiz MatchMaker</Product>

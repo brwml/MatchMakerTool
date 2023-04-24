@@ -54,7 +54,7 @@ internal class DateOnlyJsonConverter : JsonConverter<DateOnly>
     /// <returns>The <see cref="DateOnly"/> instance</returns>
     public override DateOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return DateOnly.Parse(reader.GetString() ?? string.Empty);
+        return DateOnly.Parse(reader.GetString() ?? string.Empty, CultureInfo.InvariantCulture);
     }
 
     /// <summary>
@@ -86,7 +86,7 @@ internal class TimeOnlyJsonConverter : JsonConverter<TimeOnly>
     /// <returns>The <see cref="DateOnly"/> instance</returns>
     public override TimeOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return TimeOnly.Parse(reader.GetString() ?? string.Empty);
+        return TimeOnly.Parse(reader.GetString() ?? string.Empty, CultureInfo.InvariantCulture);
     }
 
     /// <summary>

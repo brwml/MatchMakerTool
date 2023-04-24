@@ -3,7 +3,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>MatchMaker.Tool</RootNamespace>
     <AssemblyName>mmt</AssemblyName>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <PackAsTool>True</PackAsTool>
   </PropertyGroup>
   <Import Project="..\Shared\Project.xml" />
