@@ -1,21 +1,26 @@
 <Project>
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <AssemblyTitle>Tool for ACME Quiz MatchMaker</AssemblyTitle>
-        <Authors>Bryan Wilhelm</Authors>
-        <Product>Tool for ACME Quiz MatchMaker</Product>
-        <Description>A command line tool for generating reports from ACME Quiz MatchMaker results XML files.</Description>
-        <Copyright>Copyright (c) 2016-$([System.DateTime]::Now.Year) Bryan Wilhelm</Copyright>
-        <PackageProjectUrl>https://github.com/brwml/MatchMakerTool</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/brwml/MatchMakerTool</RepositoryUrl>
-        <RepositoryType>GitHub</RepositoryType>
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <AssemblyTitle>Tool for ACME Quiz MatchMaker</AssemblyTitle>
+    <Authors>Bryan Wilhelm</Authors>
+    <Product>Tool for ACME Quiz MatchMaker</Product>
+    <Description>A command line tool for generating reports from ACME Quiz MatchMaker results XML files.</Description>
+    <Copyright>Copyright (c) 2016-$([System.DateTime]::Now.Year) Bryan Wilhelm</Copyright>
+    <PackageProjectUrl>https://github.com/brwml/MatchMakerTool</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/brwml/MatchMakerTool</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
 
-        <NoWarn />
-        <AnalysisLevel>latest-all</AnalysisLevel>
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <WarningLevel>9999</WarningLevel>
+    <NoWarn />
+    <AnalysisLevel>latest-all</AnalysisLevel>
+    <AnalysisMode>all</AnalysisMode>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <CodeAnalysisVerbose>true</CodeAnalysisVerbose>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel></WarningLevel>
 
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 </Project>
