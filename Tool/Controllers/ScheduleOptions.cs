@@ -1,8 +1,9 @@
 ﻿namespace MatchMaker.Tool.Controllers;
 
+using Ardalis.GuardClauses;
+
 using CommandLine;
 
-#pragma warning disable CS8618 // Nullable types are either required or have default values.
 #pragma warning disable CA1812 // The class is instantiate by the command line parser.
 
 /// <summary>
@@ -12,21 +13,25 @@ using CommandLine;
 internal class ScheduleOptions : BaseOptions
 {
     /// <summary>
-    /// Gets or sets a value indicating whether the Swiss schedule is created a priori.
+    /// Initializes a new instance of the <see cref="ScheduleOptions"/> class.
     /// </summary>
-    [Option('a', Default = true, Required = false, HelpText = "Indicates whether the schedule is created a priori", SetName = "Swiss")]
-    public bool IsApriori
+    /// <param name="outputSchedule">The output schedule.</param>
+    /// <param name="rooms">The rooms.</param>
+    /// <param name="scheduleType">Type of the schedule.</param>
+    /// <param name="sourceSchedule">The source schedule.</param>
+    /// <param name="verbose">If set to <c>true</c>, then emit verbose output.</param>
+    public ScheduleOptions(
+        string outputSchedule,
+        int rooms,
+        ScheduleType scheduleType,
+        string sourceSchedule,
+        bool verbose)
+        : base(verbose)
     {
-        get; set;
-    }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether the tournament is seeded
-    /// </summary>
-    [Option('s', Default = true, Required = false, HelpText = "Indicates whether the tournament is seeded")]
-    public bool IsSeeded
-    {
-        get; set;
+        this.OutputSchedule = Guard.Against.NullOrWhiteSpace(outputSchedule);
+        this.Rooms = rooms;
+        this.ScheduleType = scheduleType;
+        this.SourceSchedule = Guard.Against.NullOrWhiteSpace(sourceSchedule);
     }
 
     /// <summary>
@@ -35,16 +40,7 @@ internal class ScheduleOptions : BaseOptions
     [Option('o', Required = true, HelpText = "The output schedule file path")]
     public string OutputSchedule
     {
-        get; set;
-    }
-
-    /// <summary>
-    /// Gets or sets the results folder for a Swiss tournament
-    /// </summary>
-    [Option('r', Required = false, HelpText = "The results folder", SetName = "Swiss")]
-    public string ResultsFolder
-    {
-        get; set;
+        get;
     }
 
     /// <summary>
@@ -53,16 +49,16 @@ internal class ScheduleOptions : BaseOptions
     [Option('n', Required = false, HelpText = "The number of rooms available")]
     public int Rooms
     {
-        get; set;
+        get;
     }
 
     /// <summary>
     /// Gets or sets the schedule type
     /// </summary>
-    [Option('t', Default = ScheduleType.RoundRobin, Required = false, HelpText = "The schedule type. Options include RoundRobin and Swiss.")]
+    [Option('t', Default = ScheduleType.RoundRobin, Required = false, HelpText = "The schedule type. The only option is RoundRobin.")]
     public ScheduleType ScheduleType
     {
-        get; set;
+        get;
     }
 
     /// <summary>
@@ -71,6 +67,6 @@ internal class ScheduleOptions : BaseOptions
     [Option('i', Required = true, HelpText = "The source schedule file path")]
     public string SourceSchedule
     {
-        get; set;
+        get;
     }
 }
