@@ -7,8 +7,6 @@ using CommandLine;
 
 using MatchMaker.Tool.Controllers;
 
-#pragma warning disable CA1031 // This the main program code and may catch any exception type.
-
 /// <summary>
 /// Defines the <see cref="Program" />
 /// </summary>

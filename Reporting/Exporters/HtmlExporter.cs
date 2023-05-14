@@ -255,13 +255,7 @@ public partial class HtmlExporter : BaseExporter
     private static Template LoadTemplate(string name)
     {
         var assembly = Assembly.GetExecutingAssembly();
-        using var stream = assembly.GetManifestResourceStream(name);
-
-        if (stream is null)
-        {
-            throw new InvalidOperationException(FormattableString.Invariant($"The manifest resource stream {name} was not found."));
-        }
-
+        using var stream = assembly.GetManifestResourceStream(name) ?? throw new InvalidOperationException(FormattableString.Invariant($"The manifest resource stream {name} was not found."));
         using var reader = new StreamReader(stream);
         var group = new TemplateGroupString(reader.ReadToEnd());
         group.RegisterRenderer(typeof(decimal), new DecimalAttributeRenderer());
