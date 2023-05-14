@@ -10,16 +10,6 @@
     <RepositoryUrl>https://github.com/brwml/MatchMakerTool</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
 
-    <NoWarn />
-    <AnalysisLevel>latest-all</AnalysisLevel>
-    <AnalysisMode>all</AnalysisMode>
-    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
-    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
-    <CodeAnalysisVerbose>true</CodeAnalysisVerbose>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningLevel></WarningLevel>
-
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>

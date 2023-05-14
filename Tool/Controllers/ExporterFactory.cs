@@ -16,7 +16,7 @@ internal static class ExporterFactory
     /// <returns>The <see cref="IEnumerable{IExporter}"/> instance</returns>
     public static IEnumerable<IExporter> GetExporters(OutputFormat format)
     {
-        var list = new List<IExporter> { new DefaultExporter() };
+        var list = new List<IExporter>();
 
         if (format.HasFlag(OutputFormat.Excel))
         {
