@@ -1,5 +1,9 @@
 mode: ContinuousDeployment
-next-version: 1.5.0
+next-version: 1.6.0
+assembly-versioning-scheme: MajorMinorPatchTag
+assembly-file-versioning-scheme: MajorMinorPatchTag
+increment: Patch
+mode: Mainline
 branches: {}
 ignore:
   sha: []
