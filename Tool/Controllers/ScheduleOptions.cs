@@ -28,8 +28,8 @@ internal class ScheduleOptions : BaseOptions
         bool verbose)
         : base(verbose)
     {
-        this.InputSchedulePath = Guard.Against.NullOrWhiteSpace(inputSchedulePath);
-        this.OutputSchedulePath = Guard.Against.NullOrWhiteSpace(outputSchedulePath);
+        this.InputSchedulePath = inputSchedulePath;
+        this.OutputSchedulePath = outputSchedulePath;
         this.Rooms = rooms;
         this.ScheduleType = scheduleType;
     }

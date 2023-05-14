@@ -41,10 +41,10 @@ internal class ReportingOptions : BaseOptions
     {
         this.NumberOfAlternateTeams = numberOfAlternateTeams;
         this.NumberOfTournamentTeams = numberOfTournamentTeams;
-        this.OutputFolder = Guard.Against.NullOrWhiteSpace(outputFolder);
+        this.OutputFolder = outputFolder ?? ".";
         this.OutputFormat = outputFormat;
-        this.RankingProcedure = Guard.Against.NullOrWhiteSpace(rankingProcedure);
-        this.SourceFolder = Guard.Against.NullOrWhiteSpace(sourceFolder);
+        this.RankingProcedure = rankingProcedure ?? DefaultRankingProcedure;
+        this.SourceFolder = sourceFolder ?? ".";
         this.Name = name ?? string.Empty;
     }
 

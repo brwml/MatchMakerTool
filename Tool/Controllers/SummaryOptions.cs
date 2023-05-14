@@ -22,8 +22,8 @@ internal class SummaryOptions : BaseOptions
     /// <param name="verbose">If set to <c>true</c>, then emit verbose output.</param>
     public SummaryOptions(IEnumerable<string> inputPaths, string outputPath, bool verbose) : base(verbose)
     {
-        this.InputPaths = Guard.Against.NullOrEmpty(inputPaths);
-        this.OutputPath = Guard.Against.NullOrWhiteSpace(outputPath);
+        this.InputPaths = inputPaths;
+        this.OutputPath = outputPath;
     }
 
     /// <summary>
