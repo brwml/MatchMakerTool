@@ -1,9 +1,9 @@
-mode: ContinuousDeployment
+mode: Mainline
 next-version: 1.6.0
 assembly-versioning-scheme: MajorMinorPatchTag
-assembly-file-versioning-scheme: MajorMinorPatch
+assembly-file-versioning-scheme: MajorMinorPatchTag
+assembly-informational-format: '{AssemblyFileSemVer}.{BranchName}.{ShortSha}'
 increment: Patch
-mode: Mainline
 branches: {}
 ignore:
   sha: []
