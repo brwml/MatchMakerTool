@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Serialization;
 
 using Ardalis.GuardClauses;
 
@@ -16,7 +15,6 @@ using MatchMaker.Reporting.Policies;
 /// <remarks>
 /// TODO: Make the properties read-only.
 /// </remarks>
-[DataContract]
 [DebuggerDisplay("Quizzer Summary (Quizzer {QuizzerId}, Rounds {TotalRounds}, Score {TotalScore}, Errors {TotalErrors}, Place {Place})")]
 public class QuizzerSummary
 {
@@ -32,19 +30,16 @@ public class QuizzerSummary
     /// <summary>
     /// Gets the average errors
     /// </summary>
-    [IgnoreDataMember]
     public decimal AverageErrors => Convert.ToDecimal(this.TotalErrors) / Convert.ToDecimal(this.TotalRounds);
 
     /// <summary>
     /// Gets the average score
     /// </summary>
-    [IgnoreDataMember]
     public decimal AverageScore => Convert.ToDecimal(this.TotalScore) / Convert.ToDecimal(this.TotalRounds);
 
     /// <summary>
     /// Gets or sets the Place
     /// </summary>
-    [DataMember]
     public int Place
     {
         get; set;
@@ -53,7 +48,6 @@ public class QuizzerSummary
     /// <summary>
     /// Gets or sets the quizzer identifier
     /// </summary>
-    [DataMember]
     public int QuizzerId
     {
         get; set;
@@ -62,7 +56,6 @@ public class QuizzerSummary
     /// <summary>
     /// Gets or sets the total errors
     /// </summary>
-    [DataMember]
     public int TotalErrors
     {
         get; set;
@@ -71,7 +64,6 @@ public class QuizzerSummary
     /// <summary>
     /// Gets or sets the total rounds
     /// </summary>
-    [DataMember]
     public int TotalRounds
     {
         get; set;
@@ -80,7 +72,6 @@ public class QuizzerSummary
     /// <summary>
     /// Gets or sets the total score
     /// </summary>
-    [DataMember]
     public int TotalScore
     {
         get; set;

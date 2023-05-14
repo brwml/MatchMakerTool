@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Xml.Linq;
 
 using Ardalis.GuardClauses;
@@ -11,7 +10,6 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="MatchResult" />
 /// </summary>
-[DataContract]
 [DebuggerDisplay("MatchResult {Id} (Round {Round}, Room {Room})")]
 public class MatchResult
 {
@@ -35,7 +33,6 @@ public class MatchResult
     /// <summary>
     /// Gets or sets the match identifier
     /// </summary>
-    [DataMember]
     public int Id
     {
         get;
@@ -44,7 +41,6 @@ public class MatchResult
     /// <summary>
     /// Gets or sets the quizzer results
     /// </summary>
-    [DataMember]
     public IList<QuizzerResult> QuizzerResults
     {
         get;
@@ -53,7 +49,6 @@ public class MatchResult
     /// <summary>
     /// Gets or sets the room number
     /// </summary>
-    [DataMember]
     public int Room
     {
         get;
@@ -62,7 +57,6 @@ public class MatchResult
     /// <summary>
     /// Gets or sets the round number
     /// </summary>
-    [DataMember]
     public int Round
     {
         get;
@@ -71,13 +65,11 @@ public class MatchResult
     /// <summary>
     /// Gets the schedule identifier
     /// </summary>
-    [IgnoreDataMember]
     public int ScheduleId => (this.Round * 100) + this.Room;
 
     /// <summary>
     /// Gets or sets the team results
     /// </summary>
-    [DataMember]
     public IList<TeamResult> TeamResults
     {
         get;

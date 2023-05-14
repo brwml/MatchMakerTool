@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Xml.Linq;
 
 using Ardalis.GuardClauses;
@@ -11,7 +10,6 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="Round" />
 /// </summary>
-[DataContract]
 public class Round
 {
     /// <summary>
@@ -41,7 +39,6 @@ public class Round
     /// <summary>
     /// Gets or sets the Id
     /// </summary>
-    [DataMember]
     public int Id
     {
         get;
@@ -50,7 +47,6 @@ public class Round
     /// <summary>
     /// Gets or sets the Matches
     /// </summary>
-    [DataMember]
     public IDictionary<int, MatchSchedule> Matches
     {
         get;
@@ -59,7 +55,6 @@ public class Round
     /// <summary>
     /// Gets or sets the date of the round.
     /// </summary>
-    [DataMember]
     public DateOnly Date
     {
         get;
@@ -68,7 +63,6 @@ public class Round
     /// <summary>
     /// Gets or sets the time of the round.
     /// </summary>
-    [DataMember]
     public TimeOnly Time
     {
         get;

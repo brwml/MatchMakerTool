@@ -1,13 +1,10 @@
 ﻿namespace MatchMaker.Reporting.Models;
 
-using System.Runtime.Serialization;
-
 using Humanizer;
 
 /// <summary>
 /// Defines the <see cref="TieBreak" />
 /// </summary>
-[DataContract]
 public class TieBreak
 {
     /// <summary>
@@ -27,7 +24,6 @@ public class TieBreak
     /// <summary>
     /// Gets or sets the Reason
     /// </summary>
-    [DataMember]
     public TieBreakReason Reason
     {
         get;

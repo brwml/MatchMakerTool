@@ -1,7 +1,6 @@
 ﻿namespace MatchMaker.Reporting.Models;
 
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Xml.Linq;
 
 using Ardalis.GuardClauses;
@@ -11,7 +10,6 @@ using MatchMaker.Reporting.Policies;
 /// <summary>
 /// Defines the <see cref="Summary" />
 /// </summary>
-[DataContract]
 public class Summary
 {
     /// <summary>
@@ -30,7 +28,6 @@ public class Summary
     /// <summary>
     /// Gets or sets the quizzer summaries
     /// </summary>
-    [DataMember]
     public IDictionary<int, QuizzerSummary> QuizzerSummaries
     {
         get;
@@ -39,7 +36,6 @@ public class Summary
     /// <summary>
     /// Gets or sets the Result
     /// </summary>
-    [DataMember]
     public Result Result
     {
         get;
@@ -48,7 +44,6 @@ public class Summary
     /// <summary>
     /// Gets or sets the team summaries
     /// </summary>
-    [DataMember]
     public IDictionary<int, TeamSummary> TeamSummaries
     {
         get;
@@ -57,7 +52,6 @@ public class Summary
     /// <summary>
     /// Gets the Name
     /// </summary>
-    [IgnoreDataMember]
     public string Name => this.Result.Name;
 
     /// <summary>

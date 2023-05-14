@@ -1,7 +1,6 @@
 ﻿namespace MatchMaker.Reporting.Models;
 
 using System.Diagnostics;
-using System.Runtime.Serialization;
 using System.Xml.Linq;
 
 using Ardalis.GuardClauses;
@@ -9,7 +8,6 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="Team" />
 /// </summary>
-[DataContract]
 [DebuggerDisplay("Team {Name} ({Id})")]
 public class Team
 {
@@ -31,7 +29,6 @@ public class Team
     /// <summary>
     /// Gets or sets the Abbreviation
     /// </summary>
-    [DataMember]
     public string Abbreviation
     {
         get;
@@ -40,7 +37,6 @@ public class Team
     /// <summary>
     /// Gets or sets the Division
     /// </summary>
-    [DataMember]
     public int Division
     {
         get;
@@ -49,7 +45,6 @@ public class Team
     /// <summary>
     /// Gets or sets the Id
     /// </summary>
-    [DataMember]
     public int Id
     {
         get;
@@ -58,7 +53,6 @@ public class Team
     /// <summary>
     /// Gets or sets the Name
     /// </summary>
-    [DataMember]
     public string Name
     {
         get;

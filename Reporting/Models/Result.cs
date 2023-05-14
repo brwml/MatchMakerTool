@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
@@ -11,7 +10,6 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="Result" />
 /// </summary>
-[DataContract]
 public class Result
 {
     /// <summary>
@@ -33,7 +31,6 @@ public class Result
     /// <summary>
     /// Gets or sets the Matches
     /// </summary>
-    [DataMember]
     public IDictionary<int, MatchResult> Matches
     {
         get;
@@ -42,7 +39,6 @@ public class Result
     /// <summary>
     /// Gets or sets the Schedule
     /// </summary>
-    [DataMember]
     public Schedule Schedule
     {
         get;
@@ -51,7 +47,6 @@ public class Result
     /// <summary>
     /// Gets the Name
     /// </summary>
-    [IgnoreDataMember]
     public string Name => this.Schedule.Name;
 
     /// <summary>

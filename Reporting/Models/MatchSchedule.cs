@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.Serialization;
 using System.Xml.Linq;
 
 using Ardalis.GuardClauses;
@@ -10,7 +9,6 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="MatchSchedule" />
 /// </summary>
-[DataContract]
 [DebuggerDisplay("Match {Id} (Room {Room})")]
 public class MatchSchedule
 {
@@ -30,7 +28,6 @@ public class MatchSchedule
     /// <summary>
     /// Gets or sets the Id
     /// </summary>
-    [DataMember]
     public int Id
     {
         get;
@@ -39,7 +36,6 @@ public class MatchSchedule
     /// <summary>
     /// Gets or sets the room identifier
     /// </summary>
-    [DataMember]
     public int Room
     {
         get; set;
@@ -48,7 +44,6 @@ public class MatchSchedule
     /// <summary>
     /// Gets or sets the Teams
     /// </summary>
-    [DataMember]
     public IList<int> Teams
     {
         get;

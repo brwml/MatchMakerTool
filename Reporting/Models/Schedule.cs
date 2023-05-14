@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
@@ -12,7 +11,6 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="Schedule" />
 /// </summary>
-[DataContract]
 [DebuggerDisplay("Schedule {Name}")]
 public class Schedule
 {
@@ -41,7 +39,6 @@ public class Schedule
     /// <summary>
     /// Gets or sets the Churches
     /// </summary>
-    [DataMember]
     public IDictionary<int, Church> Churches
     {
         get;
@@ -50,7 +47,6 @@ public class Schedule
     /// <summary>
     /// Gets or sets the Name
     /// </summary>
-    [DataMember]
     public string Name
     {
         get; set;
@@ -59,7 +55,6 @@ public class Schedule
     /// <summary>
     /// Gets or sets the Quizzers
     /// </summary>
-    [DataMember]
     public IDictionary<int, Quizzer> Quizzers
     {
         get;
@@ -71,7 +66,6 @@ public class Schedule
     /// <remarks>
     /// TODO: Make property read-only.
     /// </remarks>
-    [DataMember]
     public IDictionary<int, Round> Rounds
     {
         get; set;
@@ -80,7 +74,6 @@ public class Schedule
     /// <summary>
     /// Gets or sets the Teams
     /// </summary>
-    [DataMember]
     public IDictionary<int, Team> Teams
     {
         get;

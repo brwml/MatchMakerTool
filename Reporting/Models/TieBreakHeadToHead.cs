@@ -2,14 +2,12 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 
 using Ardalis.GuardClauses;
 
 /// <summary>
 /// Defines the <see cref="TieBreakHeadToHead" />
 /// </summary>
-[DataContract]
 public class TieBreakHeadToHead : TieBreak
 {
     /// <summary>
@@ -30,7 +28,6 @@ public class TieBreakHeadToHead : TieBreak
     /// <summary>
     /// Gets the Teams
     /// </summary>
-    [DataMember]
     public IDictionary<int, Team> Teams
     {
         get;
@@ -39,7 +36,6 @@ public class TieBreakHeadToHead : TieBreak
     /// <summary>
     /// Gets or sets the Results
     /// </summary>
-    [DataMember]
     private IEnumerable<MatchResult> Results
     {
         get;

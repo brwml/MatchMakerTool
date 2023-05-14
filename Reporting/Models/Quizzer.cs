@@ -1,7 +1,6 @@
 ﻿namespace MatchMaker.Reporting.Models;
 
 using System.Diagnostics;
-using System.Runtime.Serialization;
 using System.Xml.Linq;
 
 using Ardalis.GuardClauses;
@@ -9,7 +8,6 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="Quizzer" />
 /// </summary>
-[DataContract]
 [DebuggerDisplay("Quizzer {FirstName} {LastName} ({Id}, Church {ChurchId}, Team {TeamId})")]
 public class Quizzer
 {
@@ -37,7 +35,6 @@ public class Quizzer
     /// <summary>
     /// Gets or sets the church identifier
     /// </summary>
-    [DataMember]
     public int ChurchId
     {
         get;
@@ -46,7 +43,6 @@ public class Quizzer
     /// <summary>
     /// Gets or sets the first name
     /// </summary>
-    [DataMember]
     public string FirstName
     {
         get;
@@ -55,7 +51,6 @@ public class Quizzer
     /// <summary>
     /// Gets or sets the Gender
     /// </summary>
-    [DataMember]
     public Gender Gender
     {
         get;
@@ -64,7 +59,6 @@ public class Quizzer
     /// <summary>
     /// Gets or sets the Id
     /// </summary>
-    [DataMember]
     public int Id
     {
         get;
@@ -73,7 +67,6 @@ public class Quizzer
     /// <summary>
     /// Gets or sets the last name
     /// </summary>
-    [DataMember]
     public string LastName
     {
         get;
@@ -82,7 +75,6 @@ public class Quizzer
     /// <summary>
     /// Gets or sets the rookie year
     /// </summary>
-    [DataMember]
     public int RookieYear
     {
         get;
@@ -91,7 +83,6 @@ public class Quizzer
     /// <summary>
     /// Gets or sets the team identifier
     /// </summary>
-    [DataMember]
     public int TeamId
     {
         get;

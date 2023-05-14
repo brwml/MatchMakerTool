@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Serialization;
 
 using Ardalis.GuardClauses;
 
@@ -13,7 +12,6 @@ using MatchMaker.Reporting.Policies;
 /// <summary>
 /// Defines the <see cref="TeamSummary" />
 /// </summary>
-[DataContract]
 [DebuggerDisplay("Team Summary (Team {TeamId}, {Wins}-{Losses}, Rounds {TotalRounds}, Score {TotalScore}, Errors {TotalErrors}, Place {Place})")]
 public class TeamSummary
 {
@@ -29,19 +27,16 @@ public class TeamSummary
     /// <summary>
     /// Gets the average errors
     /// </summary>
-    [IgnoreDataMember]
     public decimal AverageErrors => Convert.ToDecimal(this.TotalErrors) / Convert.ToDecimal(this.TotalRounds);
 
     /// <summary>
     /// Gets the average score
     /// </summary>
-    [IgnoreDataMember]
     public decimal AverageScore => Convert.ToDecimal(this.TotalScore) / Convert.ToDecimal(this.TotalRounds);
 
     /// <summary>
     /// Gets or sets the Losses
     /// </summary>
-    [DataMember]
     public int Losses
     {
         get; set;
@@ -50,7 +45,6 @@ public class TeamSummary
     /// <summary>
     /// Gets or sets the Place
     /// </summary>
-    [DataMember]
     public int Place
     {
         get; set;
@@ -59,7 +53,6 @@ public class TeamSummary
     /// <summary>
     /// Gets or sets the team identifier
     /// </summary>
-    [DataMember]
     public int TeamId
     {
         get; set;
@@ -68,7 +61,6 @@ public class TeamSummary
     /// <summary>
     /// Gets or sets the tie breaker
     /// </summary>
-    [DataMember]
     public TieBreak TieBreak
     {
         get; set;
@@ -77,7 +69,6 @@ public class TeamSummary
     /// <summary>
     /// Gets or sets the total errors
     /// </summary>
-    [DataMember]
     public int TotalErrors
     {
         get; set;
@@ -86,13 +77,11 @@ public class TeamSummary
     /// <summary>
     /// Gets the total rounds
     /// </summary>
-    [IgnoreDataMember]
     public int TotalRounds => this.Wins + this.Losses;
 
     /// <summary>
     /// Gets or sets the total score
     /// </summary>
-    [DataMember]
     public int TotalScore
     {
         get; set;
@@ -101,13 +90,11 @@ public class TeamSummary
     /// <summary>
     /// Gets the win percentage
     /// </summary>
-    [IgnoreDataMember]
     public decimal WinPercentage => Convert.ToDecimal(this.Wins) / Convert.ToDecimal(this.TotalRounds);
 
     /// <summary>
     /// Gets or sets the Wins
     /// </summary>
-    [DataMember]
     public int Wins
     {
         get; set;

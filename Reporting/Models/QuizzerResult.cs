@@ -1,7 +1,6 @@
 ﻿namespace MatchMaker.Reporting.Models;
 
 using System.Diagnostics;
-using System.Runtime.Serialization;
 using System.Xml.Linq;
 
 using Ardalis.GuardClauses;
@@ -9,7 +8,6 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="QuizzerResult" />
 /// </summary>
-[DataContract]
 [DebuggerDisplay("Quizzer Result (Quizzer {QuizzerId}, Score {Score}, Errors {Errors})")]
 public class QuizzerResult
 {
@@ -29,7 +27,6 @@ public class QuizzerResult
     /// <summary>
     /// Gets or sets the Errors
     /// </summary>
-    [DataMember]
     public int Errors
     {
         get;
@@ -38,7 +35,6 @@ public class QuizzerResult
     /// <summary>
     /// Gets or sets the quizzer identifier
     /// </summary>
-    [DataMember]
     public int QuizzerId
     {
         get;
@@ -47,7 +43,6 @@ public class QuizzerResult
     /// <summary>
     /// Gets or sets the Score
     /// </summary>
-    [DataMember]
     public int Score
     {
         get;
