@@ -1,7 +1,5 @@
 ﻿namespace MatchMaker.Tool.Controllers;
 
-using Ardalis.GuardClauses;
-
 using CommandLine;
 
 #pragma warning disable CA1812 // The class is instantiate by the command line parser.
