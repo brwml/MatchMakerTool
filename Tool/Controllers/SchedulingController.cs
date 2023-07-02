@@ -25,6 +25,7 @@ internal class SchedulingController : IProcessController<ScheduleOptions>
         {
             RoundRobinTournament
                 .Create(LoadInputSchedule(options.InputSchedulePath), options.Rooms)
+                .WithName(GetScheduleName(options.OutputSchedulePath))
                 .ToXml()
                 .Save(options.OutputSchedulePath);
         }
@@ -39,8 +40,7 @@ internal class SchedulingController : IProcessController<ScheduleOptions>
     /// <returns>The schedule instance</returns>
     private static Schedule LoadInputSchedule(string schedulePath)
     {
-        var scheduleName = Path.GetFileNameWithoutExtension(schedulePath);
-        return Schedule.FromXml(LoadXml(schedulePath), scheduleName);
+        return Schedule.FromXml(LoadXml(schedulePath), GetScheduleName(schedulePath));
     }
 
     /// <summary>
@@ -51,5 +51,15 @@ internal class SchedulingController : IProcessController<ScheduleOptions>
     private static XDocument LoadXml(string schedulePath)
     {
         return XDocument.Load(schedulePath);
+    }
+
+    /// <summary>
+    /// Gets the name of the schedule.
+    /// </summary>
+    /// <param name="schedulePath">The schedule path.</param>
+    /// <returns></returns>
+    private static string GetScheduleName(string schedulePath)
+    {
+        return Path.GetFileNameWithoutExtension(schedulePath);
     }
 }
