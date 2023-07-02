@@ -9,6 +9,7 @@
   <Import Project="..\Shared\Project.xml" />
   <ItemGroup>
     <ProjectReference Include="..\Reporting\Reporting.csproj" />
+    <ProjectReference Include="..\Scheduling\Scheduling.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
