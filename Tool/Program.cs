@@ -33,9 +33,9 @@ internal class Program
             Parser.Default.ParseArguments(args, OptionTypes)
                 .WithParsed<BaseOptions>(ProcessBaseOptions)
                 .MapResult(
-                    (ReportingOptions options) => ReportingController.Process(options),
-                    (SummaryOptions options) => ReportingController.Process(options),
-                    (ScheduleOptions options) => SchedulingController.Process(options),
+                    (ReportingOptions options) => new ReportingController().Process(options),
+                    (SummaryOptions options) => new SummaryController().Process(options),
+                    (ScheduleOptions options) => new SchedulingController().Process(options),
                     errors => false);
         }
         catch (Exception e)
