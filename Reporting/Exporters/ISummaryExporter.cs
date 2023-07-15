@@ -3,9 +3,9 @@
 using MatchMaker.Reporting.Models;
 
 /// <summary>
-/// Defines the <see cref="IExporter" /> interface
+/// Defines the <see cref="ISummaryExporter" /> interface
 /// </summary>
-public interface IExporter
+public interface ISummaryExporter
 {
     /// <summary>
     /// Exports the tournament <see cref="Summary"/> to a file or collection of files.

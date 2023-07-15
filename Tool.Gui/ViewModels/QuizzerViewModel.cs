@@ -4,7 +4,7 @@ using System;
 
 using Ardalis.GuardClauses;
 
-using MatchMaker.Reporting.Models;
+using MatchMaker.Models;
 
 /// <summary>
 /// The quizzer view model

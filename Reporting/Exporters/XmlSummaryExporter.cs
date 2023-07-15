@@ -9,7 +9,7 @@ using MatchMaker.Reporting.Models;
 /// <summary>
 /// Exports tournament results to XML files. These result files also contain the raw data as it was provided.
 /// </summary>
-public class XmlExporter : IExporter
+public class XmlSummaryExporter : ISummaryExporter
 {
     /// <summary>
     /// Exports the tournament <paramref name="summary"/> to the specified <paramref name="folder"/>.

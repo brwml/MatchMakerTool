@@ -9,6 +9,7 @@ using Ardalis.GuardClauses;
 
 using ClosedXML.Excel;
 
+using MatchMaker.Models;
 using MatchMaker.Reporting.Models;
 
 /// <summary>

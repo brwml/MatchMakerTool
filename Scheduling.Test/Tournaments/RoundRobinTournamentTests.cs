@@ -1,11 +1,11 @@
-namespace Scheduling.Test;
+namespace Scheduling.Test.Tournaments;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using MatchMaker.Reporting.Models;
-using MatchMaker.Scheduling;
+using MatchMaker.Models;
+using MatchMaker.Scheduling.Tournaments;
 
 using Xunit;
 
@@ -104,7 +104,7 @@ public class RoundRobinTournamentTests
             for (var numRooms = 1; numRooms <= numTeams / 2; numRooms++)
             {
                 var numMatches = numTeams * (numTeams - 1) / 2;
-                var numRounds = (numMatches / numRooms) + (numMatches % numRooms != 0 ? 1 : 0);
+                var numRounds = numMatches / numRooms + (numMatches % numRooms != 0 ? 1 : 0);
                 yield return new object[] { numTeams, numRooms, numRounds };
             }
         }

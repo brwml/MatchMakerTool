@@ -5,12 +5,13 @@ using System.Linq;
 
 using Ardalis.GuardClauses;
 
+using MatchMaker.Models;
 using MatchMaker.Reporting.Models;
 
 /// <summary>
 /// The base exporter class provides consistent implementations for all exporters.
 /// </summary>
-public abstract class BaseExporter : IExporter
+public abstract class BaseSummaryExporter : ISummaryExporter
 {
     /// <summary>
     /// Exports the tournament summary information.

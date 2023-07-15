@@ -10,12 +10,13 @@ using Antlr4.StringTemplate;
 
 using Ardalis.GuardClauses;
 
+using MatchMaker.Models;
 using MatchMaker.Reporting.Models;
 
 /// <summary>
-/// Defines the <see cref="HtmlExporter" />
+/// Defines the <see cref="HtmlSummaryExporter" />
 /// </summary>
-public partial class HtmlExporter : BaseExporter
+public partial class HtmlSummaryExporter : BaseSummaryExporter
 {
     /// <summary>
     /// Defines the index template resource key

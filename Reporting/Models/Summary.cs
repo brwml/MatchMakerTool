@@ -5,6 +5,7 @@ using System.Xml.Linq;
 
 using Ardalis.GuardClauses;
 
+using MatchMaker.Models;
 using MatchMaker.Reporting.Policies;
 
 /// <summary>

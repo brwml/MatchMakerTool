@@ -6,6 +6,7 @@ using System.Linq;
 
 using Ardalis.GuardClauses;
 
+using MatchMaker.Models;
 using MatchMaker.Reporting.Models;
 
 /// <summary>

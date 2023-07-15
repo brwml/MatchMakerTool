@@ -3,7 +3,7 @@
 using System.Globalization;
 using System.Xml.Linq;
 
-using MatchMaker.Reporting.Models;
+using MatchMaker.Models;
 using MatchMaker.Reporting.Policies;
 
 /// <summary>

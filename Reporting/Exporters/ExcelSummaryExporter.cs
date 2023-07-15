@@ -12,9 +12,9 @@ using Humanizer;
 using MatchMaker.Reporting.Models;
 
 /// <summary>
-/// Defines the <see cref="ExcelExporter" />
+/// Defines the <see cref="ExcelSummaryExporter" />
 /// </summary>
-public class ExcelExporter : BaseExporter
+public class ExcelSummaryExporter : BaseSummaryExporter
 {
     /// <summary>
     /// Defines the quizzer church column width

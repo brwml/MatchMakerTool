@@ -13,8 +13,8 @@ using MatchMaker.Reporting.Models;
 /// <summary>
 /// Exports the <see cref="Summary"/> results as an RTF file.
 /// </summary>
-/// <seealso cref="MatchMaker.Reporting.Exporters.IExporter" />
-public class RtfExporter : BaseExporter
+/// <seealso cref="MatchMaker.Reporting.Exporters.ISummaryExporter" />
+public class RtfSummaryExporter : BaseSummaryExporter
 {
     /// <summary>
     /// The RTF template

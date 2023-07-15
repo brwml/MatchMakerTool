@@ -1,4 +1,4 @@
-﻿namespace MatchMaker.Reporting.Models;
+﻿namespace MatchMaker.Models;
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -65,7 +65,7 @@ public class MatchResult
     /// <summary>
     /// Gets the schedule identifier
     /// </summary>
-    public int ScheduleId => (this.Round * 100) + this.Room;
+    public int ScheduleId => this.Round * 100 + this.Room;
 
     /// <summary>
     /// Gets or sets the team results

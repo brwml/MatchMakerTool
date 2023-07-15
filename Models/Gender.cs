@@ -1,5 +1,4 @@
-﻿namespace MatchMaker.Reporting.Models;
-
+﻿namespace MatchMaker.Models;
 /// <summary>
 /// Defines the <see cref="Gender"/>
 /// </summary>

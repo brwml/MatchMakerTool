@@ -30,4 +30,7 @@
     <EmbeddedResource Include="Templates\Html\Style.css" />
     <EmbeddedResource Include="Templates\Rtf\Document.stg" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj" />
+  </ItemGroup>
 </Project>

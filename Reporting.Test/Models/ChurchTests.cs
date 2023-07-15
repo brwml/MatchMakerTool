@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using Bogus;
 
-using MatchMaker.Reporting.Models;
+using MatchMaker.Models;
 
 using Xunit;
 

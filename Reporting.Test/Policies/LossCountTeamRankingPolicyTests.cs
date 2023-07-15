@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using MatchMaker.Models;
 using MatchMaker.Reporting.Models;
 using MatchMaker.Reporting.Policies;
 

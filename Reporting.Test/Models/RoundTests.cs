@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 using Bogus;
 
-using MatchMaker.Reporting.Models;
+using MatchMaker.Models;
 
 using Xunit;
 

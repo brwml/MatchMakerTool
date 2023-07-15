@@ -1,4 +1,4 @@
-﻿namespace MatchMaker.Scheduling;
+﻿namespace MatchMaker.Scheduling.Tournaments;
 
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 
 using Ardalis.GuardClauses;
 
-using MatchMaker.Reporting.Models;
+using MatchMaker.Models;
 
 /// <summary>
 /// Create round-robin tournament schedules.
@@ -43,7 +43,7 @@ public static class RoundRobinTournament
 
         foreach (var match in matches)
         {
-            match.Room = (currentRoom++ % availableRooms) + 1;
+            match.Room = currentRoom++ % availableRooms + 1;
 
             currentRound.Matches.Add(match.Id, match);
 
@@ -118,7 +118,7 @@ public static class RoundRobinTournament
     /// <returns>The match identifier</returns>
     private static int CreateMatchId(int groupId, int instanceId, int multiplier)
     {
-        return (groupId * multiplier) + instanceId;
+        return groupId * multiplier + instanceId;
     }
 
     /// <summary>

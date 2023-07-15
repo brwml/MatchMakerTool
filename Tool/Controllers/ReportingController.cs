@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using Ardalis.GuardClauses;
 
+using MatchMaker.Models;
 using MatchMaker.Reporting.Exporters;
 using MatchMaker.Reporting.Models;
 

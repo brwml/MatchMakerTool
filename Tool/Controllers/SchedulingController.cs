@@ -4,8 +4,8 @@ using System.Xml.Linq;
 
 using Ardalis.GuardClauses;
 
-using MatchMaker.Reporting.Models;
-using MatchMaker.Scheduling;
+using MatchMaker.Models;
+using MatchMaker.Scheduling.Tournaments;
 
 /// <summary>
 /// Defines the <see cref="SchedulingController" />

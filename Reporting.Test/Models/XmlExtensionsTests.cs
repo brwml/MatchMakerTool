@@ -2,7 +2,7 @@
 
 using System.Xml.Linq;
 
-using MatchMaker.Reporting.Models;
+using MatchMaker.Models;
 
 using Xunit;
 

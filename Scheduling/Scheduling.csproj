@@ -8,6 +8,9 @@
   </PropertyGroup>
   <Import Project="..\Shared\Project.xml" />
   <ItemGroup>
-    <ProjectReference Include="..\Reporting\Reporting.csproj" />
+    <ProjectReference Include="..\Models\Models.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Templates\" />
   </ItemGroup>
 </Project>

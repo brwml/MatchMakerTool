@@ -5,6 +5,7 @@ using System.Linq;
 
 using Bogus;
 
+using MatchMaker.Models;
 using MatchMaker.Reporting.Models;
 using MatchMaker.Reporting.Policies;
 

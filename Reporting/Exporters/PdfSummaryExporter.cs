@@ -17,9 +17,9 @@ using iText.Layout.Properties;
 using MatchMaker.Reporting.Models;
 
 /// <summary>
-/// Defines the <see cref="PdfExporter" />
+/// Defines the <see cref="PdfSummaryExporter" />
 /// </summary>
-public class PdfExporter : BaseExporter
+public class PdfSummaryExporter : BaseSummaryExporter
 {
     /// <summary>
     /// Exports the <see cref="Summary"/> to a PDF file.

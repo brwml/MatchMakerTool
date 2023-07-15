@@ -1,4 +1,4 @@
-﻿namespace MatchMaker.Reporting.Models;
+﻿namespace MatchMaker.Models;
 
 using System.Xml.Linq;
 

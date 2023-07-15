@@ -4,6 +4,7 @@ using System;
 
 using Ardalis.GuardClauses;
 
+using MatchMaker.Models;
 using MatchMaker.Reporting.Models;
 
 /// <summary>
