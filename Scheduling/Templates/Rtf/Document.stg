@@ -1,0 +1,10 @@
+﻿file(schedule) ::= "{<header()><info(schedule)><document(schedule)>}"
+
+header() ::= "\rtf1\ansi\deff0{\fonttbl{\f0\fswiss Arial;}}"
+
+info(schedule) ::= "{\info{\title{<schedule.Name>}}{\subject{Meet Schedule}}}"
+
+document(schedule) ::= "<maintitle(schedule)><><>"
+
+maintitle(schedule) ::= "\pard\f0\fs48\qc{<schedule.Name>}"
+
