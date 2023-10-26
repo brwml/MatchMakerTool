@@ -62,6 +62,7 @@ internal abstract class ReportingControllerBase
     {
         return Directory
             .EnumerateFiles(sourceFolder, "*.results.xml", SearchOption.AllDirectories)
+            .Where(x => !x.EndsWith("export.results.xml", StringComparison.OrdinalIgnoreCase))
             .Select(x => new FileInfo(x));
     }
 
@@ -74,6 +75,7 @@ internal abstract class ReportingControllerBase
     {
         return Directory
             .EnumerateFiles(folder, "*.schedule.xml", SearchOption.TopDirectoryOnly)
+            .Where(x => !x.EndsWith("export.schedule.xml", StringComparison.OrdinalIgnoreCase))
             .Select(x => new FileInfo(x))
             .First();
     }
