@@ -8,55 +8,35 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="TeamResult" />
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="TeamResult"/> class.
+/// </remarks>
+/// <param name="id">The team identifier</param>
+/// <param name="score">The team score</param>
+/// <param name="errors">The team score</param>
+/// <param name="place">The team place</param>
 [DebuggerDisplay("Team Result (Team {TeamId}, Score {Score}, Errors {Errors}, Place {Place})")]
-public class TeamResult
+public class TeamResult(int id, int score, int errors, int place = 1)
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="TeamResult"/> class.
-    /// </summary>
-    /// <param name="id">The team identifier</param>
-    /// <param name="score">The team score</param>
-    /// <param name="errors">The team score</param>
-    /// <param name="place">The team place</param>
-    public TeamResult(int id, int score, int errors, int place = 1)
-    {
-        this.TeamId = id;
-        this.Score = score;
-        this.Errors = errors;
-        this.Place = place;
-    }
-
     /// <summary>
     /// Gets or sets the Errors
     /// </summary>
-    public int Errors
-    {
-        get;
-    }
+    public int Errors { get; } = errors;
 
     /// <summary>
     /// Gets or sets the Place
     /// </summary>
-    public int Place
-    {
-        get;
-    }
+    public int Place { get; } = place;
 
     /// <summary>
     /// Gets or sets the Score
     /// </summary>
-    public int Score
-    {
-        get;
-    }
+    public int Score { get; } = score;
 
     /// <summary>
     /// Gets or sets the team identifier
     /// </summary>
-    public int TeamId
-    {
-        get;
-    }
+    public int TeamId { get; } = id;
 
     /// <summary>
     /// Creates a <see cref="TeamResult"/> from an <see cref="XElement"/>

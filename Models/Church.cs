@@ -8,35 +8,23 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="Church" /> class
 /// </summary>
+/// <remarks>
+/// Initializes an instance of the <see cref="Church"/> class.
+/// </remarks>
+/// <param name="id">The identifier</param>
+/// <param name="name">The name</param>
 [DebuggerDisplay("Church {Name} ({Id})")]
-public class Church
+public class Church(int id, string name)
 {
-    /// <summary>
-    /// Initializes an instance of the <see cref="Church"/> class.
-    /// </summary>
-    /// <param name="id">The identifier</param>
-    /// <param name="name">The name</param>
-    public Church(int id, string name)
-    {
-        this.Id = id;
-        this.Name = name;
-    }
-
     /// <summary>
     /// Gets or sets the Id
     /// </summary>
-    public int Id
-    {
-        get;
-    }
+    public int Id { get; } = id;
 
     /// <summary>
     /// Gets or sets the Name
     /// </summary>
-    public string Name
-    {
-        get;
-    }
+    public string Name { get; } = name;
 
     /// <summary>
     /// Gets a <see cref="Church"/> instance from an XML element

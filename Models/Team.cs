@@ -8,55 +8,35 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="Team" />
 /// </summary>
+/// <remarks>
+/// Initializes an instance of the <see cref="Team"/> class.
+/// </remarks>
+/// <param name="id">The team identifier</param>
+/// <param name="name">The team name</param>
+/// <param name="abbreviation">The team abbreviation</param>
+/// <param name="division">The team division</param>
 [DebuggerDisplay("Team {Name} ({Id})")]
-public class Team
+public class Team(int id, string name, string abbreviation, int division)
 {
-    /// <summary>
-    /// Initializes an instance of the <see cref="Team"/> class.
-    /// </summary>
-    /// <param name="id">The team identifier</param>
-    /// <param name="name">The team name</param>
-    /// <param name="abbreviation">The team abbreviation</param>
-    /// <param name="division">The team division</param>
-    public Team(int id, string name, string abbreviation, int division)
-    {
-        this.Id = id;
-        this.Name = name;
-        this.Abbreviation = abbreviation;
-        this.Division = division;
-    }
-
     /// <summary>
     /// Gets or sets the Abbreviation
     /// </summary>
-    public string Abbreviation
-    {
-        get;
-    }
+    public string Abbreviation { get; } = abbreviation;
 
     /// <summary>
     /// Gets or sets the Division
     /// </summary>
-    public int Division
-    {
-        get;
-    }
+    public int Division { get; } = division;
 
     /// <summary>
     /// Gets or sets the Id
     /// </summary>
-    public int Id
-    {
-        get;
-    }
+    public int Id { get; } = id;
 
     /// <summary>
     /// Gets or sets the Name
     /// </summary>
-    public string Name
-    {
-        get;
-    }
+    public string Name { get; } = name;
 
     /// <summary>
     /// Creates a <see cref="Team"/> from an <see cref="XElement"/>

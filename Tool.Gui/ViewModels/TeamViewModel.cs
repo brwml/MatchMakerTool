@@ -3,34 +3,22 @@
 /// <summary>
 /// The team view model
 /// </summary>
-internal class TeamViewModel
+/// <remarks>
+/// Initializes an instance of the <see cref="TeamViewModel"/> class.
+/// </remarks>
+/// <param name="name">The name of the team</param>
+/// <param name="abbreviation">The abbreviation of the team</param>
+internal class TeamViewModel(string name, string abbreviation)
 {
-    /// <summary>
-    /// Initializes an instance of the <see cref="TeamViewModel"/> class.
-    /// </summary>
-    /// <param name="name">The name of the team</param>
-    /// <param name="abbreviation">The abbreviation of the team</param>
-    public TeamViewModel(string name, string abbreviation)
-    {
-        this.Name = name;
-        this.Abbreviation = abbreviation;
-    }
-
     /// <summary>
     /// Gets or sets the name of the team.
     /// </summary>
-    public string Name
-    {
-        get; set;
-    }
+    public string Name { get; set; } = name;
 
     /// <summary>
     /// Gets or sets the abbreviation of the team.
     /// </summary>
-    public string Abbreviation
-    {
-        get; set;
-    }
+    public string Abbreviation { get; set; } = abbreviation;
 
     /// <summary>
     /// Gets this list of quizzers.

@@ -42,8 +42,8 @@ public class ScoreQuizzerRankingPolicyTests
 
         var summaries = new List<QuizzerSummary>
             {
-                new QuizzerSummary { QuizzerId = 1, TotalScore = points1, TotalRounds = rounds1 },
-                new QuizzerSummary { QuizzerId = 2, TotalScore = points2, TotalRounds = rounds2 }
+                new() { QuizzerId = 1, TotalScore = points1, TotalRounds = rounds1 },
+                new() { QuizzerId = 2, TotalScore = points2, TotalRounds = rounds2 }
             };
 
         var places = new Dictionary<int, int>
@@ -52,7 +52,7 @@ public class ScoreQuizzerRankingPolicyTests
                 { 2, 2 }
             };
 
-        return new object[] { summaries, places };
+        return [summaries, places];
     }
 
     private static object[] GetTestCase2()
@@ -64,8 +64,8 @@ public class ScoreQuizzerRankingPolicyTests
 
         var summaries = new List<QuizzerSummary>
             {
-                new QuizzerSummary { QuizzerId = 1, TotalRounds = x, TotalScore = x * y },
-                new QuizzerSummary { QuizzerId = 2, TotalRounds = x * z, TotalScore = x * y * z }
+                new() { QuizzerId = 1, TotalRounds = x, TotalScore = x * y },
+                new() { QuizzerId = 2, TotalRounds = x * z, TotalScore = x * y * z }
             };
 
         var places = new Dictionary<int, int>
@@ -74,6 +74,6 @@ public class ScoreQuizzerRankingPolicyTests
                 { 2, 1 }
             };
 
-        return new object[] { summaries, places };
+        return [summaries, places];
     }
 }

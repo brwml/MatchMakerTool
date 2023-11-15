@@ -2,118 +2,68 @@
 
 using System;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Models;
 using MatchMaker.Reporting.Models;
 
 /// <summary>
 /// The team information
 /// </summary>
-public class TeamInfo
+/// <remarks>
+/// Initializes an instance of the <see cref="TeamInfo"/> class
+/// </remarks>
+/// <param name="team">The team</param>
+/// <param name="summary">The team summary</param>
+public class TeamInfo(Team team, TeamSummary summary)
 {
-    /// <summary>
-    /// Initializes an instance of the <see cref="TeamInfo"/> class
-    /// </summary>
-    /// <param name="team">The team</param>
-    /// <param name="summary">The team summary</param>
-    public TeamInfo(Team team, TeamSummary summary)
-    {
-        Guard.Against.Null(team);
-        Guard.Against.Null(summary);
-
-        this.Abbreviation = team.Abbreviation;
-        this.Id = team.Id;
-        this.Name = team.Name;
-        this.Losses = summary.Losses;
-        this.Place = summary.Place;
-        this.TieBreak = summary.TieBreak;
-        this.TotalErrors = summary.TotalErrors;
-        this.TotalRounds = summary.TotalRounds;
-        this.TotalScore = summary.TotalScore;
-        this.Wins = summary.Wins;
-        this.ShowPlace = true;
-    }
-
     /// <summary>
     /// Gets or sets the Abbreviation
     /// </summary>
-    public string Abbreviation
-    {
-        get;
-    }
+    public string Abbreviation { get; } = team.Abbreviation;
 
     /// <summary>
     /// Gets or sets the Id
     /// </summary>
-    public int Id
-    {
-        get;
-    }
+    public int Id { get; } = team.Id;
 
     /// <summary>
     /// Gets or sets the Name
     /// </summary>
-    public string Name
-    {
-        get;
-    }
+    public string Name { get; } = team.Name;
 
     /// <summary>
     /// Gets or sets the Losses
     /// </summary>
-    public int Losses
-    {
-        get;
-    }
+    public int Losses { get; } = summary.Losses;
 
     /// <summary>
     /// Gets or sets the Place
     /// </summary>
-    public int Place
-    {
-        get;
-    }
+    public int Place { get; } = summary.Place;
 
     /// <summary>
     /// Gets or sets a value indicating whether to show the place.
     /// </summary>
-    public bool ShowPlace
-    {
-        get; set;
-    }
+    public bool ShowPlace { get; set; } = true;
 
     /// <summary>
     /// Gets or sets the tie breaker
     /// </summary>
-    public TieBreak TieBreak
-    {
-        get;
-    }
+    public TieBreak TieBreak { get; } = summary.TieBreak;
 
     /// <summary>
     /// Gets or sets the total errors
     /// </summary>
-    public int TotalErrors
-    {
-        get;
-    }
+    public int TotalErrors { get; } = summary.TotalErrors;
 
     /// <summary>
     /// Gets the total rounds
     /// </summary>
-    public int TotalRounds
-    {
-        get;
-    }
+    public int TotalRounds { get; } = summary.TotalRounds;
 
     /// <summary>
     /// Gets or sets the total score
     /// </summary>
-    public int TotalScore
-    {
-        get;
-    }
+    public int TotalScore { get; } = summary.TotalScore;
 
     /// <summary>
     /// Gets the win percentage
@@ -123,10 +73,7 @@ public class TeamInfo
     /// <summary>
     /// Gets or sets the Wins
     /// </summary>
-    public int Wins
-    {
-        get;
-    }
+    public int Wins { get; } = summary.Wins;
 
     /// <summary>
     /// Gets the average errors

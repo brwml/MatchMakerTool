@@ -10,57 +10,36 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="MatchResult" />
 /// </summary>
+/// <remarks>
+/// Initializes an instance of the <see cref="MatchResult"/> class.
+/// </remarks>
+/// <param name="id">The result identifier</param>
+/// <param name="room">The room</param>
+/// <param name="round">The round</param>
+/// <param name="teamResults">The team results</param>
+/// <param name="quizzerResults">The quizzer results</param>
 [DebuggerDisplay("MatchResult {Id} (Round {Round}, Room {Room})")]
-public class MatchResult
+public class MatchResult(int id, int room, int round, IList<TeamResult> teamResults, IList<QuizzerResult> quizzerResults)
 {
-    /// <summary>
-    /// Initializes an instance of the <see cref="MatchResult"/> class.
-    /// </summary>
-    /// <param name="id">The result identifier</param>
-    /// <param name="room">The room</param>
-    /// <param name="round">The round</param>
-    /// <param name="teamResults">The team results</param>
-    /// <param name="quizzerResults">The quizzer results</param>
-    public MatchResult(int id, int room, int round, IList<TeamResult> teamResults, IList<QuizzerResult> quizzerResults)
-    {
-        this.Id = id;
-        this.Room = room;
-        this.Round = round;
-        this.TeamResults = teamResults;
-        this.QuizzerResults = quizzerResults;
-    }
-
     /// <summary>
     /// Gets or sets the match identifier
     /// </summary>
-    public int Id
-    {
-        get;
-    }
+    public int Id { get; } = id;
 
     /// <summary>
     /// Gets or sets the quizzer results
     /// </summary>
-    public IList<QuizzerResult> QuizzerResults
-    {
-        get;
-    }
+    public IList<QuizzerResult> QuizzerResults { get; } = quizzerResults;
 
     /// <summary>
     /// Gets or sets the room number
     /// </summary>
-    public int Room
-    {
-        get;
-    }
+    public int Room { get; } = room;
 
     /// <summary>
     /// Gets or sets the round number
     /// </summary>
-    public int Round
-    {
-        get;
-    }
+    public int Round { get; } = round;
 
     /// <summary>
     /// Gets the schedule identifier
@@ -70,10 +49,7 @@ public class MatchResult
     /// <summary>
     /// Gets or sets the team results
     /// </summary>
-    public IList<TeamResult> TeamResults
-    {
-        get;
-    }
+    public IList<TeamResult> TeamResults { get; } = teamResults;
 
     /// <summary>
     /// Create a <see cref="MatchResult"/> instance from the XML element.

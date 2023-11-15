@@ -5,23 +5,15 @@ using CommandLine;
 /// <summary>
 /// Defines the <see cref="BaseOptions" />
 /// </summary>
-internal class BaseOptions
+/// <remarks>
+/// Initializes a new instance of the <see cref="BaseOptions"/> class.
+/// </remarks>
+/// <param name="verbose">If set to <c>true</c>, then emit verbose output.</param>
+internal class BaseOptions(bool verbose)
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="BaseOptions"/> class.
-    /// </summary>
-    /// <param name="verbose">If set to <c>true</c>, then emit verbose output.</param>
-    public BaseOptions(bool verbose)
-    {
-        this.Verbose = verbose;
-    }
-
     /// <summary>
     /// Gets or sets a value indicating whether verbose output should be enabled
     /// </summary>
     [Option('v', HelpText = "Display verbose output", Default = false)]
-    public bool Verbose
-    {
-        get;
-    }
+    public bool Verbose { get; } = verbose;
 }

@@ -5,7 +5,11 @@ using Humanizer;
 /// <summary>
 /// Defines the <see cref="TieBreak" />
 /// </summary>
-public class TieBreak
+/// <remarks>
+/// Initializes a new instance of the <see cref="TieBreak"/> class.
+/// </remarks>
+/// <param name="reason">The tie-break reason</param>
+public class TieBreak(TieBreakReason reason)
 {
     /// <summary>
     /// Defines a tie breaker that does not resolve a tie.
@@ -13,21 +17,9 @@ public class TieBreak
     public static readonly TieBreak None = new NullTieBreak();
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="TieBreak"/> class.
-    /// </summary>
-    /// <param name="reason">The tie-break reason</param>
-    public TieBreak(TieBreakReason reason)
-    {
-        this.Reason = reason;
-    }
-
-    /// <summary>
     /// Gets or sets the Reason
     /// </summary>
-    public TieBreakReason Reason
-    {
-        get;
-    }
+    public TieBreakReason Reason { get; } = reason;
 
     /// <summary>
     /// Creates a <see cref="string"/> for the tie breaker

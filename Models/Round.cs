@@ -10,23 +10,15 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="Round" />
 /// </summary>
-public class Round
+/// <remarks>
+/// Initializes an instance of the <see cref="Round"/> class.
+/// </remarks>
+/// <param name="id">The identifier</param>
+/// <param name="matches">The matches</param>
+/// <param name="date">The date</param>
+/// <param name="time">The time</param>
+public class Round(int id, IDictionary<int, MatchSchedule> matches, DateOnly date, TimeOnly time)
 {
-    /// <summary>
-    /// Initializes an instance of the <see cref="Round"/> class.
-    /// </summary>
-    /// <param name="id">The identifier</param>
-    /// <param name="matches">The matches</param>
-    /// <param name="date">The date</param>
-    /// <param name="time">The time</param>
-    public Round(int id, IDictionary<int, MatchSchedule> matches, DateOnly date, TimeOnly time)
-    {
-        this.Id = id;
-        this.Matches = matches;
-        this.Date = date;
-        this.Time = time;
-    }
-
     /// <summary>
     /// Initializes an instance of the <see cref="Round"/> class
     /// </summary>
@@ -39,34 +31,22 @@ public class Round
     /// <summary>
     /// Gets or sets the Id
     /// </summary>
-    public int Id
-    {
-        get;
-    }
+    public int Id { get; } = id;
 
     /// <summary>
     /// Gets or sets the Matches
     /// </summary>
-    public IDictionary<int, MatchSchedule> Matches
-    {
-        get;
-    }
+    public IDictionary<int, MatchSchedule> Matches { get; } = matches;
 
     /// <summary>
     /// Gets or sets the date of the round.
     /// </summary>
-    public DateOnly Date
-    {
-        get;
-    }
+    public DateOnly Date { get; } = date;
 
     /// <summary>
     /// Gets or sets the time of the round.
     /// </summary>
-    public TimeOnly Time
-    {
-        get;
-    }
+    public TimeOnly Time { get; } = time;
 
     /// <summary>
     /// Creates a <see cref="Round"/> from an XML element

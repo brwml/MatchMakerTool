@@ -11,8 +11,16 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="Schedule" />
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="Schedule"/> class.
+/// </remarks>
+/// <param name="name">The schedule name</param>
+/// <param name="churches">The churches</param>
+/// <param name="quizzers">The quizzers</param>
+/// <param name="teams">The teams</param>
+/// <param name="rounds">The rounds</param>
 [DebuggerDisplay("Schedule {Name}")]
-public class Schedule
+public class Schedule(string name, IDictionary<int, Church> churches, IDictionary<int, Quizzer> quizzers, IDictionary<int, Team> teams, IDictionary<int, Round> rounds)
 {
     /// <summary>
     /// Gets an empty schedule instance.
@@ -20,45 +28,19 @@ public class Schedule
     public static Schedule Null { get; } = new Schedule(string.Empty, new Dictionary<int, Church>(), new Dictionary<int, Quizzer>(), new Dictionary<int, Team>(), new Dictionary<int, Round>());
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Schedule"/> class.
-    /// </summary>
-    /// <param name="name">The schedule name</param>
-    /// <param name="churches">The churches</param>
-    /// <param name="quizzers">The quizzers</param>
-    /// <param name="teams">The teams</param>
-    /// <param name="rounds">The rounds</param>
-    public Schedule(string name, IDictionary<int, Church> churches, IDictionary<int, Quizzer> quizzers, IDictionary<int, Team> teams, IDictionary<int, Round> rounds)
-    {
-        this.Name = name;
-        this.Churches = churches;
-        this.Teams = teams;
-        this.Quizzers = quizzers;
-        this.Rounds = rounds;
-    }
-
-    /// <summary>
     /// Gets or sets the Churches
     /// </summary>
-    public IDictionary<int, Church> Churches
-    {
-        get;
-    }
+    public IDictionary<int, Church> Churches { get; } = churches;
 
     /// <summary>
     /// Gets or sets the Name
     /// </summary>
-    public string Name
-    {
-        get; set;
-    }
+    public string Name { get; set; } = name;
 
     /// <summary>
     /// Gets or sets the Quizzers
     /// </summary>
-    public IDictionary<int, Quizzer> Quizzers
-    {
-        get;
-    }
+    public IDictionary<int, Quizzer> Quizzers { get; } = quizzers;
 
     /// <summary>
     /// Gets or sets the Rounds
@@ -66,18 +48,12 @@ public class Schedule
     /// <remarks>
     /// TODO: Make property read-only.
     /// </remarks>
-    public IDictionary<int, Round> Rounds
-    {
-        get; set;
-    }
+    public IDictionary<int, Round> Rounds { get; set; } = rounds;
 
     /// <summary>
     /// Gets or sets the Teams
     /// </summary>
-    public IDictionary<int, Team> Teams
-    {
-        get;
-    }
+    public IDictionary<int, Team> Teams { get; } = teams;
 
     /// <summary>
     /// Creates a <see cref="Schedule"/> from an <see cref="XDocument"/> and a <paramref name="name"/>.
@@ -125,7 +101,7 @@ public class Schedule
     private static IDictionary<int, Church> LoadChurches(XDocument document)
     {
         return document.XPathSelectElements("/members/churches/church")
-            .Select(x => Church.FromXml(x))
+            .Select(Church.FromXml)
             .ToDictionary(k => k.Id, v => v);
     }
 
@@ -137,7 +113,7 @@ public class Schedule
     private static IDictionary<int, Quizzer> LoadQuizzers(XDocument document)
     {
         return document.XPathSelectElements("/members/quizzers/quizzer")
-            .Select(x => Quizzer.FromXml(x))
+            .Select(Quizzer.FromXml)
             .ToDictionary(k => k.Id, v => v);
     }
 
@@ -149,7 +125,7 @@ public class Schedule
     private static IDictionary<int, Round> LoadRounds(XDocument document)
     {
         return document.XPathSelectElements("/members/schedule/round")
-            .Select(x => Round.FromXml(x))
+            .Select(Round.FromXml)
             .ToDictionary(k => k.Id, v => v);
     }
 
@@ -161,7 +137,7 @@ public class Schedule
     private static IDictionary<int, Team> LoadTeams(XDocument document)
     {
         return document.XPathSelectElements("/members/teams/team")
-            .Select(x => Team.FromXml(x))
+            .Select(Team.FromXml)
             .ToDictionary(k => k.Id, v => v);
     }
 

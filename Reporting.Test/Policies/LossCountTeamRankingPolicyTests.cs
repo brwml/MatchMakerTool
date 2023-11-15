@@ -34,8 +34,8 @@ public class LossCountTeamRankingPolicyTests
     {
         var summaries = new List<TeamSummary>
             {
-                new TeamSummary { TeamId = 1, Losses = 1 },
-                new TeamSummary { TeamId = 2, Losses = 2 }
+                new() { TeamId = 1, Losses = 1 },
+                new() { TeamId = 2, Losses = 2 }
             };
 
         var places = new Dictionary<int, int>
@@ -44,15 +44,15 @@ public class LossCountTeamRankingPolicyTests
                 { 2, 2 }
             };
 
-        return new object[] { summaries, places };
+        return [summaries, places];
     }
 
     private static object[] GetTestCase2()
     {
         var summaries = new List<TeamSummary>
             {
-                new TeamSummary { TeamId = 1, Losses = 1 },
-                new TeamSummary { TeamId = 2, Losses = 1 }
+                new() { TeamId = 1, Losses = 1 },
+                new() { TeamId = 2, Losses = 1 }
             };
 
         var places = new Dictionary<int, int>
@@ -61,6 +61,6 @@ public class LossCountTeamRankingPolicyTests
                 { 2, 1 }
             };
 
-        return new object[] { summaries, places };
+        return [summaries, places];
     }
 }

@@ -10,7 +10,12 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="Result" />
 /// </summary>
-public class Result
+/// <remarks>
+/// Initializes an instance of the <see cref="Result"/> class.
+/// </remarks>
+/// <param name="schedule">The schedule</param>
+/// <param name="matches">The matches</param>
+public class Result(Schedule schedule, IDictionary<int, MatchResult> matches)
 {
     /// <summary>
     /// Gets an empty result instance.
@@ -18,31 +23,14 @@ public class Result
     public static Result Null { get; } = new Result(Schedule.Null, new Dictionary<int, MatchResult>());
 
     /// <summary>
-    /// Initializes an instance of the <see cref="Result"/> class.
-    /// </summary>
-    /// <param name="schedule">The schedule</param>
-    /// <param name="matches">The matches</param>
-    public Result(Schedule schedule, IDictionary<int, MatchResult> matches)
-    {
-        this.Schedule = schedule;
-        this.Matches = matches;
-    }
-
-    /// <summary>
     /// Gets or sets the Matches
     /// </summary>
-    public IDictionary<int, MatchResult> Matches
-    {
-        get;
-    }
+    public IDictionary<int, MatchResult> Matches { get; } = matches;
 
     /// <summary>
     /// Gets or sets the Schedule
     /// </summary>
-    public Schedule Schedule
-    {
-        get;
-    }
+    public Schedule Schedule { get; } = schedule;
 
     /// <summary>
     /// Gets the Name

@@ -3,24 +3,16 @@
 /// <summary>
 /// The church view model
 /// </summary>
-internal class ChurchViewModel : IEquatable<ChurchViewModel>
+/// <remarks>
+/// Initializes a new instance of the <see cref="ChurchViewModel"/> class.
+/// </remarks>
+/// <param name="name">The name of the church</param>
+internal class ChurchViewModel(string name) : IEquatable<ChurchViewModel>
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ChurchViewModel"/> class.
-    /// </summary>
-    /// <param name="name">The name of the church</param>
-    public ChurchViewModel(string name)
-    {
-        this.Name = name;
-    }
-
     /// <summary>
     /// Gets the name of the church.
     /// </summary>
-    public string Name
-    {
-        get; set;
-    }
+    public string Name { get; set; } = name;
 
     /// <summary>
     /// Determines whether the other view model instance is equal to the current view model instance.

@@ -56,13 +56,14 @@ public static class SummaryExporter
         {
             foreach (var quizzerSummary in summary.QuizzerSummaries)
             {
-                if (!quizzerSummaries.ContainsKey(quizzerSummary.Key))
+                if (quizzerSummaries.TryGetValue(quizzerSummary.Key, out var quizzer))
+                {
+                    quizzer.Results.Add(summary.Name, quizzerSummary.Value);
+                }
+                else
                 {
                     quizzerSummaries.Add(quizzerSummary.Key, CreateInternalQuizzerSummary(summary, quizzerSummary.Value));
                 }
-
-                var quizzer = quizzerSummaries[quizzerSummary.Key];
-                quizzer.Results.Add(summary.Name, quizzerSummary.Value);
             }
         }
 
@@ -146,38 +147,26 @@ public static class SummaryExporter
     /// <summary>
     /// Defines the <see cref="InternalQuizzerSummary" />
     /// </summary>
-    private class InternalQuizzerSummary
+    /// <remarks>
+    /// Initializes an instance of the <see cref="InternalQuizzerSummary"/> class.
+    /// </remarks>
+    /// <param name="name">The quizzer name</param>
+    /// <param name="church">The quizzer church</param>
+    private class InternalQuizzerSummary(string name, string church)
     {
-        /// <summary>
-        /// Initializes an instance of the <see cref="InternalQuizzerSummary"/> class.
-        /// </summary>
-        /// <param name="name">The quizzer name</param>
-        /// <param name="church">The quizzer church</param>
-        public InternalQuizzerSummary(string name, string church)
-        {
-            this.Name = name;
-            this.Church = church;
-        }
-
         /// <summary>
         /// Gets or sets the Church
         /// </summary>
-        public string Church
-        {
-            get; set;
-        }
+        public string Church { get; set; } = church;
 
         /// <summary>
         /// Gets or sets the Name
         /// </summary>
-        public string Name
-        {
-            get; set;
-        }
+        public string Name { get; set; } = name;
 
         /// <summary>
         /// Gets the Results
         /// </summary>
-        public Dictionary<string, QuizzerSummary> Results { get; } = new Dictionary<string, QuizzerSummary>();
+        public Dictionary<string, QuizzerSummary> Results { get; } = [];
     }
 }

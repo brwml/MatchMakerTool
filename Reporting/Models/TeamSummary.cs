@@ -17,15 +17,6 @@ using MatchMaker.Reporting.Policies;
 public class TeamSummary
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="TeamSummary"/> class.
-    /// </summary>
-    public TeamSummary()
-    {
-        this.TieBreak = TieBreak.None;
-        this.Place = 1;
-    }
-
-    /// <summary>
     /// Gets the average errors
     /// </summary>
     public decimal AverageErrors => Convert.ToDecimal(this.TotalErrors) / Convert.ToDecimal(this.TotalRounds);
@@ -46,10 +37,7 @@ public class TeamSummary
     /// <summary>
     /// Gets or sets the Place
     /// </summary>
-    public int Place
-    {
-        get; set;
-    }
+    public int Place { get; set; } = 1;
 
     /// <summary>
     /// Gets or sets the team identifier
@@ -62,10 +50,7 @@ public class TeamSummary
     /// <summary>
     /// Gets or sets the tie breaker
     /// </summary>
-    public TieBreak TieBreak
-    {
-        get; set;
-    }
+    public TieBreak TieBreak { get; set; } = TieBreak.None;
 
     /// <summary>
     /// Gets or sets the total errors

@@ -8,45 +8,29 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="QuizzerResult" />
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="QuizzerResult"/> class.
+/// </remarks>
+/// <param name="id">The quizzer identifier</param>
+/// <param name="score">The quizzer score</param>
+/// <param name="errors">The quizzer errors</param>
 [DebuggerDisplay("Quizzer Result (Quizzer {QuizzerId}, Score {Score}, Errors {Errors})")]
-public class QuizzerResult
+public class QuizzerResult(int id, int score, int errors)
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="QuizzerResult"/> class.
-    /// </summary>
-    /// <param name="id">The quizzer identifier</param>
-    /// <param name="score">The quizzer score</param>
-    /// <param name="errors">The quizzer errors</param>
-    public QuizzerResult(int id, int score, int errors)
-    {
-        this.QuizzerId = id;
-        this.Score = score;
-        this.Errors = errors;
-    }
-
     /// <summary>
     /// Gets or sets the Errors
     /// </summary>
-    public int Errors
-    {
-        get;
-    }
+    public int Errors { get; } = errors;
 
     /// <summary>
     /// Gets or sets the quizzer identifier
     /// </summary>
-    public int QuizzerId
-    {
-        get;
-    }
+    public int QuizzerId { get; } = id;
 
     /// <summary>
     /// Gets or sets the Score
     /// </summary>
-    public int Score
-    {
-        get;
-    }
+    public int Score { get; } = score;
 
     /// <summary>
     /// Creates a <see cref="QuizzerResult"/> instance from an XML element.

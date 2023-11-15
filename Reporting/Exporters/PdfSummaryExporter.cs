@@ -82,14 +82,14 @@ public class PdfSummaryExporter : BaseSummaryExporter
     /// <returns>The <see cref="PdfPRow"/> instance</returns>
     private static Cell[] CreateQuizzerHeaderRow()
     {
-        return new[]
-        {
+        return
+        [
             CreateHeaderCell(string.Empty),
             CreateHeaderCell("Quizzer Name"),
             CreateHeaderCell("Church"),
             CreateHeaderCell("Score"),
             CreateHeaderCell("Errors")
-        };
+        ];
     }
 
     /// <summary>
@@ -110,14 +110,14 @@ public class PdfSummaryExporter : BaseSummaryExporter
     /// <returns>The <see cref="PdfPRow"/> instance</returns>
     private static Cell[] CreateQuizzerRow(QuizzerInfo quizzer)
     {
-        return new[]
-        {
+        return
+        [
             CreateCell(quizzer.ShowPlace ? quizzer.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
             CreateCell(FormattableString.Invariant($"{quizzer.FullName}{GetRookieTag(quizzer.IsRookie)}")),
             CreateCell(FormattableString.Invariant($"{quizzer.Church.Name}")),
             CreateCell(FormattableString.Invariant($"{quizzer.AverageScore.ToString("N2", CultureInfo.CurrentCulture)}")),
             CreateCell(FormattableString.Invariant($"{quizzer.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)}"))
-        };
+        ];
     }
 
     /// <summary>
@@ -136,8 +136,8 @@ public class PdfSummaryExporter : BaseSummaryExporter
     /// <returns>The <see cref="PdfPRow"/> instance</returns>
     private static Cell[] CreateTeamHeaderRow()
     {
-        return new[]
-        {
+        return
+        [
             CreateHeaderCell(string.Empty),
             CreateHeaderCell("Team Name"),
             CreateHeaderCell("W"),
@@ -145,7 +145,7 @@ public class PdfSummaryExporter : BaseSummaryExporter
             CreateHeaderCell("Score"),
             CreateHeaderCell("Errors"),
             CreateHeaderCell("Tie Breaker")
-        };
+        ];
     }
 
     /// <summary>
@@ -169,8 +169,8 @@ public class PdfSummaryExporter : BaseSummaryExporter
     /// <returns>The <see cref="PdfPRow"/> instance</returns>
     private static Cell[] CreateTeamRow(TeamInfo team)
     {
-        return new[]
-        {
+        return
+        [
             CreateCell(team.ShowPlace ? team.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
             CreateCell(team.Name),
             CreateCell(team.Wins.ToString(CultureInfo.CurrentCulture)),
@@ -178,7 +178,7 @@ public class PdfSummaryExporter : BaseSummaryExporter
             CreateCell(team.AverageScore.ToString("N2", CultureInfo.CurrentCulture)),
             CreateCell(team.AverageErrors.ToString("N2", CultureInfo.CurrentCulture)),
             CreateCell(team.TieBreak.ToString())
-        };
+        ];
     }
 
     /// <summary>

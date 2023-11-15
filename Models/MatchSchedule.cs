@@ -9,45 +9,29 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="MatchSchedule" />
 /// </summary>
+/// <remarks>
+/// Initializes an instance of the <see cref="MatchSchedule"/> class.
+/// </remarks>
+/// <param name="id">The identifier</param>
+/// <param name="room">The room</param>
+/// <param name="teams">The teams</param>
 [DebuggerDisplay("Match {Id} (Room {Room})")]
-public class MatchSchedule
+public class MatchSchedule(int id, int room, IList<int> teams)
 {
-    /// <summary>
-    /// Initializes an instance of the <see cref="MatchSchedule"/> class.
-    /// </summary>
-    /// <param name="id">The identifier</param>
-    /// <param name="room">The room</param>
-    /// <param name="teams">The teams</param>
-    public MatchSchedule(int id, int room, IList<int> teams)
-    {
-        this.Id = id;
-        this.Room = room;
-        this.Teams = teams;
-    }
-
     /// <summary>
     /// Gets or sets the Id
     /// </summary>
-    public int Id
-    {
-        get;
-    }
+    public int Id { get; } = id;
 
     /// <summary>
     /// Gets or sets the room identifier
     /// </summary>
-    public int Room
-    {
-        get; set;
-    }
+    public int Room { get; set; } = room;
 
     /// <summary>
     /// Gets or sets the Teams
     /// </summary>
-    public IList<int> Teams
-    {
-        get;
-    }
+    public IList<int> Teams { get; } = teams;
 
     /// <summary>
     /// Creates a <see cref="MatchSchedule"/> instance from an XML element.

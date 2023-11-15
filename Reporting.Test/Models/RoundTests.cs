@@ -44,11 +44,11 @@ public class RoundTests
 
     public static IEnumerable<object[]> CreateRoundTests()
     {
-        return new[]
-        {
-            new object[]{ Case1, 1, new DateOnly(2021, 11, 1), new TimeOnly(17, 55) },
-            new object[]{ Case2, 1, DateOnly.FromDateTime(DateTime.Now), TimeOnly.FromDateTime(DateTime.Now) }
-        };
+        return
+        [
+            [Case1, 1, new DateOnly(2021, 11, 1), new TimeOnly(17, 55)],
+            [Case2, 1, DateOnly.FromDateTime(DateTime.Now), TimeOnly.FromDateTime(DateTime.Now)]
+        ];
     }
 
     public static IEnumerable<object[]> CreateXmlTests()

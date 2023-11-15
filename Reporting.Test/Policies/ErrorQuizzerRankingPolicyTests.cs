@@ -25,10 +25,10 @@ public class ErrorQuizzerRankingPolicyTests
     public static IEnumerable<object[]> GetTestCases()
     {
         return new List<object[]>
-            {
-                GetTestCase1(),
-                GetTestCase2()
-            };
+        {
+            GetTestCase1(),
+            GetTestCase2()
+        };
     }
 
     private static object[] GetTestCase1()
@@ -37,18 +37,18 @@ public class ErrorQuizzerRankingPolicyTests
         var errors = faker.Random.Number(1, 100);
 
         var summaries = new List<QuizzerSummary>
-            {
-                new QuizzerSummary { QuizzerId = 1, TotalErrors = errors },
-                new QuizzerSummary { QuizzerId = 2, TotalErrors = errors + 1 }
-            };
+        {
+            new() { QuizzerId = 1, TotalErrors = errors },
+            new() { QuizzerId = 2, TotalErrors = errors + 1 }
+        };
 
         var places = new Dictionary<int, int>
-            {
-                { 1, 1 },
-                { 2, 2 }
-            };
+        {
+            { 1, 1 },
+            { 2, 2 }
+        };
 
-        return new object[] { summaries, places };
+        return [summaries, places];
     }
 
     private static object[] GetTestCase2()
@@ -57,17 +57,17 @@ public class ErrorQuizzerRankingPolicyTests
         var errors = faker.Random.Number(1, 100);
 
         var summaries = new List<QuizzerSummary>
-            {
-                new QuizzerSummary { QuizzerId = 1, TotalErrors = errors },
-                new QuizzerSummary { QuizzerId = 2, TotalErrors = errors }
-            };
+        {
+            new() { QuizzerId = 1, TotalErrors = errors },
+            new() { QuizzerId = 2, TotalErrors = errors }
+        };
 
         var places = new Dictionary<int, int>
-            {
-                { 1, 1 },
-                { 2, 1 }
-            };
+        {
+            { 1, 1 },
+            { 2, 1 }
+        };
 
-        return new object[] { summaries, places };
+        return [summaries, places];
     }
 }

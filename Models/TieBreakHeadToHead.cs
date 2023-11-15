@@ -3,43 +3,26 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Ardalis.GuardClauses;
-
 /// <summary>
 /// Defines the <see cref="TieBreakHeadToHead" />
 /// </summary>
-public class TieBreakHeadToHead : TieBreak
+/// <remarks>
+/// Initializes a new instance of the <see cref="TieBreakHeadToHead"/> class.
+/// </remarks>
+/// <param name="results">The <see cref="IEnumerable{MatchResult}"/>. This </param>
+/// <param name="teams">The <see cref="IDictionary{int, Team}"/></param>
+public class TieBreakHeadToHead(IEnumerable<MatchResult> results, IDictionary<int, Team> teams) : TieBreak(TieBreakReason.HeadToHead)
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="TieBreakHeadToHead"/> class.
-    /// </summary>
-    /// <param name="results">The <see cref="IEnumerable{MatchResult}"/>. This </param>
-    /// <param name="teams">The <see cref="IDictionary{int, Team}"/></param>
-    public TieBreakHeadToHead(IEnumerable<MatchResult> results, IDictionary<int, Team> teams)
-        : base(TieBreakReason.HeadToHead)
-    {
-        Guard.Against.Null(results);
-        Guard.Against.NullOrEmpty(teams);
-
-        this.Results = results;
-        this.Teams = teams;
-    }
 
     /// <summary>
     /// Gets the Teams
     /// </summary>
-    public IDictionary<int, Team> Teams
-    {
-        get;
-    }
+    public IDictionary<int, Team> Teams { get; } = teams;
 
     /// <summary>
     /// Gets or sets the Results
     /// </summary>
-    private IEnumerable<MatchResult> Results
-    {
-        get;
-    }
+    private IEnumerable<MatchResult> Results { get; } = results;
 
     /// <summary>
     /// Creates a <see cref="string"/> describing the head-to-head matches that produced the tie breaker.

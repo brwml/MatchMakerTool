@@ -20,15 +20,6 @@ using MatchMaker.Reporting.Policies;
 public class QuizzerSummary
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="QuizzerSummary"/> class.
-    /// </summary>
-    public QuizzerSummary()
-    {
-        this.Place = 1;
-        this.TotalRounds = 1;
-    }
-
-    /// <summary>
     /// Gets the average errors
     /// </summary>
     public decimal AverageErrors => Convert.ToDecimal(this.TotalErrors) / Convert.ToDecimal(this.TotalRounds);
@@ -41,10 +32,7 @@ public class QuizzerSummary
     /// <summary>
     /// Gets or sets the Place
     /// </summary>
-    public int Place
-    {
-        get; set;
-    }
+    public int Place { get; set; } = 1;
 
     /// <summary>
     /// Gets or sets the quizzer identifier
@@ -65,10 +53,7 @@ public class QuizzerSummary
     /// <summary>
     /// Gets or sets the total rounds
     /// </summary>
-    public int TotalRounds
-    {
-        get; set;
-    }
+    public int TotalRounds { get; set; } = 1;
 
     /// <summary>
     /// Gets or sets the total score

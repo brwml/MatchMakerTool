@@ -16,7 +16,7 @@ internal static class TeamAssignerUtility
 
     public static int GetMaxTeamSize(int numberOfTeams, int numberOfQuizzers)
     {
-        var quotient = Math.DivRem(numberOfQuizzers, numberOfTeams);
-        return quotient.Quotient + (quotient.Remainder > 0 ? 1 : 0);
+        var (Quotient, Remainder) = Math.DivRem(numberOfQuizzers, numberOfTeams);
+        return Quotient + (Remainder > 0 ? 1 : 0);
     }
 }

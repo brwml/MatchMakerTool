@@ -11,44 +11,28 @@ using MatchMaker.Reporting.Policies;
 /// <summary>
 /// Defines the <see cref="Summary" />
 /// </summary>
-public class Summary
+/// <remarks>
+/// Initializes an instance of the <see cref="Summary"/> class.
+/// </remarks>
+/// <param name="result">The results</param>
+/// <param name="teamSummaries">The team summaries</param>
+/// <param name="quizzerSummaries">The quizzer summaries</param>
+public class Summary(Result result, IEnumerable<TeamRankingPolicy> policies)
 {
-    /// <summary>
-    /// Initializes an instance of the <see cref="Summary"/> class.
-    /// </summary>
-    /// <param name="result">The results</param>
-    /// <param name="teamSummaries">The team summaries</param>
-    /// <param name="quizzerSummaries">The quizzer summaries</param>
-    public Summary(Result result, IEnumerable<TeamRankingPolicy> policies)
-    {
-        this.Result = result;
-        this.TeamSummaries = TeamSummary.FromResult(result, policies);
-        this.QuizzerSummaries = QuizzerSummary.FromResult(result);
-    }
-
     /// <summary>
     /// Gets or sets the quizzer summaries
     /// </summary>
-    public IDictionary<int, QuizzerSummary> QuizzerSummaries
-    {
-        get;
-    }
+    public IDictionary<int, QuizzerSummary> QuizzerSummaries { get; } = QuizzerSummary.FromResult(result);
 
     /// <summary>
     /// Gets or sets the Result
     /// </summary>
-    public Result Result
-    {
-        get;
-    }
+    public Result Result { get; } = result;
 
     /// <summary>
     /// Gets or sets the team summaries
     /// </summary>
-    public IDictionary<int, TeamSummary> TeamSummaries
-    {
-        get;
-    }
+    public IDictionary<int, TeamSummary> TeamSummaries { get; } = TeamSummary.FromResult(result, policies);
 
     /// <summary>
     /// Gets the Name

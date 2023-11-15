@@ -149,7 +149,7 @@ public static class TournamentExporter
 
         for (var i = 0; i < numberOfAlternateTeams; i++)
         {
-            teams.Add(new List<Quizzer>());
+            teams.Add([]);
         }
 
         for (var i = 0; i < quizzers.Count; i++)

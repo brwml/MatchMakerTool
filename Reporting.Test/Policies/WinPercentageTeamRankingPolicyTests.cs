@@ -40,8 +40,8 @@ public class WinPercentageTeamRankingPolicyTests
 
         var summaries = new List<TeamSummary>
             {
-                new TeamSummary { TeamId = 1, Wins = wins, Losses = losses },
-                new TeamSummary { TeamId = 2, Wins = wins, Losses = losses + 1 }
+                new() { TeamId = 1, Wins = wins, Losses = losses },
+                new() { TeamId = 2, Wins = wins, Losses = losses + 1 }
             };
 
         var places = new Dictionary<int, int>
@@ -50,7 +50,7 @@ public class WinPercentageTeamRankingPolicyTests
                 { 2, 2 }
             };
 
-        return new object[] { summaries, places };
+        return [summaries, places];
     }
 
     private static object[] GetTestCase2()
@@ -61,8 +61,8 @@ public class WinPercentageTeamRankingPolicyTests
 
         var summaries = new List<TeamSummary>
             {
-                new TeamSummary { TeamId = 1, Wins = wins, Losses = losses },
-                new TeamSummary { TeamId = 2, Wins = wins, Losses = losses }
+                new() { TeamId = 1, Wins = wins, Losses = losses },
+                new() { TeamId = 2, Wins = wins, Losses = losses }
             };
 
         var places = new Dictionary<int, int>
@@ -71,6 +71,6 @@ public class WinPercentageTeamRankingPolicyTests
                 { 2, 1 }
             };
 
-        return new object[] { summaries, places };
+        return [summaries, places];
     }
 }

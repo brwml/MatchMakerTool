@@ -66,6 +66,7 @@ public class HeadToHeadTeamRankingPolicy : TeamRankingPolicy
             }
             else
             {
+                // TODO: The suggestion on this line produces more confusing code. Figure out how to use collection initialization here in a clean manner.
                 ordered[position] = ordered[position].Concat(ordered[position + 1]).ToList();
                 ordered.RemoveAt(position + 1);
                 position = 0;

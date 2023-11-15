@@ -44,7 +44,7 @@ public class OrderedTeamAssignerTests
 
     private static object[] Unroll((Schedule, int, int, Schedule) tuple)
     {
-        return new object[] { tuple.Item2, tuple.Item3, tuple.Item1, tuple.Item4 };
+        return [tuple.Item2, tuple.Item3, tuple.Item1, tuple.Item4];
     }
 
     private static IEnumerable<(Schedule, int, int, Schedule)> BuildCase(int countChurches, int countTeams, int countQuizzers)

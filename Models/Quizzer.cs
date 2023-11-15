@@ -8,85 +8,53 @@ using Ardalis.GuardClauses;
 /// <summary>
 /// Defines the <see cref="Quizzer" />
 /// </summary>
+/// <remarks>
+/// Initializes an instance of the <see cref="Quizzer"/> class.
+/// </remarks>
+/// <param name="id">The identifier</param>
+/// <param name="firstName">The first name</param>
+/// <param name="lastName">The last name</param>
+/// <param name="gender">The gender</param>
+/// <param name="rookieYear">The rookie year</param>
+/// <param name="teamId">The team identifier</param>
+/// <param name="churchId">The church identifier</param>
 [DebuggerDisplay("Quizzer {FirstName} {LastName} ({Id}, Church {ChurchId}, Team {TeamId})")]
-public class Quizzer
+public class Quizzer(int id, string firstName, string lastName, Gender gender, int rookieYear, int teamId, int churchId)
 {
-    /// <summary>
-    /// Initializes an instance of the <see cref="Quizzer"/> class.
-    /// </summary>
-    /// <param name="id">The identifier</param>
-    /// <param name="firstName">The first name</param>
-    /// <param name="lastName">The last name</param>
-    /// <param name="gender">The gender</param>
-    /// <param name="rookieYear">The rookie year</param>
-    /// <param name="teamId">The team identifier</param>
-    /// <param name="churchId">The church identifier</param>
-    public Quizzer(int id, string firstName, string lastName, Gender gender, int rookieYear, int teamId, int churchId)
-    {
-        this.Id = id;
-        this.FirstName = firstName;
-        this.LastName = lastName;
-        this.Gender = gender;
-        this.RookieYear = rookieYear;
-        this.TeamId = teamId;
-        this.ChurchId = churchId;
-    }
-
     /// <summary>
     /// Gets or sets the church identifier
     /// </summary>
-    public int ChurchId
-    {
-        get;
-    }
+    public int ChurchId { get; } = churchId;
 
     /// <summary>
     /// Gets or sets the first name
     /// </summary>
-    public string FirstName
-    {
-        get;
-    }
+    public string FirstName { get; } = firstName;
 
     /// <summary>
     /// Gets or sets the Gender
     /// </summary>
-    public Gender Gender
-    {
-        get;
-    }
+    public Gender Gender { get; } = gender;
 
     /// <summary>
     /// Gets or sets the Id
     /// </summary>
-    public int Id
-    {
-        get;
-    }
+    public int Id { get; } = id;
 
     /// <summary>
     /// Gets or sets the last name
     /// </summary>
-    public string LastName
-    {
-        get;
-    }
+    public string LastName { get; } = lastName;
 
     /// <summary>
     /// Gets or sets the rookie year
     /// </summary>
-    public int RookieYear
-    {
-        get;
-    }
+    public int RookieYear { get; } = rookieYear;
 
     /// <summary>
     /// Gets or sets the team identifier
     /// </summary>
-    public int TeamId
-    {
-        get;
-    }
+    public int TeamId { get; } = teamId;
 
     /// <summary>
     /// Creates a new <see cref="Quizzer"/> instance from an XML element.

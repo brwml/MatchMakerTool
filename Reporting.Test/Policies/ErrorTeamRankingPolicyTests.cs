@@ -39,8 +39,8 @@ public class ErrorTeamRankingPolicyTests
 
         var summaries = new List<TeamSummary>
             {
-                new TeamSummary { TeamId = 1, TotalErrors = errors, Wins = 1 },
-                new TeamSummary { TeamId = 2, TotalErrors = errors + 1, Wins = 1 }
+                new() { TeamId = 1, TotalErrors = errors, Wins = 1 },
+                new() { TeamId = 2, TotalErrors = errors + 1, Wins = 1 }
             };
 
         var places = new Dictionary<int, int>
@@ -49,7 +49,7 @@ public class ErrorTeamRankingPolicyTests
                 { 2, 2 }
             };
 
-        return new object[] { summaries, places };
+        return [summaries, places];
     }
 
     private static object[] GetTestCase2()
@@ -59,8 +59,8 @@ public class ErrorTeamRankingPolicyTests
 
         var summaries = new List<TeamSummary>
             {
-                new TeamSummary { TeamId = 1, TotalErrors = errors, Wins = 1 },
-                new TeamSummary { TeamId = 2, TotalErrors = errors, Wins = 1 }
+                new() { TeamId = 1, TotalErrors = errors, Wins = 1 },
+                new() { TeamId = 2, TotalErrors = errors, Wins = 1 }
             };
 
         var places = new Dictionary<int, int>
@@ -69,6 +69,6 @@ public class ErrorTeamRankingPolicyTests
                 { 2, 1 }
             };
 
-        return new object[] { summaries, places };
+        return [summaries, places];
     }
 }
