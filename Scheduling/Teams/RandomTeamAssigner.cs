@@ -4,8 +4,21 @@ using Humanizer;
 
 using MatchMaker.Models;
 
+/// <summary>
+/// Assigns quizzers to teams randomly.
+/// </summary>
+/// <seealso cref="ITeamAssigner" />
 public class RandomTeamAssigner : ITeamAssigner
 {
+    /// <summary>
+    /// Assigns the teams in the schedule.
+    /// </summary>
+    /// <param name="schedule">The schedule.</param>
+    /// <param name="numberOfRooms">The number of rooms.</param>
+    /// <param name="numberOfTeams">The number of teams.</param>
+    /// <returns>
+    /// The <see cref="Schedule" /> instance
+    /// </returns>
     public Schedule Create(Schedule schedule, int numberOfRooms, int numberOfTeams)
     {
         var teams = CreateTeams(GetNumberOfTeams(numberOfRooms, numberOfTeams));
@@ -19,7 +32,13 @@ public class RandomTeamAssigner : ITeamAssigner
             new Dictionary<int, Round>());
     }
 
-    private static Dictionary<int, Quizzer> CreateQuizzers(Schedule schedule, IDictionary<int, Team> teams)
+    /// <summary>
+    /// Creates the quizzers map.
+    /// </summary>
+    /// <param name="schedule">The schedule.</param>
+    /// <param name="teams">The teams.</param>
+    /// <returns>The quizzers map</returns>
+    private static Dictionary<int, Quizzer> CreateQuizzers(Schedule schedule, Dictionary<int, Team> teams)
     {
         var teamId = 0;
         var quizzerId = 0;
@@ -46,7 +65,12 @@ public class RandomTeamAssigner : ITeamAssigner
         return quizzers;
     }
 
-    private static IDictionary<int, Team> CreateTeams(int numberOfTeams)
+    /// <summary>
+    /// Creates the teams map.
+    /// </summary>
+    /// <param name="numberOfTeams">The number of teams.</param>
+    /// <returns>The teams map</returns>
+    private static Dictionary<int, Team> CreateTeams(int numberOfTeams)
     {
         var teamMap = new Dictionary<int, Team>();
 
@@ -58,6 +82,12 @@ public class RandomTeamAssigner : ITeamAssigner
         return teamMap;
     }
 
+    /// <summary>
+    /// Gets the number of teams.
+    /// </summary>
+    /// <param name="numberOfRooms">The number of rooms.</param>
+    /// <param name="numberOfTeams">The number of teams.</param>
+    /// <returns>The number of teams</returns>
     private static int GetNumberOfTeams(int numberOfRooms, int numberOfTeams)
     {
         return Math.Max(numberOfTeams, numberOfRooms * 2);

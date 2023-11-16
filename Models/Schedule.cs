@@ -97,8 +97,8 @@ public class Schedule(string name, IDictionary<int, Church> churches, IDictionar
     /// Loads the churches from the <see cref="XDocument"/>
     /// </summary>
     /// <param name="document">The <see cref="XDocument"/></param>
-    /// <returns>The <see cref="IDictionary{int, Church}"/></returns>
-    private static IDictionary<int, Church> LoadChurches(XDocument document)
+    /// <returns>The <see cref="Dictionary{int, Church}"/></returns>
+    private static Dictionary<int, Church> LoadChurches(XDocument document)
     {
         return document.XPathSelectElements("/members/churches/church")
             .Select(Church.FromXml)
@@ -109,8 +109,8 @@ public class Schedule(string name, IDictionary<int, Church> churches, IDictionar
     /// Loads the quizzers from the <see cref="XDocument"/>
     /// </summary>
     /// <param name="document">The <see cref="XDocument"/></param>
-    /// <returns>The <see cref="IDictionary{int, Quizzer}"/></returns>
-    private static IDictionary<int, Quizzer> LoadQuizzers(XDocument document)
+    /// <returns>The <see cref="Dictionary{int, Quizzer}"/></returns>
+    private static Dictionary<int, Quizzer> LoadQuizzers(XDocument document)
     {
         return document.XPathSelectElements("/members/quizzers/quizzer")
             .Select(Quizzer.FromXml)
@@ -121,8 +121,8 @@ public class Schedule(string name, IDictionary<int, Church> churches, IDictionar
     /// Loads the rounds from the <see cref="XDocument"/>
     /// </summary>
     /// <param name="document">The <see cref="XDocument"/></param>
-    /// <returns>The <see cref="IDictionary{int, Round}"/></returns>
-    private static IDictionary<int, Round> LoadRounds(XDocument document)
+    /// <returns>The <see cref="Dictionary{int, Round}"/></returns>
+    private static Dictionary<int, Round> LoadRounds(XDocument document)
     {
         return document.XPathSelectElements("/members/schedule/round")
             .Select(Round.FromXml)
@@ -133,8 +133,8 @@ public class Schedule(string name, IDictionary<int, Church> churches, IDictionar
     /// Loads the teams from the <see cref="XDocument"/>
     /// </summary>
     /// <param name="document">The <see cref="XDocument"/></param>
-    /// <returns>The <see cref="IDictionary{int, Team}"/></returns>
-    private static IDictionary<int, Team> LoadTeams(XDocument document)
+    /// <returns>The <see cref="Dictionary{int, Team}"/></returns>
+    private static Dictionary<int, Team> LoadTeams(XDocument document)
     {
         return document.XPathSelectElements("/members/teams/team")
             .Select(Team.FromXml)
