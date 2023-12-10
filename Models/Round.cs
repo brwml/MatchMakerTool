@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -17,6 +18,7 @@ using Ardalis.GuardClauses;
 /// <param name="matches">The matches</param>
 /// <param name="date">The date</param>
 /// <param name="time">The time</param>
+[DebuggerDisplay("Round {Id}")]
 public class Round(int id, IDictionary<int, MatchSchedule> matches, DateOnly date, TimeOnly time)
 {
     /// <summary>
