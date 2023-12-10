@@ -20,13 +20,17 @@ public class MatchScheduleTests
         Assert.Equal(expected.Teams, actual.Teams);
     }
 
-    public static IEnumerable<object[]> MatchSchedules()
+    public static TheoryData<MatchSchedule> MatchSchedules()
     {
+        var data = new TheoryData<MatchSchedule>();
         var faker = new Faker();
 
         for (var i = 0; i < 100; i++)
         {
-            yield return new object[] { new MatchSchedule(faker.Random.Int(), faker.Random.Int(), new List<int> { faker.Random.Int(), faker.Random.Int() }) };
+            data.Add(
+                new MatchSchedule(faker.Random.Int(), faker.Random.Int(), new List<int> { faker.Random.Int(), faker.Random.Int() }));
         }
+
+        return data;
     }
 }

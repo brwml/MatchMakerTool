@@ -34,17 +34,17 @@ public class HeadToHeadTeamRankingTests
         return Summary.FromResult(result, new[] { new HeadToHeadTeamRankingPolicy() });
     }
 
-    public static IEnumerable<object[]> GetHeadToHeadTestCases()
+    public static TheoryData<string, IDictionary<int, int>> GetHeadToHeadTestCases()
     {
-        return new List<object[]>
+        return new TheoryData<string, IDictionary<int, int>>
         {
-            new object[]{ "0002", new Dictionary<int, int>{ { 1, 1 }, { 2, 2 } } },
-            new object[]{ "0003", new Dictionary<int, int>{ { 1, 1 }, { 2, 1 } } },
-            new object[]{ "0007", new Dictionary<int, int>{ { 1, 1 }, { 2, 3 }, { 3, 1 } } },
-            new object[]{ "0008", new Dictionary<int, int>{ { 1, 1 }, { 2, 2 }, { 3, 2 } } },
-            new object[]{ "0015", new Dictionary<int, int>{ { 1, 1 }, { 2, 1 }, { 3, 1 } } },
-            new object[]{ "0019", new Dictionary<int, int>{ { 1, 1 }, { 2, 1 }, { 3, 1 }, { 4, 1 } } },
-            new object[]{ "0035", new Dictionary<int, int>{ { 1, 1 }, { 2, 1 }, { 3, 3 }, { 4, 3 }, { 5, 3 }, { 6, 6 }, { 7, 6 }, { 8, 8 } } },
+            { "0002", new Dictionary<int, int>{ { 1, 1 }, { 2, 2 } } },
+            { "0003", new Dictionary<int, int>{ { 1, 1 }, { 2, 1 } } },
+            { "0007", new Dictionary<int, int>{ { 1, 1 }, { 2, 3 }, { 3, 1 } } },
+            { "0008", new Dictionary<int, int>{ { 1, 1 }, { 2, 2 }, { 3, 2 } } },
+            { "0015", new Dictionary<int, int>{ { 1, 1 }, { 2, 1 }, { 3, 1 } } },
+            { "0019", new Dictionary<int, int>{ { 1, 1 }, { 2, 1 }, { 3, 1 }, { 4, 1 } } },
+            { "0035", new Dictionary<int, int>{ { 1, 1 }, { 2, 1 }, { 3, 3 }, { 4, 3 }, { 5, 3 }, { 6, 6 }, { 7, 6 }, { 8, 8 } } },
         };
     }
 }

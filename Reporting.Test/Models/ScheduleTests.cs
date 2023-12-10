@@ -1,6 +1,5 @@
 ﻿namespace Reporting.Test.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using Bogus;
@@ -23,8 +22,10 @@ public class ScheduleTests
         Assert.Equal(expected.Rounds.Select(x => x.Key), actual.Rounds.Select(x => x.Key));
     }
 
-    public static IEnumerable<object[]> GetScheduleTests()
+    public static TheoryData<Schedule> GetScheduleTests()
     {
+        var data = new TheoryData<Schedule>();
+
         for (var i = 0; i < 100; i++)
         {
             var faker = new Faker();
@@ -65,15 +66,15 @@ public class ScheduleTests
                 new Round(faker.Random.Int(), matches.ToDictionary(x => x.Id, x => x), DateOnly.FromDateTime(faker.Date.Future()), TimeOnly.FromDateTime(faker.Date.Future()))
             };
 
-            yield return new object[]
-            {
+            data.Add(
                 new Schedule(
                     faker.Random.String2(faker.Random.Int(10, 100)),
                     churches.ToDictionary(x => x.Id, x => x),
-                    quizzers.ToDictionary(x => x.Id, x=>x),
-                    teams.ToDictionary(x => x.Id,x=>x),
-                    rounds.ToDictionary(x => x.Id, x=>x))
-            };
+                    quizzers.ToDictionary(x => x.Id, x => x),
+                    teams.ToDictionary(x => x.Id, x => x),
+                    rounds.ToDictionary(x => x.Id, x => x)));
         }
+
+        return data;
     }
 }

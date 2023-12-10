@@ -19,13 +19,16 @@ public class ChurchTests
         Assert.Equal(expected.Name, actual.Name);
     }
 
-    public static IEnumerable<object[]> ChurchTestData()
+    public static TheoryData<Church> ChurchTestData()
     {
         var faker = new Faker();
+        var data = new TheoryData<Church>();
 
         for (var i = 0; i < 100; i++)
         {
-            yield return new object[] { new Church(faker.Random.Int(), faker.Random.String(faker.Random.Int(10, 100))) };
+            data.Add(new Church(faker.Random.Int(), faker.Random.String(faker.Random.Int(10, 100))));
         }
+
+        return data;
     }
 }

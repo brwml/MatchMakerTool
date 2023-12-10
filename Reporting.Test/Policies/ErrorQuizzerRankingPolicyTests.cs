@@ -22,16 +22,22 @@ public class ErrorQuizzerRankingPolicyTests
         Assert.Equal(places, summaries.ToDictionary(x => x.QuizzerId, y => y.Place));
     }
 
-    public static IEnumerable<object[]> GetTestCases()
+    public static TheoryData<IEnumerable<QuizzerSummary>, IDictionary<int, int>> GetTestCases()
     {
-        return new List<object[]>
-        {
-            GetTestCase1(),
-            GetTestCase2()
-        };
+        var data = new TheoryData<IEnumerable<QuizzerSummary>, IDictionary<int, int>>();
+
+        AddRow(data, GetTestCase1());
+        AddRow(data, GetTestCase2());
+
+        return data;
     }
 
-    private static object[] GetTestCase1()
+    private static void AddRow(TheoryData<IEnumerable<QuizzerSummary>, IDictionary<int, int>> data, (IEnumerable<QuizzerSummary>, IDictionary<int, int>) tuple)
+    {
+        data.Add(tuple.Item1, tuple.Item2);
+    }
+
+    private static (IEnumerable<QuizzerSummary>, IDictionary<int, int>) GetTestCase1()
     {
         var faker = new Faker();
         var errors = faker.Random.Number(1, 100);
@@ -48,10 +54,10 @@ public class ErrorQuizzerRankingPolicyTests
             { 2, 2 }
         };
 
-        return [summaries, places];
+        return (summaries, places);
     }
 
-    private static object[] GetTestCase2()
+    private static (IEnumerable<QuizzerSummary>, IDictionary<int, int>) GetTestCase2()
     {
         var faker = new Faker();
         var errors = faker.Random.Number(1, 100);
@@ -68,6 +74,6 @@ public class ErrorQuizzerRankingPolicyTests
             { 2, 1 }
         };
 
-        return [summaries, places];
+        return (summaries, places);
     }
 }

@@ -22,16 +22,22 @@ public class ScoreQuizzerRankingPolicyTests
         Assert.Equal(places, summaries.ToDictionary(x => x.QuizzerId, y => y.Place));
     }
 
-    public static IEnumerable<object[]> GetTestCases()
+    public static TheoryData<IEnumerable<QuizzerSummary>, IDictionary<int, int>> GetTestCases()
     {
-        return new List<object[]>
-            {
-                GetTestCase1(),
-                GetTestCase2()
-            };
+        var data = new TheoryData<IEnumerable<QuizzerSummary>, IDictionary<int, int>>();
+
+        AddRow(data, GetTestCase1());
+        AddRow(data, GetTestCase2());
+
+        return data;
     }
 
-    private static object[] GetTestCase1()
+    private static void AddRow(TheoryData<IEnumerable<QuizzerSummary>, IDictionary<int, int>> data, (IEnumerable<QuizzerSummary>, IDictionary<int, int>) tuple)
+    {
+        data.Add(tuple.Item1, tuple.Item2);
+    }
+
+    private static (IEnumerable<QuizzerSummary>, IDictionary<int, int>) GetTestCase1()
     {
         var faker = new Faker();
         var points1 = faker.Random.Number(100, 200);
@@ -41,21 +47,21 @@ public class ScoreQuizzerRankingPolicyTests
         var rounds2 = faker.Random.Number(100, 200);
 
         var summaries = new List<QuizzerSummary>
-            {
-                new() { QuizzerId = 1, TotalScore = points1, TotalRounds = rounds1 },
-                new() { QuizzerId = 2, TotalScore = points2, TotalRounds = rounds2 }
-            };
+        {
+            new() { QuizzerId = 1, TotalScore = points1, TotalRounds = rounds1 },
+            new() { QuizzerId = 2, TotalScore = points2, TotalRounds = rounds2 }
+        };
 
         var places = new Dictionary<int, int>
-            {
-                { 1, 1 },
-                { 2, 2 }
-            };
+        {
+            { 1, 1 },
+            { 2, 2 }
+        };
 
-        return [summaries, places];
+        return (summaries, places);
     }
 
-    private static object[] GetTestCase2()
+    private static (IEnumerable<QuizzerSummary>, IDictionary<int, int>) GetTestCase2()
     {
         var faker = new Faker();
         var x = faker.Random.Number(10, 20);
@@ -63,17 +69,17 @@ public class ScoreQuizzerRankingPolicyTests
         var z = faker.Random.Number(10, 20);
 
         var summaries = new List<QuizzerSummary>
-            {
-                new() { QuizzerId = 1, TotalRounds = x, TotalScore = x * y },
-                new() { QuizzerId = 2, TotalRounds = x * z, TotalScore = x * y * z }
-            };
+        {
+            new() { QuizzerId = 1, TotalRounds = x, TotalScore = x * y },
+            new() { QuizzerId = 2, TotalRounds = x * z, TotalScore = x * y * z }
+        };
 
         var places = new Dictionary<int, int>
-            {
-                { 1, 1 },
-                { 2, 1 }
-            };
+        {
+            { 1, 1 },
+            { 2, 1 }
+        };
 
-        return [summaries, places];
+        return (summaries, places);
     }
 }

@@ -97,17 +97,21 @@ public class RoundRobinTournamentTests
         Assert.Equal(maxRoom, schedule.Rounds.SelectMany(x => x.Value.Matches).Select(x => x.Value.Room).Max());
     }
 
-    public static IEnumerable<object[]> CreateRoundParameters()
+    public static TheoryData<int, int, int> CreateRoundParameters()
     {
+        var data = new TheoryData<int, int, int>();
+
         for (var numTeams = 2; numTeams <= 100; numTeams++)
         {
             for (var numRooms = 1; numRooms <= numTeams / 2; numRooms++)
             {
                 var numMatches = numTeams * (numTeams - 1) / 2;
                 var numRounds = numMatches / numRooms + (numMatches % numRooms != 0 ? 1 : 0);
-                yield return new object[] { numTeams, numRooms, numRounds };
+                data.Add(numTeams, numRooms, numRounds);
             }
         }
+
+        return data;
     }
 
     private static Schedule CreateSchedule(int numTeams)

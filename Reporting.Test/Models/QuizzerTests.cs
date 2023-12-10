@@ -1,7 +1,5 @@
 ﻿namespace Reporting.Test.Models;
 
-using System.Collections.Generic;
-
 using Bogus;
 
 using MatchMaker.Models;
@@ -24,13 +22,17 @@ public class QuizzerTests
         Assert.Equal(expected.RookieYear, actual.RookieYear);
     }
 
-    public static IEnumerable<object[]> QuizzerTestData()
+    public static TheoryData<Quizzer> QuizzerTestData()
     {
+        var data = new TheoryData<Quizzer>();
         var faker = new Faker();
 
         for (var i = 0; i < 100; i++)
         {
-            yield return new object[] { new Quizzer(faker.Random.Int(), faker.Random.String(10, 20), faker.Random.String(10, 20), faker.Random.Enum(Gender.Unknown), faker.Random.Int(), faker.Random.Int(), faker.Random.Int()) };
+            data.Add(
+                new Quizzer(faker.Random.Int(), faker.Random.String(10, 20), faker.Random.String(10, 20), faker.Random.Enum(Gender.Unknown), faker.Random.Int(), faker.Random.Int(), faker.Random.Int()));
         }
+
+        return data;
     }
 }

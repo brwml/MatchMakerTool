@@ -42,17 +42,18 @@ public class RoundTests
         Assert.True(round.Time.IsBetween(time.AddMinutes(-0.1), time.AddMinutes(0.1)));
     }
 
-    public static IEnumerable<object[]> CreateRoundTests()
+    public static TheoryData<XElement, int, DateOnly, TimeOnly> CreateRoundTests()
     {
-        return
-        [
-            [Case1, 1, new DateOnly(2021, 11, 1), new TimeOnly(17, 55)],
-            [Case2, 1, DateOnly.FromDateTime(DateTime.Now), TimeOnly.FromDateTime(DateTime.Now)]
-        ];
+        return new TheoryData<XElement, int, DateOnly, TimeOnly>
+        {
+            { Case1, 1, new DateOnly(2021, 11, 1), new TimeOnly(17, 55) },
+            { Case2, 1, DateOnly.FromDateTime(DateTime.Now), TimeOnly.FromDateTime(DateTime.Now) }
+        };
     }
 
-    public static IEnumerable<object[]> CreateXmlTests()
+    public static TheoryData<Round> CreateXmlTests()
     {
+        var data = new TheoryData<Round>();
         var faker = new Faker();
 
         for (var i = 0; i < 100; i++)
@@ -65,11 +66,11 @@ public class RoundTests
                 new MatchSchedule(faker.Random.Int(), faker.Random.Int(), new List<int>{ faker.Random.Int(), faker.Random.Int() })
             };
 
-            yield return new object[]
-            {
-                new Round(i, matches.ToDictionary(x => x.Id, y => y), DateOnly.FromDateTime(faker.Date.Future()), TimeOnly.FromDateTime(faker.Date.Future()))
-            };
+            data.Add(
+                new Round(i, matches.ToDictionary(x => x.Id, y => y), DateOnly.FromDateTime(faker.Date.Future()), TimeOnly.FromDateTime(faker.Date.Future())));
         }
+
+        return data;
     }
 
     private static XElement Case1 => new(

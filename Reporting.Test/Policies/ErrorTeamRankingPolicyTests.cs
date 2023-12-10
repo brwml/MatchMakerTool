@@ -23,52 +23,58 @@ public class ErrorTeamRankingPolicyTests
         Assert.Equal(places, summaries.ToDictionary(x => x.TeamId, y => y.Place));
     }
 
-    public static IEnumerable<object[]> GetTestCases()
+    public static TheoryData<IEnumerable<TeamSummary>, IDictionary<int, int>> GetTestCases()
     {
-        return new List<object[]>
-            {
-                GetTestCase1(),
-                GetTestCase2()
-            };
+        var data = new TheoryData<IEnumerable<TeamSummary>, IDictionary<int, int>>();
+
+        AddRow(data, GetTestCase1());
+        AddRow(data, GetTestCase2());
+
+        return data;
     }
 
-    private static object[] GetTestCase1()
+    private static void AddRow(TheoryData<IEnumerable<TeamSummary>, IDictionary<int, int>> data, (IEnumerable<TeamSummary>, IDictionary<int, int>) tuple)
+    {
+        data.Add(tuple.Item1, tuple.Item2);
+    }
+
+    private static (IEnumerable<TeamSummary>, IDictionary<int, int>) GetTestCase1()
     {
         var faker = new Faker();
         var errors = faker.Random.Number(1, 100);
 
         var summaries = new List<TeamSummary>
-            {
-                new() { TeamId = 1, TotalErrors = errors, Wins = 1 },
-                new() { TeamId = 2, TotalErrors = errors + 1, Wins = 1 }
-            };
+        {
+            new() { TeamId = 1, TotalErrors = errors, Wins = 1 },
+            new() { TeamId = 2, TotalErrors = errors + 1, Wins = 1 }
+        };
 
         var places = new Dictionary<int, int>
-            {
-                { 1, 1 },
-                { 2, 2 }
-            };
+        {
+            { 1, 1 },
+            { 2, 2 }
+        };
 
-        return [summaries, places];
+        return (summaries, places);
     }
 
-    private static object[] GetTestCase2()
+    private static (IEnumerable<TeamSummary>, IDictionary<int, int>) GetTestCase2()
     {
         var faker = new Faker();
         var errors = faker.Random.Number(1, 100);
 
         var summaries = new List<TeamSummary>
-            {
-                new() { TeamId = 1, TotalErrors = errors, Wins = 1 },
-                new() { TeamId = 2, TotalErrors = errors, Wins = 1 }
-            };
+        {
+            new() { TeamId = 1, TotalErrors = errors, Wins = 1 },
+            new() { TeamId = 2, TotalErrors = errors, Wins = 1 }
+        };
 
         var places = new Dictionary<int, int>
-            {
-                { 1, 1 },
-                { 2, 1 }
-            };
+        {
+            { 1, 1 },
+            { 2, 1 }
+        };
 
-        return [summaries, places];
+        return (summaries, places);
     }
 }

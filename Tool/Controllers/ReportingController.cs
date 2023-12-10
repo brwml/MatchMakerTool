@@ -29,11 +29,6 @@ internal class ReportingController : ReportingControllerBase, IProcessController
 
         Parallel.ForEach(ExporterFactory.GetExporters(options.OutputFormat), exporter => exporter.Export(summary, directory.FullName));
 
-        if (options.NumberOfAlternateTeams > 0)
-        {
-            TournamentExporter.Create(summary, options.NumberOfTournamentTeams, options.NumberOfAlternateTeams, directory.FullName);
-        }
-
         return true;
     }
 

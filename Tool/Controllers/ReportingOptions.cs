@@ -10,18 +10,16 @@ using CommandLine;
 /// <remarks>
 /// Initializes a new instance of the <see cref="ReportingOptions"/> class.
 /// </remarks>
-/// <param name="numberOfAlternateTeams">The number of alternate teams.</param>
-/// <param name="numberOfTournamentTeams">The number of tournament teams.</param>
 /// <param name="outputFolder">The output folder.</param>
 /// <param name="outputFormat">The output format.</param>
 /// <param name="rankingProcedure">The ranking procedure.</param>
 /// <param name="sourceFolder">The source folder of the result files.</param>
 /// <param name="name">The name of the tournament.</param>
 /// <param name="verbose">If set to <c>true</c>, then emit verbose output.</param>
+/// 
+/// 
 [Verb("report", HelpText = "Generate a report from the results XML files")]
 internal class ReportingOptions(
-    int numberOfAlternateTeams,
-    int numberOfTournamentTeams,
     string outputFolder,
     OutputFormat outputFormat,
     string rankingProcedure,
@@ -33,18 +31,6 @@ internal class ReportingOptions(
     /// Defines the default ranking procedure
     /// </summary>
     public const string DefaultRankingProcedure = "whse";
-
-    /// <summary>
-    /// Gets or sets the number of alternate teams
-    /// </summary>
-    [Option('m', Default = 0, HelpText = "The number of alternate tournament teams to create.")]
-    public int NumberOfAlternateTeams { get; } = numberOfAlternateTeams;
-
-    /// <summary>
-    /// Gets or sets the number of tournament teams
-    /// </summary>
-    [Option('t', Default = 0, HelpText = "The number of teams in the tournament.")]
-    public int NumberOfTournamentTeams { get; } = numberOfTournamentTeams;
 
     /// <summary>
     /// Gets or sets the output folder

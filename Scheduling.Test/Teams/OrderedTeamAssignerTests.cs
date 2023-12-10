@@ -26,8 +26,9 @@ public class OrderedTeamAssignerTests
         }
     }
 
-    public static IEnumerable<object[]> GetOrderedTeamsTestData()
+    public static TheoryData<int, int, Schedule, Schedule> GetOrderedTeamsTestData()
     {
+        var data = new TheoryData<int, int, Schedule, Schedule>();
         var faker = new Faker();
 
         for (var teams = 2; teams < 100; teams++)
@@ -37,14 +38,11 @@ public class OrderedTeamAssignerTests
 
             foreach (var scheduleCase in cases)
             {
-                yield return Unroll(scheduleCase);
+                data.Add(scheduleCase.Item2, scheduleCase.Item3, scheduleCase.Item1, scheduleCase.Item4);
             }
         }
-    }
 
-    private static object[] Unroll((Schedule, int, int, Schedule) tuple)
-    {
-        return [tuple.Item2, tuple.Item3, tuple.Item1, tuple.Item4];
+        return data;
     }
 
     private static IEnumerable<(Schedule, int, int, Schedule)> BuildCase(int countChurches, int countTeams, int countQuizzers)
