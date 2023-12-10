@@ -33,7 +33,7 @@ public class Result(Schedule schedule, IDictionary<int, MatchResult> matches)
     public Schedule Schedule { get; } = schedule;
 
     /// <summary>
-    /// Gets the Name
+    /// Gets the name of the schedule.
     /// </summary>
     public string Name => this.Schedule.Name;
 
