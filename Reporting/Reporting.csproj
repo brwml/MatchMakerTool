@@ -9,7 +9,7 @@
   </PropertyGroup>
   <Import Project="..\Shared\Project.xml" />
   <ItemGroup>
-    <PackageReference Include="ClosedXML" Version="0.102.1" />
+    <PackageReference Include="ClosedXML" Version="0.102.2" />
     <PackageReference Include="Humanizer.Core" Version="2.14.1" />
     <PackageReference Include="itext" Version="8.0.2" />
     <PackageReference Include="itext.bouncy-castle-adapter" Version="8.0.2" />

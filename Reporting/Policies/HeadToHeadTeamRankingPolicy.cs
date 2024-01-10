@@ -66,7 +66,7 @@ public class HeadToHeadTeamRankingPolicy : TeamRankingPolicy
             }
             else
             {
-                ordered[position] = ordered[position].Concat(ordered[position + 1]).ToList();
+                ordered[position] = [.. ordered[position], .. ordered[position + 1]];
                 ordered.RemoveAt(position + 1);
                 position = 0;
             }

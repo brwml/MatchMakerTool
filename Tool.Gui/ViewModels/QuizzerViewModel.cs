@@ -26,7 +26,7 @@ internal class QuizzerViewModel
         Guard.Against.NullOrEmpty(lastName);
         Guard.Against.NullOrEmpty(church);
         Guard.Against.NegativeOrZero(firstYear);
-        Guard.Against.AgainstExpression(
+        Guard.Against.Expression(
             (isGender) => isGender,
             isMale ^ isFemale,
             FormattableString.Invariant($"Only one gender flag is to be set (male is {isMale}, female is {isFemale})."));
