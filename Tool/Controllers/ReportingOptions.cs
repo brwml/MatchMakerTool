@@ -33,25 +33,25 @@ internal class ReportingOptions(
     public const string DefaultRankingProcedure = "whse";
 
     /// <summary>
-    /// Gets or sets the output folder
+    /// Gets or sets the output folder. If not specified, the default value is ".", or the current folder.
     /// </summary>
     [Option('o', Default = ".", HelpText = "Output folder for the report.")]
     public string OutputFolder { get; } = outputFolder ?? ".";
 
     /// <summary>
-    /// Gets or sets the output format
+    /// Gets or sets the output format. The default is to export all formats.
     /// </summary>
     [Option('f', Default = OutputFormat.All, HelpText = "Output format for the report. Possible values are Excel, Html, Pdf, Rtf, and Xml.")]
     public OutputFormat OutputFormat { get; } = outputFormat;
 
     /// <summary>
-    /// Gets or sets the ranking procedure
+    /// Gets or sets the ranking procedure. The default ranking procedure is "whse" (wins, head-to-head, score, and errors).
     /// </summary>
     [Option('r', Default = DefaultRankingProcedure, HelpText = "The ranking operations and sequence. Each character represents a ranking operation. Possible operations include 'w' for winning percentage, 'l' for total losses, 'h' for head-to-head competition, 's' for average score, and 'e' for average errors.")]
     public string RankingProcedure { get; } = rankingProcedure ?? DefaultRankingProcedure;
 
     /// <summary>
-    /// Gets or sets the source folder
+    /// Gets or sets the source folder.
     /// </summary>
     [Option('s', Required = true, HelpText = "Source folder with the score files.")]
     public string SourceFolder { get; } = sourceFolder ?? ".";
