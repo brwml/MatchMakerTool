@@ -58,7 +58,7 @@ public class Round(int id, IDictionary<int, MatchSchedule> matches, DateOnly dat
         var id = xml.GetAttribute<int>("id");
         var date = ConvertDate(xml.GetAttribute<string>("date"));
         var time = ConvertTime(xml.GetAttribute<string>("time"));
-        var matches = xml.Elements("match").Select(x => MatchSchedule.FromXml(x)).ToDictionary(k => k.Id, v => v);
+        var matches = xml.Elements("match").Select(MatchSchedule.FromXml).ToDictionary(k => k.Id, v => v);
 
         return new Round(id, matches, date, time);
     }

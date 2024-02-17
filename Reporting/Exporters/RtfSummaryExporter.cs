@@ -31,10 +31,11 @@ public class RtfSummaryExporter : BaseSummaryExporter
     /// <param name="folder">The output folder</param>
     public override void Export(Summary summary, string folder)
     {
-        var template = LoadTemplate();
-        template.Add("summary", summary);
-        template.Add("teams", GetTeamInfo(summary));
-        template.Add("quizzers", GetQuizzerInfo(summary));
+        var template =
+            LoadTemplate()
+                .Add("summary", summary)
+                .Add("teams", GetTeamInfo(summary))
+                .Add("quizzers", GetQuizzerInfo(summary));
 
         var path = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.rtf"));
         File.WriteAllText(path, template.Render(CultureInfo.InvariantCulture));

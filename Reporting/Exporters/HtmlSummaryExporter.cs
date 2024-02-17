@@ -265,8 +265,7 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
     /// <param name="folder">The target folder</param>
     private static void WriteIndex(Summary summary, string folder)
     {
-        var template = LoadTemplate(IndexTemplate);
-        template.Add("summary", summary);
+        var template = LoadTemplate(IndexTemplate).Add("summary", summary);
         File.WriteAllText(Path.Combine(folder, IndexFileName), template.Render(CultureInfo.CurrentCulture));
     }
 
@@ -296,10 +295,11 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
 
         var quizzerInfo = new QuizzerInfo(quizzer, quizzerSummary, GetChurch(summary, quizzer), GetTeam(summary, quizzer));
 
-        var template = LoadTemplate(QuizzerDetailTemplate);
-        template.Add("summary", summary);
-        template.Add("quizzer", quizzerInfo);
-        template.Add("details", details);
+        var template =
+            LoadTemplate(QuizzerDetailTemplate)
+                .Add("summary", summary)
+                .Add("quizzer", quizzerInfo)
+                .Add("details", details);
 
         var path = Path.Combine(folder, FormattableString.Invariant($"{quizzerId}.html"));
         File.WriteAllText(path, template.Render(CultureInfo.CurrentCulture));
@@ -330,9 +330,10 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
     {
         var quizzers = GetQuizzerInfo(summary);
 
-        var template = LoadTemplate(QuizzerSummaryTemplate);
-        template.Add("name", summary.Name);
-        template.Add("quizzers", quizzers);
+        var template =
+            LoadTemplate(QuizzerSummaryTemplate)
+                .Add("name", summary.Name)
+                .Add("quizzers", quizzers);
 
         File.WriteAllText(Path.Combine(folder, QuizzersFileName), template.Render(CultureInfo.CurrentCulture));
     }
@@ -380,11 +381,12 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
 
         var quizzers = GetQuizzerInfo(summary).Where(x => x.Team.Id == teamId);
 
-        var template = LoadTemplate(TeamDetailTemplate);
-        template.Add("summary", summary);
-        template.Add("team", teamInfo);
-        template.Add("details", details);
-        template.Add("quizzers", quizzers);
+        var template =
+            LoadTemplate(TeamDetailTemplate)
+                .Add("summary", summary)
+                .Add("team", teamInfo)
+                .Add("details", details)
+                .Add("quizzers", quizzers);
 
         var path = Path.Combine(folder, FormattableString.Invariant($"{team.Id}.html"));
         File.WriteAllText(path, template.Render(CultureInfo.CurrentCulture));
@@ -415,9 +417,10 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
     {
         var teams = GetTeamInfo(summary);
 
-        var template = LoadTemplate(TeamSummaryTemplate);
-        template.Add("name", summary.Name);
-        template.Add("teams", teams);
+        var template =
+            LoadTemplate(TeamSummaryTemplate)
+                .Add("name", summary.Name)
+                .Add("teams", teams);
 
         File.WriteAllText(Path.Combine(folder, TeamsFileName), template.Render(CultureInfo.CurrentCulture));
     }

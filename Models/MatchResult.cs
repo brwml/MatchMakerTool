@@ -42,7 +42,7 @@ public class MatchResult(int id, int room, int round, IList<TeamResult> teamResu
     /// <summary>
     /// Gets the schedule identifier
     /// </summary>
-    public int ScheduleId => this.Round * 100 + this.Room;
+    public int ScheduleId => (this.Round * 100) + this.Room;
 
     /// <summary>
     /// Gets or sets the team results
@@ -59,8 +59,8 @@ public class MatchResult(int id, int room, int round, IList<TeamResult> teamResu
         var id = xml.GetAttribute<int>("id");
         var round = xml.GetAttribute<int>("round");
         var room = xml.GetAttribute<int>("room");
-        var teamResults = xml.Elements("team").Select(x => TeamResult.FromXml(x)).ToArray();
-        var quizzerResults = xml.Elements("quizzer").Select(x => QuizzerResult.FromXml(x)).ToArray();
+        var teamResults = xml.Elements("team").Select(TeamResult.FromXml).ToArray();
+        var quizzerResults = xml.Elements("quizzer").Select(QuizzerResult.FromXml).ToArray();
 
         return new MatchResult(id, room, round, teamResults, quizzerResults);
     }

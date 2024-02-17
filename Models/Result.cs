@@ -43,7 +43,7 @@ public class Result(Schedule schedule, IDictionary<int, MatchResult> matches)
     /// <returns>The <see cref="Result"/></returns>
     public static Result FromXml(IEnumerable<XDocument> documents, Schedule schedule)
     {
-        var matches = documents.SelectMany(x => LoadMatches(x)).ToDictionary(m => m.ScheduleId, m => m);
+        var matches = documents.SelectMany(LoadMatches).ToDictionary(m => m.ScheduleId, m => m);
 
         return new Result(schedule, matches);
     }
@@ -70,6 +70,6 @@ public class Result(Schedule schedule, IDictionary<int, MatchResult> matches)
     /// <returns>The <see cref="IEnumerable{MatchResult}"/></returns>
     private static IEnumerable<MatchResult> LoadMatches(XDocument document)
     {
-        return document.XPathSelectElements("/members/results/match").Select(x => MatchResult.FromXml(x));
+        return document.XPathSelectElements("/members/results/match").Select(MatchResult.FromXml);
     }
 }

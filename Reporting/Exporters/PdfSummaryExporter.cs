@@ -93,9 +93,9 @@ public class PdfSummaryExporter : BaseSummaryExporter
     /// <param name="document">The <see cref="Document"/> instance</param>
     private static void CreateQuizzerPageTitle(Document document)
     {
-        document.Add(new AreaBreak());
-        document.Add(new Paragraph("Quizzer Results")
-                .SetSubtitleFont());
+        document
+            .Add(new AreaBreak())
+            .Add(new Paragraph("Quizzer Results").SetSubtitleFont());
     }
 
     /// <summary>
@@ -150,9 +150,10 @@ public class PdfSummaryExporter : BaseSummaryExporter
     /// <param name="document">The <see cref="Document"/> instance</param>
     private static void CreateTeamPageTitle(Summary summary, Document document)
     {
-        document.Add(new Paragraph(summary.Name).SetTitleFont());
-        document.Add(new AreaBreak());
-        document.Add(new Paragraph("Team Results").SetSubtitleFont());
+        document
+            .Add(new Paragraph(summary.Name).SetTitleFont())
+            .Add(new AreaBreak())
+            .Add(new Paragraph("Team Results").SetSubtitleFont());
     }
 
     /// <summary>

@@ -99,7 +99,7 @@ internal abstract class ReportingControllerBase
     /// <returns>The tournament <see cref="Result"/> instance</returns>
     private static Result LoadResultsFromFiles(IEnumerable<FileInfo> files, Schedule schedule)
     {
-        return Result.FromXml(files.Select(x => LoadXml(x)), schedule);
+        return Result.FromXml(files.Select(LoadXml), schedule);
     }
 
     /// <summary>

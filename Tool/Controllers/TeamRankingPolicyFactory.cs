@@ -17,7 +17,7 @@ internal class TeamRankingPolicyFactory
     /// <returns>The <see cref="IEnumerable{TeamRankingPolicy}"/> instance</returns>
     public static IEnumerable<TeamRankingPolicy> GetTeamRankingPolicies(string policies)
     {
-        return policies.Select(p => GetTeamRankingPolicy(p));
+        return policies.Select(GetTeamRankingPolicy);
     }
 
     /// <summary>

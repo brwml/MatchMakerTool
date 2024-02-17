@@ -94,7 +94,7 @@ public class TeamSummary
     {
         var summaries = GetAllTeamSummaries(result)
             .GroupBy(s => s.TeamId)
-            .Select(t => AggregateTeamSummary(t))
+            .Select(AggregateTeamSummary)
             .ToDictionary(kvp => kvp.TeamId, kvp => kvp);
 
         foreach (var policy in policies)
@@ -149,7 +149,7 @@ public class TeamSummary
     /// <returns>The <see cref="IEnumerable{TeamSummary}"/></returns>
     private static IEnumerable<TeamSummary> GetAllTeamSummaries(Result result)
     {
-        return GetAllTeamResults(result).Select(x => FromTeamResult(x));
+        return GetAllTeamResults(result).Select(FromTeamResult);
     }
 
     /// <summary>

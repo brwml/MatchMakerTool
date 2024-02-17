@@ -106,7 +106,7 @@ public class RoundRobinTournamentTests
             for (var numRooms = 1; numRooms <= numTeams / 2; numRooms++)
             {
                 var numMatches = numTeams * (numTeams - 1) / 2;
-                var numRounds = numMatches / numRooms + (numMatches % numRooms != 0 ? 1 : 0);
+                var numRounds = (numMatches / numRooms) + (numMatches % numRooms != 0 ? 1 : 0);
                 data.Add(numTeams, numRooms, numRounds);
             }
         }

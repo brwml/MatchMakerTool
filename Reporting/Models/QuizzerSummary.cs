@@ -70,7 +70,7 @@ public class QuizzerSummary
     {
         var summaries = GetAllQuizzerSummaries(result)
             .GroupBy(s => s.QuizzerId)
-            .Select(s => AggregateQuizzerSummary(s))
+            .Select(AggregateQuizzerSummary)
             .ToDictionary(s => s.QuizzerId, s => s);
 
         new ScoreQuizzerRankingPolicy().Rank(summaries.Values);

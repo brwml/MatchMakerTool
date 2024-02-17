@@ -18,7 +18,6 @@ using MatchMaker.Models;
 /// <param name="church">The name of the church</param>
 internal class QuizzerViewModel(string firstName, string lastName, bool isMale, bool isFemale, int firstYear, string church)
 {
-
     /// <summary>
     /// Initializes a new instance of the <see cref="QuizzerViewModel"/> class.
     /// </summary>
