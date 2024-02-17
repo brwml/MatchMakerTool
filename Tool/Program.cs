@@ -15,12 +15,12 @@ internal class Program
     /// <summary>
     /// Gets the option types
     /// </summary>
-    private static Type[] OptionTypes => new[]
-    {
+    private static Type[] OptionTypes =>
+    [
         typeof(ReportingOptions),
         typeof(SummaryOptions),
         typeof(ScheduleOptions)
-    };
+    ];
 
     /// <summary>
     /// The main program entry point

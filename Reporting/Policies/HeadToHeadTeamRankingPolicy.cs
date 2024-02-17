@@ -87,7 +87,7 @@ public class HeadToHeadTeamRankingPolicy : TeamRankingPolicy
     /// <returns>The <see cref="IEnumerable{MatchResult}"/> instance</returns>
     private IEnumerable<MatchResult> GetMatchesForTeamSummaries(IEnumerable<TeamSummary> summaries)
     {
-        return this.Result?.Matches.Select(m => m.Value).Where(m => m.TeamResults.All(t => summaries.Any(s => s.TeamId == t.TeamId))) ?? Enumerable.Empty<MatchResult>();
+        return this.Result?.Matches.Select(m => m.Value).Where(m => m.TeamResults.All(t => summaries.Any(s => s.TeamId == t.TeamId))) ?? [];
     }
 
     /// <summary>
