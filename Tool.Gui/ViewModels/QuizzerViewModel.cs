@@ -7,26 +7,17 @@ using MatchMaker.Models;
 /// <summary>
 /// The quizzer view model
 /// </summary>
-internal class QuizzerViewModel
+/// <remarks>
+/// Initializes a new instance of the <see cref="QuizzerViewModel"/> class.
+/// </remarks>
+/// <param name="firstName">The first name of the quizzer</param>
+/// <param name="lastName">The last name of the quizzer</param>
+/// <param name="isMale">Indicates whether the quizzer is male</param>
+/// <param name="isFemale">Indicates whether the quizzer is female</param>
+/// <param name="firstYear">The first year of the quizzer</param>
+/// <param name="church">The name of the church</param>
+internal class QuizzerViewModel(string firstName, string lastName, bool isMale, bool isFemale, int firstYear, string church)
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="QuizzerViewModel"/> class.
-    /// </summary>
-    /// <param name="firstName">The first name of the quizzer</param>
-    /// <param name="lastName">The last name of the quizzer</param>
-    /// <param name="isMale">Indicates whether the quizzer is male</param>
-    /// <param name="isFemale">Indicates whether the quizzer is female</param>
-    /// <param name="firstYear">The first year of the quizzer</param>
-    /// <param name="church">The name of the church</param>
-    public QuizzerViewModel(string firstName, string lastName, bool isMale, bool isFemale, int firstYear, string church)
-    {
-        this.FirstName = firstName;
-        this.LastName = lastName;
-        this.IsMale = isMale;
-        this.IsFemale = isFemale;
-        this.FirstYear = firstYear;
-        this.Church = church;
-    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="QuizzerViewModel"/> class.
@@ -46,50 +37,32 @@ internal class QuizzerViewModel
     /// <summary>
     /// Gets the first name of the quizzer
     /// </summary>
-    public string FirstName
-    {
-        get;
-    }
+    public string FirstName { get; } = firstName;
 
     /// <summary>
     /// Gets the last name of the quizzer
     /// </summary>
-    public string LastName
-    {
-        get;
-    }
+    public string LastName { get; } = lastName;
 
     /// <summary>
     /// Gets a value indicating whether the quizzer is a male
     /// </summary>
-    public bool IsMale
-    {
-        get;
-    }
+    public bool IsMale { get; } = isMale;
 
     /// <summary>
     /// Gets a value indicating whether the quizzer is a female
     /// </summary>
-    public bool IsFemale
-    {
-        get;
-    }
+    public bool IsFemale { get; } = isFemale;
 
     /// <summary>
     /// Gets the first year of the quizzer
     /// </summary>
-    public int FirstYear
-    {
-        get;
-    }
+    public int FirstYear { get; } = firstYear;
 
     /// <summary>
     /// Gets the name of the church
     /// </summary>
-    public string Church
-    {
-        get;
-    }
+    public string Church { get; } = church;
 
     /// <summary>
     /// Converts the quizzer view model to a string.
