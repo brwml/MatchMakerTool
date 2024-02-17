@@ -5,8 +5,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 
-using Ardalis.GuardClauses;
-
 /// <summary>
 /// Defines the <see cref="MatchResult" />
 /// </summary>
@@ -58,8 +56,6 @@ public class MatchResult(int id, int room, int round, IList<TeamResult> teamResu
     /// <returns>The <see cref="MatchResult"/> instance</returns>
     public static MatchResult FromXml(XElement xml)
     {
-        Guard.Against.Null(xml);
-
         var id = xml.GetAttribute<int>("id");
         var round = xml.GetAttribute<int>("round");
         var room = xml.GetAttribute<int>("room");

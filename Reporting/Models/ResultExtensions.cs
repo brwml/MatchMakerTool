@@ -2,8 +2,6 @@
 
 using System.Collections.Generic;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Models;
 using MatchMaker.Reporting.Policies;
 
@@ -17,9 +15,6 @@ internal static class ResultExtensions
     /// <returns>The <see cref="Summary"/></returns>
     public static Summary ToSummary(this Result result, IEnumerable<TeamRankingPolicy> policies)
     {
-        Guard.Against.Null(result);
-        Guard.Against.NullOrEmpty(policies);
-
         return new Summary(result, policies);
     }
 }

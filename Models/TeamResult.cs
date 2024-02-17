@@ -3,8 +3,6 @@
 using System.Diagnostics;
 using System.Xml.Linq;
 
-using Ardalis.GuardClauses;
-
 /// <summary>
 /// Defines the <see cref="TeamResult" />
 /// </summary>
@@ -45,8 +43,6 @@ public class TeamResult(int id, int score, int errors, int place = 1)
     /// <returns>The <see cref="TeamResult"/></returns>
     public static TeamResult FromXml(XElement xml)
     {
-        Guard.Against.Null(xml);
-
         return new TeamResult(
             xml.GetAttribute<int>("id"),
             xml.GetAttribute<int>("score"),

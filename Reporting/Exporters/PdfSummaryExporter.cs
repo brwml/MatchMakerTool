@@ -4,8 +4,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
-using Ardalis.GuardClauses;
-
 using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
@@ -28,9 +26,6 @@ public class PdfSummaryExporter : BaseSummaryExporter
     /// <param name="folder">The output folder</param>
     public override void Export(Summary summary, string folder)
     {
-        Guard.Against.Null(summary);
-        Guard.Against.NullOrWhiteSpace(folder);
-
         var fileName = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.pdf"));
 
         using var writer = new PdfWriter(fileName);

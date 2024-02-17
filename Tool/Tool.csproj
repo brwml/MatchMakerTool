@@ -14,7 +14,4 @@
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Update="Ardalis.GuardClauses" Version="4.4.0" />
-  </ItemGroup>
 </Project>

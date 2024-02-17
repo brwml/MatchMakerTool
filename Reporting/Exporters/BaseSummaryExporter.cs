@@ -3,8 +3,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Models;
 using MatchMaker.Reporting.Models;
 
@@ -28,9 +26,6 @@ public abstract class BaseSummaryExporter : ISummaryExporter
     /// <returns>The church</returns>
     protected static Church GetChurch(Summary summary, Quizzer quizzer)
     {
-        Guard.Against.Null(summary);
-        Guard.Against.Null(quizzer);
-
         return summary.Result.Schedule.Churches[quizzer.ChurchId];
     }
 
@@ -42,9 +37,6 @@ public abstract class BaseSummaryExporter : ISummaryExporter
     /// <returns>The team</returns>
     protected static Team GetTeam(Summary summary, Quizzer quizzer)
     {
-        Guard.Against.Null(summary);
-        Guard.Against.Null(quizzer);
-
         return summary.Result.Schedule.Teams[quizzer.TeamId];
     }
 
@@ -55,8 +47,6 @@ public abstract class BaseSummaryExporter : ISummaryExporter
     /// <returns>The quizzer information</returns>
     protected static IEnumerable<QuizzerInfo> GetQuizzerInfo(Summary summary)
     {
-        Guard.Against.Null(summary);
-
         var quizzers = summary.Result.Schedule.Quizzers;
 
         var quizzerInfo = summary.QuizzerSummaries
@@ -88,8 +78,6 @@ public abstract class BaseSummaryExporter : ISummaryExporter
     /// <returns>The team information</returns>
     protected static IEnumerable<TeamInfo> GetTeamInfo(Summary summary)
     {
-        Guard.Against.Null(summary);
-
         var teams = summary.Result.Schedule.Teams;
 
         var teamInfo = summary.TeamSummaries

@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Models;
 using MatchMaker.Reporting.Models;
 
@@ -26,8 +24,6 @@ public abstract class TeamRankingPolicy
     /// <param name="result">The <see cref="Result"/></param>
     public void Rank(IEnumerable<TeamSummary> summaries, Result result)
     {
-        Guard.Against.NullOrEmpty(summaries);
-
         this.Result = result;
         var groups = summaries.GroupBy(s => s.Place);
 
@@ -49,10 +45,6 @@ public abstract class TeamRankingPolicy
     /// <param name="tieBreak">The <see cref="TieBreak"/> method that was used.</param>
     protected static void SetRelativePlaces(IList<TeamSummary> summaries, int initial, Func<TeamSummary, TeamSummary, bool> areEqual, TieBreak tieBreak)
     {
-        Guard.Against.Null(summaries);
-        Guard.Against.NegativeOrZero(initial);
-        Guard.Against.Null(areEqual);
-
         for (var i = 1; i < summaries.Count; i++)
         {
             if (areEqual(summaries[i], summaries[i - 1]))

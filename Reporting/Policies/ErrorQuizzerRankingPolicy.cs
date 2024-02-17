@@ -3,8 +3,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Reporting.Models;
 
 /// <summary>
@@ -19,9 +17,6 @@ public class ErrorQuizzerRankingPolicy : QuizzerRankingPolicy
     /// <param name="initial">The initial place</param>
     protected override void RankGroup(IEnumerable<QuizzerSummary> summaries, int initial)
     {
-        Guard.Against.NullOrEmpty(summaries);
-        Guard.Against.NegativeOrZero(initial);
-
         var list = summaries.OrderBy(s => s.AverageErrors).ToList();
         SetRelativePlaces(list, initial, (s1, s2) => s1.AverageErrors == s2.AverageErrors);
     }

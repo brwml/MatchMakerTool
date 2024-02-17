@@ -2,8 +2,6 @@
 
 using System.Xml.Linq;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Models;
 using MatchMaker.Scheduling.Tournaments;
 
@@ -19,8 +17,6 @@ internal class SchedulingController : IProcessController<ScheduleOptions>
     /// <returns>The <see cref="bool"/></returns>
     public bool Process(ScheduleOptions options)
     {
-        Guard.Against.Null(options);
-
         if (options.ScheduleType == ScheduleType.RoundRobin)
         {
             RoundRobinTournament

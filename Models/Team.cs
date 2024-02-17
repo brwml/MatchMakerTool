@@ -3,8 +3,6 @@
 using System.Diagnostics;
 using System.Xml.Linq;
 
-using Ardalis.GuardClauses;
-
 /// <summary>
 /// Defines the <see cref="Team" />
 /// </summary>
@@ -45,8 +43,6 @@ public class Team(int id, string name, string abbreviation, int division)
     /// <returns>The <see cref="Team"/></returns>
     public static Team FromXml(XElement xml)
     {
-        Guard.Against.Null(xml);
-
         var id = xml.GetAttribute<int>("id");
         var division = xml.GetAttribute<int>("div");
         var abbreviation = xml.GetAttribute<string>("abbrev");

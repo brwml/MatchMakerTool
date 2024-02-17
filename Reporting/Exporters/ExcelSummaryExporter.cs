@@ -3,8 +3,6 @@
 using System;
 using System.IO;
 
-using Ardalis.GuardClauses;
-
 using ClosedXML.Excel;
 
 using Humanizer;
@@ -43,9 +41,6 @@ public class ExcelSummaryExporter : BaseSummaryExporter
     /// <param name="folder">The folder/></param>
     public override void Export(Summary summary, string folder)
     {
-        Guard.Against.Null(summary);
-        Guard.Against.NullOrWhiteSpace(folder);
-
         using var workbook = new XLWorkbook();
         ExportTeamResults(workbook, summary);
         ExportQuizzerResults(workbook, summary);

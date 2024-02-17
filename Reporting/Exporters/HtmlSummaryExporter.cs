@@ -8,8 +8,6 @@ using System.Reflection;
 
 using Antlr4.StringTemplate;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Models;
 using MatchMaker.Reporting.Models;
 
@@ -95,9 +93,6 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
     /// <param name="folder">The output folder</param>
     public override void Export(Summary summary, string folder)
     {
-        Guard.Against.Null(summary);
-        Guard.Against.NullOrWhiteSpace(folder);
-
         var resultsFolder = CreateResultsFolder(folder);
 
         CreateResults(summary, resultsFolder);

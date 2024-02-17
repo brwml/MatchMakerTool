@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Linq;
 
-using Ardalis.GuardClauses;
-
 /// <summary>
 /// Defines the <see cref="MatchSchedule" />
 /// </summary>
@@ -40,8 +38,6 @@ public class MatchSchedule(int id, int room, IList<int> teams)
     /// <returns>The <see cref="MatchSchedule"/> instance</returns>
     public static MatchSchedule FromXml(XElement xml)
     {
-        Guard.Against.Null(xml);
-
         var id = xml.GetAttribute<int>("id");
         var room = xml.GetAttribute<int>("room");
         var teams = new[]

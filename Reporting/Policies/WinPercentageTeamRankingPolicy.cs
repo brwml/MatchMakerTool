@@ -3,8 +3,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Models;
 using MatchMaker.Reporting.Models;
 
@@ -20,9 +18,6 @@ public class WinPercentageTeamRankingPolicy : TeamRankingPolicy
     /// <param name="initial">The initial placement</param>
     protected override void RankGroup(IEnumerable<TeamSummary> summaries, int initial)
     {
-        Guard.Against.NullOrEmpty(summaries);
-        Guard.Against.NegativeOrZero(initial);
-
         var list = summaries.ToList();
         list.Sort(Compare);
 

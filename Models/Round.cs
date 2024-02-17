@@ -6,8 +6,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 
-using Ardalis.GuardClauses;
-
 /// <summary>
 /// Defines the <see cref="Round" />
 /// </summary>
@@ -57,8 +55,6 @@ public class Round(int id, IDictionary<int, MatchSchedule> matches, DateOnly dat
     /// <returns>The <see cref="Round"/></returns>
     public static Round FromXml(XElement xml)
     {
-        Guard.Against.Null(xml);
-
         var id = xml.GetAttribute<int>("id");
         var date = ConvertDate(xml.GetAttribute<string>("date"));
         var time = ConvertTime(xml.GetAttribute<string>("time"));

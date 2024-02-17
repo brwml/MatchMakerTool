@@ -6,8 +6,6 @@ using System.Reflection;
 
 using Antlr4.StringTemplate;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Reporting.Models;
 
 /// <summary>
@@ -33,9 +31,6 @@ public class RtfSummaryExporter : BaseSummaryExporter
     /// <param name="folder">The output folder</param>
     public override void Export(Summary summary, string folder)
     {
-        Guard.Against.Null(summary);
-        Guard.Against.NullOrWhiteSpace(folder);
-
         var template = LoadTemplate();
         template.Add("summary", summary);
         template.Add("teams", GetTeamInfo(summary));

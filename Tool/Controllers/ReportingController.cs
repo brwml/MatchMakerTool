@@ -3,8 +3,6 @@
 using System.IO;
 using System.Threading.Tasks;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Models;
 using MatchMaker.Reporting.Models;
 
@@ -20,8 +18,6 @@ internal class ReportingController : ReportingControllerBase, IProcessController
     /// <returns><c>true</c> if the reporting options are processed; otherwise <c>false</c>.</returns>
     public bool Process(ReportingOptions options)
     {
-        Guard.Against.Null(options);
-
         var summary = CreateSummary(options);
 
         var directory = Directory.CreateDirectory(options.OutputFolder);

@@ -3,8 +3,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Reporting.Exporters;
 using MatchMaker.Reporting.Models;
 using MatchMaker.Reporting.Policies;
@@ -20,8 +18,6 @@ internal class SummaryController : ReportingControllerBase, IProcessController<S
     /// </returns>
     public bool Process(SummaryOptions options)
     {
-        Guard.Against.Null(options);
-
         var policies = LoadRankingPolicies(ReportingOptions.DefaultRankingProcedure);
         var summaries = options.InputPaths.Select(x => CreateSummary(x, policies));
         SummaryExporter.Export(summaries, options.OutputPath);

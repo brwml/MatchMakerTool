@@ -3,8 +3,6 @@
 using System.Diagnostics;
 using System.Xml.Linq;
 
-using Ardalis.GuardClauses;
-
 /// <summary>
 /// Defines the <see cref="Quizzer" />
 /// </summary>
@@ -63,8 +61,6 @@ public class Quizzer(int id, string firstName, string lastName, Gender gender, i
     /// <returns>The <see cref="Quizzer"/> instance</returns>
     public static Quizzer FromXml(XElement xml)
     {
-        Guard.Against.Null(xml);
-
         var id = xml.GetAttribute<int>("id");
         var teamId = xml.GetElement<int>("teamID");
         var churchId = xml.GetElement<int>("churchID");

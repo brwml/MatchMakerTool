@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Models;
 using MatchMaker.Reporting.Policies;
 
@@ -94,9 +92,6 @@ public class TeamSummary
     /// <returns>The <see cref="IDictionary{int, TeamSummary}"/></returns>
     public static IDictionary<int, TeamSummary> FromResult(Result result, IEnumerable<TeamRankingPolicy> policies)
     {
-        Guard.Against.Null(policies);
-        Guard.Against.NullOrEmpty(policies);
-
         var summaries = GetAllTeamSummaries(result)
             .GroupBy(s => s.TeamId)
             .Select(t => AggregateTeamSummary(t))
@@ -117,8 +112,6 @@ public class TeamSummary
     /// <returns>The <see cref="IEnumerable{TeamResult}"/></returns>
     private static IEnumerable<TeamResult> GetAllTeamResults(Result result)
     {
-        Guard.Against.Null(result);
-
         return result.Matches.SelectMany(m => m.Value.TeamResults);
     }
 

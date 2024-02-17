@@ -3,8 +3,6 @@
 using System.Diagnostics;
 using System.Xml.Linq;
 
-using Ardalis.GuardClauses;
-
 /// <summary>
 /// Defines the <see cref="Church" /> class
 /// </summary>
@@ -33,8 +31,6 @@ public class Church(int id, string name)
     /// <returns>The <see cref="Church"/></returns>
     public static Church FromXml(XElement xml)
     {
-        Guard.Against.Null(xml);
-
         var id = xml.GetAttribute<int>("id");
         var name = xml.Value;
 

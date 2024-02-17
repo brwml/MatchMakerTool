@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Models;
 
 /// <summary>
@@ -21,8 +19,6 @@ public static class RoundRobinTournament
     /// <returns>The <see cref="Schedule"/> instance with the rounds created.</returns>
     public static Schedule Create(Schedule schedule, int availableRooms)
     {
-        Guard.Against.Null(schedule);
-
         schedule.Rounds = CreateRounds(schedule.Teams.Select(x => x.Value), availableRooms).ToDictionary(x => x.Id, x => x);
         return schedule;
     }

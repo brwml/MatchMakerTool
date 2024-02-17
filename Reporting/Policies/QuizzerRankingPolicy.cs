@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Reporting.Models;
 
 /// <summary>
@@ -19,8 +17,6 @@ public abstract class QuizzerRankingPolicy
     /// <param name="summaries">The <see cref="QuizzerSummary"/> instances</param>
     public void Rank(IEnumerable<QuizzerSummary> summaries)
     {
-        Guard.Against.NullOrEmpty(summaries);
-
         var groups = summaries.GroupBy(s => s.Place);
 
         foreach (var group in groups)
@@ -37,10 +33,6 @@ public abstract class QuizzerRankingPolicy
     /// <param name="areEqual">A <see cref="Func{QuizzerSummary, QuizzerSummary, Boolean}"/> indicating whether two placements are equal.</param>
     protected static void SetRelativePlaces(IList<QuizzerSummary> summaries, int initial, Func<QuizzerSummary, QuizzerSummary, bool> areEqual)
     {
-        Guard.Against.Null(summaries);
-        Guard.Against.NegativeOrZero(initial);
-        Guard.Against.Null(areEqual);
-
         for (var i = 1; i < summaries.Count; i++)
         {
             summaries[i].Place = areEqual(summaries[i], summaries[i - 1])

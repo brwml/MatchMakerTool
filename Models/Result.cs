@@ -5,8 +5,6 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
-using Ardalis.GuardClauses;
-
 /// <summary>
 /// Defines the <see cref="Result" />
 /// </summary>
@@ -45,9 +43,6 @@ public class Result(Schedule schedule, IDictionary<int, MatchResult> matches)
     /// <returns>The <see cref="Result"/></returns>
     public static Result FromXml(IEnumerable<XDocument> documents, Schedule schedule)
     {
-        Guard.Against.NullOrEmpty(documents);
-        Guard.Against.Null(schedule);
-
         var matches = documents.SelectMany(x => LoadMatches(x)).ToDictionary(m => m.ScheduleId, m => m);
 
         return new Result(schedule, matches);

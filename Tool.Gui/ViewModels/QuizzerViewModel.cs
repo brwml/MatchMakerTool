@@ -2,8 +2,6 @@
 
 using System;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Models;
 
 /// <summary>
@@ -22,15 +20,6 @@ internal class QuizzerViewModel
     /// <param name="church">The name of the church</param>
     public QuizzerViewModel(string firstName, string lastName, bool isMale, bool isFemale, int firstYear, string church)
     {
-        Guard.Against.NullOrEmpty(firstName);
-        Guard.Against.NullOrEmpty(lastName);
-        Guard.Against.NullOrEmpty(church);
-        Guard.Against.NegativeOrZero(firstYear);
-        Guard.Against.Expression(
-            (isGender) => isGender,
-            isMale ^ isFemale,
-            FormattableString.Invariant($"Only one gender flag is to be set (male is {isMale}, female is {isFemale})."));
-
         this.FirstName = firstName;
         this.LastName = lastName;
         this.IsMale = isMale;

@@ -3,8 +3,6 @@
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-using Ardalis.GuardClauses;
-
 using MatchMaker.Models;
 using MatchMaker.Reporting.Policies;
 
@@ -47,9 +45,6 @@ public class Summary(Result result, IEnumerable<TeamRankingPolicy> policies)
     /// <returns>The <see cref="Summary"/></returns>
     public static Summary FromResult(Result result, IEnumerable<TeamRankingPolicy> policies)
     {
-        Guard.Against.Null(result);
-        Guard.Against.NullOrEmpty(policies);
-
         return new Summary(result, policies);
     }
 
