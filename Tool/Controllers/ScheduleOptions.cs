@@ -5,10 +5,11 @@ using CommandLine;
 #pragma warning disable CA1812 // The class is instantiate by the command line parser.
 
 /// <summary>
-/// Defines the <see cref="ScheduleOptions" />
+/// Defines the <see cref="ScheduleOptions" /> for the scheduling controller.
 /// </summary>
 /// <remarks>
-/// Initializes a new instance of the <see cref="ScheduleOptions"/> class.
+/// Initializes a new instance of the <see cref="ScheduleOptions"/> class. The parameters must appear in the same
+/// order they appear in the class.
 /// </remarks>
 /// <param name="outputSchedule">The output schedule.</param>
 /// <param name="rooms">The rooms.</param>

@@ -5,10 +5,11 @@ using CommandLine;
 #pragma warning disable CA1812 // The class is instantiate by the command line parser.
 
 /// <summary>
-/// Defines the <see cref="ReportingOptions" />
+/// Defines the <see cref="ReportingOptions" /> for the reporting controller.
 /// </summary>
 /// <remarks>
-/// Initializes a new instance of the <see cref="ReportingOptions"/> class.
+/// Initializes a new instance of the <see cref="ReportingOptions"/> class. The parameters must appear in the
+/// same order they appear in the class.
 /// </remarks>
 /// <param name="outputFolder">The output folder.</param>
 /// <param name="outputFormat">The output format.</param>
@@ -16,8 +17,6 @@ using CommandLine;
 /// <param name="sourceFolder">The source folder of the result files.</param>
 /// <param name="name">The name of the tournament.</param>
 /// <param name="verbose">If set to <c>true</c>, then emit verbose output.</param>
-/// 
-/// 
 [Verb("report", HelpText = "Generate a report from the results XML files")]
 internal class ReportingOptions(
     string outputFolder,
