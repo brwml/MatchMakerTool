@@ -3,9 +3,6 @@ name: "CodeQL"
 on:
   push:
     branches: [master]
-    paths:
-    - '**.cs'
-    - '**.csproj'
 
 jobs:
   analyze:
