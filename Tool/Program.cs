@@ -30,7 +30,7 @@ internal class Program
     {
         try
         {
-            _ = Parser.Default.ParseArguments(args, OptionTypes)
+            Parser.Default.ParseArguments(args, OptionTypes)
                 .WithParsed<BaseOptions>(ProcessBaseOptions)
                 .MapResult(
                     (ReportingOptions options) => new ReportingController().Process(options),
@@ -52,7 +52,7 @@ internal class Program
     {
         if (options.Verbose)
         {
-            _ = Trace.Listeners.Add(new ConsoleTraceListener());
+            Trace.Listeners.Add(new ConsoleTraceListener());
             Trace.IndentSize = 2;
         }
     }
