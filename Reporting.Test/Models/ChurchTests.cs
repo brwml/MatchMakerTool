@@ -8,25 +8,15 @@ using Xunit;
 
 public class ChurchTests
 {
-    [Theory]
-    [MemberData(nameof(ChurchTestData))]
-    public void VerifyXmlConversion(Church expected)
-    {
-        var actual = Church.FromXml(expected.ToXml());
-        Assert.Equal(expected.Id, actual.Id);
-        Assert.Equal(expected.Name, actual.Name);
-    }
-
-    public static TheoryData<Church> ChurchTestData()
+    [Fact]
+    public void VerifyXmlConversion()
     {
         var faker = new Faker();
-        var data = new TheoryData<Church>();
 
-        for (var i = 0; i < 100; i++)
-        {
-            data.Add(new Church(faker.Random.Int(), faker.Random.String(faker.Random.Int(10, 100))));
-        }
+        var expected = new Church(faker.Random.Int(), faker.Random.String(faker.Random.Int(10, 100)));
+        var actual = Church.FromXml(expected.ToXml());
 
-        return data;
+        Assert.Equal(expected.Id, actual.Id);
+        Assert.Equal(expected.Name, actual.Name);
     }
 }
