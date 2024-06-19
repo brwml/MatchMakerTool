@@ -238,7 +238,7 @@ dotnet_diagnostic.CA1512.severity = warning
 dotnet_diagnostic.CA1513.severity = warning
 dotnet_diagnostic.CA1507.severity = warning
 
-[*.{json,xml,yaml,yml}]
+[*.{json,xml,yaml,yml,props}]
 indent_size = 2
 indent_style = space
 tab_width = 2
