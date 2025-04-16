@@ -62,9 +62,9 @@ public class PdfSummaryExporter : BaseSummaryExporter
     /// <returns>The <see cref="PdfPHeaderCell"/> instance</returns>
     private static Cell CreateHeaderCell(string content)
     {
+        // TODO: Set bold font
         return new Cell()
             .Add(new Paragraph(content).SetNormalFont())
-            .SetBold()
             .SetUnderline()
             .SetBorder(Border.NO_BORDER)
             .SetPaddingRight(10f)
