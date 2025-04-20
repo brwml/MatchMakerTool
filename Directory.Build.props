@@ -1,0 +1,17 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyTitle>Tool for ACME Quiz MatchMaker</AssemblyTitle>
+    <Authors>Bryan Wilhelm</Authors>
+    <Product>Tool for ACME Quiz MatchMaker</Product>
+    <Description>A command line tool for generating reports from ACME Quiz MatchMaker results XML files.</Description>
+    <Copyright>Copyright (c) 2016-$([System.DateTime]::Now.Year) Bryan Wilhelm</Copyright>
+    <PackageProjectUrl>https://github.com/brwml/MatchMakerTool</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/brwml/MatchMakerTool</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PublishAot>true</PublishAot>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+</Project>

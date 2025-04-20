@@ -4,7 +4,6 @@
     <RootNamespace>MatchMaker.Scheduling</RootNamespace>
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
-  <Import Project="..\Shared\Project.xml" />
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
