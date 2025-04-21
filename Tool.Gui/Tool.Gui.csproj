@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <PublishAot>false</PublishAot>
+
     <AssemblyName>mmtgui</AssemblyName>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <OutputType>WinExe</OutputType>
     <RootNamespace>MatchMaker.Tool.Gui</RootNamespace>
-    <TargetFramework>net8.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 

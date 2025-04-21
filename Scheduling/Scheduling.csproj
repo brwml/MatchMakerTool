@@ -2,7 +2,6 @@
   <PropertyGroup>
     <AssemblyName>MatchMaker.Scheduling</AssemblyName>
     <RootNamespace>MatchMaker.Scheduling</RootNamespace>
-    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />

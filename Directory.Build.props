@@ -1,6 +1,10 @@
 <Project>
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PublishAot>true</PublishAot>
+
     <AssemblyTitle>Tool for ACME Quiz MatchMaker</AssemblyTitle>
     <Authors>Bryan Wilhelm</Authors>
     <Product>Tool for ACME Quiz MatchMaker</Product>
@@ -9,9 +13,5 @@
     <PackageProjectUrl>https://github.com/brwml/MatchMakerTool</PackageProjectUrl>
     <RepositoryUrl>https://github.com/brwml/MatchMakerTool</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <PublishAot>true</PublishAot>
-    <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 </Project>
