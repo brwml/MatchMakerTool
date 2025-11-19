@@ -11,8 +11,6 @@
     <PackageReference Include="itext.bouncy-castle-adapter" />
     <PackageReference Include="QuikGraph" />
     <PackageReference Include="StringTemplate4" />
-    <PackageReference Include="System.IO.Compression.ZipFile" />
-    <PackageReference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Templates\Html\Index.stg" />

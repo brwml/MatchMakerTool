@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <PublishAot>false</PublishAot>
 
     <AssemblyName>mmtgui</AssemblyName>
@@ -9,10 +9,6 @@
     <RootNamespace>MatchMaker.Tool.Gui</RootNamespace>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Net.Http" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Reporting\Reporting.csproj" />
