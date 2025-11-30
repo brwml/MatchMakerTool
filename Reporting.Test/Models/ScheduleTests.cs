@@ -1,4 +1,5 @@
 ﻿namespace Reporting.Test.Models;
+
 using System;
 using System.Linq;
 

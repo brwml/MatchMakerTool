@@ -1,4 +1,5 @@
 ﻿namespace MatchMaker.Tool.Gui.Views;
+
 using System;
 using System.Globalization;
 using System.Windows;
