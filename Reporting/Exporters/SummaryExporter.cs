@@ -1,6 +1,7 @@
 ﻿namespace MatchMaker.Reporting.Exporters;
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -20,9 +21,25 @@ public static class SummaryExporter
     /// <param name="folder">The output folder</param>
     public static void Export(IEnumerable<Summary> summaries, string folder)
     {
-        using var workbook = new XLWorkbook();
-        Export(workbook, summaries);
-        SaveWorkbook(workbook, folder);
+        Trace.WriteLine("Starting summary export to Excel");
+        Trace.Indent();
+
+        try
+        {
+            using var workbook = new XLWorkbook();
+            Export(workbook, summaries);
+            SaveWorkbook(workbook, folder);
+            Trace.WriteLine("Summary export completed successfully");
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError($"Error during summary export: {ex.Message}");
+            throw;
+        }
+        finally
+        {
+            Trace.Unindent();
+        }
     }
 
     /// <summary>
@@ -45,6 +62,7 @@ public static class SummaryExporter
     /// <returns>The <see cref="Dictionary{int, InternalQuizzerSummary}"/></returns>
     private static Dictionary<int, InternalQuizzerSummary> CreateQuizzerSummaries(IEnumerable<Summary> summaries)
     {
+        Trace.WriteLine("Creating quizzer summaries");
         var quizzerSummaries = new Dictionary<int, InternalQuizzerSummary>();
 
         foreach (var summary in summaries)
@@ -62,6 +80,7 @@ public static class SummaryExporter
             }
         }
 
+        Trace.WriteLine($"Created summaries for {quizzerSummaries.Count} quizzers");
         return quizzerSummaries;
     }
 
@@ -73,6 +92,8 @@ public static class SummaryExporter
     private static void Export(XLWorkbook workbook, IEnumerable<Summary> summaries)
     {
         var summaryNames = summaries.Select(x => x.Name).Distinct().ToArray();
+        Trace.WriteLine($"Exporting {summaryNames.Length} tournament summaries to workbook");
+        
         var worksheet = workbook.AddWorksheet("Summary");
 
         SetWorksheetHeaders(summaryNames, worksheet);
@@ -88,8 +109,24 @@ public static class SummaryExporter
     {
         var filePath = Path.Combine(folder, "summary.xlsx");
 
-        File.Delete(filePath);
-        workbook.SaveAs(filePath);
+        Trace.WriteLine($"Saving workbook to: {filePath}");
+
+        try
+        {
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+                Trace.WriteLine("Existing file deleted");
+            }
+
+            workbook.SaveAs(filePath);
+            Trace.WriteLine("Workbook saved successfully");
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError($"Error saving workbook: {ex.Message}");
+            throw;
+        }
     }
 
     /// <summary>
@@ -107,6 +144,8 @@ public static class SummaryExporter
         {
             worksheet.Cell(1, i + 4).Value = summaryNames[i];
         }
+
+        Trace.WriteLine($"Worksheet headers set with {summaryNames.Length + 3} columns");
     }
 
     /// <summary>
@@ -137,6 +176,8 @@ public static class SummaryExporter
 
             row++;
         }
+
+        Trace.WriteLine($"Populated worksheet with {row - 2} quizzer records");
     }
 
     /// <summary>

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using MatchMaker.Reporting.Models;
@@ -21,7 +22,11 @@ public abstract class QuizzerRankingPolicy
 
         foreach (var group in groups)
         {
-            this.RankGroup(group, group.Min(g => g.Place));
+            if (group.Count() > 1)
+            {
+                Trace.WriteLine($"Applying {this.GetType().Name} to {group.Count()} quizzers with place {group.Min(g => g.Place)}");
+                this.RankGroup(group, group.Min(g => g.Place));
+            }
         }
     }
 

@@ -2,6 +2,7 @@
 
 using System;
 using System.IO;
+using System.Diagnostics;
 
 using ClosedXML.Excel;
 
@@ -41,10 +42,26 @@ public class ExcelSummaryExporter : BaseSummaryExporter
     /// <param name="folder">The folder/></param>
     public override void Export(Summary summary, string folder)
     {
-        using var workbook = new XLWorkbook();
-        ExportTeamResults(workbook, summary);
-        ExportQuizzerResults(workbook, summary);
-        SaveFile(workbook, summary, folder);
+        Trace.WriteLine($"Exporting tournament '{summary.Name}' to Excel format");
+        Trace.Indent();
+
+        try
+        {
+            using var workbook = new XLWorkbook();
+            ExportTeamResults(workbook, summary);
+            ExportQuizzerResults(workbook, summary);
+            SaveFile(workbook, summary, folder);
+            Trace.WriteLine("Excel export completed successfully");
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError($"Error during Excel export: {ex.Message}");
+            throw;
+        }
+        finally
+        {
+            Trace.Unindent();
+        }
     }
 
     /// <summary>
@@ -54,10 +71,12 @@ public class ExcelSummaryExporter : BaseSummaryExporter
     /// <param name="summary">The summary/></param>
     private static void ExportQuizzerResults(XLWorkbook workbook, Summary summary)
     {
+        Trace.WriteLine("Exporting quizzer results worksheet");
         var worksheet = workbook.AddWorksheet("Quizzer Results");
 
         FillQuizzerHeaderRow(worksheet.Row(1));
-        FillQuizzerResults(summary, worksheet, 2);
+        var quizzerCount = FillQuizzerResults(summary, worksheet, 2);
+        Trace.WriteLine($"Quizzer results worksheet populated with {quizzerCount - 2} quizzers");
     }
 
     /// <summary>
@@ -67,10 +86,12 @@ public class ExcelSummaryExporter : BaseSummaryExporter
     /// <param name="summary">The summary/></param>
     private static void ExportTeamResults(XLWorkbook workbook, Summary summary)
     {
+        Trace.WriteLine("Exporting team results worksheet");
         var worksheet = workbook.AddWorksheet("Team Results");
 
         FillTeamHeaderRow(worksheet.Row(1));
-        FillTeamResults(summary, worksheet, 2);
+        var teamCount = FillTeamResults(summary, worksheet, 2);
+        Trace.WriteLine($"Team results worksheet populated with {teamCount - 2} teams");
     }
 
     /// <summary>
@@ -229,8 +250,25 @@ public class ExcelSummaryExporter : BaseSummaryExporter
     private static void SaveFile(XLWorkbook workbook, Summary summary, string folder)
     {
         var fileName = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.xlsx"));
-        File.Delete(fileName);
-        workbook.SaveAs(fileName);
+        
+        Trace.WriteLine($"Saving Excel workbook to: {fileName}");
+
+        try
+        {
+            if (File.Exists(fileName))
+            {
+                File.Delete(fileName);
+                Trace.WriteLine("Existing file deleted");
+            }
+
+            workbook.SaveAs(fileName);
+            Trace.WriteLine("Excel workbook saved successfully");
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError($"Error saving Excel file: {ex.Message}");
+            throw;
+        }
     }
 
     /// <summary>

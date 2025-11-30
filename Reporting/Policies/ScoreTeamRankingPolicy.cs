@@ -1,6 +1,7 @@
 ﻿namespace MatchMaker.Reporting.Policies;
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using MatchMaker.Models;
@@ -18,6 +19,7 @@ public class ScoreTeamRankingPolicy : TeamRankingPolicy
     /// <param name="initial">The initial placement</param>
     protected override void RankGroup(IEnumerable<TeamSummary> summaries, int initial)
     {
+        Trace.WriteLine("Ranking teams by average score");
         var list = summaries.OrderByDescending(s => s.AverageScore).ToList();
         SetRelativePlaces(list, initial, (s1, s2) => s1.AverageScore == s2.AverageScore, new TieBreak(TieBreakReason.AverageScore));
     }

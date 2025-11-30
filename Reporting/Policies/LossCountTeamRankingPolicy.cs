@@ -1,6 +1,7 @@
 ﻿namespace MatchMaker.Reporting.Policies;
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using MatchMaker.Models;
@@ -18,6 +19,7 @@ public class LossCountTeamRankingPolicy : TeamRankingPolicy
     /// <param name="initial">The initial placement</param>
     protected override void RankGroup(IEnumerable<TeamSummary> summaries, int initial)
     {
+        Trace.WriteLine("Ranking teams by loss count");
         var list = summaries.ToList();
         list.Sort(Compare);
 

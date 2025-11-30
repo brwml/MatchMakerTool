@@ -1,6 +1,8 @@
 ﻿namespace MatchMaker.Reporting.Policies;
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using MatchMaker.Models;
@@ -18,6 +20,7 @@ public class WinPercentageTeamRankingPolicy : TeamRankingPolicy
     /// <param name="initial">The initial placement</param>
     protected override void RankGroup(IEnumerable<TeamSummary> summaries, int initial)
     {
+        Trace.WriteLine("Ranking teams by win percentage");
         var list = summaries.ToList();
         list.Sort(Compare);
 

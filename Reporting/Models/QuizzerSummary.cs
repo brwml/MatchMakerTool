@@ -68,15 +68,29 @@ public class QuizzerSummary
     /// <returns>The <see cref="IDictionary{int, QuizzerSummary}"/> instance</returns>
     public static IDictionary<int, QuizzerSummary> FromResult(Result result)
     {
-        var summaries = GetAllQuizzerSummaries(result)
-            .GroupBy(s => s.QuizzerId)
-            .Select(AggregateQuizzerSummary)
-            .ToDictionary(s => s.QuizzerId, s => s);
+        Trace.WriteLine("Creating quizzer summaries from results");
+        Trace.Indent();
 
-        new ScoreQuizzerRankingPolicy().Rank(summaries.Values);
-        new ErrorQuizzerRankingPolicy().Rank(summaries.Values);
+        try
+        {
+            var summaries = GetAllQuizzerSummaries(result)
+                .GroupBy(s => s.QuizzerId)
+                .Select(AggregateQuizzerSummary)
+                .ToDictionary(s => s.QuizzerId, s => s);
 
-        return summaries;
+            Trace.WriteLine($"Aggregated {summaries.Count} quizzer summaries");
+
+            Trace.WriteLine("Applying quizzer ranking policies");
+            new ScoreQuizzerRankingPolicy().Rank(summaries.Values);
+            new ErrorQuizzerRankingPolicy().Rank(summaries.Values);
+            Trace.WriteLine("Quizzer ranking policies applied successfully");
+
+            return summaries;
+        }
+        finally
+        {
+            Trace.Unindent();
+        }
     }
 
     /// <summary>

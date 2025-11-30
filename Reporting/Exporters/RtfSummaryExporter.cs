@@ -1,5 +1,7 @@
 ﻿namespace MatchMaker.Reporting.Exporters;
 
+using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -31,14 +33,31 @@ public class RtfSummaryExporter : BaseSummaryExporter
     /// <param name="folder">The output folder</param>
     public override void Export(Summary summary, string folder)
     {
-        var template =
-            LoadTemplate()
-                .Add("summary", summary)
-                .Add("teams", GetTeamInfo(summary))
-                .Add("quizzers", GetQuizzerInfo(summary));
+        Trace.WriteLine($"Exporting tournament '{summary.Name}' to RTF format");
+        Trace.Indent();
 
-        var path = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.rtf"));
-        File.WriteAllText(path, template.Render(CultureInfo.InvariantCulture));
+        try
+        {
+            var template =
+                LoadTemplate()
+                    .Add("summary", summary)
+                    .Add("teams", GetTeamInfo(summary))
+                    .Add("quizzers", GetQuizzerInfo(summary));
+
+            var path = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.rtf"));
+            Trace.WriteLine($"Writing RTF file to: {path}");
+            File.WriteAllText(path, template.Render(CultureInfo.InvariantCulture));
+            Trace.WriteLine("RTF export completed successfully");
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError($"Error during RTF export: {ex.Message}");
+            throw;
+        }
+        finally
+        {
+            Trace.Unindent();
+        }
     }
 
     /// <summary>
@@ -47,11 +66,13 @@ public class RtfSummaryExporter : BaseSummaryExporter
     /// <returns>The <see cref="Template"/> instance</returns>
     private static Template LoadTemplate()
     {
+        Trace.WriteLine("Loading RTF template");
         var assembly = Assembly.GetExecutingAssembly();
         using var stream = assembly.GetManifestResourceStream(RtfTemplate) ?? throw new InvalidOperationException(FormattableString.Invariant($"The template {RtfTemplate} was not found."));
         using var reader = new StreamReader(stream);
         var group = new TemplateGroupString(reader.ReadToEnd());
         group.RegisterRenderer(typeof(decimal), new DecimalAttributeRenderer());
+        Trace.WriteLine("RTF template loaded successfully");
         return group.GetInstanceOf(RootElement);
     }
 }

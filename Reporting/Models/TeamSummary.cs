@@ -92,17 +92,31 @@ public class TeamSummary
     /// <returns>The <see cref="IDictionary{int, TeamSummary}"/></returns>
     public static IDictionary<int, TeamSummary> FromResult(Result result, IEnumerable<TeamRankingPolicy> policies)
     {
-        var summaries = GetAllTeamSummaries(result)
-            .GroupBy(s => s.TeamId)
-            .Select(AggregateTeamSummary)
-            .ToDictionary(kvp => kvp.TeamId, kvp => kvp);
+        Trace.WriteLine("Creating team summaries from results");
+        Trace.Indent();
 
-        foreach (var policy in policies)
+        try
         {
-            policy.Rank(summaries.Values, result);
-        }
+            var summaries = GetAllTeamSummaries(result)
+                .GroupBy(s => s.TeamId)
+                .Select(AggregateTeamSummary)
+                .ToDictionary(kvp => kvp.TeamId, kvp => kvp);
 
-        return summaries;
+            Trace.WriteLine($"Aggregated {summaries.Count} team summaries");
+
+            foreach (var policy in policies)
+            {
+                Trace.WriteLine($"Applying ranking policy: {policy.GetType().Name}");
+                policy.Rank(summaries.Values, result);
+            }
+
+            Trace.WriteLine("Team summaries created successfully");
+            return summaries;
+        }
+        finally
+        {
+            Trace.Unindent();
+        }
     }
 
     /// <summary>

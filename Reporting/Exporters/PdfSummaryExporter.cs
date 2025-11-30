@@ -1,5 +1,7 @@
 ﻿namespace MatchMaker.Reporting.Exporters;
 
+using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -28,17 +30,34 @@ public class PdfSummaryExporter : BaseSummaryExporter
     {
         var fileName = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.pdf"));
 
-        using var writer = new PdfWriter(fileName);
-        using var pdfDoc = new PdfDocument(writer);
-        using var document = new Document(pdfDoc);
+        Trace.WriteLine($"Exporting tournament '{summary.Name}' to PDF format");
+        Trace.Indent();
 
-        CreateTeamPageTitle(summary, document);
-        ExportTeamResults(document, summary);
+        try
+        {
+            using var writer = new PdfWriter(fileName);
+            using var pdfDoc = new PdfDocument(writer);
+            using var document = new Document(pdfDoc);
 
-        CreateQuizzerPageTitle(document);
-        ExportQuizzerResults(document, summary);
+            CreateTeamPageTitle(summary, document);
+            ExportTeamResults(document, summary);
 
-        document.Close();
+            CreateQuizzerPageTitle(document);
+            ExportQuizzerResults(document, summary);
+
+            document.Close();
+            Trace.WriteLine($"PDF file saved to: {fileName}");
+            Trace.WriteLine("PDF export completed successfully");
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError($"Error during PDF export: {ex.Message}");
+            throw;
+        }
+        finally
+        {
+            Trace.Unindent();
+        }
     }
 
     /// <summary>
@@ -178,42 +197,46 @@ public class PdfSummaryExporter : BaseSummaryExporter
     }
 
     /// <summary>
-    /// Exports the quizzer results
-    /// </summary>
-    /// <param name="document">The <see cref="Document"/> instance</param>
-    /// <param name="summary">The <see cref="Summary"/> instance</param>
-    private static void ExportQuizzerResults(Document document, Summary summary)
-    {
-        var table = new Table(5).SetHorizontalAlignment(HorizontalAlignment.CENTER);
-
-        table.AddHeader(CreateQuizzerHeaderRow());
-
-        var quizzers = GetQuizzerInfo(summary).ToArray();
-
-        foreach (var quizzer in quizzers)
-        {
-            table.AddRow(CreateQuizzerRow(quizzer));
-        }
-
-        document.Add(table);
-    }
-
-    /// <summary>
     /// Exports the team results.
     /// </summary>
     /// <param name="document">The <see cref="Document"/> instance</param>
     /// <param name="summary">The <see cref="Summary"/> instance</param>
     private static void ExportTeamResults(Document document, Summary summary)
     {
+        Trace.WriteLine("Exporting team results to PDF");
         var table = new Table(7).SetHorizontalAlignment(HorizontalAlignment.CENTER);
 
         table.AddHeader(CreateTeamHeaderRow());
 
-        var teams = GetTeamInfo(summary);
+        var teams = GetTeamInfo(summary).ToArray();
+        Trace.WriteLine($"Populating PDF table with {teams.Length} teams");
 
         foreach (var team in teams)
         {
             table.AddRow(CreateTeamRow(team));
+        }
+
+        document.Add(table);
+    }
+
+    /// <summary>
+    /// Exports the quizzer results
+    /// </summary>
+    /// <param name="document">The <see cref="Document"/> instance</param>
+    /// <param name="summary">The <see cref="Summary"/> instance</param>
+    private static void ExportQuizzerResults(Document document, Summary summary)
+    {
+        Trace.WriteLine("Exporting quizzer results to PDF");
+        var table = new Table(5).SetHorizontalAlignment(HorizontalAlignment.CENTER);
+
+        table.AddHeader(CreateQuizzerHeaderRow());
+
+        var quizzers = GetQuizzerInfo(summary).ToArray();
+        Trace.WriteLine($"Populating PDF table with {quizzers.Length} quizzers");
+
+        foreach (var quizzer in quizzers)
+        {
+            table.AddRow(CreateQuizzerRow(quizzer));
         }
 
         document.Add(table);

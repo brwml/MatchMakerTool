@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using MatchMaker.Models;
@@ -31,6 +32,7 @@ public abstract class TeamRankingPolicy
         {
             if (group.Count() > 1)
             {
+                Trace.WriteLine($"Applying {this.GetType().Name} to {group.Count()} teams with place {group.Min(g => g.Place)}");
                 this.RankGroup(group, group.Min(g => g.Place));
             }
         }
@@ -56,6 +58,7 @@ public abstract class TeamRankingPolicy
                 summaries[i - 1].TieBreak = tieBreak;
                 summaries[i].TieBreak = tieBreak;
                 summaries[i].Place = initial + i;
+                Trace.WriteLine($"Team {summaries[i].TeamId} placed at {summaries[i].Place} using {tieBreak}");
             }
         }
     }

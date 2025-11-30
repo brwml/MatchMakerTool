@@ -1,6 +1,7 @@
 ﻿namespace MatchMaker.Reporting.Exporters;
 
 using System.Globalization;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -93,11 +94,28 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
     /// <param name="folder">The output folder</param>
     public override void Export(Summary summary, string folder)
     {
-        var resultsFolder = CreateResultsFolder(folder);
+        Trace.WriteLine($"Exporting tournament '{summary.Name}' to HTML format");
+        Trace.Indent();
 
-        CreateResults(summary, resultsFolder);
+        try
+        {
+            var resultsFolder = CreateResultsFolder(folder);
 
-        CreateZipFile(summary, folder, resultsFolder);
+            CreateResults(summary, resultsFolder);
+
+            CreateZipFile(summary, folder, resultsFolder);
+            
+            Trace.WriteLine("HTML export completed successfully");
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError($"Error during HTML export: {ex.Message}");
+            throw;
+        }
+        finally
+        {
+            Trace.Unindent();
+        }
     }
 
     /// <summary>
@@ -110,12 +128,24 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
     {
         var zipPath = Path.Combine(folder, FormattableString.Invariant($"{summary.Name} (Results).zip"));
 
-        if (File.Exists(zipPath))
-        {
-            File.Delete(zipPath);
-        }
+        Trace.WriteLine($"Creating ZIP archive at: {zipPath}");
 
-        ZipFile.CreateFromDirectory(resultsFolder, zipPath);
+        try
+        {
+            if (File.Exists(zipPath))
+            {
+                File.Delete(zipPath);
+                Trace.WriteLine("Existing ZIP file deleted");
+            }
+
+            ZipFile.CreateFromDirectory(resultsFolder, zipPath);
+            Trace.WriteLine("ZIP archive created successfully");
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError($"Error creating ZIP file: {ex.Message}");
+            throw;
+        }
     }
 
     /// <summary>
@@ -127,12 +157,16 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
     {
         var resultsFolder = Path.Combine(folder, ResultsFolder);
 
+        Trace.WriteLine($"Preparing results folder: {resultsFolder}");
+
         if (Directory.Exists(resultsFolder))
         {
             Directory.Delete(resultsFolder, true);
+            Trace.WriteLine("Existing results folder deleted");
         }
 
         Directory.CreateDirectory(resultsFolder);
+        Trace.WriteLine("Results folder created");
         return resultsFolder;
     }
 
@@ -143,15 +177,27 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
     /// <param name="folder">The target folder</param>
     private static void CreateResults(Summary summary, string folder)
     {
-        WriteStyleSheet(folder);
+        Trace.WriteLine("Generating HTML report files");
+        Trace.Indent();
 
-        WriteIndex(summary, folder);
+        try
+        {
+            WriteStyleSheet(folder);
 
-        WriteTeamSummary(summary, folder);
-        WriteTeamDetails(summary, folder);
+            WriteIndex(summary, folder);
 
-        WriteQuizzerSummary(summary, folder);
-        WriteQuizzerDetails(summary, folder);
+            WriteTeamSummary(summary, folder);
+            WriteTeamDetails(summary, folder);
+
+            WriteQuizzerSummary(summary, folder);
+            WriteQuizzerDetails(summary, folder);
+
+            Trace.WriteLine("HTML report files generated successfully");
+        }
+        finally
+        {
+            Trace.Unindent();
+        }
     }
 
     /// <summary>
@@ -259,91 +305,12 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
     }
 
     /// <summary>
-    /// Writes the tournament <see cref="Summary"/> index.
-    /// </summary>
-    /// <param name="summary">The <see cref="Summary"/> instance</param>
-    /// <param name="folder">The target folder</param>
-    private static void WriteIndex(Summary summary, string folder)
-    {
-        var template = LoadTemplate(IndexTemplate).Add("summary", summary);
-        File.WriteAllText(Path.Combine(folder, IndexFileName), template.Render(CultureInfo.CurrentCulture));
-    }
-
-    /// <summary>
-    /// Writes the quizzer detail page.
-    /// </summary>
-    /// <param name="summary">The <see cref="Summary"/> instance</param>
-    /// <param name="quizzerSummary">The <see cref="QuizzerSummary"/> instance</param>
-    /// <param name="folder">The target folder</param>
-    private static void WriteQuizzerDetail(Summary summary, QuizzerSummary quizzerSummary, string folder)
-    {
-        var quizzerId = quizzerSummary.QuizzerId;
-        var quizzer = summary.Result.Schedule.Quizzers[quizzerId];
-        var teamId = quizzer.TeamId;
-
-        var details = summary.Result.Matches
-            .Where(x => x.Value.QuizzerResults.Any(r => r.QuizzerId == quizzerId))
-            .OrderBy(x => x.Value.Round)
-            .Select(x => new
-            {
-                Round = GetRoundNumber(x.Value),
-                OpponentId = GetOpponentId(x.Value, teamId),
-                Opponent = GetOpponentName(summary, x.Value, teamId),
-                Score = GetQuizzerScore(x.Value, quizzerId),
-                Errors = GetQuizzerErrors(x.Value, quizzerId)
-            });
-
-        var quizzerInfo = new QuizzerInfo(quizzer, quizzerSummary, GetChurch(summary, quizzer), GetTeam(summary, quizzer));
-
-        var template =
-            LoadTemplate(QuizzerDetailTemplate)
-                .Add("summary", summary)
-                .Add("quizzer", quizzerInfo)
-                .Add("details", details);
-
-        var path = Path.Combine(folder, FormattableString.Invariant($"{quizzerId}.html"));
-        File.WriteAllText(path, template.Render(CultureInfo.CurrentCulture));
-    }
-
-    /// <summary>
-    /// Writes all quizzer details to the output.
-    /// </summary>
-    /// <param name="summary">The <see cref="Summary"/> instance</param>
-    /// <param name="folder">The target folder</param>
-    private static void WriteQuizzerDetails(Summary summary, string folder)
-    {
-        folder = Path.Combine(folder, QuizzersFolderName);
-        Directory.CreateDirectory(folder);
-
-        foreach (var quizzer in summary.QuizzerSummaries)
-        {
-            WriteQuizzerDetail(summary, quizzer.Value, folder);
-        }
-    }
-
-    /// <summary>
-    /// Writes the quizzer summary page
-    /// </summary>
-    /// <param name="summary">The <see cref="Summary"/> instance</param>
-    /// <param name="folder">The target folder</param>
-    private static void WriteQuizzerSummary(Summary summary, string folder)
-    {
-        var quizzers = GetQuizzerInfo(summary);
-
-        var template =
-            LoadTemplate(QuizzerSummaryTemplate)
-                .Add("name", summary.Name)
-                .Add("quizzers", quizzers);
-
-        File.WriteAllText(Path.Combine(folder, QuizzersFileName), template.Render(CultureInfo.CurrentCulture));
-    }
-
-    /// <summary>
     /// Writes the CSS style sheet
     /// </summary>
     /// <param name="folder">The target folder</param>
     private static void WriteStyleSheet(string folder)
     {
+        Trace.WriteLine("Writing stylesheet");
         var assembly = Assembly.GetExecutingAssembly();
         using var stream = assembly.GetManifestResourceStream(StyleSheet);
 
@@ -351,7 +318,61 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
         {
             using var destination = File.OpenWrite(Path.Combine(folder, StyleSheetFileName));
             stream.CopyTo(destination);
+            Trace.WriteLine("Stylesheet written successfully");
         }
+    }
+
+    /// <summary>
+    /// Writes the tournament <see cref="Summary"/> index.
+    /// </summary>
+    /// <param name="summary">The <see cref="Summary"/> instance</param>
+    /// <param name="folder">The target folder</param>
+    private static void WriteIndex(Summary summary, string folder)
+    {
+        Trace.WriteLine("Writing tournament index page");
+        var template = LoadTemplate(IndexTemplate).Add("summary", summary);
+        File.WriteAllText(Path.Combine(folder, IndexFileName), template.Render(CultureInfo.CurrentCulture));
+        Trace.WriteLine("Index page written successfully");
+    }
+
+    /// <summary>
+    /// Writes the team summary page
+    /// </summary>
+    /// <param name="summary">The <see cref="Summary"/> instance</param>
+    /// <param name="folder">The target folder</param>
+    private static void WriteTeamSummary(Summary summary, string folder)
+    {
+        Trace.WriteLine("Writing team summary page");
+        var teams = GetTeamInfo(summary);
+
+        var template =
+            LoadTemplate(TeamSummaryTemplate)
+                .Add("name", summary.Name)
+                .Add("teams", teams);
+
+        File.WriteAllText(Path.Combine(folder, TeamsFileName), template.Render(CultureInfo.CurrentCulture));
+        Trace.WriteLine($"Team summary page written with {teams.Count()} teams");
+    }
+
+    /// <summary>
+    /// Writes all team details.
+    /// </summary>
+    /// <param name="summary">The <see cref="Summary"/> instance</param>
+    /// <param name="folder">The target folder</param>
+    private static void WriteTeamDetails(Summary summary, string folder)
+    {
+        Trace.WriteLine("Writing team detail pages");
+        folder = Path.Combine(folder, TeamsFolderName);
+        Directory.CreateDirectory(folder);
+
+        var teamCount = 0;
+        foreach (var team in summary.TeamSummaries)
+        {
+            WriteTeamDetail(summary, team.Value, folder);
+            teamCount++;
+        }
+
+        Trace.WriteLine($"Team detail pages written for {teamCount} teams");
     }
 
     /// <summary>
@@ -393,35 +414,78 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
     }
 
     /// <summary>
-    /// Writes all team details.
+    /// Writes the quizzer summary page
     /// </summary>
     /// <param name="summary">The <see cref="Summary"/> instance</param>
     /// <param name="folder">The target folder</param>
-    private static void WriteTeamDetails(Summary summary, string folder)
+    private static void WriteQuizzerSummary(Summary summary, string folder)
     {
-        folder = Path.Combine(folder, TeamsFolderName);
-        Directory.CreateDirectory(folder);
+        Trace.WriteLine("Writing quizzer summary page");
+        var quizzers = GetQuizzerInfo(summary);
 
-        foreach (var team in summary.TeamSummaries)
-        {
-            WriteTeamDetail(summary, team.Value, folder);
-        }
+        var template =
+            LoadTemplate(QuizzerSummaryTemplate)
+                .Add("name", summary.Name)
+                .Add("quizzers", quizzers);
+
+        File.WriteAllText(Path.Combine(folder, QuizzersFileName), template.Render(CultureInfo.CurrentCulture));
+        Trace.WriteLine($"Quizzer summary page written with {quizzers.Count()} quizzers");
     }
 
     /// <summary>
-    /// Writes the team summary page
+    /// Writes all quizzer details to the output.
     /// </summary>
     /// <param name="summary">The <see cref="Summary"/> instance</param>
     /// <param name="folder">The target folder</param>
-    private static void WriteTeamSummary(Summary summary, string folder)
+    private static void WriteQuizzerDetails(Summary summary, string folder)
     {
-        var teams = GetTeamInfo(summary);
+        Trace.WriteLine("Writing quizzer detail pages");
+        folder = Path.Combine(folder, QuizzersFolderName);
+        Directory.CreateDirectory(folder);
+
+        var quizzerCount = 0;
+        foreach (var quizzer in summary.QuizzerSummaries)
+        {
+            WriteQuizzerDetail(summary, quizzer.Value, folder);
+            quizzerCount++;
+        }
+
+        Trace.WriteLine($"Quizzer detail pages written for {quizzerCount} quizzers");
+    }
+
+    /// <summary>
+    /// Writes the quizzer detail page.
+    /// </summary>
+    /// <param name="summary">The <see cref="Summary"/> instance</param>
+    /// <param name="quizzerSummary">The <see cref="QuizzerSummary"/> instance</param>
+    /// <param name="folder">The target folder</param>
+    private static void WriteQuizzerDetail(Summary summary, QuizzerSummary quizzerSummary, string folder)
+    {
+        var quizzerId = quizzerSummary.QuizzerId;
+        var quizzer = summary.Result.Schedule.Quizzers[quizzerId];
+        var teamId = quizzer.TeamId;
+
+        var details = summary.Result.Matches
+            .Where(x => x.Value.QuizzerResults.Any(r => r.QuizzerId == quizzerId))
+            .OrderBy(x => x.Value.Round)
+            .Select(x => new
+            {
+                Round = GetRoundNumber(x.Value),
+                OpponentId = GetOpponentId(x.Value, teamId),
+                Opponent = GetOpponentName(summary, x.Value, teamId),
+                Score = GetQuizzerScore(x.Value, quizzerId),
+                Errors = GetQuizzerErrors(x.Value, quizzerId)
+            });
+
+        var quizzerInfo = new QuizzerInfo(quizzer, quizzerSummary, GetChurch(summary, quizzer), GetTeam(summary, quizzer));
 
         var template =
-            LoadTemplate(TeamSummaryTemplate)
-                .Add("name", summary.Name)
-                .Add("teams", teams);
+            LoadTemplate(QuizzerDetailTemplate)
+                .Add("summary", summary)
+                .Add("quizzer", quizzerInfo)
+                .Add("details", details);
 
-        File.WriteAllText(Path.Combine(folder, TeamsFileName), template.Render(CultureInfo.CurrentCulture));
+        var path = Path.Combine(folder, FormattableString.Invariant($"{quizzerId}.html"));
+        File.WriteAllText(path, template.Render(CultureInfo.CurrentCulture));
     }
 }

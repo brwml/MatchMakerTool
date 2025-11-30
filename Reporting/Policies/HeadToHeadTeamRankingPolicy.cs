@@ -1,6 +1,8 @@
 ﻿namespace MatchMaker.Reporting.Policies;
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using MatchMaker.Models;
@@ -26,6 +28,7 @@ public class HeadToHeadTeamRankingPolicy : TeamRankingPolicy
     /// <param name="initial">The initial</param>
     protected override void RankGroup(IEnumerable<TeamSummary> summaries, int initial)
     {
+        Trace.WriteLine("Ranking teams by head-to-head competition");
         this.RankGroupInternal(summaries, initial);
     }
 

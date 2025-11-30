@@ -1,6 +1,7 @@
 ﻿namespace MatchMaker.Reporting.Exporters;
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using MatchMaker.Models;
@@ -47,28 +48,41 @@ public abstract class BaseSummaryExporter : ISummaryExporter
     /// <returns>The quizzer information</returns>
     protected static IEnumerable<QuizzerInfo> GetQuizzerInfo(Summary summary)
     {
-        var quizzers = summary.Result.Schedule.Quizzers;
+        Trace.WriteLine("Building quizzer information");
+        Trace.Indent();
 
-        var quizzerInfo = summary.QuizzerSummaries
-                                 .Join(quizzers,
-                                       x => x.Key,
-                                       x => x.Key,
-                                       (s, q) => new QuizzerInfo(q.Value, s.Value, GetChurch(summary, q.Value), GetTeam(summary, q.Value)))
-                                 .OrderBy(x => (x.Place, x.LastName, x.FirstName)).ToArray();
-
-        for (var i = 1; i < quizzerInfo.Length; i++)
+        try
         {
-            quizzerInfo[i].ShowPlace = quizzerInfo[i - 1].Place != quizzerInfo[i].Place;
+            var quizzers = summary.Result.Schedule.Quizzers;
+
+            var quizzerInfo = summary.QuizzerSummaries
+                                     .Join(quizzers,
+                                           x => x.Key,
+                                           x => x.Key,
+                                           (s, q) => new QuizzerInfo(q.Value, s.Value, GetChurch(summary, q.Value), GetTeam(summary, q.Value)))
+                                     .OrderBy(x => (x.Place, x.LastName, x.FirstName)).ToArray();
+
+            Trace.WriteLine($"Sorted {quizzerInfo.Length} quizzers by place");
+
+            for (var i = 1; i < quizzerInfo.Length; i++)
+            {
+                quizzerInfo[i].ShowPlace = quizzerInfo[i - 1].Place != quizzerInfo[i].Place;
+            }
+
+            var rookieYear = summary.Result.Schedule.Rounds.Min(x => x.Value.Date).AddDays(-180).Year;
+
+            foreach (var quizzer in quizzerInfo)
+            {
+                quizzer.IsRookie = quizzer.RookieYear == rookieYear;
+            }
+
+            Trace.WriteLine($"Quizzer information prepared successfully");
+            return quizzerInfo;
         }
-
-        var rookieYear = summary.Result.Schedule.Rounds.Min(x => x.Value.Date).AddDays(-180).Year;
-
-        foreach (var quizzer in quizzerInfo)
+        finally
         {
-            quizzer.IsRookie = quizzer.RookieYear == rookieYear;
+            Trace.Unindent();
         }
-
-        return quizzerInfo;
     }
 
     /// <summary>
@@ -78,20 +92,33 @@ public abstract class BaseSummaryExporter : ISummaryExporter
     /// <returns>The team information</returns>
     protected static IEnumerable<TeamInfo> GetTeamInfo(Summary summary)
     {
-        var teams = summary.Result.Schedule.Teams;
+        Trace.WriteLine("Building team information");
+        Trace.Indent();
 
-        var teamInfo = summary.TeamSummaries
-                      .Join(teams,
-                            x => x.Key,
-                            x => x.Key,
-                            (s, t) => new TeamInfo(t.Value, s.Value))
-                      .OrderBy(x => (x.Place, x.Name)).ToArray();
-
-        for (var i = 1; i < teamInfo.Length; i++)
+        try
         {
-            teamInfo[i].ShowPlace = teamInfo[i - 1].Place != teamInfo[i].Place;
-        }
+            var teams = summary.Result.Schedule.Teams;
 
-        return teamInfo;
+            var teamInfo = summary.TeamSummaries
+                          .Join(teams,
+                                x => x.Key,
+                                x => x.Key,
+                                (s, t) => new TeamInfo(t.Value, s.Value))
+                          .OrderBy(x => (x.Place, x.Name)).ToArray();
+
+            Trace.WriteLine($"Sorted {teamInfo.Length} teams by place");
+
+            for (var i = 1; i < teamInfo.Length; i++)
+            {
+                teamInfo[i].ShowPlace = teamInfo[i - 1].Place != teamInfo[i].Place;
+            }
+
+            Trace.WriteLine("Team information prepared successfully");
+            return teamInfo;
+        }
+        finally
+        {
+            Trace.Unindent();
+        }
     }
 }

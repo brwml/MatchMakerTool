@@ -1,6 +1,7 @@
 ﻿namespace MatchMaker.Reporting.Exporters;
 
 using System;
+using System.Diagnostics;
 
 using MatchMaker.Reporting.Models;
 
@@ -16,13 +17,33 @@ public class XmlSummaryExporter : ISummaryExporter
     /// <param name="folder">The output folder</param>
     public void Export(Summary summary, string folder)
     {
-        var filePathSchedule = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.export.schedule.xml"));
-        File.WriteAllText(filePathSchedule, summary.Result.Schedule.ToXml().ToString());
+        Trace.WriteLine($"Exporting tournament '{summary.Name}' to XML format");
+        Trace.Indent();
 
-        var filePathResults = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.export.results.xml"));
-        File.WriteAllText(filePathResults, summary.Result.ToXml().ToString());
+        try
+        {
+            var filePathSchedule = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.export.schedule.xml"));
+            Trace.WriteLine($"Writing schedule XML to: {filePathSchedule}");
+            File.WriteAllText(filePathSchedule, summary.Result.Schedule.ToXml().ToString());
 
-        var filePathSummary = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.export.xml"));
-        File.WriteAllText(filePathSummary, summary.ToXml().ToString());
+            var filePathResults = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.export.results.xml"));
+            Trace.WriteLine($"Writing results XML to: {filePathResults}");
+            File.WriteAllText(filePathResults, summary.Result.ToXml().ToString());
+
+            var filePathSummary = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.export.xml"));
+            Trace.WriteLine($"Writing summary XML to: {filePathSummary}");
+            File.WriteAllText(filePathSummary, summary.ToXml().ToString());
+
+            Trace.WriteLine("XML export completed successfully");
+        }
+        catch (Exception ex)
+        {
+            Trace.TraceError($"Error during XML export: {ex.Message}");
+            throw;
+        }
+        finally
+        {
+            Trace.Unindent();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace MatchMaker.Reporting.Policies;
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using MatchMaker.Reporting.Models;
@@ -17,6 +18,7 @@ public class ErrorQuizzerRankingPolicy : QuizzerRankingPolicy
     /// <param name="initial">The initial place</param>
     protected override void RankGroup(IEnumerable<QuizzerSummary> summaries, int initial)
     {
+        Trace.WriteLine("Ranking quizzers by average errors");
         var list = summaries.OrderBy(s => s.AverageErrors).ToList();
         SetRelativePlaces(list, initial, (s1, s2) => s1.AverageErrors == s2.AverageErrors);
     }

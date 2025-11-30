@@ -1,6 +1,8 @@
 ﻿namespace MatchMaker.Reporting.Models;
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Xml.Linq;
 
 using MatchMaker.Models;
@@ -45,7 +47,19 @@ public class Summary(Result result, IEnumerable<TeamRankingPolicy> policies)
     /// <returns>The <see cref="Summary"/></returns>
     public static Summary FromResult(Result result, IEnumerable<TeamRankingPolicy> policies)
     {
-        return new Summary(result, policies);
+        Trace.WriteLine($"Creating summary for tournament: {result.Name}");
+        Trace.Indent();
+
+        try
+        {
+            var summary = new Summary(result, policies);
+            Trace.WriteLine($"Summary created with {summary.TeamSummaries.Count} teams and {summary.QuizzerSummaries.Count} quizzers");
+            return summary;
+        }
+        finally
+        {
+            Trace.Unindent();
+        }
     }
 
     /// <summary>
@@ -54,6 +68,7 @@ public class Summary(Result result, IEnumerable<TeamRankingPolicy> policies)
     /// <returns>The <see cref="XDocument"/> instance</returns>
     public XDocument ToXml()
     {
+        Trace.WriteLine("Converting summary to XML format");
         var scheduleXml = this.Result.Schedule.ToXml();
         var resultXml = this.Result.ToXml();
 
