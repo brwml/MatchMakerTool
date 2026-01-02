@@ -1,10 +1,6 @@
-mode: Mainline
+mode: ManualDeployment
 next-version: 1.6.0
-assembly-versioning-scheme: MajorMinorPatchTag
-assembly-file-versioning-scheme: MajorMinorPatchTag
-assembly-informational-format: '{AssemblyFileSemVer}.{BranchName}.{ShortSha}'
 increment: Patch
-branches:
-  master:
-    regex: ^master$
-    increment: Minor
+assembly-file-versioning-format: "{MajorMinorPatch}.{CommitsSinceVersionSource}"
+assembly-versioning-format: "{MajorMinorPatch}.{CommitsSinceVersionSource}"
+assembly-informational-format: "{MajorMinorPatch}.{CommitsSinceVersionSource}.{BranchName}"

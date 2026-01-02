@@ -15,4 +15,11 @@
     <ProjectReference Include="..\Scheduling\Scheduling.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="GitVersion.MsBuild">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
 </Project>
