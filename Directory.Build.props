@@ -13,5 +13,11 @@
     <PackageProjectUrl>https://github.com/brwml/MatchMakerTool</PackageProjectUrl>
     <RepositoryUrl>https://github.com/brwml/MatchMakerTool</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
+    
+    <!-- GitVersion Configuration -->
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="GitVersion.MsBuild" />
+  </ItemGroup>
 </Project>

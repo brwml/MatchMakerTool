@@ -4,7 +4,7 @@ assembly-versioning-scheme: MajorMinorPatchTag
 assembly-file-versioning-scheme: MajorMinorPatchTag
 assembly-informational-format: '{AssemblyFileSemVer}.{BranchName}.{ShortSha}'
 increment: Patch
-branches: {}
-ignore:
-  sha: []
-merge-message-formats: {}
+branches:
+  master:
+    regex: ^master$
+    increment: Minor
