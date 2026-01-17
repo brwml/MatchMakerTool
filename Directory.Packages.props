@@ -16,8 +16,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
     <PackageVersion Include="Humanizer.Core" Version="3.0.1" />
-    <PackageVersion Include="itext" Version="9.4.0" />
-    <PackageVersion Include="itext.bouncy-castle-adapter" Version="9.4.0" />
+    <PackageVersion Include="itext" Version="9.5.0" />
+    <PackageVersion Include="itext.bouncy-castle-adapter" Version="9.5.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageVersion Include="QuikGraph" Version="2.5.0" />
