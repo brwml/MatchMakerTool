@@ -5,6 +5,9 @@
     <Nullable>enable</Nullable>
     <PublishAot>true</PublishAot>
 
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>recommended</AnalysisMode>
+
     <AssemblyTitle>Tool for ACME Quiz MatchMaker</AssemblyTitle>
     <Authors>Bryan Wilhelm</Authors>
     <Product>Tool for ACME Quiz MatchMaker</Product>

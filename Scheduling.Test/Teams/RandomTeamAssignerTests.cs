@@ -1,6 +1,7 @@
 namespace Scheduling.Test.Teams;
 
 using System.Collections.Generic;
+using System.Globalization;
 
 using Bogus;
 
@@ -41,7 +42,7 @@ public class RandomTeamAssignerTests
 
         Assert.Equal(inputSchedule.Quizzers.Count, actualSchedule.Quizzers.Count);
 
-        for (int i = 1; i <= actualSchedule.Quizzers.Count; i++)
+        for (var i = 1; i <= actualSchedule.Quizzers.Count; i++)
         {
             Assert.True(actualSchedule.Quizzers.ContainsKey(i));
         }
@@ -57,11 +58,13 @@ public class RandomTeamAssignerTests
         var teamAssignments = new Dictionary<int, int>();
         foreach (var quizzer in actualSchedule.Quizzers.Values)
         {
-            if (!teamAssignments.ContainsKey(quizzer.TeamId))
+            if (!teamAssignments.TryGetValue(quizzer.TeamId, out var value))
             {
-                teamAssignments[quizzer.TeamId] = 0;
+                value = 0;
+                teamAssignments[quizzer.TeamId] = value;
             }
-            teamAssignments[quizzer.TeamId]++;
+
+            teamAssignments[quizzer.TeamId] = ++value;
         }
 
         Assert.True(teamAssignments.Count > 0);
@@ -110,7 +113,7 @@ public class RandomTeamAssignerTests
         }
     }
 
-    private static IEnumerable<Quizzer> BuildQuizzers(int count, IList<Church> churches, IList<Team> teams)
+    private static IEnumerable<Quizzer> BuildQuizzers(int count, List<Church> churches, List<Team> teams)
     {
         var faker = new Faker();
 
@@ -134,7 +137,7 @@ public class RandomTeamAssignerTests
         for (var i = 0; i < count; i++)
         {
             var id = i + 1;
-            yield return new Team(id, $"Team {id}", id.ToString("D02"), 0);
+            yield return new Team(id, $"Team {id}", id.ToString("D02", CultureInfo.InvariantCulture), 0);
         }
     }
 }

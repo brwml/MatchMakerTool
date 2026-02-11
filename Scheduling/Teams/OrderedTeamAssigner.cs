@@ -1,6 +1,7 @@
 ﻿namespace MatchMaker.Scheduling.Teams;
 
 using System;
+using System.Globalization;
 
 using Humanizer;
 
@@ -40,7 +41,7 @@ public class OrderedTeamAssigner : ITeamAssigner
     /// <param name="quizzers">The quizzers.</param>
     /// <param name="teams">The teams.</param>
     /// <returns>The quizzer map</returns>
-    private static Dictionary<int, Quizzer> CreateQuizzers(IDictionary<int, Quizzer> quizzers, IDictionary<int, Team> teams)
+    private static Dictionary<int, Quizzer> CreateQuizzers(IDictionary<int, Quizzer> quizzers, Dictionary<int, Team> teams)
     {
         var result = new Dictionary<int, Quizzer>();
 
@@ -78,7 +79,7 @@ public class OrderedTeamAssigner : ITeamAssigner
 
         for (var i = 1; i <= numberOfTeams; i++)
         {
-            teamMap.Add(i, new Team(i, $"Team {i.ToWords().Titleize()}", i.ToString(), 0));
+            teamMap.Add(i, new Team(i, $"Team {i.ToWords().Titleize()}", i.ToString(CultureInfo.InvariantCulture), 0));
         }
 
         return teamMap;

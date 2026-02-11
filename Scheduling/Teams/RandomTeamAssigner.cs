@@ -1,5 +1,7 @@
 ﻿namespace MatchMaker.Scheduling.Teams;
 
+using System.Globalization;
+
 using Humanizer;
 
 using MatchMaker.Models;
@@ -76,7 +78,7 @@ public class RandomTeamAssigner : ITeamAssigner
 
         for (var i = 1; i <= numberOfTeams; i++)
         {
-            teamMap.Add(i, new Team(i, $"Team {i.ToWords().Titleize()}", i.ToString(), 0));
+            teamMap.Add(i, new Team(i, $"Team {i.ToWords().Titleize()}", i.ToString(CultureInfo.InvariantCulture), 0));
         }
 
         return teamMap;

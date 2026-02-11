@@ -1,6 +1,7 @@
 ﻿namespace Scheduling.Test.Teams;
 
 using System.Collections.Generic;
+using System.Globalization;
 
 using Bogus;
 
@@ -80,7 +81,7 @@ public class OrderedTeamAssignerTests
         }
     }
 
-    private static IEnumerable<Quizzer> BuildQuizzers(int count, IList<Church> churches, IList<Team> teams)
+    private static IEnumerable<Quizzer> BuildQuizzers(int count, List<Church> churches, List<Team> teams)
     {
         var church = 0;
         var team = 0;
@@ -123,7 +124,7 @@ public class OrderedTeamAssignerTests
         for (var i = 0; i < count; i++)
         {
             var id = i + 1;
-            yield return new Team(id, $"Team {id.ToWords().Titleize()}", id.ToString("D02"), 0);
+            yield return new Team(id, $"Team {id.ToWords().Titleize()}", id.ToString("D02", CultureInfo.InvariantCulture), 0);
         }
     }
 }
