@@ -1,6 +1,7 @@
 ﻿namespace Reporting.Test.Models;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using Bogus;
@@ -13,6 +14,7 @@ public class ScheduleTests
 {
     [Theory]
     [MemberData(nameof(GetScheduleTests))]
+    [SuppressMessage("Usage", "xUnit1045:Avoid using TheoryData type arguments that might not be serializable", Justification = "<Pending>")]
     public void Test(Schedule expected)
     {
         var actual = Schedule.FromXml(expected.ToXml(), expected.Name);
@@ -59,7 +61,7 @@ public class ScheduleTests
 
             var matches = new[]
             {
-                new MatchSchedule(faker.Random.Int(), faker.Random.Int(), teams.Select(x => x.Id).ToList())
+                new MatchSchedule(faker.Random.Int(), faker.Random.Int(), [.. teams.Select(x => x.Id)])
             };
 
             var rounds = new[]

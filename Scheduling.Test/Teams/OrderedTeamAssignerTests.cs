@@ -1,6 +1,7 @@
 ﻿namespace Scheduling.Test.Teams;
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 using Bogus;
@@ -16,6 +17,7 @@ public class OrderedTeamAssignerTests
 {
     [Theory(DisplayName = "Ordered Team Assignment Tests ")]
     [MemberData(nameof(GetOrderedTeamsTestData))]
+    [SuppressMessage("Usage", "xUnit1045:Avoid using TheoryData type arguments that might not be serializable", Justification = "<Pending>")]
     public void Tests(int numberOfRooms, int numberOfTeams, Schedule inputSchedule, Schedule expectedSchedule)
     {
         var assigner = new OrderedTeamAssigner();

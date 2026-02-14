@@ -15,7 +15,7 @@ public class MatchScheduleTests
     {
         var faker = new Faker();
 
-        var expected = new MatchSchedule(faker.Random.Int(), faker.Random.Int(), new List<int> { faker.Random.Int(), faker.Random.Int() });
+        var expected = new MatchSchedule(faker.Random.Int(), faker.Random.Int(), [faker.Random.Int(), faker.Random.Int()]);
         var actual = MatchSchedule.FromXml(expected.ToXml());
 
         Assert.Equal(expected.Id, actual.Id);

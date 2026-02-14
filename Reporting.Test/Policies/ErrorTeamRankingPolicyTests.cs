@@ -1,6 +1,7 @@
 ﻿namespace Reporting.Test.Policies;
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using Bogus;
@@ -15,6 +16,7 @@ public class ErrorTeamRankingPolicyTests
 {
     [Theory]
     [MemberData(nameof(GetTestCases))]
+    [SuppressMessage("Usage", "xUnit1045:Avoid using TheoryData type arguments that might not be serializable", Justification = "<Pending>")]
     public void TeamErrorTests(IEnumerable<TeamSummary> summaries, IDictionary<int, int> places)
     {
         var policy = new ErrorTeamRankingPolicy();

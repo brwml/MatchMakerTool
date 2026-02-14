@@ -1,6 +1,7 @@
 ﻿namespace Reporting.Test.Policies;
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using Bogus;
@@ -14,6 +15,7 @@ public class ErrorQuizzerRankingPolicyTests
 {
     [Theory]
     [MemberData(nameof(GetTestCases))]
+    [SuppressMessage("Usage", "xUnit1045:Avoid using TheoryData type arguments that might not be serializable", Justification = "<Pending>")]
     public void QuizzerErrorTests(IEnumerable<QuizzerSummary> summaries, IDictionary<int, int> places)
     {
         var policy = new ErrorQuizzerRankingPolicy();

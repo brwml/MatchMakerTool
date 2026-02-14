@@ -23,7 +23,7 @@ internal class TeamViewModel(string name, string abbreviation)
     /// <summary>
     /// Gets this list of quizzers.
     /// </summary>
-    public IList<QuizzerViewModel> Quizzers { get; } = new List<QuizzerViewModel>();
+    public IList<QuizzerViewModel> Quizzers { get; } = [];
 
     /// <summary>
     /// Creates the string representation of the team view model.

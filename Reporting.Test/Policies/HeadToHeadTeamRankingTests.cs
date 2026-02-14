@@ -1,6 +1,7 @@
 ﻿namespace Reporting.Test.Policies;
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 
 using MatchMaker.Models;
@@ -16,6 +17,7 @@ public class HeadToHeadTeamRankingTests
 {
     [Theory]
     [MemberData(nameof(GetHeadToHeadTestCases))]
+    [SuppressMessage("Usage", "xUnit1045:Avoid using TheoryData type arguments that might not be serializable", Justification = "<Pending>")]
     public void HeadToHeadTests(string testId, IDictionary<int, int> places)
     {
         var summary = LoadSummary(

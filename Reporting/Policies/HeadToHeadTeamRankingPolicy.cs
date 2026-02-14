@@ -80,7 +80,7 @@ public class HeadToHeadTeamRankingPolicy : TeamRankingPolicy
     /// <returns>The ordered <see cref="List{List{DependencyGraph}}"/> instance</returns>
     private static List<List<DependencyGraph>> SortCondensatedGraph(IMutableBidirectionalGraph<DependencyGraph, CondensedEdge<GraphVertex, GraphEdge, DependencyGraph>> condensated)
     {
-        return condensated.TopologicalSort().Select(x => new List<DependencyGraph> { x }).ToList();
+        return [.. condensated.TopologicalSort().Select(x => new List<DependencyGraph> { x })];
     }
 
     /// <summary>

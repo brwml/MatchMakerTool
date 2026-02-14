@@ -1,6 +1,7 @@
 namespace Scheduling.Test.Teams;
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 using Bogus;
@@ -14,6 +15,7 @@ public class RandomTeamAssignerTests
 {
     [Theory(DisplayName = "Random Team Assignment Tests")]
     [MemberData(nameof(GetRandomTeamsTestData))]
+    [SuppressMessage("Usage", "xUnit1045:Avoid using TheoryData type arguments that might not be serializable", Justification = "<Pending>")]
     public void TestRandomAssignment(int numberOfRooms, int numberOfTeams, Schedule inputSchedule)
     {
         var assigner = new RandomTeamAssigner();
@@ -35,6 +37,7 @@ public class RandomTeamAssignerTests
 
     [Theory]
     [MemberData(nameof(GetRandomTeamsTestData))]
+    [SuppressMessage("Usage", "xUnit1045:Avoid using TheoryData type arguments that might not be serializable", Justification = "<Pending>")]
     public void TestAllQuizzersAssigned(int numberOfRooms, int numberOfTeams, Schedule inputSchedule)
     {
         var assigner = new RandomTeamAssigner();
@@ -50,6 +53,7 @@ public class RandomTeamAssignerTests
 
     [Theory]
     [MemberData(nameof(GetRandomTeamsTestData))]
+    [SuppressMessage("Usage", "xUnit1045:Avoid using TheoryData type arguments that might not be serializable", Justification = "<Pending>")]
     public void TestTeamsDistributedAcrossQuizzers(int numberOfRooms, int numberOfTeams, Schedule inputSchedule)
     {
         var assigner = new RandomTeamAssigner();

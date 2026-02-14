@@ -23,7 +23,7 @@ public class ResultExtensionsTests
     [Fact]
     public void ResultExtensions_ToXml_ContainsResultElement()
     {
-        var result = CreateTestResult("Test Result");
+        var result = CreateTestResult();
         var xmlDoc = result.ToXml();
 
         Assert.NotNull(xmlDoc.Root);
@@ -34,20 +34,19 @@ public class ResultExtensionsTests
     [Fact]
     public void ResultExtensions_ToXml_PreservesResultName()
     {
-        var resultName = "Tournament Results";
-        var result = CreateTestResult(resultName);
+        var result = CreateTestResult();
         var xmlDoc = result.ToXml();
 
         Assert.NotNull(xmlDoc);
         var resultsElement = xmlDoc.Descendants("results").FirstOrDefault();
         if (resultsElement != null)
         {
-            var nameAttribute = resultsElement.Attribute("name");
+            _ = resultsElement.Attribute("name");
             // The name may or may not be present depending on implementation
         }
     }
 
-    private static Result CreateTestResult(string name = "Test Result")
+    private static Result CreateTestResult()
     {
         var churches = new Dictionary<int, Church>
         {

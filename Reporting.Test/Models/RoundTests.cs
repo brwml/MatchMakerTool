@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 
 using Bogus;
@@ -14,6 +15,7 @@ public class RoundTests
 {
     [Theory]
     [MemberData(nameof(CreateXmlTests))]
+    [SuppressMessage("Usage", "xUnit1045:Avoid using TheoryData type arguments that might not be serializable", Justification = "<Pending>")]
     public void VerifyXml(Round expected)
     {
         var actual = Round.FromXml(expected.ToXml());
@@ -33,6 +35,7 @@ public class RoundTests
 
     [Theory]
     [MemberData(nameof(CreateRoundTests))]
+    [SuppressMessage("Usage", "xUnit1045:Avoid using TheoryData type arguments that might not be serializable", Justification = "<Pending>")]
     public void Verify(XElement xml, int id, DateOnly date, TimeOnly time)
     {
         var round = Round.FromXml(xml);
@@ -60,10 +63,10 @@ public class RoundTests
         {
             var matches = new[]
             {
-                new MatchSchedule(faker.Random.Int(), faker.Random.Int(), new List<int>{ faker.Random.Int(), faker.Random.Int() }),
-                new MatchSchedule(faker.Random.Int(), faker.Random.Int(), new List<int>{ faker.Random.Int(), faker.Random.Int() }),
-                new MatchSchedule(faker.Random.Int(), faker.Random.Int(), new List<int>{ faker.Random.Int(), faker.Random.Int() }),
-                new MatchSchedule(faker.Random.Int(), faker.Random.Int(), new List<int>{ faker.Random.Int(), faker.Random.Int() })
+                new MatchSchedule(faker.Random.Int(), faker.Random.Int(), [faker.Random.Int(), faker.Random.Int()]),
+                new MatchSchedule(faker.Random.Int(), faker.Random.Int(), [faker.Random.Int(), faker.Random.Int()]),
+                new MatchSchedule(faker.Random.Int(), faker.Random.Int(), [faker.Random.Int(), faker.Random.Int()]),
+                new MatchSchedule(faker.Random.Int(), faker.Random.Int(), [faker.Random.Int(), faker.Random.Int()])
             };
 
             data.Add(
