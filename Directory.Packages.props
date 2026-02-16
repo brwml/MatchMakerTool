@@ -7,11 +7,11 @@
     <PackageVersion Include="Bogus" Version="35.6.5" />
     <PackageVersion Include="ClosedXML" Version="0.105.0" />
     <PackageVersion Include="CommandLineParser" Version="2.9.1" />
-    <PackageVersion Include="coverlet.collector" Version="6.0.4">
+    <PackageVersion Include="coverlet.collector" Version="8.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageVersion>
-    <PackageVersion Include="GitVersion.MsBuild" Version="6.5.1">
+    <PackageVersion Include="GitVersion.MsBuild" Version="6.6.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
