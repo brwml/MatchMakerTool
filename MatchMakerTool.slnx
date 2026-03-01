@@ -1,19 +1,25 @@
 <Solution>
   <Configurations>
     <Platform Name="Any CPU" />
-    <Platform Name="x86" />
   </Configurations>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
+    <File Path=".gitignore" />
     <File Path="Directory.Build.props" />
     <File Path="Directory.Packages.props" />
     <File Path="GitVersion.yml" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
   </Folder>
-  <Project Path="Models/Models.csproj" />
-  <Project Path="Reporting.Test/Reporting.Test.csproj" />
-  <Project Path="Reporting/Reporting.csproj" />
-  <Project Path="Scheduling.Test/Scheduling.Test.csproj" />
-  <Project Path="Scheduling/Scheduling.csproj" />
-  <Project Path="Tool.Gui/Tool.Gui.csproj" />
-  <Project Path="Tool/Tool.csproj" />
+  <Folder Name="/Source/">
+    <Project Path="Models/Models.csproj" />
+    <Project Path="Reporting/Reporting.csproj" />
+    <Project Path="Scheduling/Scheduling.csproj" />
+    <Project Path="Tool.Gui/Tool.Gui.csproj" />
+    <Project Path="Tool/Tool.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Reporting.Test/Reporting.Test.csproj" />
+    <Project Path="Scheduling.Test/Scheduling.Test.csproj" />
+  </Folder>
 </Solution>
