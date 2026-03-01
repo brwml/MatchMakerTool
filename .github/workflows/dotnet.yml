@@ -41,16 +41,14 @@ jobs:
     - name: Test
       run: dotnet test --no-build --configuration Release --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./TestResults/coverage/
 
-    - name: Generate coverage summary
-      uses: irongut/CodeCoverageSummary@v1.3.0
-      with:
-        filename: coverage/**/coverage.cobertura.xml
-        format: markdown
-        output: both
-        badge: true
+    - name: Install ReportGenerator
+      run: dotnet tool install -g dotnet-reportgenerator-globaltool
 
+    - name: Generate coverage report
+      run: reportgenerator -reports:coverage/**/coverage.cobertura.xml -targetdir:coverage-report -reporttypes:MarkdownSummary;Html
+      
     - name: Add summary to job
-      run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+      run: cat coverage-report/Summary.md >> $GITHUB_STEP_SUMMARY
 
     - name: CodeQL Analysis
       uses: github/codeql-action/analyze@v4
