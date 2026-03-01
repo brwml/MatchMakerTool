@@ -12,6 +12,9 @@ jobs:
     name: build-and-test
     permissions:
       contents: read
+      security-events: write
+      actions: read
+      pull-requests: read
     runs-on: windows-latest
 
     strategy:
