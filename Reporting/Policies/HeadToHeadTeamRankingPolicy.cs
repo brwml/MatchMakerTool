@@ -1,6 +1,5 @@
 ﻿namespace MatchMaker.Reporting.Policies;
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;

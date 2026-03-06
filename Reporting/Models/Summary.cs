@@ -1,6 +1,5 @@
 ﻿namespace MatchMaker.Reporting.Models;
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Linq;

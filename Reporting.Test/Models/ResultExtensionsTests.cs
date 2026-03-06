@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 
 using MatchMaker.Models;
-using MatchMaker.Reporting.Models;
 
 using Xunit;
 

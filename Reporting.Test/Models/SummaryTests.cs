@@ -2,7 +2,6 @@ namespace Reporting.Test.Models;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using Bogus;
 
@@ -64,8 +63,8 @@ public class SummaryTests
     public void Summary_WithMultiplePolicies_AppliesAllPolicies()
     {
         var result = CreateTestResult("Tournament 1");
-        var policies = new TeamRankingPolicy[] 
-        { 
+        var policies = new TeamRankingPolicy[]
+        {
             new NullTeamRankingPolicy(),
             new ErrorTeamRankingPolicy()
         };

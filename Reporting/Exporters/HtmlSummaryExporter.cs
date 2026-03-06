@@ -1,7 +1,7 @@
 ﻿namespace MatchMaker.Reporting.Exporters;
 
-using System.Globalization;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -104,7 +104,7 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
             CreateResults(summary, resultsFolder);
 
             CreateZipFile(summary, folder, resultsFolder);
-            
+
             Trace.WriteLine("HTML export completed successfully");
         }
         catch (Exception ex)

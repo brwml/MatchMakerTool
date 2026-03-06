@@ -1,7 +1,5 @@
 ﻿namespace Reporting.Test.Models;
 
-using System.Collections.Generic;
-
 using Bogus;
 
 using MatchMaker.Models;

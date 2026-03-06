@@ -1,8 +1,8 @@
 ﻿namespace MatchMaker.Reporting.Exporters;
 
 using System;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
 
 using ClosedXML.Excel;
 
@@ -250,7 +250,7 @@ public class ExcelSummaryExporter : BaseSummaryExporter
     private static void SaveFile(XLWorkbook workbook, Summary summary, string folder)
     {
         var fileName = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.xlsx"));
-        
+
         Trace.WriteLine($"Saving Excel workbook to: {fileName}");
 
         try

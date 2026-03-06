@@ -93,7 +93,7 @@ public static class SummaryExporter
     {
         var summaryNames = summaries.Select(x => x.Name).Distinct().ToArray();
         Trace.WriteLine($"Exporting {summaryNames.Length} tournament summaries to workbook");
-        
+
         var worksheet = workbook.AddWorksheet("Summary");
 
         SetWorksheetHeaders(summaryNames, worksheet);
