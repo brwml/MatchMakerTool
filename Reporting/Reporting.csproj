@@ -19,6 +19,11 @@
     <EmbeddedResource Include="Templates\Html\QuizzerSummary.stg" />
     <EmbeddedResource Include="Templates\Html\QuizzerDetail.stg" />
     <EmbeddedResource Include="Templates\Html\Style.css" />
+    <EmbeddedResource Include="Templates\Markdown\Index.stg" />
+    <EmbeddedResource Include="Templates\Markdown\TeamSummary.stg" />
+    <EmbeddedResource Include="Templates\Markdown\TeamDetail.stg" />
+    <EmbeddedResource Include="Templates\Markdown\QuizzerSummary.stg" />
+    <EmbeddedResource Include="Templates\Markdown\QuizzerDetail.stg" />
     <EmbeddedResource Include="Templates\Rtf\Document.stg" />
   </ItemGroup>
   <ItemGroup>

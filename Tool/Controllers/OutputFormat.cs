@@ -33,7 +33,11 @@ internal enum OutputFormat
     /// </summary>
     Xml = 16,
     /// <summary>
+    /// Defines the Markdown output format
+    /// </summary>
+    Markdown = 32,
+    /// <summary>
     /// Defines all output formats
     /// </summary>
-    All = Excel | Html | Pdf | Rtf | Xml
+    All = Excel | Html | Pdf | Rtf | Xml | Markdown
 }

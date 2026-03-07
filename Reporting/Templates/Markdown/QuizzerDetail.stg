@@ -1,0 +1,23 @@
+root(summary, quizzer, details) ::= <<
+# <quizzer.FullName><if(quizzer.IsRookie)> (Rookie)<endif>
+
+## Quizzer Statistics
+
+- **Place:** <quizzer.Place>
+- **Team:** [<quizzer.Team.Name>](../teams/<quizzer.Team.Id>.md)
+- **Church:** <quizzer.Church.Name>
+- **Average Score:** <quizzer.AverageScore; format="F2">
+- **Average Errors:** <quizzer.AverageErrors; format="F2">
+
+## Match History
+
+| Round | Opponent | Score | Errors |
+|-------|----------|-------|--------|
+<details:matchRows()>
+
+[Back to Quizzer Summary](../quizzers.md)
+>>
+
+matchRows(detail) ::= <<
+| <detail.Round> | <detail.Opponent> | <detail.Score> | <detail.Errors> |
+>>

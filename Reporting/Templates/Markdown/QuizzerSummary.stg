@@ -1,0 +1,12 @@
+root(name, quizzers) ::= <<
+# <name>: Quizzer Summary
+
+| Place | Name | Team | Church | Average Score | Average Errors |
+|-------|------|------|--------|---------------|-----------------|
+<quizzers:rows()>
+
+>>
+
+rows(quizzer) ::= <<
+| <if(quizzer.ShowPlace)><quizzer.Place><endif> | [<quizzer.FullName>](quizzers/<quizzer.Id>.md)<if(quizzer.IsRookie)> (R)<endif> | [<quizzer.Team.Name>](teams/<quizzer.Team.Id>.md) | <quizzer.Church.Name> | <quizzer.AverageScore; format="F2"> | <quizzer.AverageErrors; format="F2"> |
+>>

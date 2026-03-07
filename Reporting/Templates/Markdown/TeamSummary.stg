@@ -1,0 +1,12 @@
+root(name, teams) ::= <<
+# <name>: Team Summary
+
+| Place | Team | Wins | Losses | Win % | Avg Score | Avg Errors | Tie Breaker |
+|-------|------|------|--------|-------|-----------|------------|-------------|
+<teams:rows()>
+
+>>
+
+rows(team) ::= <<
+| <team.Place> | [<team.Name>](teams/<team.Id>.md) | <team.Wins> | <team.Losses> | <team.WinPercentage; format="F3"> | <team.AverageScore; format="F2"> | <team.AverageErrors; format="F2"> | <team.TieBreak> |
+>>

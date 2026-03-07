@@ -43,6 +43,11 @@ internal static class ExporterFactory
             list.Add(new XmlSummaryExporter());
         }
 
+        if (format.HasFlag(OutputFormat.Markdown))
+        {
+            list.Add(new MarkdownExporter());
+        }
+
         return list;
     }
 }
