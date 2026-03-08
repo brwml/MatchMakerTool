@@ -1,10 +1,12 @@
-﻿file(schedule) ::= "{<header()><info(schedule)><document(schedule)>}"
+﻿file(title, date, rooms, rows, teamPairs, cellDefs, teamCellDefs) ::= "{\rtf1\ansi\deff0{\fonttbl{\f0\fswiss Arial;}}{\info{\title{<title>}}{\subject{Meet Schedule}}}<maintitle(title)><daterow(date)>\pard\par<scheduletable(rooms, rows, cellDefs)>\pard\par\par<teamtable(teamPairs, teamCellDefs)>}"
 
-header() ::= "\rtf1\ansi\deff0{\fonttbl{\f0\fswiss Arial;}}"
+maintitle(title) ::= "\pard\f0\fs48\qc{<title>}\par"
 
-info(schedule) ::= "{\info{\title{<schedule.Name>}}{\subject{Meet Schedule}}}"
+daterow(date) ::= "<if(date)>\pard\f0\fs24\qc{<date>}\par<endif>"
 
-document(schedule) ::= "<maintitle(schedule)><><>"
+scheduletable(rooms, rows, cellDefs) ::= "<tableheaderrow(rooms, cellDefs)><rows:{r|{\trowd\trpaddb120\trpaddfb3<cellDefs>\intbl\b{<r.Label>}\b0\cell<r.Cells:{c|\intbl{<c>}\cell}>\row}}>"
 
-maintitle(schedule) ::= "\pard\f0\fs48\qc{<schedule.Name>}"
+tableheaderrow(rooms, cellDefs) ::= "{\trowd\trpaddb120\trpaddfb3<cellDefs>\intbl{}\cell<rooms:{r|\intbl\b\aul{<r>}\aul0\b0\cell}>\row}"
+
+teamtable(teamPairs, teamCellDefs) ::= "<teamPairs:{p|{\trowd\trpaddb120\trpaddfb3<teamCellDefs>\intbl{<if(p.Left)><p.Left.Abbreviation> - <p.Left.Name><endif>}\cell\intbl{<if(p.Right)><p.Right.Abbreviation> - <p.Right.Name><endif>}\cell\row}}>"
 

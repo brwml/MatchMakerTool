@@ -4,6 +4,12 @@
     <RootNamespace>MatchMaker.Scheduling</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="StringTemplate4" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\Rtf\Document.stg" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
   <ItemGroup>
