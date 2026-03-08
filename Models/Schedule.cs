@@ -172,4 +172,32 @@ public static class ScheduleExtensions
 
         return schedule;
     }
+
+    /// <summary>
+    /// Returns the identifier of the team that has a bye in the given round, or <see langword="null"/>
+    /// if all teams play (even team count) or if the round is a partial rotation containing fewer
+    /// matches than a full fold (multiple teams idle but none with a designated bye).
+    /// </summary>
+    /// <param name="schedule">The schedule containing the full team list.</param>
+    /// <param name="round">The round to inspect.</param>
+    /// <returns>The bye team identifier, or <see langword="null"/> if no single bye team exists.</returns>
+    public static int? GetByeTeamId(this Schedule schedule, Round round)
+    {
+        var playing = new HashSet<int>(round.Matches.Values.SelectMany(m => m.Teams));
+        var idle = schedule.Teams.Keys.Where(id => !playing.Contains(id)).ToList();
+        return idle.Count == 1 ? idle[0] : null;
+    }
+
+    /// <summary>
+    /// Returns the <see cref="Team"/> that has a bye in the given round, or <see langword="null"/>
+    /// if all teams play or if the round is a partial rotation with multiple idle teams.
+    /// </summary>
+    /// <param name="schedule">The schedule containing the full team list.</param>
+    /// <param name="round">The round to inspect.</param>
+    /// <returns>The bye <see cref="Team"/>, or <see langword="null"/> if no team has a bye.</returns>
+    public static Team? GetByeTeam(this Schedule schedule, Round round)
+    {
+        var byeId = schedule.GetByeTeamId(round);
+        return byeId.HasValue && schedule.Teams.TryGetValue(byeId.Value, out var team) ? team : null;
+    }
 }
