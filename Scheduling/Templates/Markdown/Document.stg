@@ -1,0 +1,16 @@
+file(title, date, rooms, rows, teamPairs) ::= <<
+# <title><if(date)>
+
+<date><endif>
+
+| |<rooms:{r| <r> |}> |
+|:--|<rooms:{r|:--:|}>|
+<rows:{r|| **<r.Label>** |<r.Cells:{c| <c> |}> |
+}>
+## Teams
+
+| | |
+|:--|:--|
+<teamPairs:{p|| <if(p.Left)><p.Left.Abbreviation> - <p.Left.Name><endif> | <if(p.Right)><p.Right.Abbreviation> - <p.Right.Name><endif> |
+}>
+>>

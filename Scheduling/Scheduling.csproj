@@ -4,9 +4,13 @@
     <RootNamespace>MatchMaker.Scheduling</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="itext" />
+    <PackageReference Include="itext.bouncy-castle-adapter" />
     <PackageReference Include="StringTemplate4" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Templates\Html\Document.stg" />
+    <EmbeddedResource Include="Templates\Markdown\Document.stg" />
     <EmbeddedResource Include="Templates\Rtf\Document.stg" />
   </ItemGroup>
   <ItemGroup>

@@ -1,12 +1,13 @@
-﻿file(title, date, rooms, rows, teamPairs, cellDefs, teamCellDefs) ::= "{\rtf1\ansi\deff0{\fonttbl{\f0\fswiss Arial;}}{\info{\title{<title>}}{\subject{Meet Schedule}}}<maintitle(title)><daterow(date)>\pard\par<scheduletable(rooms, rows, cellDefs)>\pard\par\par<teamtable(teamPairs, teamCellDefs)>}"
+﻿file(title, date, rooms, rows, teamPairs, headerCellDefs, dataCellDefs, teamCellDefs) ::= "{\rtf1\ansi\deff0{\fonttbl{\f0\fswiss Arial;}{\f1\froman Times New Roman}}{\colortbl;\red26\green54\blue104;\red255\green255\blue255;}{\info{\title{<title>}}{\subject{Meet Schedule}}}<maintitle(title)><daterow(date)>\pard\par<scheduletable(rooms, rows, headerCellDefs, dataCellDefs)>\pard\par\par<teamtable(teamPairs, teamCellDefs)>}"
 
-maintitle(title) ::= "\pard\f0\fs48\qc{<title>}\par"
+maintitle(title) ::= "\pard\f1\fs48\b\qc{<title>}\b0\par"
 
-daterow(date) ::= "<if(date)>\pard\f0\fs24\qc{<date>}\par<endif>"
+daterow(date) ::= "<if(date)>\pard\f0\fs24\qc{\cf1<date>\cf0}\par<endif>"
 
-scheduletable(rooms, rows, cellDefs) ::= "<tableheaderrow(rooms, cellDefs)><rows:{r|{\trowd\trpaddb120\trpaddfb3<cellDefs>\intbl\b{<r.Label>}\b0\cell<r.Cells:{c|\intbl{<c>}\cell}>\row}}>"
+scheduletable(rooms, rows, headerCellDefs, dataCellDefs) ::= "<tableheaderrow(rooms, headerCellDefs)><rows:{r|<tabledatarow(r, dataCellDefs)>}>"
 
-tableheaderrow(rooms, cellDefs) ::= "{\trowd\trpaddb120\trpaddfb3<cellDefs>\intbl{}\cell<rooms:{r|\intbl\b\aul{<r>}\aul0\b0\cell}>\row}"
+tableheaderrow(rooms, headerCellDefs) ::= "{\trowd\trpaddb80\trpaddfb3\trpaddt80\trpaddft3<headerCellDefs>\intbl\cf2\b{}\b0\cf0\cell<rooms:{r|\intbl\cf2\b{<r>}\b0\cf0\cell}>\row}"
 
-teamtable(teamPairs, teamCellDefs) ::= "<teamPairs:{p|{\trowd\trpaddb120\trpaddfb3<teamCellDefs>\intbl{<if(p.Left)><p.Left.Abbreviation> - <p.Left.Name><endif>}\cell\intbl{<if(p.Right)><p.Right.Abbreviation> - <p.Right.Name><endif>}\cell\row}}>"
+tabledatarow(row, dataCellDefs) ::= "{\trowd\trpaddb80\trpaddfb3\trpaddt80\trpaddft3<dataCellDefs>\intbl\b{<row.Label>}\b0\cell<row.Cells:{c|\intbl{<c>}\cell}>\row}"
 
+teamtable(teamPairs, teamCellDefs) ::= "<teamPairs:{p|{\trowd\trpaddb80\trpaddfb3\trpaddt80\trpaddft3<teamCellDefs>\intbl{<if(p.Left)><p.Left.Abbreviation> - <p.Left.Name><endif>}\cell\intbl{<if(p.Right)><p.Right.Abbreviation> - <p.Right.Name><endif>}\cell\row}}>"

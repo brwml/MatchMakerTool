@@ -1,0 +1,55 @@
+file(title, date, rooms, rows, teamPairs) ::= <<
+\<!DOCTYPE html>
+\<html lang="en">
+\<head>
+  \<meta charset="utf-8">
+  \<title><title>\</title>
+  \<style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 2em auto; max-width: 1200px; padding: 0 1.5em; color: #222; }
+    h1 { color: #1a3668; text-align: center; font-size: 2.2em; margin-bottom: 0.15em; }
+    h2 { color: #1a3668; font-size: 1.4em; margin-top: 2em; border-bottom: 2px solid #c8d0e0; padding-bottom: 0.3em; }
+    .date { text-align: center; color: #555; font-size: 1.1em; margin-top: 0; margin-bottom: 1.5em; }
+    table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+    th { background-color: #1a3668; color: #fff; padding: 9px 14px; text-align: center; font-weight: 600; letter-spacing: 0.03em; border: 1px solid #14295a; }
+    td { padding: 7px 14px; text-align: center; border: 1px solid #c8d0e0; }
+    .schedule-table tr:nth-child(odd) td { background-color: #f7f9ff; }
+    .schedule-table tr:nth-child(even) td { background-color: #eef1fc; }
+    .schedule-table td:first-child { font-weight: 600; background-color: #dce3f5; border-right: 2px solid #a0aac8; }
+    .teams-table td { text-align: left; }
+    .teams-table td:first-child { background: none; border-right: 1px solid #c8d0e0; font-weight: normal; }
+  \</style>
+\</head>
+\<body>
+  \<h1><title>\</h1><if(date)>
+  \<p class="date"><date>\</p><endif>
+  \<table class="schedule-table">
+    \<thead>
+      \<tr>
+        \<th>\</th>
+        <rooms:{r|\<th><r>\</th>
+        }>
+      \</tr>
+    \</thead>
+    \<tbody>
+      <rows:{r|\<tr>
+        \<td><r.Label>\</td>
+        <r.Cells:{c|\<td><c>\</td>
+        }>
+      \</tr>
+      }>
+    \</tbody>
+  \</table>
+  \<h2>Teams\</h2>
+  \<table class="teams-table">
+    \<tbody>
+      <teamPairs:{p|\<tr>
+        \<td><if(p.Left)><p.Left.Abbreviation> - <p.Left.Name><endif>\</td>
+        \<td><if(p.Right)><p.Right.Abbreviation> - <p.Right.Name><endif>\</td>
+      \</tr>
+      }>
+    \</tbody>
+  \</table>
+\</body>
+\</html>
+>>
