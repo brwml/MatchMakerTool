@@ -11,39 +11,47 @@ using CommandLine;
 /// Initializes a new instance of the <see cref="ScheduleOptions"/> class. The parameters must appear in the same
 /// order they appear in the class.
 /// </remarks>
-/// <param name="outputSchedule">The output schedule.</param>
-/// <param name="rooms">The rooms.</param>
+/// <param name="inputSchedulePath">The source schedule file path.</param>
+/// <param name="outputFolderPath">The output folder path.</param>
+/// <param name="outputFormats">The output formats.</param>
+/// <param name="rooms">The number of rooms available.</param>
 /// <param name="scheduleType">Type of the schedule.</param>
-/// <param name="sourceSchedule">The source schedule.</param>
 /// <param name="verbose">If set to <c>true</c>, then emit verbose output.</param>
 [Verb("schedule", HelpText = "Generates a tournament schedule")]
 internal class ScheduleOptions(
     string inputSchedulePath,
-    string outputSchedulePath,
+    string outputFolderPath,
+    OutputFormat outputFormat,
     int rooms,
     ScheduleType scheduleType,
     bool verbose) : BaseOptions(verbose)
 {
     /// <summary>
-    /// Gets or sets the source schedule file path
+    /// Gets the source schedule file path.
     /// </summary>
     [Option('i', Required = true, HelpText = "The source schedule file path")]
     public string InputSchedulePath { get; } = inputSchedulePath;
 
     /// <summary>
-    /// Gets or sets the output schedule file path
+    /// Gets the output folder path.
     /// </summary>
-    [Option('o', Required = true, HelpText = "The output schedule file path")]
-    public string OutputSchedulePath { get; } = outputSchedulePath;
+    [Option('o', Required = true, HelpText = "The output folder path")]
+    public string OutputFolderPath { get; } = outputFolderPath;
 
     /// <summary>
-    /// Gets or sets the rooms available
+    /// Gets the output formats. XML is always produced. Supported values: Html, Pdf, Rtf, Markdown.
+    /// </summary>
+    [Option('f', Default = OutputFormat.All, HelpText = "Output format for the report. Possible values are Excel, Html, Pdf, Rtf, and Xml.")]
+    public OutputFormat OutputFormat { get; } = outputFormat;
+
+    /// <summary>
+    /// Gets the number of rooms available.
     /// </summary>
     [Option('n', Required = false, HelpText = "The number of rooms available")]
     public int Rooms { get; } = rooms;
 
     /// <summary>
-    /// Gets or sets the schedule type
+    /// Gets the schedule type.
     /// </summary>
     [Option('t', Default = ScheduleType.RoundRobin, Required = false, HelpText = "The schedule type. The only option is RoundRobin.")]
     public ScheduleType ScheduleType { get; } = scheduleType;

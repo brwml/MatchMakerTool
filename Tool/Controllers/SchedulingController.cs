@@ -3,6 +3,7 @@
 using System.Xml.Linq;
 
 using MatchMaker.Models;
+using MatchMaker.Scheduling.Exporters;
 using MatchMaker.Scheduling.Tournaments;
 
 /// <summary>
@@ -19,14 +20,47 @@ internal class SchedulingController : IProcessController<ScheduleOptions>
     {
         if (options.ScheduleType == ScheduleType.RoundRobin)
         {
-            RoundRobinTournament
+            var schedule = RoundRobinTournament
                 .Create(LoadInputSchedule(options.InputSchedulePath), options.Rooms)
-                .WithName(GetScheduleName(options.OutputSchedulePath))
-                .ToXml()
-                .Save(options.OutputSchedulePath);
+                .WithName(GetScheduleName(options.InputSchedulePath));
+
+            var folder = options.OutputFolderPath;
+            Directory.CreateDirectory(folder);
+
+            var formats = options.OutputFormat | OutputFormat.Xml;
+
+            ExportSchedule(schedule, folder, formats);
         }
 
         return true;
+    }
+
+    private static void ExportSchedule(Schedule schedule, string folder, OutputFormat formats)
+    {
+        if ((formats & OutputFormat.Xml) != 0)
+        {
+            new XmlScheduleExporter().Export(schedule, folder);
+        }
+
+        if ((formats & OutputFormat.Html) != 0)
+        {
+            new HtmlScheduleExporter().Export(schedule, folder);
+        }
+
+        if ((formats & OutputFormat.Pdf) != 0)
+        {
+            new PdfScheduleExporter().Export(schedule, folder);
+        }
+
+        if ((formats & OutputFormat.Rtf) != 0)
+        {
+            new RtfScheduleExporter().Export(schedule, folder);
+        }
+
+        if ((formats & OutputFormat.Markdown) != 0)
+        {
+            new MarkdownScheduleExporter().Export(schedule, folder);
+        }
     }
 
     /// <summary>
@@ -36,17 +70,7 @@ internal class SchedulingController : IProcessController<ScheduleOptions>
     /// <returns>The schedule instance</returns>
     private static Schedule LoadInputSchedule(string schedulePath)
     {
-        return Schedule.FromXml(LoadXml(schedulePath), GetScheduleName(schedulePath));
-    }
-
-    /// <summary>
-    /// Loads the XML document.
-    /// </summary>
-    /// <param name="schedulePath">The schedule path.</param>
-    /// <returns>The XML document</returns>
-    private static XDocument LoadXml(string schedulePath)
-    {
-        return XDocument.Load(schedulePath);
+        return Schedule.FromXml(XDocument.Load(schedulePath), GetScheduleName(schedulePath));
     }
 
     /// <summary>
