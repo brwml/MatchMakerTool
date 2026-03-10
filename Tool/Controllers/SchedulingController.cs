@@ -27,7 +27,8 @@ internal class SchedulingController : IProcessController<ScheduleOptions>
             var folder = options.OutputFolderPath;
             Directory.CreateDirectory(folder);
 
-            var formats = options.OutputFormat | OutputFormat.Xml;
+            const OutputFormat supportedFormats = OutputFormat.Html | OutputFormat.Pdf | OutputFormat.Rtf | OutputFormat.Xml | OutputFormat.Markdown;
+            var formats = (options.OutputFormat & supportedFormats) | OutputFormat.Xml;
 
             ExportSchedule(schedule, folder, formats);
         }
@@ -35,29 +36,35 @@ internal class SchedulingController : IProcessController<ScheduleOptions>
         return true;
     }
 
+    /// <summary>
+    /// Exports the schedule to the specified folder in each requested format.
+    /// </summary>
+    /// <param name="schedule">The schedule to export.</param>
+    /// <param name="folder">The target output folder.</param>
+    /// <param name="formats">The set of output formats to generate.</param>
     private static void ExportSchedule(Schedule schedule, string folder, OutputFormat formats)
     {
-        if ((formats & OutputFormat.Xml) != 0)
+        if (formats.HasFlag(OutputFormat.Xml))
         {
             new XmlScheduleExporter().Export(schedule, folder);
         }
 
-        if ((formats & OutputFormat.Html) != 0)
+        if (formats.HasFlag(OutputFormat.Html))
         {
             new HtmlScheduleExporter().Export(schedule, folder);
         }
 
-        if ((formats & OutputFormat.Pdf) != 0)
+        if (formats.HasFlag(OutputFormat.Pdf))
         {
             new PdfScheduleExporter().Export(schedule, folder);
         }
 
-        if ((formats & OutputFormat.Rtf) != 0)
+        if (formats.HasFlag(OutputFormat.Rtf))
         {
             new RtfScheduleExporter().Export(schedule, folder);
         }
 
-        if ((formats & OutputFormat.Markdown) != 0)
+        if (formats.HasFlag(OutputFormat.Markdown))
         {
             new MarkdownScheduleExporter().Export(schedule, folder);
         }

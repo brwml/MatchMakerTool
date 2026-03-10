@@ -13,7 +13,7 @@ using CommandLine;
 /// </remarks>
 /// <param name="inputSchedulePath">The source schedule file path.</param>
 /// <param name="outputFolderPath">The output folder path.</param>
-/// <param name="outputFormats">The output formats.</param>
+/// <param name="outputFormat">The output format.</param>
 /// <param name="rooms">The number of rooms available.</param>
 /// <param name="scheduleType">Type of the schedule.</param>
 /// <param name="verbose">If set to <c>true</c>, then emit verbose output.</param>
@@ -39,9 +39,9 @@ internal class ScheduleOptions(
     public string OutputFolderPath { get; } = outputFolderPath;
 
     /// <summary>
-    /// Gets the output formats. XML is always produced. Supported values: Html, Pdf, Rtf, Markdown.
+    /// Gets the output formats. XML is always produced. Supported values: Html, Markdown, Pdf, Rtf, Xml.
     /// </summary>
-    [Option('f', Default = OutputFormat.All, HelpText = "Output format for the report. Possible values are Excel, Html, Pdf, Rtf, and Xml.")]
+    [Option('f', Default = OutputFormat.Html | OutputFormat.Pdf | OutputFormat.Rtf | OutputFormat.Xml | OutputFormat.Markdown, HelpText = "Output format for the schedule. Possible values are Html, Markdown, Pdf, Rtf, and Xml.")]
     public OutputFormat OutputFormat { get; } = outputFormat;
 
     /// <summary>
