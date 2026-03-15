@@ -16,7 +16,6 @@
     <Project Path="Models/Models.csproj" />
     <Project Path="Reporting/Reporting.csproj" />
     <Project Path="Scheduling/Scheduling.csproj" />
-    <Project Path="Tool.Gui/Tool.Gui.csproj" />
     <Project Path="Tool/Tool.csproj" />
   </Folder>
   <Folder Name="/Tests/">
