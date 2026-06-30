@@ -8,6 +8,8 @@ using MatchMaker.Scheduling.Tournaments;
 
 using Xunit;
 
+#pragma warning disable CA1707
+
 public class ScheduleExtensionsTests
 {
     // --- GetByeTeamId ---
@@ -132,5 +134,44 @@ public class ScheduleExtensionsTests
                 Assert.Null(byeTeam);
             }
         }
+    }
+
+    // --- WithName ---
+
+    [Fact]
+    public void WithName_NonEmptyName_UpdatesScheduleName()
+    {
+        var schedule = Schedule.Null;
+        var result = schedule.WithName("New Name");
+
+        Assert.Equal("New Name", result.Name);
+        Assert.Same(schedule, result);
+    }
+
+    [Fact]
+    public void WithName_EmptyString_DoesNotChangeName()
+    {
+        var original = new Schedule("Original", new Dictionary<int, Church>(), new Dictionary<int, Quizzer>(), new Dictionary<int, Team>(), new Dictionary<int, Round>());
+        var result = original.WithName(string.Empty);
+
+        Assert.Equal("Original", result.Name);
+    }
+
+    [Fact]
+    public void WithName_NullString_DoesNotChangeName()
+    {
+        var original = new Schedule("Original", new Dictionary<int, Church>(), new Dictionary<int, Quizzer>(), new Dictionary<int, Team>(), new Dictionary<int, Round>());
+        var result = original.WithName(null!);
+
+        Assert.Equal("Original", result.Name);
+    }
+
+    [Fact]
+    public void WithName_WhitespaceOnly_DoesNotChangeName()
+    {
+        var original = new Schedule("Original", new Dictionary<int, Church>(), new Dictionary<int, Quizzer>(), new Dictionary<int, Team>(), new Dictionary<int, Round>());
+        var result = original.WithName("   ");
+
+        Assert.Equal("Original", result.Name);
     }
 }
