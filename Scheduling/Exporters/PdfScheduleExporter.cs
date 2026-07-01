@@ -103,7 +103,7 @@ public class PdfScheduleExporter : BaseScheduleExporter
         foreach (var row in rows)
         {
             var rowBg = row.IsOdd ? AlternateRow : White;
-            table.AddCell(CreateLabelCell(row.Label, rowBg));
+            table.AddCell(CreateLabelCell(row.Label));
             foreach (var cell in row.Cells)
             {
                 table.AddCell(CreateDataCell(cell, rowBg));
@@ -148,7 +148,7 @@ public class PdfScheduleExporter : BaseScheduleExporter
             .SetPadding(5);
     }
 
-    private static Cell CreateLabelCell(string content, Color background)
+    private static Cell CreateLabelCell(string content)
     {
         return new Cell()
             .Add(new Paragraph(content)
