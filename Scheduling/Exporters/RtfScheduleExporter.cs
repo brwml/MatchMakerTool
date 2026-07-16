@@ -67,15 +67,21 @@ public class RtfScheduleExporter : BaseScheduleExporter
         return widths;
     }
 
-    private static List<string> GetHeaderCellDefs(IList<int> widths) =>
-        widths.Select(w => $"{HeaderBackground}{CellBorders}\\cellx{w}").ToList();
+    private static List<string> GetHeaderCellDefs(IList<int> widths)
+    {
+        return [.. widths.Select(w => $"{HeaderBackground}{CellBorders}\\cellx{w}")];
+    }
 
-    private static List<string> GetDataCellDefs(IList<int> widths) =>
-        widths.Select(w => $"{CellBorders}\\cellx{w}").ToList();
+    private static List<string> GetDataCellDefs(IList<int> widths)
+    {
+        return [.. widths.Select(w => $"{CellBorders}\\cellx{w}")];
+    }
 
-    private static List<string> GetTeamCellDefs() =>
-    [
+    private static List<string> GetTeamCellDefs()
+    {
+        return [
         $"{CellBorders}\\cellx{PageWidth / 2}",
         $"{CellBorders}\\cellx{PageWidth}"
     ];
+    }
 }

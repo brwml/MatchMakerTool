@@ -21,26 +21,29 @@ public abstract class BaseScheduleExporter : IScheduleExporter
     /// <summary>
     /// Returns the distinct, sorted room numbers used across all rounds.
     /// </summary>
-    private protected static List<int> GetRooms(Schedule schedule) =>
-        schedule.Rounds.Values
+    private protected static List<int> GetRooms(Schedule schedule)
+    {
+        return [.. schedule.Rounds.Values
             .SelectMany(r => r.Matches.Values)
             .Select(m => m.Room)
             .Distinct()
-            .OrderBy(r => r)
-            .ToList();
+            .OrderBy(r => r)];
+    }
 
     /// <summary>
     /// Converts raw room numbers to display strings ("Room 1", "Room 2", …).
     /// </summary>
-    private protected static List<string> GetRoomHeaders(IList<int> rooms) =>
-        rooms.Select(r => $"Room {r}").ToList();
+    private protected static List<string> GetRoomHeaders(IList<int> rooms)
+    {
+        return [.. rooms.Select(r => $"Room {r}")];
+    }
 
     /// <summary>
     /// Builds one <see cref="RoundRow"/> per round containing the match cell text for each room.
     /// </summary>
     private protected static List<RoundRow> GetRows(Schedule schedule, IList<int> rooms)
     {
-        return schedule.Rounds.Values
+        return [.. schedule.Rounds.Values
             .OrderBy(r => r.Id)
             .Select((round, index) =>
             {
@@ -58,8 +61,7 @@ public abstract class BaseScheduleExporter : IScheduleExporter
                 }).ToList();
 
                 return new RoundRow($"Round {round.Id}", cells, index % 2 != 0);
-            })
-            .ToList();
+            })];
     }
 
     /// <summary>
@@ -89,9 +91,7 @@ public abstract class BaseScheduleExporter : IScheduleExporter
     private protected static string? GetDate(Schedule schedule)
     {
         var firstRound = schedule.Rounds.Values.OrderBy(r => r.Id).FirstOrDefault();
-        return firstRound != null
-            ? firstRound.Date.ToString("MMMM d, yyyy", CultureInfo.InvariantCulture)
-            : null;
+        return firstRound?.Date.ToString("MMMM d, yyyy", CultureInfo.InvariantCulture);
     }
 
     /// <summary>

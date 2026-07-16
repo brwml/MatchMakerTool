@@ -393,7 +393,7 @@ public class MarkdownExporterTests
             var teamSummaryPath = Path.Combine(tempDir, "Markdown", summary.Name, "teams.md");
             var content = File.ReadAllText(teamSummaryPath);
 
-            var lines = content.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var lines = content.Split([Environment.NewLine], StringSplitOptions.None);
             var dataRow = System.Linq.Enumerable.FirstOrDefault(lines, l => l.StartsWith('|') && !l.Contains("Place") && !l.Contains("---"));
 
             Assert.NotNull(dataRow);
