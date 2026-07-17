@@ -1,7 +1,6 @@
 namespace MatchMaker.Scheduling.Exporters;
 
 using System;
-using System.Globalization;
 using System.IO;
 
 using iText.IO.Font.Constants;
