@@ -80,8 +80,7 @@ public class RtfScheduleExporter : BaseScheduleExporter
     private static List<string> GetTeamCellDefs()
     {
         return [
-        $"{CellBorders}\\cellx{PageWidth / 2}",
-        $"{CellBorders}\\cellx{PageWidth}"
-    ];
+            $"{CellBorders}\\cellx{PageWidth / 2}",
+            $"{CellBorders}\\cellx{PageWidth}"];
     }
 }
