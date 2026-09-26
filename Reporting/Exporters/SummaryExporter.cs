@@ -69,14 +69,13 @@ public static class SummaryExporter
         {
             foreach (var quizzerSummary in summary.QuizzerSummaries)
             {
-                if (quizzerSummaries.TryGetValue(quizzerSummary.Key, out var quizzer))
+                if (!quizzerSummaries.TryGetValue(quizzerSummary.Key, out var quizzer))
                 {
-                    quizzer.Results.Add(summary.Name, quizzerSummary.Value);
+                    quizzer = CreateInternalQuizzerSummary(summary, quizzerSummary.Value);
+                    quizzerSummaries.Add(quizzerSummary.Key, quizzer);
                 }
-                else
-                {
-                    quizzerSummaries.Add(quizzerSummary.Key, CreateInternalQuizzerSummary(summary, quizzerSummary.Value));
-                }
+
+                quizzer.Results[summary.Name] = quizzerSummary.Value;
             }
         }
 

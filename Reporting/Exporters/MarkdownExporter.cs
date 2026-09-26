@@ -478,7 +478,7 @@ public partial class MarkdownExporter : BaseSummaryExporter
 /// Initializes a new instance of the SafeMarkdown class.
 /// </remarks>
 /// <param name="value">The text to be escaped when rendered</param>
-internal class SafeMarkdown(string value)
+public class SafeMarkdown(string value)
 {
     /// <summary>
     /// Gets the raw value without escaping.
@@ -497,7 +497,7 @@ internal class SafeMarkdown(string value)
 /// <summary>
 /// StringTemplate attribute renderer for escaping markdown special characters.
 /// </summary>
-internal class MarkdownEscapeRenderer : IAttributeRenderer
+public class MarkdownEscapeRenderer : IAttributeRenderer
 {
     /// <summary>
     /// Escapes markdown special characters in the given string.

@@ -4,10 +4,18 @@ maintitle(title) ::= "\pard\f1\fs48\b\qc{<title>}\b0\par"
 
 daterow(date) ::= "<if(date)>\pard\f0\fs24\qc{\cf1<date>\cf0}\par<endif>"
 
-scheduletable(rooms, rows, headerCellDefs, dataCellDefs) ::= "<tableheaderrow(rooms, headerCellDefs)><rows:{r|<tabledatarow(r, dataCellDefs)>}>"
+scheduletable(rooms, rows, headerCellDefs, dataCellDefs) ::= "<tableheaderrow(rooms, headerCellDefs)><rows:{row|<tabledatarow(row, dataCellDefs)>}>"
 
-tableheaderrow(rooms, headerCellDefs) ::= "{\trowd\trpaddb80\trpaddfb3\trpaddt80\trpaddft3<headerCellDefs>\intbl\cf2\b{}\b0\cf0\cell<rooms:{r|\intbl\cf2\b{<r>}\b0\cf0\cell}>\row}"
+tableheaderrow(rooms, headerCellDefs) ::= "{\trowd\trpaddb80\trpaddfb3\trpaddt80\trpaddft3<headerCellDefs>\intbl\cf2\b{}\b0\cf0\cell<rooms:{room|<roomheadercell(room)>}>\row}"
 
-tabledatarow(row, dataCellDefs) ::= "{\trowd\trpaddb80\trpaddfb3\trpaddt80\trpaddft3<dataCellDefs>\intbl\b{<row.Label>}\b0\cell<row.Cells:{c|\intbl{<c>}\cell}>\row}"
+roomheadercell(room) ::= "\intbl\cf2\b{<room>}\b0\cf0\cell"
 
-teamtable(teamPairs, teamCellDefs) ::= "<teamPairs:{p|{\trowd\trpaddb80\trpaddfb3\trpaddt80\trpaddft3<teamCellDefs>\intbl{<if(p.Left)><p.Left.Abbreviation> - <p.Left.Name><endif>}\cell\intbl{<if(p.Right)><p.Right.Abbreviation> - <p.Right.Name><endif>}\cell\row}}>"
+tabledatarow(row, dataCellDefs) ::= "{\trowd\trpaddb80\trpaddfb3\trpaddt80\trpaddft3<dataCellDefs>\intbl\b{<row.Label>}\b0\cell<row.Cells:{cell|<datacell(cell)>}>\row}"
+
+datacell(cell) ::= "\intbl{<cell>}\cell"
+
+teamtable(teamPairs, teamCellDefs) ::= "<teamPairs:{pair|<teampairrow(pair, teamCellDefs)>}>"
+
+teampairrow(pair, teamCellDefs) ::= "{\trowd\trpaddb80\trpaddfb3\trpaddt80\trpaddft3<teamCellDefs>\intbl{<teamcell(pair.Left)>}\cell\intbl{<teamcell(pair.Right)>}\cell\row}"
+
+teamcell(team) ::= "<if(team)><team.Abbreviation> - <team.Name><endif>"
