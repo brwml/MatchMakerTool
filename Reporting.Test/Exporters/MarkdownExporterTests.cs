@@ -3,6 +3,7 @@ namespace Reporting.Test.Exporters;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 using Bogus;
 
@@ -525,6 +526,208 @@ public class MarkdownExporterTests
         var summary = Summary.FromResult(result, policies);
 
         return summary;
+    }
+
+    /// <summary>
+    /// Builds a summary with the given number of teams/quizzers and the given number of rounds,
+    /// so that markdown tables and match-history sections produce multiple rows.
+    /// </summary>
+    private static Summary CreateTestSummary(string name, int numberOfTeams, int numberOfRounds, int numberOfEliminationTeams = 0)
+    {
+        var faker = new Faker();
+
+        var churches = Enumerable.Range(1, numberOfTeams).ToDictionary(x => x, x => new Church(x, $"Church {x}"));
+        var teams = Enumerable.Range(1, numberOfTeams).ToDictionary(x => x, x => new Team(x, $"Team {x}", $"T{x}", 0));
+        var quizzers = Enumerable.Range(1, numberOfTeams).ToDictionary(
+            x => x,
+            x => new Quizzer(x, faker.Name.FirstName(), faker.Name.LastName(), Gender.Male, DateTime.Now.Year, x, x));
+
+        var rounds = Enumerable.Range(1, numberOfRounds).ToDictionary(
+            x => x,
+            x => new Round(x, new Dictionary<int, MatchSchedule>(), DateOnly.FromDateTime(DateTime.Now), TimeOnly.FromDateTime(DateTime.Now)));
+
+        var schedule = new Schedule(name, churches, quizzers, teams, rounds);
+
+        var teamResults = Enumerable.Range(1, numberOfTeams).Select(x => new TeamResult(x, 100 - x, x - 1, 1)).ToList();
+        var quizzerResults = Enumerable.Range(1, numberOfTeams).Select(x => new QuizzerResult(x, 100 - x, x - 1)).ToList();
+        var matches = Enumerable.Range(1, numberOfRounds).ToDictionary(
+            x => x,
+            x => new MatchResult(x, x, x, teamResults, quizzerResults));
+
+        var result = new Result(schedule, matches);
+        var policies = new TeamRankingPolicy[] { new NullTeamRankingPolicy() };
+        var summary = Summary.FromResult(result, policies);
+        summary.NumberOfEliminationTeams = numberOfEliminationTeams;
+
+        return summary;
+    }
+
+    [Fact]
+    public void MarkdownExporter_Export_TeamSummaryFile_WritesEachTeamOnItsOwnLine()
+    {
+        var exporter = new MarkdownExporter();
+        var summary = CreateTestSummary("Test Tournament", numberOfTeams: 4, numberOfRounds: 1);
+        var tempDir = CreateTempDirectory();
+
+        try
+        {
+            exporter.Export(summary, tempDir);
+
+            var teamSummaryPath = Path.Combine(tempDir, "Markdown", summary.Name, "teams.md");
+            var content = File.ReadAllText(teamSummaryPath);
+            var lines = content.Split([Environment.NewLine], StringSplitOptions.None);
+            var dataRows = lines.Where(l => l.StartsWith('|') && !l.Contains("Place") && !l.Contains("---")).ToArray();
+
+            Assert.Equal(4, dataRows.Length);
+        }
+        finally
+        {
+            CleanupDirectory(tempDir);
+        }
+    }
+
+    [Fact]
+    public void MarkdownExporter_Export_QuizzerSummaryFile_WritesEachQuizzerOnItsOwnLine()
+    {
+        var exporter = new MarkdownExporter();
+        var summary = CreateTestSummary("Test Tournament", numberOfTeams: 4, numberOfRounds: 1);
+        var tempDir = CreateTempDirectory();
+
+        try
+        {
+            exporter.Export(summary, tempDir);
+
+            var quizzerSummaryPath = Path.Combine(tempDir, "Markdown", summary.Name, "quizzers.md");
+            var content = File.ReadAllText(quizzerSummaryPath);
+            var lines = content.Split([Environment.NewLine], StringSplitOptions.None);
+            var dataRows = lines.Where(l => l.StartsWith('|') && !l.Contains("Place") && !l.Contains("---")).ToArray();
+
+            Assert.Equal(4, dataRows.Length);
+        }
+        finally
+        {
+            CleanupDirectory(tempDir);
+        }
+    }
+
+    [Fact]
+    public void MarkdownExporter_Export_TeamDetailFile_WritesEachMatchOnItsOwnLine()
+    {
+        var exporter = new MarkdownExporter();
+        var summary = CreateTestSummary("Test Tournament", numberOfTeams: 2, numberOfRounds: 3);
+        var tempDir = CreateTempDirectory();
+
+        try
+        {
+            exporter.Export(summary, tempDir);
+
+            var teamDetailPath = Path.Combine(tempDir, "Markdown", summary.Name, "teams", "1.md");
+            var content = File.ReadAllText(teamDetailPath);
+            var matchHistorySection = content.Split("## Team Quizzers")[0];
+            var lines = matchHistorySection.Split([Environment.NewLine], StringSplitOptions.None);
+            var dataRows = lines.Where(l => l.StartsWith('|') && !l.Contains("Round") && !l.Contains("---")).ToArray();
+
+            Assert.Equal(3, dataRows.Length);
+        }
+        finally
+        {
+            CleanupDirectory(tempDir);
+        }
+    }
+
+    [Fact]
+    public void MarkdownExporter_Export_QuizzerDetailFile_WritesEachMatchOnItsOwnLine()
+    {
+        var exporter = new MarkdownExporter();
+        var summary = CreateTestSummary("Test Tournament", numberOfTeams: 2, numberOfRounds: 3);
+        var tempDir = CreateTempDirectory();
+
+        try
+        {
+            exporter.Export(summary, tempDir);
+
+            var quizzerDetailPath = Path.Combine(tempDir, "Markdown", summary.Name, "quizzers", "1.md");
+            var content = File.ReadAllText(quizzerDetailPath);
+            var lines = content.Split([Environment.NewLine], StringSplitOptions.None);
+            var dataRows = lines.Where(l => l.StartsWith('|') && !l.Contains("Round") && !l.Contains("---")).ToArray();
+
+            Assert.Equal(3, dataRows.Length);
+        }
+        finally
+        {
+            CleanupDirectory(tempDir);
+        }
+    }
+
+    [Fact]
+    public void MarkdownExporter_Export_TeamSummaryFile_MarksEliminationTeamsWithAsterisk()
+    {
+        var exporter = new MarkdownExporter();
+        var summary = CreateTestSummary("Test Tournament", numberOfTeams: 4, numberOfRounds: 1, numberOfEliminationTeams: 2);
+        var tempDir = CreateTempDirectory();
+
+        try
+        {
+            exporter.Export(summary, tempDir);
+
+            var teamSummaryPath = Path.Combine(tempDir, "Markdown", summary.Name, "teams.md");
+            var content = File.ReadAllText(teamSummaryPath);
+            var eliminationTeamIds = summary.EliminationTeamIds;
+
+            foreach (var teamId in Enumerable.Range(1, 4))
+            {
+                var expectedName = eliminationTeamIds.Contains(teamId) ? $"[*Team {teamId}]" : $"[Team {teamId}]";
+                Assert.Contains(expectedName, content);
+            }
+        }
+        finally
+        {
+            CleanupDirectory(tempDir);
+        }
+    }
+
+    [Fact]
+    public void MarkdownExporter_Export_TeamSummaryFile_IncludesLegendWhenEliminationTeamsPresent()
+    {
+        var exporter = new MarkdownExporter();
+        var summary = CreateTestSummary("Test Tournament", numberOfTeams: 4, numberOfRounds: 1, numberOfEliminationTeams: 2);
+        var tempDir = CreateTempDirectory();
+
+        try
+        {
+            exporter.Export(summary, tempDir);
+
+            var teamSummaryPath = Path.Combine(tempDir, "Markdown", summary.Name, "teams.md");
+            var content = File.ReadAllText(teamSummaryPath);
+
+            Assert.Contains("Indicates a team that will participate in the elimination tournament.", content);
+        }
+        finally
+        {
+            CleanupDirectory(tempDir);
+        }
+    }
+
+    [Fact]
+    public void MarkdownExporter_Export_TeamSummaryFile_OmitsLegendWhenNoEliminationTeams()
+    {
+        var exporter = new MarkdownExporter();
+        var summary = CreateTestSummary("Test Tournament", numberOfTeams: 4, numberOfRounds: 1, numberOfEliminationTeams: 0);
+        var tempDir = CreateTempDirectory();
+
+        try
+        {
+            exporter.Export(summary, tempDir);
+
+            var teamSummaryPath = Path.Combine(tempDir, "Markdown", summary.Name, "teams.md");
+            var content = File.ReadAllText(teamSummaryPath);
+
+            Assert.DoesNotContain("Indicates a team that will participate in the elimination tournament.", content);
+        }
+        finally
+        {
+            CleanupDirectory(tempDir);
+        }
     }
 
     private static string CreateTempDirectory()

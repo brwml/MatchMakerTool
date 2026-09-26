@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 using Antlr4.StringTemplate;
@@ -38,11 +39,14 @@ public class RtfSummaryExporter : BaseSummaryExporter
 
         try
         {
+            var teams = GetTeamInfo(summary).ToArray();
+
             var template =
                 LoadTemplate()
                     .Add("summary", summary)
-                    .Add("teams", GetTeamInfo(summary))
-                    .Add("quizzers", GetQuizzerInfo(summary));
+                    .Add("teams", teams)
+                    .Add("quizzers", GetQuizzerInfo(summary))
+                    .Add("hasEliminationTeams", teams.Any(x => x.IsElimination));
 
             var path = Path.Combine(folder, FormattableString.Invariant($"{summary.Name}.rtf"));
             Trace.WriteLine($"Writing RTF file to: {path}");

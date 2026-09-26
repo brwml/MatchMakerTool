@@ -3,7 +3,7 @@ root(name, quizzers) ::= <<
 
 | Place | Name | Team | Church | Average Score | Average Errors |
 |-------|------|------|--------|---------------|-----------------|
-<quizzers:rows()>
+<quizzers:rows(); separator="\n">
 
 >>
 

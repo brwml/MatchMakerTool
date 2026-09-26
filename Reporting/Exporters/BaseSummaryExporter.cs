@@ -13,6 +13,11 @@ using MatchMaker.Reporting.Models;
 public abstract class BaseSummaryExporter : ISummaryExporter
 {
     /// <summary>
+    /// The legend text describing the elimination tournament marker used on team reports.
+    /// </summary>
+    protected const string EliminationLegend = "* Indicates a team that will participate in the elimination tournament.";
+
+    /// <summary>
     /// Exports the tournament summary information.
     /// </summary>
     /// <param name="summary">The tournament summary</param>
@@ -98,12 +103,13 @@ public abstract class BaseSummaryExporter : ISummaryExporter
         try
         {
             var teams = summary.Result.Schedule.Teams;
+            var eliminationTeamIds = new HashSet<int>(summary.EliminationTeamIds);
 
             var teamInfo = summary.TeamSummaries
                           .Join(teams,
                                 x => x.Key,
                                 x => x.Key,
-                                (s, t) => new TeamInfo(t.Value, s.Value))
+                                (s, t) => new TeamInfo(t.Value, s.Value, eliminationTeamIds.Contains(t.Value.Id)))
                           .OrderBy(x => (x.Place, x.Name)).ToArray();
 
             Trace.WriteLine($"Sorted {teamInfo.Length} teams by place");

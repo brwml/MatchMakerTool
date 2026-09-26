@@ -286,6 +286,7 @@ public partial class MarkdownExporter : BaseSummaryExporter
     }
 
     /// <summary>
+    /// <summary>
     /// Loads the specified template with markdown escaping renderer registered.
     /// </summary>
     /// <param name="name">The name of the template resource</param>
@@ -327,7 +328,8 @@ public partial class MarkdownExporter : BaseSummaryExporter
         var template =
             LoadTemplate(TeamSummaryTemplate)
                 .Add("name", summary.Name)
-                .Add("teams", teams);
+                .Add("teams", teams)
+                .Add("hasEliminationTeams", teams.Any(x => x.IsElimination));
 
         File.WriteAllText(Path.Combine(folder, TeamsFileName), template.Render(CultureInfo.CurrentCulture));
         Trace.WriteLine($"Team summary page written with {teams.Count()} teams");

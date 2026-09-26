@@ -343,15 +343,16 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
     private static void WriteTeamSummary(Summary summary, string folder)
     {
         Trace.WriteLine("Writing team summary page");
-        var teams = GetTeamInfo(summary);
+        var teams = GetTeamInfo(summary).ToArray();
 
         var template =
             LoadTemplate(TeamSummaryTemplate)
                 .Add("name", summary.Name)
-                .Add("teams", teams);
+                .Add("teams", teams)
+                .Add("hasEliminationTeams", teams.Any(x => x.IsElimination));
 
         File.WriteAllText(Path.Combine(folder, TeamsFileName), template.Render(CultureInfo.CurrentCulture));
-        Trace.WriteLine($"Team summary page written with {teams.Count()} teams");
+        Trace.WriteLine($"Team summary page written with {teams.Length} teams");
     }
 
     /// <summary>

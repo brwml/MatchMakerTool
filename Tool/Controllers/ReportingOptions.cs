@@ -16,6 +16,9 @@ using CommandLine;
 /// <param name="rankingProcedure">The ranking procedure.</param>
 /// <param name="sourceFolder">The source folder of the result files.</param>
 /// <param name="name">The name of the tournament.</param>
+/// <param name="numberOfTournamentTeams">The number of teams that advance to an elimination tournament.</param>
+/// <param name="numberOfAlternateTeams">The number of alternate teams to create from the remaining quizzers.</param>
+/// <param name="numberOfAlternateRooms">The number of rooms available for the alternate teams round-robin tournament.</param>
 /// <param name="verbose">If set to <c>true</c>, then emit verbose output.</param>
 [Verb("report", HelpText = "Generate a report from the results XML files")]
 internal class ReportingOptions(
@@ -24,6 +27,9 @@ internal class ReportingOptions(
     string rankingProcedure,
     string sourceFolder,
     string name,
+    int numberOfTournamentTeams,
+    int numberOfAlternateTeams,
+    int numberOfAlternateRooms,
     bool verbose) : BaseOptions(verbose)
 {
     /// <summary>
@@ -60,4 +66,28 @@ internal class ReportingOptions(
     /// </summary>
     [Option('n', HelpText = "The name of the tournament")]
     public string Name { get; } = name ?? string.Empty;
+
+    /// <summary>
+    /// Gets or sets the number of top-placing teams from the round-robin phase that advance
+    /// unchanged to a single-elimination tournament. When combined with a positive
+    /// <see cref="NumberOfAlternateTeams"/>, the elimination tournament and alternate teams
+    /// artifacts are generated.
+    /// </summary>
+    [Option('t', Default = 0, HelpText = "The number of top-placing teams that advance to an elimination tournament.")]
+    public int NumberOfTournamentTeams { get; } = numberOfTournamentTeams;
+
+    /// <summary>
+    /// Gets or sets the number of new, evenly balanced teams to create from the quizzers who did
+    /// not qualify for the elimination tournament, for a round-robin consolation tournament.
+    /// </summary>
+    [Option('m', Default = 0, HelpText = "The number of alternate teams to create from the remaining quizzers.")]
+    public int NumberOfAlternateTeams { get; } = numberOfAlternateTeams;
+
+    /// <summary>
+    /// Gets or sets the number of rooms available for the alternate teams round-robin tournament.
+    /// When not specified (or less than 1), every match in a round is scheduled to run
+    /// simultaneously, one match per alternate team pair.
+    /// </summary>
+    [Option('a', Default = 0, HelpText = "The number of rooms available for the alternate teams round-robin tournament.")]
+    public int NumberOfAlternateRooms { get; } = numberOfAlternateRooms;
 }

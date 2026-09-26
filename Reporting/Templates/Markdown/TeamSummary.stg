@@ -1,12 +1,15 @@
-root(name, teams) ::= <<
+root(name, teams, hasEliminationTeams) ::= <<
 # <name>: Team Summary
 
 | Place | Team | Wins | Losses | Win % | Avg Score | Avg Errors | Tie Breaker |
 |-------|------|------|--------|-------|-----------|------------|-------------|
-<teams:rows()>
+<teams:rows(); separator="\n">
 
+<if(hasEliminationTeams)>
+_* Indicates a team that will participate in the elimination tournament._
+<endif>
 >>
 
 rows(team) ::= <<
-| <team.Place> | [<team.Name>](teams/<team.Id>.md) | <team.Wins> | <team.Losses> | <team.WinPercentage; format="F3"> | <team.AverageScore; format="F2"> | <team.AverageErrors; format="F2"> | <team.TieBreak> |
+| <team.Place> | [<if(team.IsElimination)>*<endif><team.Name>](teams/<team.Id>.md) | <team.Wins> | <team.Losses> | <team.WinPercentage; format="F3"> | <team.AverageScore; format="F2"> | <team.AverageErrors; format="F2"> | <team.TieBreak> |
 >>

@@ -15,13 +15,13 @@ root(summary, team, details, quizzers) ::= <<
 
 | Round | Opponent | Score | Opponent Score | Result |
 |-------|----------|-------|-----------------|--------|
-<details:matchRows()>
+<details:matchRows(); separator="\n">
 
 ## Team Quizzers
 
 | Name | Average Score | Average Errors |
 |------|---------------|-----------------|
-<quizzers:quizzerRows()>
+<quizzers:quizzerRows(); separator="\n">
 
 [Back to Team Summary](../teams.md)
 >>

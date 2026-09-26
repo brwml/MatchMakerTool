@@ -13,7 +13,7 @@ root(summary, quizzer, details) ::= <<
 
 | Round | Opponent | Score | Errors |
 |-------|----------|-------|--------|
-<details:matchRows()>
+<details:matchRows(); separator="\n">
 
 [Back to Quizzer Summary](../quizzers.md)
 >>

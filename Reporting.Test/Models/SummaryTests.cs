@@ -2,6 +2,7 @@ namespace Reporting.Test.Models;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Bogus;
 
@@ -78,43 +79,90 @@ public class SummaryTests
         }
     }
 
-    private static Result CreateTestResult(string name)
+    [Fact]
+    public void Summary_ByDefault_HasZeroEliminationTeams()
+    {
+        var result = CreateTestResult("Tournament 1");
+        var policies = new TeamRankingPolicy[] { new NullTeamRankingPolicy() };
+
+        var summary = Summary.FromResult(result, policies);
+
+        Assert.Equal(0, summary.NumberOfEliminationTeams);
+    }
+
+    [Fact]
+    public void Summary_NumberOfEliminationTeams_CanBeSet()
+    {
+        var result = CreateTestResult("Tournament 1");
+        var policies = new TeamRankingPolicy[] { new NullTeamRankingPolicy() };
+        var summary = Summary.FromResult(result, policies);
+
+        summary.NumberOfEliminationTeams = 1;
+
+        Assert.Equal(1, summary.NumberOfEliminationTeams);
+    }
+
+    [Fact]
+    public void Summary_EliminationTeamIds_ByDefault_IsEmpty()
+    {
+        var result = CreateTestResult("Tournament 1");
+        var policies = new TeamRankingPolicy[] { new NullTeamRankingPolicy() };
+        var summary = Summary.FromResult(result, policies);
+
+        Assert.Empty(summary.EliminationTeamIds);
+    }
+
+    [Fact]
+    public void Summary_EliminationTeamIds_SelectsExactlyTheRequestedCount()
+    {
+        var result = CreateTestResult("Tournament 1", numberOfTeams: 4);
+        var policies = new TeamRankingPolicy[] { new WinPercentageTeamRankingPolicy() };
+        var summary = Summary.FromResult(result, policies);
+
+        summary.NumberOfEliminationTeams = 3;
+
+        Assert.Equal(3, summary.EliminationTeamIds.Count);
+    }
+
+    [Fact]
+    public void Summary_EliminationTeamIds_WhenPlacesAreTied_BreaksTiesByTeamId()
+    {
+        // NullTeamRankingPolicy assigns the same Place to every team, so all 4 teams here are
+        // tied. The selection must still return exactly 2 teams, chosen deterministically.
+        var result = CreateTestResult("Tournament 1", numberOfTeams: 4);
+        var policies = new TeamRankingPolicy[] { new NullTeamRankingPolicy() };
+        var summary = Summary.FromResult(result, policies);
+
+        summary.NumberOfEliminationTeams = 2;
+
+        Assert.Equal([1, 2], summary.EliminationTeamIds);
+    }
+
+    private static Result CreateTestResult(string name, int numberOfTeams = 2)
     {
         var faker = new Faker();
 
-        var churches = new Dictionary<int, Church>
-        {
-            { 1, new Church(1, "Church 1") },
-            { 2, new Church(2, "Church 2") }
-        };
+        var churches = Enumerable.Range(1, numberOfTeams).ToDictionary(x => x, x => new Church(x, $"Church {x}"));
+        var teams = Enumerable.Range(1, numberOfTeams).ToDictionary(x => x, x => new Team(x, $"Team {x}", $"T{x}", 0));
 
-        var teams = new Dictionary<int, Team>
-        {
-            { 1, new Team(1, "Team 1", "T1", 0) },
-            { 2, new Team(2, "Team 2", "T2", 0) }
-        };
-
-        var quizzers = new Dictionary<int, Quizzer>
-        {
-            { 1, new Quizzer(1, faker.Name.FirstName(Bogus.DataSets.Name.Gender.Male), faker.Name.LastName(), Gender.Male, DateTime.Now.Year, 1, 1) },
-            { 2, new Quizzer(2, faker.Name.FirstName(Bogus.DataSets.Name.Gender.Female), faker.Name.LastName(), Gender.Female, DateTime.Now.Year, 2, 2) }
-        };
+        var quizzers = Enumerable.Range(1, numberOfTeams).ToDictionary(
+            x => x,
+            x => new Quizzer(x, faker.Name.FirstName(), faker.Name.LastName(), Gender.Male, DateTime.Now.Year, x, x));
 
         var round = new Round(1, new Dictionary<int, MatchSchedule>(), DateOnly.FromDateTime(DateTime.Now), TimeOnly.FromDateTime(DateTime.Now));
         var rounds = new Dictionary<int, Round> { { 1, round } };
 
         var schedule = new Schedule(name, churches, quizzers, teams, rounds);
 
-        var teamResults = new List<TeamResult>
-        {
-            new(1, 90, 0, 1),
-            new(2, 80, 1, 2)
-        };
-        var quizzerResults = new List<QuizzerResult>
-        {
-            new(1, 90, 0),
-            new(2, 80, 1)
-        };
+        // Descending scores/errors so ranking policies that differentiate by score (for example
+        // WinPercentageTeamRankingPolicy) produce a strict order across every team.
+        var teamResults = Enumerable.Range(1, numberOfTeams)
+            .Select(x => new TeamResult(x, 100 - x, x - 1, 1))
+            .ToList();
+        var quizzerResults = Enumerable.Range(1, numberOfTeams)
+            .Select(x => new QuizzerResult(x, 100 - x, x - 1))
+            .ToList();
+
         var matchResult = new MatchResult(1, 1, 1, teamResults, quizzerResults);
         var matches = new Dictionary<int, MatchResult> { { 1, matchResult } };
 

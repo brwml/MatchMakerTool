@@ -187,7 +187,7 @@ public class PdfSummaryExporter : BaseSummaryExporter
         return
         [
             CreateCell(team.ShowPlace ? team.Place.ToString(CultureInfo.CurrentCulture) : string.Empty),
-            CreateCell(team.Name),
+            CreateCell(FormattableString.Invariant($"{(team.IsElimination ? "*" : string.Empty)}{team.Name}")),
             CreateCell(team.Wins.ToString(CultureInfo.CurrentCulture)),
             CreateCell(team.Losses.ToString(CultureInfo.CurrentCulture)),
             CreateCell(team.AverageScore.ToString("N2", CultureInfo.CurrentCulture)),
@@ -217,6 +217,11 @@ public class PdfSummaryExporter : BaseSummaryExporter
         }
 
         document.Add(table);
+
+        if (teams.Any(x => x.IsElimination))
+        {
+            document.Add(new Paragraph(EliminationLegend).SetNormalFont());
+        }
     }
 
     /// <summary>

@@ -13,7 +13,8 @@ using MatchMaker.Reporting.Models;
 /// </remarks>
 /// <param name="team">The team</param>
 /// <param name="summary">The team summary</param>
-public class TeamInfo(Team team, TeamSummary summary)
+/// <param name="isElimination">A value indicating whether the team advances to an elimination tournament.</param>
+public class TeamInfo(Team team, TeamSummary summary, bool isElimination = false)
 {
     /// <summary>
     /// Gets or sets the Abbreviation
@@ -24,6 +25,11 @@ public class TeamInfo(Team team, TeamSummary summary)
     /// Gets or sets the Id
     /// </summary>
     public int Id { get; } = team.Id;
+
+    /// <summary>
+    /// Gets a value indicating whether the team advances to an elimination tournament.
+    /// </summary>
+    public bool IsElimination { get; } = isElimination;
 
     /// <summary>
     /// Gets or sets the Name
