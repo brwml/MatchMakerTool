@@ -11,6 +11,16 @@ using Xunit;
 
 public class RoundRobinTournamentTests
 {
+    [Fact]
+    public void Create_SetsTypeToRoundRobin()
+    {
+        var schedule = CreateSchedule(4);
+        schedule = RoundRobinTournament.Create(schedule, 1);
+
+        Assert.Equal(TournamentType.RoundRobin, schedule.Type);
+        Assert.Equal(TournamentType.RoundRobin, schedule.EffectiveType);
+    }
+
     [Theory]
     [MemberData(nameof(CreateRoundParameters))]
     public void VerifyCorrectNumberOfRounds(int numTeams, int availableRooms, int expectedRounds)

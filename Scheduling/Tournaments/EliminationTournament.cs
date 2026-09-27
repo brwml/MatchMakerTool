@@ -57,7 +57,172 @@ public static class EliminationTournament
 
         var round = CreateFirstRound(seededTeamIds, startDate, startTime);
 
-        return new Schedule(schedule.Name, schedule.Churches, quizzers, teams, new Dictionary<int, Round> { { round.Id, round } });
+        return new Schedule(schedule.Name, schedule.Churches, quizzers, teams, new Dictionary<int, Round> { { round.Id, round } }, TournamentType.SingleElimination);
+    }
+
+    /// <summary>
+    /// Determines whether every match in the given <paramref name="round"/> has a recorded result.
+    /// </summary>
+    /// <param name="round">The round to inspect.</param>
+    /// <param name="result">The <see cref="Result"/> containing recorded match outcomes.</param>
+    /// <returns><see langword="true"/> when every match in the round has a result; otherwise <see langword="false"/>.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="round"/> or <paramref name="result"/> is <see langword="null"/>.</exception>
+    public static bool IsRoundComplete(Round round, Result result)
+    {
+        ArgumentNullException.ThrowIfNull(round);
+        ArgumentNullException.ThrowIfNull(result);
+
+        return round.Matches.Values.All(match => result.Matches.ContainsKey(GetScheduleId(round, match)));
+    }
+
+    /// <summary>
+    /// Determines whether the elimination tournament is complete, that is, whether the latest
+    /// round has been fully resolved and only a single team (the champion) remains.
+    /// </summary>
+    /// <param name="schedule">The elimination tournament schedule.</param>
+    /// <param name="result">The <see cref="Result"/> containing recorded match outcomes.</param>
+    /// <returns>
+    /// <see langword="true"/> when the tournament has a decided champion; <see langword="false"/>
+    /// when the schedule has no rounds yet, or the latest round has not been fully resolved, or
+    /// more than one team remains.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="schedule"/> or <paramref name="result"/> is <see langword="null"/>.</exception>
+    public static bool IsComplete(Schedule schedule, Result result)
+    {
+        ArgumentNullException.ThrowIfNull(schedule);
+        ArgumentNullException.ThrowIfNull(result);
+
+        if (schedule.Rounds.Count == 0)
+        {
+            return false;
+        }
+
+        var currentRound = GetLatestRound(schedule);
+
+        return IsRoundComplete(currentRound, result) && GetWinnersInOrder(schedule, currentRound, result).Count <= 1;
+    }
+
+    /// <summary>
+    /// Gets the identifiers of the teams that won each match of the given round, in the same
+    /// strongest-to-weakest order used to construct that round: the round's bye team (if any)
+    /// first, followed by each match's winner in ascending match order.
+    /// </summary>
+    /// <param name="schedule">The elimination tournament schedule.</param>
+    /// <param name="round">The completed round.</param>
+    /// <param name="result">The <see cref="Result"/> containing recorded match outcomes.</param>
+    /// <returns>The winning team identifiers, ordered from strongest to weakest.</returns>
+    private static List<int> GetWinnersInOrder(Schedule schedule, Round round, Result result)
+    {
+        var winners = new List<int>();
+        var byeTeamId = GetByeTeamId(schedule, round, result);
+
+        if (byeTeamId.HasValue)
+        {
+            winners.Add(byeTeamId.Value);
+        }
+
+        foreach (var match in round.Matches.Values.OrderBy(m => m.Id))
+        {
+            var matchResult = result.Matches[GetScheduleId(round, match)];
+            var winnerId = matchResult.TeamResults.First(t => t.Place == 1).TeamId;
+            winners.Add(winnerId);
+        }
+
+        return winners;
+    }
+
+    /// <summary>
+    /// Gets the identifier of the team that has a bye in the given round, that is, the one team
+    /// still in the tournament at the start of the round that does not appear in any of the
+    /// round's matches. Unlike <see cref="ScheduleExtensions.GetByeTeamId"/> (which assumes every
+    /// team in the schedule plays every round, as in round robin), this accounts for teams
+    /// eliminated in earlier rounds by excluding anyone with a recorded loss in a prior round.
+    /// </summary>
+    /// <param name="schedule">The elimination tournament schedule.</param>
+    /// <param name="round">The round to inspect.</param>
+    /// <param name="result">The <see cref="Result"/> containing recorded match outcomes, including prior rounds.</param>
+    /// <returns>The bye team identifier, or <see langword="null"/> when no single team has a bye.</returns>
+    private static int? GetByeTeamId(Schedule schedule, Round round, Result result)
+    {
+        var eliminated = result.Matches.Values
+            .Where(m => m.Round < round.Id)
+            .SelectMany(m => m.TeamResults)
+            .Where(t => t.Place != 1)
+            .Select(t => t.TeamId);
+
+        var stillIn = new HashSet<int>(schedule.Teams.Keys);
+        stillIn.ExceptWith(eliminated);
+        stillIn.ExceptWith(round.Matches.Values.SelectMany(m => m.Teams));
+
+        return stillIn.Count == 1 ? stillIn.Single() : null;
+    }
+
+    /// <summary>
+    /// Creates and appends the next round of the elimination tournament from the results of the
+    /// latest round, pairing the winners (and the current round's bye team, if any) using the
+    /// same strongest-versus-weakest pattern used to build the first round. This preserves the
+    /// standard "protect the seed" bracket structure without needing to track original seed
+    /// values: at every round, the surviving teams are already ordered from strongest to weakest
+    /// by construction, so re-applying the identical fold produces the correct next-round pairings.
+    /// </summary>
+    /// <param name="schedule">The elimination tournament schedule. The new round, if any, is added directly to <see cref="Schedule.Rounds"/>.</param>
+    /// <param name="result">The <see cref="Result"/> containing recorded match outcomes.</param>
+    /// <returns>
+    /// The newly created <see cref="Round"/>, or <see langword="null"/> when the latest round has
+    /// not yet been fully resolved, or when the tournament is already complete (a single champion
+    /// remains and no further round is needed).
+    /// </returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="schedule"/> or <paramref name="result"/> is <see langword="null"/>.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when <paramref name="schedule"/> does not contain any rounds to advance from.</exception>
+    public static Round? AdvanceRound(Schedule schedule, Result result)
+    {
+        ArgumentNullException.ThrowIfNull(schedule);
+        ArgumentNullException.ThrowIfNull(result);
+
+        if (schedule.Rounds.Count == 0)
+        {
+            throw new InvalidOperationException("The schedule does not contain any rounds to advance from.");
+        }
+
+        var currentRound = GetLatestRound(schedule);
+
+        if (!IsRoundComplete(currentRound, result))
+        {
+            return null;
+        }
+
+        var winners = GetWinnersInOrder(schedule, currentRound, result);
+
+        if (winners.Count < 2)
+        {
+            return null;
+        }
+
+        var nextRound = CreatePairingRound(currentRound.Id + 1, winners, currentRound.Date, currentRound.Time);
+        schedule.Rounds.Add(nextRound.Id, nextRound);
+
+        return nextRound;
+    }
+
+    /// <summary>
+    /// Gets the most recently created round of the schedule.
+    /// </summary>
+    /// <param name="schedule">The elimination tournament schedule.</param>
+    /// <returns>The <see cref="Round"/> with the highest <see cref="Round.Id"/>.</returns>
+    private static Round GetLatestRound(Schedule schedule)
+    {
+        return schedule.Rounds.Values.OrderByDescending(r => r.Id).First();
+    }
+
+    /// <summary>
+    /// Gets the identifier used to look up a match's recorded result within a <see cref="Result"/>.
+    /// </summary>
+    /// <param name="round">The round containing the match.</param>
+    /// <param name="match">The match.</param>
+    /// <returns>The schedule identifier, matching <see cref="MatchResult.ScheduleId"/>.</returns>
+    private static int GetScheduleId(Round round, MatchSchedule match)
+    {
+        return (round.Id * 100) + match.Room;
     }
 
     /// <summary>
@@ -69,13 +234,29 @@ public static class EliminationTournament
     /// <returns>The first <see cref="Round"/> instance.</returns>
     private static Round CreateFirstRound(IReadOnlyList<int> seededTeamIds, DateOnly? startDate, TimeOnly? startTime)
     {
-        // For an odd number of teams the strongest seed sits out the first round; the remaining
-        // teams are paired using the same strongest-versus-weakest pattern.
-        var pairingIds = seededTeamIds.Count % 2 == 0 ? seededTeamIds : seededTeamIds.Skip(1).ToList();
-
         var now = DateTime.Now;
         var date = startDate ?? DateOnly.FromDateTime(now);
         var time = startTime ?? TimeOnly.FromDateTime(now);
+
+        return CreatePairingRound(1, seededTeamIds, date, time);
+    }
+
+    /// <summary>
+    /// Creates a round pairing the given teams using the strongest-versus-weakest fold: the
+    /// strongest remaining team plays the weakest, the second-strongest plays the
+    /// second-weakest, and so on. When an odd number of teams is given, the first (strongest)
+    /// team receives a bye and the remaining teams are paired using the same pattern.
+    /// </summary>
+    /// <param name="roundId">The identifier assigned to the new round.</param>
+    /// <param name="teamIdsInOrder">The team identifiers, ordered from strongest to weakest.</param>
+    /// <param name="date">The round date.</param>
+    /// <param name="time">The round start time.</param>
+    /// <returns>The <see cref="Round"/> instance.</returns>
+    private static Round CreatePairingRound(int roundId, IReadOnlyList<int> teamIdsInOrder, DateOnly date, TimeOnly time)
+    {
+        // For an odd number of teams the strongest remaining team sits out this round; the
+        // remaining teams are paired using the same strongest-versus-weakest pattern.
+        var pairingIds = teamIdsInOrder.Count % 2 == 0 ? teamIdsInOrder : teamIdsInOrder.Skip(1).ToList();
 
         var matches = new Dictionary<int, MatchSchedule>();
         var matchCount = pairingIds.Count / 2;
@@ -88,6 +269,6 @@ public static class EliminationTournament
             matches.Add(matchId, new MatchSchedule(matchId, matchId, new[] { team1Id, team2Id }));
         }
 
-        return new Round(1, matches, date, time);
+        return new Round(roundId, matches, date, time);
     }
 }

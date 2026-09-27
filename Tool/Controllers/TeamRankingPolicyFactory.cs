@@ -1,4 +1,4 @@
-﻿namespace MatchMaker.Tool.Controllers;
+namespace MatchMaker.Tool.Controllers;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,10 @@ using System.Linq;
 using MatchMaker.Reporting.Policies;
 
 /// <summary>
-/// A factory class that creates <see cref="TeamRankingPolicy"/> instances.
+/// A factory class that creates <see cref="TeamRankingPolicy"/> instances from the command-line
+/// ranking procedure string. For the default policy chain associated with a
+/// <see cref="MatchMaker.Models.TournamentType"/>, see
+/// <see cref="MatchMaker.Reporting.Policies.TeamRankingPolicyFactory"/>.
 /// </summary>
 internal class TeamRankingPolicyFactory
 {

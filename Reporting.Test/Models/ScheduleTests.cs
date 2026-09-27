@@ -12,6 +12,58 @@ using Xunit;
 
 public class ScheduleTests
 {
+    [Fact]
+    public void Type_DefaultsToNull_AndEffectiveTypeDefaultsToRoundRobin()
+    {
+        var schedule = new Schedule("Test", new Dictionary<int, Church>(), new Dictionary<int, Quizzer>(), new Dictionary<int, Team>(), new Dictionary<int, Round>());
+
+        Assert.Null(schedule.Type);
+        Assert.Equal(TournamentType.RoundRobin, schedule.EffectiveType);
+    }
+
+    [Theory]
+    [InlineData(TournamentType.RoundRobin)]
+    [InlineData(TournamentType.SingleElimination)]
+    [InlineData(TournamentType.DoubleElimination)]
+    [InlineData(TournamentType.TripleElimination)]
+    [InlineData(TournamentType.Swiss)]
+    [InlineData(TournamentType.SwissWithTopCut)]
+    public void ToXml_FromXml_RoundTripsType(TournamentType type)
+    {
+        var schedule = new Schedule("Test", new Dictionary<int, Church>(), new Dictionary<int, Quizzer>(), new Dictionary<int, Team>(), new Dictionary<int, Round>(), type);
+
+        var actual = Schedule.FromXml(schedule.ToXml(), schedule.Name);
+
+        Assert.Equal(type, actual.Type);
+    }
+
+    [Fact]
+    public void FromXml_WithNoTypeAttribute_LeavesTypeNull()
+    {
+        var schedule = new Schedule("Test", new Dictionary<int, Church>(), new Dictionary<int, Quizzer>(), new Dictionary<int, Team>(), new Dictionary<int, Round>());
+
+        var actual = Schedule.FromXml(schedule.ToXml(), schedule.Name);
+
+        Assert.Null(actual.Type);
+        Assert.Equal(TournamentType.RoundRobin, actual.EffectiveType);
+    }
+
+    [Theory]
+    [InlineData("999")]
+    [InlineData("-1")]
+    [InlineData("NotARealType")]
+    public void FromXml_WithUnrecognizedTypeAttributeValue_LeavesTypeNull(string value)
+    {
+        var schedule = new Schedule("Test", new Dictionary<int, Church>(), new Dictionary<int, Quizzer>(), new Dictionary<int, Team>(), new Dictionary<int, Round>());
+        var document = schedule.ToXml();
+        document.Root!.SetAttributeValue("type", value);
+
+        var actual = Schedule.FromXml(document, schedule.Name);
+
+        Assert.Null(actual.Type);
+        Assert.Equal(TournamentType.RoundRobin, actual.EffectiveType);
+    }
+
     [Theory]
     [MemberData(nameof(GetScheduleTests))]
     [SuppressMessage("Usage", "xUnit1045:Avoid using TheoryData type arguments that might not be serializable", Justification = "<Pending>")]

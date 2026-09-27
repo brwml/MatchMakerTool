@@ -1,5 +1,6 @@
 ﻿namespace MatchMaker.Models;
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -17,8 +18,14 @@ using System.Xml.XPath;
 /// <param name="quizzers">The quizzers</param>
 /// <param name="teams">The teams</param>
 /// <param name="rounds">The rounds</param>
+/// <param name="type">
+/// The tournament type, or <see langword="null"/> when unknown. Schedules created before this
+/// property existed, and schedules loaded from XML that predates it, will have a
+/// <see langword="null"/> <see cref="Type"/>; use <see cref="EffectiveType"/> to treat an unknown
+/// type as <see cref="TournamentType.RoundRobin"/>.
+/// </param>
 [DebuggerDisplay("Schedule {Name}")]
-public class Schedule(string name, IDictionary<int, Church> churches, IDictionary<int, Quizzer> quizzers, IDictionary<int, Team> teams, IDictionary<int, Round> rounds)
+public class Schedule(string name, IDictionary<int, Church> churches, IDictionary<int, Quizzer> quizzers, IDictionary<int, Team> teams, IDictionary<int, Round> rounds, TournamentType? type = null)
 {
     /// <summary>
     /// Gets an empty schedule instance.
@@ -54,6 +61,20 @@ public class Schedule(string name, IDictionary<int, Church> churches, IDictionar
     public IDictionary<int, Team> Teams { get; } = teams;
 
     /// <summary>
+    /// Gets or sets the tournament type, or <see langword="null"/> when unknown (for example, a
+    /// schedule created or loaded before this property existed). Prefer <see cref="EffectiveType"/>
+    /// when a concrete type is required.
+    /// </summary>
+    public TournamentType? Type { get; set; } = type;
+
+    /// <summary>
+    /// Gets the tournament type, treating a <see langword="null"/> <see cref="Type"/> as
+    /// <see cref="TournamentType.RoundRobin"/> for backward compatibility with schedules that
+    /// predate this property.
+    /// </summary>
+    public TournamentType EffectiveType => this.Type ?? TournamentType.RoundRobin;
+
+    /// <summary>
     /// Creates a <see cref="Schedule"/> from an <see cref="XDocument"/> and a <paramref name="name"/>.
     /// </summary>
     /// <param name="document">The <see cref="XDocument"/></param>
@@ -74,6 +95,7 @@ public class Schedule(string name, IDictionary<int, Church> churches, IDictionar
             new XmlDocumentDeclaration(),
             new XElement(
                 "members",
+                this.Type.HasValue ? new XAttribute("type", this.Type.Value) : null,
                 new XElement(
                     "churches",
                     this.Churches.Select(x => x.Value.ToXml())),
@@ -137,6 +159,21 @@ public class Schedule(string name, IDictionary<int, Church> churches, IDictionar
     }
 
     /// <summary>
+    /// Loads the tournament type from the <see cref="XDocument"/>.
+    /// </summary>
+    /// <param name="document">The <see cref="XDocument"/></param>
+    /// <returns>
+    /// The <see cref="TournamentType"/>, or <see langword="null"/> when the document has no
+    /// "type" attribute or the value cannot be parsed (for example, XML written before this
+    /// property existed).
+    /// </returns>
+    private static TournamentType? LoadTournamentType(XDocument document)
+    {
+        var value = document.Root?.Attribute("type")?.Value;
+        return !string.IsNullOrEmpty(value) && Enum.TryParse<TournamentType>(value, true, out var type) && Enum.IsDefined(type) ? type : null;
+    }
+
+    /// <summary>
     /// Populates the schedule.
     /// </summary>
     /// <param name="document">The <see cref="XDocument"/></param>
@@ -148,7 +185,8 @@ public class Schedule(string name, IDictionary<int, Church> churches, IDictionar
         var teams = LoadTeams(document);
         var quizzers = LoadQuizzers(document);
         var rounds = LoadRounds(document);
-        return new Schedule(name, churches, quizzers, teams, rounds);
+        var type = LoadTournamentType(document);
+        return new Schedule(name, churches, quizzers, teams, rounds, type);
     }
 }
 

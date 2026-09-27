@@ -46,6 +46,7 @@ public static class RoundRobinTournament
 
         schedule.Rounds = CreateRounds(schedule.Teams.Values, availableRooms, startDate, startTime, roundDuration)
             .ToDictionary(x => x.Id, x => x);
+        schedule.Type = TournamentType.RoundRobin;
 
         return schedule;
     }
