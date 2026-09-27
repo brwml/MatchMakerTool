@@ -1,5 +1,6 @@
 namespace MatchMaker.Reporting.Exporters;
 
+using System.Buffers;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -500,6 +501,12 @@ public class SafeMarkdown(string value)
 public class MarkdownEscapeRenderer : IAttributeRenderer
 {
     /// <summary>
+    /// The markdown special characters that must be escaped with a leading backslash.
+    /// </summary>
+    private static readonly SearchValues<char> SpecialCharacters =
+        SearchValues.Create("|[]()\\*_#+-.!`{}");
+
+    /// <summary>
     /// Escapes markdown special characters in the given string.
     /// </summary>
     /// <param name="obj">The SafeMarkdown object to render</param>
@@ -518,40 +525,30 @@ public class MarkdownEscapeRenderer : IAttributeRenderer
             return obj.ToString() ?? string.Empty;
         }
 
-        var str = safeMarkdown.Value;
+        var value = safeMarkdown.Value;
 
-        if (string.IsNullOrEmpty(str))
-        {
-            return str;
-        }
+        return string.IsNullOrEmpty(value) || value.AsSpan().IndexOfAny(SpecialCharacters) < 0
+            ? value
+            : EscapeSpecialCharacters(value);
+    }
 
-        var escaped = new StringBuilder();
-        foreach (var c in str)
+    /// <summary>
+    /// Prefixes every markdown special character in the given string with a backslash.
+    /// </summary>
+    /// <param name="value">The string to escape</param>
+    /// <returns>The escaped string</returns>
+    private static string EscapeSpecialCharacters(string value)
+    {
+        var escaped = new StringBuilder(value.Length + 8);
+
+        foreach (var c in value)
         {
-            switch (c)
+            if (SpecialCharacters.Contains(c))
             {
-                case '|':
-                case '[':
-                case ']':
-                case '(':
-                case ')':
-                case '\\':
-                case '*':
-                case '_':
-                case '#':
-                case '+':
-                case '-':
-                case '.':
-                case '!':
-                case '`':
-                case '{':
-                case '}':
-                    escaped.Append('\\').Append(c);
-                    break;
-                default:
-                    escaped.Append(c);
-                    break;
+                escaped.Append('\\');
             }
+
+            escaped.Append(c);
         }
 
         return escaped.ToString();
