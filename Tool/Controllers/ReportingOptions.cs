@@ -13,7 +13,7 @@ using CommandLine;
 /// </remarks>
 /// <param name="outputFolder">The output folder.</param>
 /// <param name="outputFormat">The output format.</param>
-/// <param name="rankingProcedure">The ranking procedure.</param>
+/// <param name="rankingProcedure">The ranking procedure, or <see langword="null"/> to use the default for the schedule's tournament type.</param>
 /// <param name="sourceFolder">The source folder of the result files.</param>
 /// <param name="name">The name of the tournament.</param>
 /// <param name="numberOfTournamentTeams">The number of teams that advance to an elimination tournament.</param>
@@ -24,7 +24,7 @@ using CommandLine;
 internal class ReportingOptions(
     string outputFolder,
     OutputFormat outputFormat,
-    string rankingProcedure,
+    string? rankingProcedure,
     string sourceFolder,
     string name,
     int numberOfTournamentTeams,
@@ -33,7 +33,9 @@ internal class ReportingOptions(
     bool verbose) : BaseOptions(verbose)
 {
     /// <summary>
-    /// Defines the default ranking procedure
+    /// Defines the default ranking procedure, used only by the <c>summary</c> verb
+    /// (<see cref="SummaryController"/>), which has no associated <see cref="MatchMaker.Models.TournamentType"/>
+    /// to derive a default from.
     /// </summary>
     public const string DefaultRankingProcedure = "whse";
 
@@ -50,10 +52,12 @@ internal class ReportingOptions(
     public OutputFormat OutputFormat { get; } = outputFormat;
 
     /// <summary>
-    /// Gets or sets the ranking procedure. The default ranking procedure is "whse" (wins, head-to-head, score, and errors).
+    /// Gets or sets the ranking procedure. When not specified, the default ranking policy chain
+    /// for the schedule's <see cref="MatchMaker.Models.TournamentType"/> is used (see
+    /// <see cref="MatchMaker.Reporting.Policies.TeamRankingPolicyFactory.GetDefaultPolicies"/>).
     /// </summary>
-    [Option('r', Default = DefaultRankingProcedure, HelpText = "The ranking operations and sequence. Each character represents a ranking operation. Possible operations include 'w' for winning percentage, 'l' for total losses, 'h' for head-to-head competition, 's' for average score, and 'e' for average errors.")]
-    public string RankingProcedure { get; } = rankingProcedure ?? DefaultRankingProcedure;
+    [Option('r', Required = false, HelpText = "The ranking operations and sequence. Each character represents a ranking operation. Possible operations include 'w' for winning percentage, 'l' for total losses, 'h' for head-to-head competition, 's' for average score, and 'e' for average errors. When not specified, the default ranking for the schedule's tournament type is used.")]
+    public string? RankingProcedure { get; } = rankingProcedure;
 
     /// <summary>
     /// Gets or sets the source folder.

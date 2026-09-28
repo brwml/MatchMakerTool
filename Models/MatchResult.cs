@@ -42,7 +42,22 @@ public class MatchResult(int id, int room, int round, IList<TeamResult> teamResu
     /// <summary>
     /// Gets the schedule identifier
     /// </summary>
-    public int ScheduleId => (this.Round * 100) + this.Room;
+    public int ScheduleId => GetScheduleId(this.Round, this.Room);
+
+    /// <summary>
+    /// Computes the schedule identifier for a given round and room, combining them into a single
+    /// value that uniquely identifies a scheduled match across all rounds. This is the single
+    /// source of truth for the formula used by <see cref="ScheduleId"/> and by the tournament
+    /// scheduling classes in the Scheduling project when looking up a <see cref="MatchResult"/>
+    /// for a scheduled <c>MatchSchedule</c>.
+    /// </summary>
+    /// <param name="round">The round number.</param>
+    /// <param name="room">The room number.</param>
+    /// <returns>The schedule identifier.</returns>
+    public static int GetScheduleId(int round, int room)
+    {
+        return (round * 100) + room;
+    }
 
     /// <summary>
     /// Gets or sets the team results

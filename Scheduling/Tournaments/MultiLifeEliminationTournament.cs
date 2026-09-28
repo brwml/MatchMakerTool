@@ -122,10 +122,33 @@ internal static class MultiLifeEliminationTournament
             return null;
         }
 
-        var nextRound = CreatePairingRound(currentRound.Id + 1, survivors, currentRound.Date, currentRound.Time);
+        var priorByeTeamIds = GetTeamsWithPriorByes(schedule, result, currentRound.Id + 1, lives);
+        var nextRound = CreatePairingRound(currentRound.Id + 1, survivors, currentRound.Date, currentRound.Time, priorByeTeamIds);
         schedule.Rounds.Add(nextRound.Id, nextRound);
 
         return nextRound;
+    }
+
+    /// <summary>
+    /// Gets the set of team identifiers that have already received a bye in some previous round
+    /// (rounds with an id less than <paramref name="throughRoundId"/>), used to rotate the bye
+    /// among survivors when the survivor count is odd.
+    /// </summary>
+    private static HashSet<int> GetTeamsWithPriorByes(Schedule schedule, Result result, int throughRoundId, int lives)
+    {
+        var byeTeams = new HashSet<int>();
+
+        foreach (var round in schedule.Rounds.Values.Where(r => r.Id < throughRoundId))
+        {
+            var byeTeamId = GetByeTeamId(schedule, round, result, lives);
+
+            if (byeTeamId.HasValue)
+            {
+                byeTeams.Add(byeTeamId.Value);
+            }
+        }
+
+        return byeTeams;
     }
 
     /// <summary>
@@ -147,8 +170,8 @@ internal static class MultiLifeEliminationTournament
         foreach (var match in round.Matches.Values.OrderBy(m => m.Id))
         {
             var matchResult = result.Matches[GetScheduleId(round, match)];
-            var winnerId = matchResult.TeamResults.First(t => t.Place == 1).TeamId;
-            var loserId = matchResult.TeamResults.First(t => t.Place != 1).TeamId;
+            var winnerId = EliminationTournament.GetWinnerId(matchResult);
+            var loserId = EliminationTournament.GetLoserId(matchResult);
 
             ordered.Add(winnerId);
 
@@ -203,16 +226,28 @@ internal static class MultiLifeEliminationTournament
     /// </summary>
     private static int GetScheduleId(Round round, MatchSchedule match)
     {
-        return (round.Id * 100) + match.Room;
+        return MatchResult.GetScheduleId(round.Id, match.Room);
     }
 
     /// <summary>
-    /// Creates a round pairing the given teams using the strongest-versus-weakest fold, giving the
-    /// strongest remaining team a bye when an odd number of teams is given.
+    /// Creates a round pairing the given teams using the strongest-versus-weakest fold, giving a
+    /// bye to a team when an odd number of teams is given. When <paramref name="priorByeTeamIds"/>
+    /// is provided and non-empty, the bye is given to the strongest remaining team that has not
+    /// already received one (falling back to the strongest team overall once every team has had
+    /// exactly one), rotating the bye instead of always giving it to the same team.
     /// </summary>
-    private static Round CreatePairingRound(int roundId, IReadOnlyList<int> teamIdsInOrder, DateOnly date, TimeOnly time)
+    private static Round CreatePairingRound(int roundId, IReadOnlyList<int> teamIdsInOrder, DateOnly date, TimeOnly time, HashSet<int>? priorByeTeamIds = null)
     {
-        var pairingIds = teamIdsInOrder.Count % 2 == 0 ? teamIdsInOrder : teamIdsInOrder.Skip(1).ToList();
+        var pairingIds = teamIdsInOrder;
+
+        if (teamIdsInOrder.Count % 2 != 0)
+        {
+            var byeIndex = priorByeTeamIds is null
+                ? -1
+                : Enumerable.Range(0, teamIdsInOrder.Count).FirstOrDefault(i => !priorByeTeamIds.Contains(teamIdsInOrder[i]), -1);
+
+            pairingIds = [.. teamIdsInOrder.Where((_, index) => index != (byeIndex >= 0 ? byeIndex : 0))];
+        }
 
         var matches = new Dictionary<int, MatchSchedule>();
         var matchCount = pairingIds.Count / 2;

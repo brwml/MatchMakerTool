@@ -37,6 +37,11 @@ public class TeamInfo(Team team, TeamSummary summary, bool isElimination = false
     public string Name { get; } = team.Name;
 
     /// <summary>
+    /// Gets the team name wrapped for markdown-escaped rendering.
+    /// </summary>
+    public SafeMarkdown SafeName => new(this.Name);
+
+    /// <summary>
     /// Gets or sets the Losses
     /// </summary>
     public int Losses { get; } = summary.Losses;

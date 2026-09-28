@@ -42,14 +42,15 @@ public class RandomTeamAssigner : ITeamAssigner
     /// <returns>The quizzers map</returns>
     private static Dictionary<int, Quizzer> CreateQuizzers(Schedule schedule, Dictionary<int, Team> teams)
     {
-        var teamId = 0;
+        var teamIndex = 0;
         var quizzerId = 0;
 
         var quizzers = new Dictionary<int, Quizzer>();
 
         foreach (var quizzer in schedule.Quizzers.OrderBy(_ => Random.Shared.Next()).Select(x => x.Value))
         {
-            teamId = ((teamId + 1) % teams.Count) + 1;
+            var teamId = (teamIndex % teams.Count) + 1;
+            teamIndex++;
             quizzerId++;
 
             quizzers.Add(

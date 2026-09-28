@@ -11,6 +11,22 @@ using Xunit;
 
 public class SwissWithTopCutTournamentTests
 {
+    [Theory]
+    [InlineData(2, 2)]
+    [InlineData(3, 2)]
+    [InlineData(4, 2)]
+    [InlineData(5, 2)]
+    [InlineData(6, 2)]
+    [InlineData(8, 4)]
+    [InlineData(9, 4)]
+    [InlineData(10, 4)]
+    [InlineData(12, 4)]
+    [InlineData(16, 8)]
+    public void GetTopCutSize_ReturnsLargestPowerOfTwoAtMostHalfTheField(int teamCount, int expected)
+    {
+        Assert.Equal(expected, SwissWithTopCutTournament.GetTopCutSize(teamCount));
+    }
+
     [Fact]
     public void Create_SetsTypeToSwissWithTopCut()
     {

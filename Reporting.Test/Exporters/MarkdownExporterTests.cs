@@ -37,6 +37,30 @@ public class MarkdownExporterTests
     }
 
     [Fact]
+    public void MarkdownExporter_Export_WhenFolderContainsForeignFiles_ThrowsAndDoesNotDeleteThem()
+    {
+        var exporter = new MarkdownExporter();
+        var summary = CreateTestSummary("Test Tournament");
+        var tempDir = CreateTempDirectory();
+
+        try
+        {
+            var markdownFolder = Path.Combine(tempDir, "Markdown", summary.Name);
+            Directory.CreateDirectory(markdownFolder);
+            var sourceFile = Path.Combine(markdownFolder, "round1.xml");
+            File.WriteAllText(sourceFile, "<schedule/>");
+
+            Assert.Throws<InvalidOperationException>(() => exporter.Export(summary, tempDir));
+
+            Assert.True(File.Exists(sourceFile), "Foreign source file should not have been deleted");
+        }
+        finally
+        {
+            CleanupDirectory(tempDir);
+        }
+    }
+
+    [Fact]
     public void MarkdownExporter_Export_CreatesIndexFile()
     {
         var exporter = new MarkdownExporter();
@@ -479,6 +503,74 @@ public class MarkdownExporterTests
         {
             CleanupDirectory(tempDir);
         }
+    }
+
+    [Fact]
+    public void MarkdownExporter_Export_TeamNameWithSpecialCharacters_IsEscapedInTable()
+    {
+        var exporter = new MarkdownExporter();
+        var summary = CreateTestSummaryWithNames("Test Tournament", "Team [One] | Two", "Alice", "Smith|Jones", "Church [A]");
+        var tempDir = CreateTempDirectory();
+
+        try
+        {
+            exporter.Export(summary, tempDir);
+
+            var teamSummaryPath = Path.Combine(tempDir, "Markdown", summary.Name, "teams.md");
+            var teamContent = File.ReadAllText(teamSummaryPath);
+
+            Assert.Contains(@"[Team \[One\] \| Two](teams/1.md)", teamContent, StringComparison.Ordinal);
+
+            var rows = teamContent.Split(Environment.NewLine)
+                .Count(l => l.StartsWith('|') && !l.Contains("---", StringComparison.Ordinal));
+            Assert.True(rows > 1, "The malformed pipe in the team name must not merge or drop table rows");
+
+            var quizzerSummaryPath = Path.Combine(tempDir, "Markdown", summary.Name, "quizzers.md");
+            var quizzerContent = File.ReadAllText(quizzerSummaryPath);
+
+            Assert.Contains(@"Alice Smith\|Jones", quizzerContent, StringComparison.Ordinal);
+            Assert.Contains(@"Church \[A\]", quizzerContent, StringComparison.Ordinal);
+        }
+        finally
+        {
+            CleanupDirectory(tempDir);
+        }
+    }
+
+    private static Summary CreateTestSummaryWithNames(
+        string tournamentName, string teamName, string quizzerFirstName, string quizzerLastName, string churchName)
+    {
+        var churches = new Dictionary<int, Church>
+        {
+            { 1, new Church(1, churchName) },
+            { 2, new Church(2, "Church 2") }
+        };
+
+        var teams = new Dictionary<int, Team>
+        {
+            { 1, new Team(1, teamName, "T1", 0) },
+            { 2, new Team(2, "Team 2", "T2", 0) }
+        };
+
+        var quizzers = new Dictionary<int, Quizzer>
+        {
+            { 1, new Quizzer(1, quizzerFirstName, quizzerLastName, Gender.Female, DateTime.Now.Year, 1, 1) },
+            { 2, new Quizzer(2, "Bob", "Brown", Gender.Male, DateTime.Now.Year, 2, 2) }
+        };
+
+        var round = new Round(1, new Dictionary<int, MatchSchedule>(), DateOnly.FromDateTime(DateTime.Now), TimeOnly.FromDateTime(DateTime.Now));
+        var rounds = new Dictionary<int, Round> { { 1, round } };
+
+        var schedule = new Schedule(tournamentName, churches, quizzers, teams, rounds);
+
+        var teamResults = new List<TeamResult> { new(1, 90, 0, 1), new(2, 80, 1, 2) };
+        var quizzerResults = new List<QuizzerResult> { new(1, 90, 0), new(2, 80, 1) };
+        var matchResult = new MatchResult(1, 1, 1, teamResults, quizzerResults);
+        var matches = new Dictionary<int, MatchResult> { { 1, matchResult } };
+
+        var result = new Result(schedule, matches);
+        var policies = new TeamRankingPolicy[] { new NullTeamRankingPolicy() };
+        return Summary.FromResult(result, policies);
     }
 
     private static Summary CreateTestSummary(string name)

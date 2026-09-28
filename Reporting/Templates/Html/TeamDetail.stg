@@ -1,16 +1,16 @@
-﻿root(summary, team, details, quizzers) ::= <<
+root(summary, summaryName, team, details, quizzers) ::= <<
 \<html>
 	\<head>
-		\<title><summary.Name>: <team.Name> Team Details\</title>
+		\<title><summaryName>: <team.SafeName> Team Details\</title>
 		\<link rel="stylesheet" type="text/css" href="../style.css">
 	\</head>
 	\<body>
-		\<a href="../index.html"><summary.Name> Home\</a> |
+		\<a href="../index.html"><summaryName> Home\</a> |
 		\<a href="../teams.html">Teams\</a> |
 		\<a href="../quizzers.html">Quizzers\</a>
 		\<br/>
 		\<hr/>
-		\<h1><team.Name> Team Details\</h1>
+		\<h1><team.SafeName> Team Details\</h1>
 		\<h2>Summary\</h2>
 		\<table>
 			<summaryRows(team)>
@@ -44,8 +44,8 @@
 quizzerRows(quizzer) ::= <<
 \<tr>
 	\<td><quizzer.Place>\</td>
-	\<td>\<a href="../quizzers/<quizzer.Id>.html"><quizzer.FullName>\</a><if(quizzer.IsRookie)> (R)<endif>\</td>
-	\<td><quizzer.Church.Name>\</td>
+	\<td>\<a href="../quizzers/<quizzer.Id>.html"><quizzer.SafeFullName>\</a><if(quizzer.IsRookie)> (R)<endif>\</td>
+	\<td><quizzer.SafeChurchName>\</td>
 	\<td><quizzer.AverageScore; format="F2">\</td>
 	\<td><quizzer.AverageErrors; format="F2">\</td>
 \</tr>

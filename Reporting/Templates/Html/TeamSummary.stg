@@ -32,7 +32,7 @@
 rows(team) ::= <<
 \<tr>
 	\<td><team.Place>\</td>
-	\<td>\<a href="teams/<team.Id>.html"><if(team.IsElimination)>*<endif><team.Name>\</a>\</td>
+	\<td>\<a href="teams/<team.Id>.html"><if(team.IsElimination)>*<endif><team.SafeName>\</a>\</td>
 	\<td><team.Wins>\</td>
 	\<td><team.Losses>\</td>
 	\<td><team.WinPercentage; format="F3">\</td>

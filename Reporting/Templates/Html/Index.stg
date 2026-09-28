@@ -1,14 +1,14 @@
-﻿root(summary) ::= <<
+root(summary, name) ::= <<
 \<html>
 	\<head>
-		\<title><summary.Name>\</title>
+		\<title><name>\</title>
 		\<link rel="stylesheet" type="text/css" href="style.css">
 	\</head>
 	\<body>
 		\<a href="index.html">Home\</a>
 		\<br/>
 		\<hr/>
-		\<h1><summary.Name>\</h1>
+		\<h1><name>\</h1>
 		\<h2>Summaries\</h2>
 		\<ul>
 			\<li>\<a href="teams.html">Team Summary\</a>\</li>

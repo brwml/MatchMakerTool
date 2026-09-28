@@ -1,1 +1,4 @@
-﻿[assembly: CLSCompliant(false)]
+﻿using System.Runtime.CompilerServices;
+
+[assembly: CLSCompliant(false)]
+[assembly: InternalsVisibleTo("Scheduling.Test")]

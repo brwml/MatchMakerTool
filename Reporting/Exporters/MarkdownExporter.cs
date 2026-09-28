@@ -122,7 +122,7 @@ public partial class MarkdownExporter : BaseSummaryExporter
         var fullBasePath = Path.GetFullPath(basePath);
         var fullMarkdownPath = Path.GetFullPath(markdownFolder);
 
-        if (!fullMarkdownPath.StartsWith(fullBasePath, StringComparison.OrdinalIgnoreCase))
+        if (!IsWithinBaseDirectory(fullMarkdownPath, fullBasePath))
         {
             throw new InvalidOperationException(
                 FormattableString.Invariant($"Tournament name results in path outside base directory: {fullMarkdownPath}"));
@@ -132,6 +132,7 @@ public partial class MarkdownExporter : BaseSummaryExporter
 
         if (Directory.Exists(markdownFolder))
         {
+            EnsureFolderOnlyContainsPriorExportArtifacts(markdownFolder);
             Directory.Delete(markdownFolder, true);
             Trace.WriteLine("Existing markdown folder deleted");
         }
@@ -139,6 +140,51 @@ public partial class MarkdownExporter : BaseSummaryExporter
         Directory.CreateDirectory(markdownFolder);
         Trace.WriteLine("Markdown folder created");
         return markdownFolder;
+    }
+
+    /// <summary>
+    /// Determines whether the given path is the base directory itself or a true descendant of
+    /// it, using a directory-boundary-aware comparison rather than a raw string prefix check
+    /// (which would incorrectly accept sibling directories whose name happens to start with the
+    /// same characters, for example "Markdown" and "MarkdownEvil").
+    /// </summary>
+    /// <param name="path">The fully-qualified candidate path.</param>
+    /// <param name="baseDirectory">The fully-qualified base directory.</param>
+    /// <returns><see langword="true"/> if <paramref name="path"/> is contained within <paramref name="baseDirectory"/>.</returns>
+    private static bool IsWithinBaseDirectory(string path, string baseDirectory)
+    {
+        var normalizedBase = baseDirectory.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+
+        return path.Equals(normalizedBase, StringComparison.OrdinalIgnoreCase)
+            || path.StartsWith(normalizedBase + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    /// Guards against deleting a folder that was not created by a previous Markdown export, for
+    /// example when the output folder is mistakenly set to the same folder as the source result
+    /// files. Only files and subfolders recognized as artifacts produced by this exporter are
+    /// permitted; anything else causes an exception instead of a silent recursive delete.
+    /// </summary>
+    /// <param name="markdownFolder">The markdown folder to validate.</param>
+    private static void EnsureFolderOnlyContainsPriorExportArtifacts(string markdownFolder)
+    {
+        var knownFiles = new[] { IndexFileName, TeamsFileName, QuizzersFileName };
+        var knownFolders = new[] { TeamsFolderName, QuizzersFolderName };
+
+        var unexpectedFile = Directory.EnumerateFiles(markdownFolder)
+            .Select(Path.GetFileName)
+            .FirstOrDefault(name => !knownFiles.Contains(name, StringComparer.OrdinalIgnoreCase));
+
+        var unexpectedFolder = Directory.EnumerateDirectories(markdownFolder)
+            .Select(Path.GetFileName)
+            .FirstOrDefault(name => !knownFolders.Contains(name, StringComparer.OrdinalIgnoreCase));
+
+        if (unexpectedFile is not null || unexpectedFolder is not null)
+        {
+            throw new InvalidOperationException(
+                FormattableString.Invariant(
+                    $"The folder '{markdownFolder}' contains files or subfolders that were not created by a previous Markdown export (for example, the source folder may be the same as the output folder). Remove or rename it and try again."));
+        }
     }
 
     /// <summary>
@@ -311,7 +357,9 @@ public partial class MarkdownExporter : BaseSummaryExporter
     private static void WriteIndex(Summary summary, string folder)
     {
         Trace.WriteLine("Writing tournament index page");
-        var template = LoadTemplate(IndexTemplate).Add("summary", summary);
+        var template = LoadTemplate(IndexTemplate)
+            .Add("summary", summary)
+            .Add("name", new SafeMarkdown(summary.Name));
         File.WriteAllText(Path.Combine(folder, IndexFileName), template.Render(CultureInfo.CurrentCulture));
         Trace.WriteLine("Index page written successfully");
     }
@@ -328,7 +376,7 @@ public partial class MarkdownExporter : BaseSummaryExporter
 
         var template =
             LoadTemplate(TeamSummaryTemplate)
-                .Add("name", summary.Name)
+                .Add("name", new SafeMarkdown(summary.Name))
                 .Add("teams", teams)
                 .Add("hasEliminationTeams", teams.Any(x => x.IsElimination));
 
@@ -373,7 +421,7 @@ public partial class MarkdownExporter : BaseSummaryExporter
             {
                 Round = GetRoundNumber(x.Value),
                 OpponentId = GetOpponentId(x.Value, teamId),
-                Opponent = GetOpponentName(summary, x.Value, teamId),
+                Opponent = new SafeMarkdown(GetOpponentName(summary, x.Value, teamId)),
                 Score = GetTeamScore(x.Value, teamId),
                 OpponentScore = GetOpponentScore(x.Value, teamId),
                 Win = GetTeamPlace(x.Value, teamId) == 1
@@ -407,7 +455,7 @@ public partial class MarkdownExporter : BaseSummaryExporter
 
         var template =
             LoadTemplate(QuizzerSummaryTemplate)
-                .Add("name", summary.Name)
+                .Add("name", new SafeMarkdown(summary.Name))
                 .Add("quizzers", quizzers);
 
         File.WriteAllText(Path.Combine(folder, QuizzersFileName), template.Render(CultureInfo.CurrentCulture));
@@ -454,7 +502,7 @@ public partial class MarkdownExporter : BaseSummaryExporter
             {
                 Round = GetRoundNumber(x.Value),
                 OpponentId = GetOpponentId(x.Value, teamId),
-                Opponent = GetOpponentName(summary, x.Value, teamId),
+                Opponent = new SafeMarkdown(GetOpponentName(summary, x.Value, teamId)),
                 Score = GetQuizzerScore(x.Value, quizzerId),
                 Errors = GetQuizzerErrors(x.Value, quizzerId)
             });

@@ -236,6 +236,34 @@ public class EliminationTournamentTests
     /// </summary>
     /// <param name="schedule">The schedule that owns the rounds.</param>
     /// <param name="outcomes">The (round, matchId, winnerTeamId, loserTeamId) tuples for each recorded match.</param>
+    [Fact]
+    public void AdvanceRound_WithTiedMatchResult_ThrowsDescriptiveInvalidOperationException()
+    {
+        var schedule = EliminationTournament.Create(CreateSchedule(4), [1, 2, 3, 4]);
+        var round = schedule.Rounds.Single().Value;
+
+        // Both teams recorded as place 1 (a tie), which cannot yield a valid winner.
+        var match1 = round.Matches.Values.OrderBy(x => x.Id).First();
+        var match2 = round.Matches.Values.OrderBy(x => x.Id).Last();
+        var tiedTeamResults = new List<TeamResult>
+        {
+            new(match1.Teams[0], 10, 0, 1),
+            new(match1.Teams[1], 10, 0, 1),
+        };
+        var matches = new Dictionary<int, MatchResult>
+        {
+            { MatchResult.GetScheduleId(round.Id, match1.Room), new MatchResult(0, match1.Room, round.Id, tiedTeamResults, []) },
+            {
+                MatchResult.GetScheduleId(round.Id, match2.Room),
+                new MatchResult(0, match2.Room, round.Id, [new(match2.Teams[0], 10, 0, 1), new(match2.Teams[1], 0, 0, 2)], [])
+            },
+        };
+        var result = new Result(schedule, matches);
+
+        var exception = Assert.Throws<InvalidOperationException>(() => EliminationTournament.AdvanceRound(schedule, result));
+        Assert.Contains("exactly one team", exception.Message, StringComparison.Ordinal);
+    }
+
     private static Result CreateResult(Schedule schedule, params (Round Round, int MatchId, int WinnerTeamId, int LoserTeamId)[] outcomes)
     {
         var matches = outcomes.Select(outcome =>

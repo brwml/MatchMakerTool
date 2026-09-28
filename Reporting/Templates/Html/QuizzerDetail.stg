@@ -1,16 +1,16 @@
-﻿root(summary, quizzer, details) ::= <<
+root(summary, summaryName, quizzer, details) ::= <<
 \<html>
 	\<head>
-		\<title><summary.Name>: <quizzer.FullName>\</title>
+		\<title><summaryName>: <quizzer.SafeFullName>\</title>
 		\<link rel="stylesheet" type="text/css" href="../style.css">
 	\</head>
 	\<body>
-		\<a href="../index.html"><summary.Name> Home\</a> |
+		\<a href="../index.html"><summaryName> Home\</a> |
 		\<a href="../teams.html">Teams\</a> |
 		\<a href="../quizzers.html">Quizzers\</a>
 		\<br/>
 		\<hr/>
-		\<h1><quizzer.FullName> (<if(quizzer.IsRookie)>Rookie from <endif><quizzer.Church.Name>)\</h1>
+		\<h1><quizzer.SafeFullName> (<if(quizzer.IsRookie)>Rookie from <endif><quizzer.SafeChurchName>)\</h1>
 		\<h2>Summary\</h2>
 		\<table>
 			<summaryRows(quizzer)>

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -72,8 +73,8 @@ public class Round(int id, IDictionary<int, MatchSchedule> matches, DateOnly dat
         return new XElement(
             "round",
             new XAttribute("id", this.Id),
-            new XAttribute("date", this.Date),
-            new XAttribute("time", this.Time),
+            new XAttribute("date", this.Date.ToString("O", CultureInfo.InvariantCulture)),
+            new XAttribute("time", this.Time.ToString("O", CultureInfo.InvariantCulture)),
             this.Matches.Select(x => x.Value.ToXml()));
     }
 
@@ -84,7 +85,7 @@ public class Round(int id, IDictionary<int, MatchSchedule> matches, DateOnly dat
     /// <returns>The <see cref="DateOnly"/> instance. If the date cannot be parsed then the current date is returned.</returns>
     private static DateOnly ConvertDate(string date)
     {
-        return DateOnly.TryParse(date, out var dateOnly) ? dateOnly : DateOnly.FromDateTime(DateTime.Now);
+        return DateOnly.TryParse(date, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateOnly) ? dateOnly : DateOnly.FromDateTime(DateTime.Now);
     }
 
     /// <summary>
@@ -94,6 +95,6 @@ public class Round(int id, IDictionary<int, MatchSchedule> matches, DateOnly dat
     /// <returns>The <see cref="TimeOnly"/> instance. If the time cannot be parsed then the current time is returned.</returns>
     private static TimeOnly ConvertTime(string time)
     {
-        return TimeOnly.TryParse(time, out var timeOnly) ? timeOnly : TimeOnly.FromDateTime(DateTime.Now);
+        return TimeOnly.TryParse(time, CultureInfo.InvariantCulture, DateTimeStyles.None, out var timeOnly) ? timeOnly : TimeOnly.FromDateTime(DateTime.Now);
     }
 }

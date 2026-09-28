@@ -8,5 +8,5 @@ root(name, quizzers) ::= <<
 >>
 
 rows(quizzer) ::= <<
-| <if(quizzer.ShowPlace)><quizzer.Place><endif> | [<quizzer.FullName>](quizzers/<quizzer.Id>.md)<if(quizzer.IsRookie)> (R)<endif> | [<quizzer.Team.Name>](teams/<quizzer.Team.Id>.md) | <quizzer.Church.Name> | <quizzer.AverageScore; format="F2"> | <quizzer.AverageErrors; format="F2"> |
+| <if(quizzer.ShowPlace)><quizzer.Place><endif> | [<quizzer.SafeFullName>](quizzers/<quizzer.Id>.md)<if(quizzer.IsRookie)> (R)<endif> | [<quizzer.SafeTeamName>](teams/<quizzer.Team.Id>.md) | <quizzer.SafeChurchName> | <quizzer.AverageScore; format="F2"> | <quizzer.AverageErrors; format="F2"> |
 >>

@@ -6,12 +6,12 @@ using System.Linq;
 using MatchMaker.Reporting.Policies;
 
 /// <summary>
-/// A factory class that creates <see cref="TeamRankingPolicy"/> instances from the command-line
-/// ranking procedure string. For the default policy chain associated with a
-/// <see cref="MatchMaker.Models.TournamentType"/>, see
-/// <see cref="MatchMaker.Reporting.Policies.TeamRankingPolicyFactory"/>.
+/// Parses the command-line ranking procedure string (a sequence of tie-break letters, for
+/// example <c>"whse"</c>) into <see cref="TeamRankingPolicy"/> instances. For the default policy
+/// chain associated with a <see cref="MatchMaker.Models.TournamentType"/>, see
+/// <see cref="MatchMaker.Reporting.Policies.TeamRankingPolicyFactory"/> instead.
 /// </summary>
-internal class TeamRankingPolicyFactory
+internal class RankingProcedureParser
 {
     /// <summary>
     /// Gets a collection of <see cref="TeamRankingPolicy"/> instances.

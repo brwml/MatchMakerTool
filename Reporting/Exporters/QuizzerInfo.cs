@@ -38,6 +38,11 @@ public class QuizzerInfo(Quizzer quizzer, QuizzerSummary summary, Church church,
     public string FullName => FormattableString.Invariant($"{this.FirstName} {this.LastName}");
 
     /// <summary>
+    /// Gets the full name wrapped for markdown-escaped rendering.
+    /// </summary>
+    public SafeMarkdown SafeFullName => new(this.FullName);
+
+    /// <summary>
     /// Gets the rookie year
     /// </summary>
     public int RookieYear { get; } = quizzer.RookieYear;
@@ -56,9 +61,19 @@ public class QuizzerInfo(Quizzer quizzer, QuizzerSummary summary, Church church,
     public Church Church { get; } = church;
 
     /// <summary>
+    /// Gets the church name wrapped for markdown-escaped rendering.
+    /// </summary>
+    public SafeMarkdown SafeChurchName => new(this.Church.Name);
+
+    /// <summary>
     /// Gets the team
     /// </summary>
     public Team Team { get; } = team;
+
+    /// <summary>
+    /// Gets the team name wrapped for markdown-escaped rendering.
+    /// </summary>
+    public SafeMarkdown SafeTeamName => new(this.Team.Name);
 
     /// <summary>
     /// Gets the place

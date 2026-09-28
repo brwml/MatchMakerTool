@@ -138,16 +138,12 @@ public static class SwissWithTopCutTournament
     /// <returns>The number of teams that advance to the top cut.</returns>
     internal static int GetTopCutSize(int teamCount)
     {
+        var halfField = teamCount / 2;
         var size = 1;
 
-        while (size * 2 <= teamCount)
+        while (size * 2 <= halfField)
         {
             size *= 2;
-        }
-
-        if (size >= teamCount && size > 2)
-        {
-            size /= 2;
         }
 
         return Math.Max(size, 2);
@@ -202,7 +198,7 @@ public static class SwissWithTopCutTournament
     {
         return round.Matches.Values
             .OrderBy(m => m.Id)
-            .Select(m => result.Matches[GetScheduleId(round, m)].TeamResults.First(t => t.Place == 1).TeamId)
+            .Select(m => EliminationTournament.GetWinnerId(result.Matches[GetScheduleId(round, m)]))
             .ToList();
     }
 
@@ -211,7 +207,7 @@ public static class SwissWithTopCutTournament
     /// </summary>
     private static int GetScheduleId(Round round, MatchSchedule match)
     {
-        return (round.Id * 100) + match.Room;
+        return MatchResult.GetScheduleId(round.Id, match.Room);
     }
 
     /// <summary>

@@ -1,5 +1,5 @@
-root(summary) ::= <<
-# <summary.Name>
+root(summary, name) ::= <<
+# <name>
 
 ## Summaries
 

@@ -14,9 +14,9 @@ using MatchMaker.Models;
 /// The number of rounds is not stored on the <see cref="Schedule"/>; instead it is recomputed as
 /// needed from the number of teams (see <see cref="GetSwissRoundCount"/>), using the standard
 /// recommendation of enough rounds to guarantee a single unbeaten leader (<c>ceil(log2(n))</c>).
-/// Byes and rematches are avoided using a simple standings-based greedy pairing; unlike a
-/// tournament-management system, this does not track historical bye counts, so with an odd number
-/// of teams the weakest remaining team tends to receive repeat byes.
+/// Byes and rematches are avoided using a simple standings-based greedy pairing; with an odd
+/// number of teams, the bye is rotated among the weakest-standing teams so that no team sits out
+/// more than once before every team has had exactly one bye.
 /// </remarks>
 public static class SwissTournament
 {
@@ -131,8 +131,9 @@ public static class SwissTournament
 
         var wins = GetWinCounts(schedule, result);
         var playedPairs = GetPlayedPairs(schedule);
+        var priorByeTeamIds = GetTeamsWithPriorByes(schedule);
         var standingsOrder = schedule.Teams.Keys.OrderByDescending(id => wins.GetValueOrDefault(id)).ThenBy(id => id).ToList();
-        var pairs = PairByStandings(standingsOrder, playedPairs);
+        var pairs = PairByStandings(standingsOrder, playedPairs, priorByeTeamIds);
 
         var nextRoundId = currentRound.Id + 1;
         var matches = new Dictionary<int, MatchSchedule>();
@@ -203,14 +204,44 @@ public static class SwissTournament
     }
 
     /// <summary>
+    /// Gets the set of team identifiers that have already received a bye in some previously
+    /// scheduled round, used to rotate the bye among teams when an odd number of teams is entered.
+    /// </summary>
+    private static HashSet<int> GetTeamsWithPriorByes(Schedule schedule)
+    {
+        var byeTeams = new HashSet<int>();
+
+        foreach (var round in schedule.Rounds.Values)
+        {
+            var byeTeamId = schedule.GetByeTeamId(round);
+
+            if (byeTeamId.HasValue)
+            {
+                byeTeams.Add(byeTeamId.Value);
+            }
+        }
+
+        return byeTeams;
+    }
+
+    /// <summary>
     /// Pairs teams from the given standings order (strongest first), greedily matching each team
     /// with the nearest team below it in the standings that it has not already played. When no
     /// unplayed opponent remains for a team, it is paired with the next available team (a
-    /// rematch). When an odd number of teams is given, the weakest team is left unpaired (a bye).
+    /// rematch). When an odd number of teams is given, one team is left unpaired (a bye): the
+    /// weakest-standing team that has not already received a bye, or the weakest-standing team
+    /// overall once every team has had exactly one.
     /// </summary>
-    private static List<(int Team1, int Team2)> PairByStandings(List<int> standingsOrder, HashSet<(int Team1, int Team2)> playedPairs)
+    private static List<(int Team1, int Team2)> PairByStandings(List<int> standingsOrder, HashSet<(int Team1, int Team2)> playedPairs, HashSet<int> priorByeTeamIds)
     {
         var remaining = new List<int>(standingsOrder);
+
+        if (remaining.Count % 2 != 0)
+        {
+            var byeIndex = FindLastIndex(remaining, id => !priorByeTeamIds.Contains(id));
+            remaining.RemoveAt(byeIndex >= 0 ? byeIndex : remaining.Count - 1);
+        }
+
         var pairs = new List<(int Team1, int Team2)>();
 
         while (remaining.Count > 1)
@@ -232,6 +263,24 @@ public static class SwissTournament
         }
 
         return pairs;
+    }
+
+    /// <summary>
+    /// Gets the index of the last element in <paramref name="items"/> satisfying
+    /// <paramref name="predicate"/>, searching from the weakest (last) standing backward, or
+    /// <c>-1</c> when no element satisfies it.
+    /// </summary>
+    private static int FindLastIndex(List<int> items, Func<int, bool> predicate)
+    {
+        for (var i = items.Count - 1; i >= 0; i--)
+        {
+            if (predicate(items[i]))
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     /// <summary>

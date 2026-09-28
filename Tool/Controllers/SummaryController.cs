@@ -19,7 +19,7 @@ internal class SummaryController : ReportingControllerBase, IProcessController<S
     public bool Process(SummaryOptions options)
     {
         var policies = LoadRankingPolicies(ReportingOptions.DefaultRankingProcedure);
-        var summaries = options.InputPaths.Select(x => CreateSummary(x, policies));
+        var summaries = options.InputPaths.Select(x => CreateSummary(x, policies)).ToList();
         SummaryExporter.Export(summaries, options.OutputPath);
 
         return true;

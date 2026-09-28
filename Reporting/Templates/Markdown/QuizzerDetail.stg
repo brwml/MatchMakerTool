@@ -1,11 +1,11 @@
 root(summary, quizzer, details) ::= <<
-# <quizzer.FullName><if(quizzer.IsRookie)> (Rookie)<endif>
+# <quizzer.SafeFullName><if(quizzer.IsRookie)> (Rookie)<endif>
 
 ## Quizzer Statistics
 
 - **Place:** <quizzer.Place>
-- **Team:** [<quizzer.Team.Name>](../teams/<quizzer.Team.Id>.md)
-- **Church:** <quizzer.Church.Name>
+- **Team:** [<quizzer.SafeTeamName>](../teams/<quizzer.Team.Id>.md)
+- **Church:** <quizzer.SafeChurchName>
 - **Average Score:** <quizzer.AverageScore; format="F2">
 - **Average Errors:** <quizzer.AverageErrors; format="F2">
 

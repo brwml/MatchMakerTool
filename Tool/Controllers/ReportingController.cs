@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using MatchMaker.Models;
 using MatchMaker.Reporting.Models;
+using MatchMaker.Reporting.Policies;
 
 /// <summary>
 /// Defines the <see cref="ReportingController" /> processor class.
@@ -58,6 +59,10 @@ internal class ReportingController : ReportingControllerBase, IProcessController
         var sourceFolder = options.SourceFolder;
         var schedule = LoadScheduleFromFolder(sourceFolder).WithName(options.Name);
         var result = LoadResultsFromFolder(sourceFolder, schedule);
-        return Summary.FromResult(result, LoadRankingPolicies(options.RankingProcedure));
+        var policies = options.RankingProcedure is not null
+            ? LoadRankingPolicies(options.RankingProcedure)
+            : TeamRankingPolicyFactory.GetDefaultPolicies(schedule.EffectiveType);
+
+        return Summary.FromResult(result, policies);
     }
 }

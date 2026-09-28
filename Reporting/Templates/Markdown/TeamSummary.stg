@@ -11,5 +11,5 @@ _* Indicates a team that will participate in the elimination tournament._
 >>
 
 rows(team) ::= <<
-| <team.Place> | [<if(team.IsElimination)>*<endif><team.Name>](teams/<team.Id>.md) | <team.Wins> | <team.Losses> | <team.WinPercentage; format="F3"> | <team.AverageScore; format="F2"> | <team.AverageErrors; format="F2"> | <team.TieBreak> |
+| <team.Place> | [<if(team.IsElimination)>*<endif><team.SafeName>](teams/<team.Id>.md) | <team.Wins> | <team.Losses> | <team.WinPercentage; format="F3"> | <team.AverageScore; format="F2"> | <team.AverageErrors; format="F2"> | <team.TieBreak> |
 >>

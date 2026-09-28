@@ -116,6 +116,33 @@ public class SwissTournamentTests
         Assert.Contains(pairs, p => p.SequenceEqual([3, 4]));
     }
 
+    [Fact]
+    public void AdvanceRound_WithOddTeamCount_RotatesByeAwayFromPriorByeTeam()
+    {
+        var schedule = SwissTournament.Create(EliminationTournamentTests.CreateSchedule(5), [1, 2, 3, 4, 5]);
+        var round1 = schedule.Rounds.Single().Value;
+
+        // Round 1 pairs (1, 3) and (2, 4); team 5 (the weakest seed) has the bye.
+        Assert.Equal(5, schedule.GetByeTeamId(round1));
+
+        // Team 1 beats team 3, and team 2 beats team 4.
+        var result = CreateResult(
+            schedule,
+            (round1, round1.Matches.Values.First(m => m.Teams.Contains(1)).Id, 1, 3),
+            (round1, round1.Matches.Values.First(m => m.Teams.Contains(2)).Id, 2, 4));
+
+        var round2 = SwissTournament.AdvanceRound(schedule, result);
+
+        Assert.NotNull(round2);
+
+        // Team 5 already had the bye in round 1, so round 2's bye rotates to a different team
+        // instead of leaving team 5 out again.
+        var byeTeamId2 = schedule.GetByeTeamId(round2);
+
+        Assert.NotNull(byeTeamId2);
+        Assert.NotEqual(5, byeTeamId2);
+    }
+
     /// <summary>
     /// Creates a <see cref="Result"/> recording the given winner/loser outcomes, accumulated
     /// across however many rounds are represented in <paramref name="outcomes"/>.

@@ -1,5 +1,5 @@
 root(summary, team, details, quizzers) ::= <<
-# <team.Name>
+# <team.SafeName>
 
 ## Team Statistics
 
@@ -31,5 +31,5 @@ matchRows(detail) ::= <<
 >>
 
 quizzerRows(quizzer) ::= <<
-| [<quizzer.FullName>](../quizzers/<quizzer.Id>.md)<if(quizzer.IsRookie)> (R)<endif> | <quizzer.AverageScore; format="F2"> | <quizzer.AverageErrors; format="F2"> |
+| [<quizzer.SafeFullName>](../quizzers/<quizzer.Id>.md)<if(quizzer.IsRookie)> (R)<endif> | <quizzer.AverageScore; format="F2"> | <quizzer.AverageErrors; format="F2"> |
 >>

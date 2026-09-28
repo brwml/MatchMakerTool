@@ -76,6 +76,53 @@ public static class EliminationTournament
     }
 
     /// <summary>
+    /// Gets the identifier of the team recorded as the sole winner (<see cref="TeamResult.Place"/>
+    /// equal to <c>1</c>) of the given match result.
+    /// </summary>
+    /// <param name="matchResult">The recorded match result.</param>
+    /// <returns>The winning team's identifier.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when the match result does not contain exactly one team result recorded with
+    /// <see cref="TeamResult.Place"/> equal to <c>1</c>, for example because of a tie or a
+    /// malformed/incomplete result.
+    /// </exception>
+    internal static int GetWinnerId(MatchResult matchResult)
+    {
+        ArgumentNullException.ThrowIfNull(matchResult);
+
+        var winners = matchResult.TeamResults.Where(t => t.Place == 1).ToList();
+
+        return winners.Count == 1
+            ? winners[0].TeamId
+            : throw new InvalidOperationException(
+                FormattableString.Invariant(
+                    $"Match result {matchResult.ScheduleId} must have exactly one team recorded with place 1, but found {winners.Count}."));
+    }
+
+    /// <summary>
+    /// Gets the identifier of the team recorded as the sole loser (any <see cref="TeamResult.Place"/>
+    /// other than <c>1</c>) of a two-team match result.
+    /// </summary>
+    /// <param name="matchResult">The recorded match result.</param>
+    /// <returns>The losing team's identifier.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when the match result does not contain exactly two team results, or does not
+    /// contain exactly one team result recorded with a place other than <c>1</c>.
+    /// </exception>
+    internal static int GetLoserId(MatchResult matchResult)
+    {
+        ArgumentNullException.ThrowIfNull(matchResult);
+
+        var losers = matchResult.TeamResults.Where(t => t.Place != 1).ToList();
+
+        return matchResult.TeamResults.Count == 2 && losers.Count == 1
+            ? losers[0].TeamId
+            : throw new InvalidOperationException(
+                FormattableString.Invariant(
+                    $"Match result {matchResult.ScheduleId} must have exactly two teams with a single non-winning team, but found {matchResult.TeamResults.Count} team(s) and {losers.Count} non-winner(s)."));
+    }
+
+    /// <summary>
     /// Determines whether the elimination tournament is complete, that is, whether the latest
     /// round has been fully resolved and only a single team (the champion) remains.
     /// </summary>
@@ -124,7 +171,7 @@ public static class EliminationTournament
         foreach (var match in round.Matches.Values.OrderBy(m => m.Id))
         {
             var matchResult = result.Matches[GetScheduleId(round, match)];
-            var winnerId = matchResult.TeamResults.First(t => t.Place == 1).TeamId;
+            var winnerId = GetWinnerId(matchResult);
             winners.Add(winnerId);
         }
 
@@ -222,7 +269,7 @@ public static class EliminationTournament
     /// <returns>The schedule identifier, matching <see cref="MatchResult.ScheduleId"/>.</returns>
     private static int GetScheduleId(Round round, MatchSchedule match)
     {
-        return (round.Id * 100) + match.Room;
+        return MatchResult.GetScheduleId(round.Id, match.Room);
     }
 
     /// <summary>

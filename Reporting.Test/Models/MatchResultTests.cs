@@ -54,6 +54,19 @@ public class MatchResultTests
         Assert.Equal(expectedScheduleId, result.ScheduleId);
     }
 
+    [Theory]
+    [InlineData(1, 1, 101)]
+    [InlineData(3, 5, 305)]
+    [InlineData(10, 2, 1002)]
+    [InlineData(99, 99, 9999)]
+    public void GetScheduleId_MatchesInstanceScheduleId(int round, int room, int expectedScheduleId)
+    {
+        var result = new MatchResult(1, room, round, [], []);
+
+        Assert.Equal(expectedScheduleId, MatchResult.GetScheduleId(round, room));
+        Assert.Equal(result.ScheduleId, MatchResult.GetScheduleId(round, room));
+    }
+
     [Fact]
     public void ToXml_UsesScheduleIdAsId()
     {

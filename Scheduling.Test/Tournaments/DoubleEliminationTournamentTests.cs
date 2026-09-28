@@ -121,6 +121,32 @@ public class DoubleEliminationTournamentTests
         Assert.True(DoubleEliminationTournament.IsComplete(schedule, result2));
     }
 
+    [Fact]
+    public void AdvanceRound_WithOddSurvivorCount_RotatesByeAcrossRounds()
+    {
+        var schedule = DoubleEliminationTournament.Create(EliminationTournamentTests.CreateSchedule(5), [1, 2, 3, 4, 5]);
+        var round1 = schedule.Rounds.Single().Value;
+
+        // Round 1 pairs the 4 weakest seeds ((2, 5) and (3, 4)); team 1 (the strongest seed)
+        // receives the first bye, since no team has had one yet.
+        Assert.Equal(new HashSet<int> { 2, 5, 3, 4 }, round1.Matches.Values.SelectMany(m => m.Teams).ToHashSet());
+        Assert.Equal(1, schedule.GetByeTeamId(round1));
+
+        // Team 2 beats team 5, and team 3 beats team 4 (each loser now has one loss, but is not
+        // yet eliminated under double elimination).
+        var result = CreateResult(schedule, (round1, round1.Matches.Values.Single(m => m.Teams.Contains(2)).Id, 2, 5), (round1, round1.Matches.Values.Single(m => m.Teams.Contains(3)).Id, 3, 4));
+        var round2 = DoubleEliminationTournament.AdvanceRound(schedule, result);
+
+        Assert.NotNull(round2);
+
+        // All 5 teams still have fewer than two losses, so round 2 is odd again. Because team 1
+        // already had a bye in round 1, the bye rotates to a different team instead of repeating.
+        var byeTeamId2 = schedule.GetByeTeamId(round2);
+
+        Assert.NotNull(byeTeamId2);
+        Assert.NotEqual(1, byeTeamId2);
+    }
+
     /// <summary>
     /// Creates a <see cref="Result"/> recording the given winner/loser outcomes, accumulated
     /// across however many rounds are represented in <paramref name="outcomes"/>.

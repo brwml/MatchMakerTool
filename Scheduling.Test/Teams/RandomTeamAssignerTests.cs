@@ -72,6 +72,7 @@ public class RandomTeamAssignerTests
         }
 
         Assert.True(teamAssignments.Count > 0);
+        Assert.Equal(actualSchedule.Teams.Count, teamAssignments.Count);
         foreach (var count in teamAssignments.Values)
         {
             Assert.True(count > 0);

@@ -18,7 +18,7 @@ internal abstract class ReportingControllerBase
     /// <returns>The <see cref="IEnumerable{TeamRankingPolicy}"/> instance</returns>
     protected static IEnumerable<TeamRankingPolicy> LoadRankingPolicies(string procedure)
     {
-        return TeamRankingPolicyFactory.GetTeamRankingPolicies(procedure).ToArray();
+        return RankingProcedureParser.GetTeamRankingPolicies(procedure).ToArray();
     }
 
     /// <summary>

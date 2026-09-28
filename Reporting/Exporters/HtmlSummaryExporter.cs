@@ -161,6 +161,7 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
 
         if (Directory.Exists(resultsFolder))
         {
+            EnsureFolderOnlyContainsPriorExportArtifacts(resultsFolder);
             Directory.Delete(resultsFolder, true);
             Trace.WriteLine("Existing results folder deleted");
         }
@@ -168,6 +169,34 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
         Directory.CreateDirectory(resultsFolder);
         Trace.WriteLine("Results folder created");
         return resultsFolder;
+    }
+
+    /// <summary>
+    /// Guards against deleting a folder that was not created by a previous HTML export, for
+    /// example when the output folder is mistakenly set to the same folder as the source result
+    /// files. Only files and subfolders recognized as artifacts produced by this exporter are
+    /// permitted; anything else causes an exception instead of a silent recursive delete.
+    /// </summary>
+    /// <param name="resultsFolder">The results folder to validate.</param>
+    private static void EnsureFolderOnlyContainsPriorExportArtifacts(string resultsFolder)
+    {
+        var knownFiles = new[] { IndexFileName, TeamsFileName, QuizzersFileName, StyleSheetFileName };
+        var knownFolders = new[] { TeamsFolderName, QuizzersFolderName };
+
+        var unexpectedFile = Directory.EnumerateFiles(resultsFolder)
+            .Select(Path.GetFileName)
+            .FirstOrDefault(name => !knownFiles.Contains(name, StringComparer.OrdinalIgnoreCase));
+
+        var unexpectedFolder = Directory.EnumerateDirectories(resultsFolder)
+            .Select(Path.GetFileName)
+            .FirstOrDefault(name => !knownFolders.Contains(name, StringComparer.OrdinalIgnoreCase));
+
+        if (unexpectedFile is not null || unexpectedFolder is not null)
+        {
+            throw new InvalidOperationException(
+                FormattableString.Invariant(
+                    $"The folder '{resultsFolder}' contains files or subfolders that were not created by a previous HTML export (for example, the source folder may be the same as the output folder). Remove or rename it and try again."));
+        }
     }
 
     /// <summary>
@@ -301,6 +330,7 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
         using var reader = new StreamReader(stream);
         var group = new TemplateGroupString(reader.ReadToEnd());
         group.RegisterRenderer(typeof(decimal), new DecimalAttributeRenderer());
+        group.RegisterRenderer(typeof(SafeMarkdown), new HtmlEscapeRenderer());
         return group.GetInstanceOf(RootElement);
     }
 
@@ -330,7 +360,9 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
     private static void WriteIndex(Summary summary, string folder)
     {
         Trace.WriteLine("Writing tournament index page");
-        var template = LoadTemplate(IndexTemplate).Add("summary", summary);
+        var template = LoadTemplate(IndexTemplate)
+            .Add("summary", summary)
+            .Add("name", new SafeMarkdown(summary.Name));
         File.WriteAllText(Path.Combine(folder, IndexFileName), template.Render(CultureInfo.CurrentCulture));
         Trace.WriteLine("Index page written successfully");
     }
@@ -347,7 +379,7 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
 
         var template =
             LoadTemplate(TeamSummaryTemplate)
-                .Add("name", summary.Name)
+                .Add("name", new SafeMarkdown(summary.Name))
                 .Add("teams", teams)
                 .Add("hasEliminationTeams", teams.Any(x => x.IsElimination));
 
@@ -392,7 +424,7 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
             {
                 Round = GetRoundNumber(x.Value),
                 OpponentId = GetOpponentId(x.Value, teamId),
-                Opponent = GetOpponentName(summary, x.Value, teamId),
+                Opponent = new SafeMarkdown(GetOpponentName(summary, x.Value, teamId)),
                 Score = GetTeamScore(x.Value, teamId),
                 OpponentScore = GetOpponentScore(x.Value, teamId),
                 Win = GetTeamPlace(x.Value, teamId) == 1
@@ -406,6 +438,7 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
         var template =
             LoadTemplate(TeamDetailTemplate)
                 .Add("summary", summary)
+                .Add("summaryName", new SafeMarkdown(summary.Name))
                 .Add("team", teamInfo)
                 .Add("details", details)
                 .Add("quizzers", quizzers);
@@ -426,7 +459,7 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
 
         var template =
             LoadTemplate(QuizzerSummaryTemplate)
-                .Add("name", summary.Name)
+                .Add("name", new SafeMarkdown(summary.Name))
                 .Add("quizzers", quizzers);
 
         File.WriteAllText(Path.Combine(folder, QuizzersFileName), template.Render(CultureInfo.CurrentCulture));
@@ -473,7 +506,7 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
             {
                 Round = GetRoundNumber(x.Value),
                 OpponentId = GetOpponentId(x.Value, teamId),
-                Opponent = GetOpponentName(summary, x.Value, teamId),
+                Opponent = new SafeMarkdown(GetOpponentName(summary, x.Value, teamId)),
                 Score = GetQuizzerScore(x.Value, quizzerId),
                 Errors = GetQuizzerErrors(x.Value, quizzerId)
             });
@@ -483,10 +516,41 @@ public partial class HtmlSummaryExporter : BaseSummaryExporter
         var template =
             LoadTemplate(QuizzerDetailTemplate)
                 .Add("summary", summary)
+                .Add("summaryName", new SafeMarkdown(summary.Name))
                 .Add("quizzer", quizzerInfo)
                 .Add("details", details);
 
         var path = Path.Combine(folder, FormattableString.Invariant($"{quizzerId}.html"));
         File.WriteAllText(path, template.Render(CultureInfo.CurrentCulture));
+    }
+}
+
+/// <summary>
+/// StringTemplate attribute renderer that HTML-encodes <see cref="SafeMarkdown"/>-wrapped text
+/// before it is written into an HTML template, protecting against markup injection and broken
+/// pages when team, church, or quizzer names contain HTML-significant characters.
+/// </summary>
+public class HtmlEscapeRenderer : IAttributeRenderer
+{
+    /// <summary>
+    /// HTML-encodes the given <see cref="SafeMarkdown"/>-wrapped string.
+    /// </summary>
+    /// <param name="obj">The <see cref="SafeMarkdown"/> object to render</param>
+    /// <param name="formatString">Optional format string (not used)</param>
+    /// <param name="culture">The culture for rendering (not used)</param>
+    /// <returns>The HTML-encoded string</returns>
+    public string ToString(object obj, string formatString, CultureInfo culture)
+    {
+        if (obj is null)
+        {
+            return string.Empty;
+        }
+
+        if (obj is not SafeMarkdown safeMarkdown)
+        {
+            return obj.ToString() ?? string.Empty;
+        }
+
+        return System.Net.WebUtility.HtmlEncode(safeMarkdown.Value) ?? string.Empty;
     }
 }

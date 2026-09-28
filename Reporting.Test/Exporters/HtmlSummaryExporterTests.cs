@@ -77,6 +77,112 @@ public class HtmlSummaryExporterTests
         }
     }
 
+    [Fact]
+    public void Export_WhenResultsFolderContainsForeignFiles_ThrowsAndDoesNotDeleteThem()
+    {
+        var exporter = new HtmlSummaryExporter();
+        var summary = CreateTestSummary("Test Tournament", numberOfEliminationTeams: 0);
+        var tempDir = CreateTempDirectory();
+
+        try
+        {
+            var resultsFolder = Path.Combine(tempDir, "Results");
+            Directory.CreateDirectory(resultsFolder);
+            var sourceFile = Path.Combine(resultsFolder, "round1.xml");
+            File.WriteAllText(sourceFile, "<schedule/>");
+
+            Assert.Throws<InvalidOperationException>(() => exporter.Export(summary, tempDir));
+
+            Assert.True(File.Exists(sourceFile), "Foreign source file should not have been deleted");
+        }
+        finally
+        {
+            CleanupDirectory(tempDir);
+        }
+    }
+
+    [Fact]
+    public void Export_WhenResultsFolderContainsOnlyPriorExportArtifacts_OverwritesSuccessfully()
+    {
+        var exporter = new HtmlSummaryExporter();
+        var summary = CreateTestSummary("Test Tournament", numberOfEliminationTeams: 0);
+        var tempDir = CreateTempDirectory();
+
+        try
+        {
+            exporter.Export(summary, tempDir);
+
+            exporter.Export(summary, tempDir);
+
+            var path = Path.Combine(tempDir, "Results", "teams.html");
+            Assert.True(File.Exists(path));
+        }
+        finally
+        {
+            CleanupDirectory(tempDir);
+        }
+    }
+
+    [Fact]
+    public void Export_WithTeamNameContainingHtmlSpecialCharacters_EncodesNameInOutput()
+    {
+        var exporter = new HtmlSummaryExporter();
+        var summary = CreateTestSummary("Test Tournament", numberOfEliminationTeams: 0, teamOneName: "Smith & <Sons>");
+        var tempDir = CreateTempDirectory();
+
+        try
+        {
+            exporter.Export(summary, tempDir);
+
+            var content = File.ReadAllText(Path.Combine(tempDir, "Results", "teams.html"));
+
+            Assert.Contains("Smith &amp; &lt;Sons&gt;", content, StringComparison.Ordinal);
+            Assert.DoesNotContain("Smith & <Sons>", content, StringComparison.Ordinal);
+        }
+        finally
+        {
+            CleanupDirectory(tempDir);
+        }
+    }
+
+    private static Summary CreateTestSummary(string name, int numberOfEliminationTeams, string teamOneName)
+    {
+        var churches = new Dictionary<int, Church>
+        {
+            { 1, new Church(1, "Church 1") },
+            { 2, new Church(2, "Church 2") }
+        };
+
+        var teams = new Dictionary<int, Team>
+        {
+            { 1, new Team(1, teamOneName, "T1", 0) },
+            { 2, new Team(2, "Team 2", "T2", 0) }
+        };
+
+        var quizzers = new Dictionary<int, Quizzer>
+        {
+            { 1, new Quizzer(1, "Alice", "Adams", Gender.Female, DateTime.Now.Year, 1, 1) },
+            { 2, new Quizzer(2, "Bob", "Brown", Gender.Male, DateTime.Now.Year, 2, 2) }
+        };
+
+        var round = new Round(1, new Dictionary<int, MatchSchedule>(), DateOnly.FromDateTime(DateTime.Now), TimeOnly.FromDateTime(DateTime.Now));
+        var rounds = new Dictionary<int, Round> { { 1, round } };
+
+        var schedule = new Schedule(name, churches, quizzers, teams, rounds);
+
+        var teamResults = new List<TeamResult> { new(1, 90, 0, 1), new(2, 80, 1, 2) };
+        var quizzerResults = new List<QuizzerResult> { new(1, 90, 0), new(2, 80, 1) };
+        var matchResult = new MatchResult(1, 1, 1, teamResults, quizzerResults);
+        var matches = new Dictionary<int, MatchResult> { { 1, matchResult } };
+
+        var result = new Result(schedule, matches);
+        var policies = new TeamRankingPolicy[] { new WinPercentageTeamRankingPolicy() };
+        var summary = Summary.FromResult(result, policies);
+        summary.NumberOfEliminationTeams = numberOfEliminationTeams;
+
+        return summary;
+    }
+
     private static Summary CreateTestSummary(string name, int numberOfEliminationTeams)
     {
         var churches = new Dictionary<int, Church>
