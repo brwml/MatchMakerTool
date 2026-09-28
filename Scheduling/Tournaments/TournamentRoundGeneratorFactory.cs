@@ -16,19 +16,17 @@ public static class TournamentRoundGeneratorFactory
     /// </summary>
     /// <param name="type">The tournament type.</param>
     /// <returns>The <see cref="ITournamentRoundGenerator"/> instance.</returns>
-    /// <exception cref="NotSupportedException">
-    /// Thrown when round generation for <paramref name="type"/> has not yet been implemented.
-    /// </exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="type"/> is not a recognized <see cref="TournamentType"/>.</exception>
     public static ITournamentRoundGenerator For(TournamentType type)
     {
         return type switch
         {
             TournamentType.RoundRobin => new RoundRobinRoundGenerator(),
             TournamentType.SingleElimination => new SingleEliminationRoundGenerator(),
-            TournamentType.DoubleElimination => throw new NotSupportedException("Double-elimination round generation is not yet implemented."),
-            TournamentType.TripleElimination => throw new NotSupportedException("Triple-elimination round generation is not yet implemented."),
-            TournamentType.Swiss => throw new NotSupportedException("Swiss round generation is not yet implemented."),
-            TournamentType.SwissWithTopCut => throw new NotSupportedException("Swiss-with-top-cut round generation is not yet implemented."),
+            TournamentType.DoubleElimination => new DoubleEliminationRoundGenerator(),
+            TournamentType.TripleElimination => new TripleEliminationRoundGenerator(),
+            TournamentType.Swiss => new SwissRoundGenerator(),
+            TournamentType.SwissWithTopCut => new SwissWithTopCutRoundGenerator(),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown tournament type."),
         };
     }

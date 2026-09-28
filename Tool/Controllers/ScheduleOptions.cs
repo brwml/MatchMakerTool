@@ -2,6 +2,8 @@
 
 using CommandLine;
 
+using MatchMaker.Models;
+
 #pragma warning disable CA1812 // The class is instantiate by the command line parser.
 
 /// <summary>
@@ -15,15 +17,15 @@ using CommandLine;
 /// <param name="outputFolderPath">The output folder path.</param>
 /// <param name="outputFormat">The output format.</param>
 /// <param name="rooms">The number of rooms available.</param>
-/// <param name="scheduleType">Type of the schedule.</param>
+/// <param name="tournamentType">Type of the tournament.</param>
 /// <param name="verbose">If set to <c>true</c>, then emit verbose output.</param>
-[Verb("schedule", HelpText = "Generates a tournament schedule")]
+[Verb("schedule", HelpText = "Generates the initial state of a tournament schedule")]
 internal class ScheduleOptions(
     string inputSchedulePath,
     string outputFolderPath,
     OutputFormat outputFormat,
     int rooms,
-    ScheduleType scheduleType,
+    TournamentType tournamentType,
     bool verbose) : BaseOptions(verbose)
 {
     /// <summary>
@@ -47,12 +49,21 @@ internal class ScheduleOptions(
     /// <summary>
     /// Gets the number of rooms available.
     /// </summary>
-    [Option('n', Required = false, HelpText = "The number of rooms available")]
+    /// <remarks>
+    /// Only used when <see cref="TournamentType"/> is <see cref="TournamentType.RoundRobin"/>.
+    /// </remarks>
+    [Option('n', Required = false, HelpText = "The number of rooms available. Only used for the RoundRobin tournament type.")]
     public int Rooms { get; } = rooms;
 
     /// <summary>
-    /// Gets the schedule type.
+    /// Gets the tournament type.
     /// </summary>
-    [Option('t', Default = ScheduleType.RoundRobin, Required = false, HelpText = "The schedule type. The only option is RoundRobin.")]
-    public ScheduleType ScheduleType { get; } = scheduleType;
+    /// <remarks>
+    /// For <see cref="TournamentType.RoundRobin"/>, the entire schedule is generated. For every
+    /// other tournament type, only the initial round is generated; a separate application is
+    /// expected to generate subsequent rounds as results become available (see
+    /// <c>MatchMaker.Scheduling.Tournaments.TournamentRoundGeneratorFactory</c>).
+    /// </remarks>
+    [Option('t', Default = TournamentType.RoundRobin, Required = false, HelpText = "The tournament type. Possible values are RoundRobin, SingleElimination, DoubleElimination, TripleElimination, Swiss, and SwissWithTopCut. For any value other than RoundRobin, only the initial round is generated.")]
+    public TournamentType TournamentType { get; } = tournamentType;
 }

@@ -18,20 +18,29 @@ internal class SchedulingController : IProcessController<ScheduleOptions>
     /// <returns>The <see cref="bool"/></returns>
     public bool Process(ScheduleOptions options)
     {
-        if (options.ScheduleType == ScheduleType.RoundRobin)
+        var inputSchedule = LoadInputSchedule(options.InputSchedulePath);
+        var seededTeamIds = inputSchedule.Teams.Keys.OrderBy(id => id).ToList();
+
+        var schedule = options.TournamentType switch
         {
-            var schedule = RoundRobinTournament
-                .Create(LoadInputSchedule(options.InputSchedulePath), options.Rooms)
-                .WithName(GetScheduleName(options.InputSchedulePath));
+            TournamentType.RoundRobin => RoundRobinTournament.Create(inputSchedule, options.Rooms),
+            TournamentType.SingleElimination => EliminationTournament.Create(inputSchedule, seededTeamIds),
+            TournamentType.DoubleElimination => DoubleEliminationTournament.Create(inputSchedule, seededTeamIds),
+            TournamentType.TripleElimination => TripleEliminationTournament.Create(inputSchedule, seededTeamIds),
+            TournamentType.Swiss => SwissTournament.Create(inputSchedule, seededTeamIds),
+            TournamentType.SwissWithTopCut => SwissWithTopCutTournament.Create(inputSchedule, seededTeamIds),
+            _ => throw new ArgumentOutOfRangeException(nameof(options), options.TournamentType, "Unknown tournament type."),
+        };
 
-            var folder = options.OutputFolderPath;
-            Directory.CreateDirectory(folder);
+        schedule = schedule.WithName(GetScheduleName(options.InputSchedulePath));
 
-            const OutputFormat supportedFormats = OutputFormat.Html | OutputFormat.Pdf | OutputFormat.Rtf | OutputFormat.Xml | OutputFormat.Markdown;
-            var formats = (options.OutputFormat & supportedFormats) | OutputFormat.Xml;
+        var folder = options.OutputFolderPath;
+        Directory.CreateDirectory(folder);
 
-            ExportSchedule(schedule, folder, formats);
-        }
+        const OutputFormat supportedFormats = OutputFormat.Html | OutputFormat.Pdf | OutputFormat.Rtf | OutputFormat.Xml | OutputFormat.Markdown;
+        var formats = (options.OutputFormat & supportedFormats) | OutputFormat.Xml;
+
+        ExportSchedule(schedule, folder, formats);
 
         return true;
     }

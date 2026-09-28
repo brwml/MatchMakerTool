@@ -23,14 +23,28 @@ public class TournamentRoundGeneratorFactoryTests
         Assert.IsType<SingleEliminationRoundGenerator>(TournamentRoundGeneratorFactory.For(TournamentType.SingleElimination));
     }
 
-    [Theory]
-    [InlineData(TournamentType.DoubleElimination)]
-    [InlineData(TournamentType.TripleElimination)]
-    [InlineData(TournamentType.Swiss)]
-    [InlineData(TournamentType.SwissWithTopCut)]
-    public void For_NotYetImplementedTypes_ThrowsNotSupportedException(TournamentType type)
+    [Fact]
+    public void For_DoubleElimination_ReturnsDoubleEliminationRoundGenerator()
     {
-        Assert.Throws<NotSupportedException>(() => TournamentRoundGeneratorFactory.For(type));
+        Assert.IsType<DoubleEliminationRoundGenerator>(TournamentRoundGeneratorFactory.For(TournamentType.DoubleElimination));
+    }
+
+    [Fact]
+    public void For_TripleElimination_ReturnsTripleEliminationRoundGenerator()
+    {
+        Assert.IsType<TripleEliminationRoundGenerator>(TournamentRoundGeneratorFactory.For(TournamentType.TripleElimination));
+    }
+
+    [Fact]
+    public void For_Swiss_ReturnsSwissRoundGenerator()
+    {
+        Assert.IsType<SwissRoundGenerator>(TournamentRoundGeneratorFactory.For(TournamentType.Swiss));
+    }
+
+    [Fact]
+    public void For_SwissWithTopCut_ReturnsSwissWithTopCutRoundGenerator()
+    {
+        Assert.IsType<SwissWithTopCutRoundGenerator>(TournamentRoundGeneratorFactory.For(TournamentType.SwissWithTopCut));
     }
 
     [Fact]
@@ -86,6 +100,98 @@ public class TournamentRoundGeneratorFactoryTests
         var result = new Result(schedule, matches);
 
         Assert.False(generator.IsComplete(schedule, result));
+
+        var nextRound = generator.CreateNextRound(schedule, result);
+
+        Assert.NotNull(nextRound);
+        Assert.Equal(2, schedule.Rounds.Count);
+    }
+
+    [Fact]
+    public void DoubleEliminationRoundGenerator_CreateNextRound_DelegatesToDoubleEliminationTournamentAdvanceRound()
+    {
+        var generator = new DoubleEliminationRoundGenerator();
+        var schedule = DoubleEliminationTournament.Create(EliminationTournamentTests.CreateSchedule(4), [1, 2, 3, 4]);
+        var round = schedule.Rounds.Single().Value;
+
+        var teamResults = new List<TeamResult> { new(1, 10, 0, 1), new(4, 0, 0, 2) };
+        var teamResults2 = new List<TeamResult> { new(2, 10, 0, 1), new(3, 0, 0, 2) };
+        var matches = new[]
+        {
+            new MatchResult(0, round.Matches[1].Room, round.Id, teamResults, []),
+            new MatchResult(0, round.Matches[2].Room, round.Id, teamResults2, []),
+        }.ToDictionary(m => m.ScheduleId, m => m);
+        var result = new Result(schedule, matches);
+
+        Assert.False(generator.IsComplete(schedule, result));
+
+        var nextRound = generator.CreateNextRound(schedule, result);
+
+        Assert.NotNull(nextRound);
+        Assert.Equal(2, schedule.Rounds.Count);
+    }
+
+    [Fact]
+    public void TripleEliminationRoundGenerator_CreateNextRound_DelegatesToTripleEliminationTournamentAdvanceRound()
+    {
+        var generator = new TripleEliminationRoundGenerator();
+        var schedule = TripleEliminationTournament.Create(EliminationTournamentTests.CreateSchedule(4), [1, 2, 3, 4]);
+        var round = schedule.Rounds.Single().Value;
+
+        var teamResults = new List<TeamResult> { new(1, 10, 0, 1), new(4, 0, 0, 2) };
+        var teamResults2 = new List<TeamResult> { new(2, 10, 0, 1), new(3, 0, 0, 2) };
+        var matches = new[]
+        {
+            new MatchResult(0, round.Matches[1].Room, round.Id, teamResults, []),
+            new MatchResult(0, round.Matches[2].Room, round.Id, teamResults2, []),
+        }.ToDictionary(m => m.ScheduleId, m => m);
+        var result = new Result(schedule, matches);
+
+        Assert.False(generator.IsComplete(schedule, result));
+
+        var nextRound = generator.CreateNextRound(schedule, result);
+
+        Assert.NotNull(nextRound);
+        Assert.Equal(2, schedule.Rounds.Count);
+    }
+
+    [Fact]
+    public void SwissRoundGenerator_CreateNextRound_DelegatesToSwissTournamentAdvanceRound()
+    {
+        var generator = new SwissRoundGenerator();
+        var schedule = SwissTournament.Create(EliminationTournamentTests.CreateSchedule(4), [1, 2, 3, 4]);
+        var round = schedule.Rounds.Single().Value;
+
+        Assert.False(generator.IsComplete(schedule, Result.Null));
+
+        var matches = round.Matches.Values.Select(match =>
+        {
+            var teamResults = new List<TeamResult> { new(match.Teams[0], 10, 0, 1), new(match.Teams[1], 0, 0, 2) };
+            return new MatchResult(0, match.Room, round.Id, teamResults, []);
+        }).ToDictionary(m => m.ScheduleId, m => m);
+        var result = new Result(schedule, matches);
+
+        var nextRound = generator.CreateNextRound(schedule, result);
+
+        Assert.NotNull(nextRound);
+        Assert.Equal(2, schedule.Rounds.Count);
+    }
+
+    [Fact]
+    public void SwissWithTopCutRoundGenerator_CreateNextRound_DelegatesToSwissWithTopCutTournamentAdvanceRound()
+    {
+        var generator = new SwissWithTopCutRoundGenerator();
+        var schedule = SwissWithTopCutTournament.Create(EliminationTournamentTests.CreateSchedule(4), [1, 2, 3, 4]);
+        var round = schedule.Rounds.Single().Value;
+
+        Assert.False(generator.IsComplete(schedule, Result.Null));
+
+        var matches = round.Matches.Values.Select(match =>
+        {
+            var teamResults = new List<TeamResult> { new(match.Teams[0], 10, 0, 1), new(match.Teams[1], 0, 0, 2) };
+            return new MatchResult(0, match.Room, round.Id, teamResults, []);
+        }).ToDictionary(m => m.ScheduleId, m => m);
+        var result = new Result(schedule, matches);
 
         var nextRound = generator.CreateNextRound(schedule, result);
 
